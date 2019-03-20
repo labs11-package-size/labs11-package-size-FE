@@ -8,6 +8,7 @@ import ShipmentListView from '../containers/shipmentView/ShipmentListView';
 const Routes = () => {
 	return (
 		<div>
+			<App />
 			{/* <LoginView /> */}
 			{/* <ProductListView /> */}
 			{/* <ShipmentInputView /> */}
