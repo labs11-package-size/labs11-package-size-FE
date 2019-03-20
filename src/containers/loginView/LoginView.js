@@ -1,7 +1,8 @@
 import React from 'react';
+import Login from '../../components/login/Login';
 
 const LoginView = () => {
-	return <div>LoginView</div>;
+	return <Login />;
 };
 
 export default LoginView;
