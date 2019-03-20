@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -93,25 +94,29 @@ function SearchAppBar(props) {
 						aria-label="Open drawer">
 						<MenuIcon />
 					</IconButton>
-					<Typography
-						className={classes.title}
-						variant="h6"
-						color="inherit"
-						noWrap>
-						ScannAR
-					</Typography>
-					<div className={classes.grow} />
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<SearchIcon />
+					<div
+						className={classes.grow}
+						style={{ display: 'flex', justifyContent: 'space-between' }}>
+						<Typography
+							className={classes.title}
+							variant="h6"
+							color="inherit"
+							noWrap>
+							ScannAR
+						</Typography>
+						<div className={classes.search}>
+							<div className={classes.searchIcon}>
+								<SearchIcon />
+							</div>
+							<InputBase
+								placeholder="Search…"
+								classes={{
+									root: classes.inputRoot,
+									input: classes.inputInput,
+								}}
+							/>
 						</div>
-						<InputBase
-							placeholder="Search…"
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
-							}}
-						/>
+						<Button color="inherit">Login</Button>
 					</div>
 				</Toolbar>
 			</AppBar>
