@@ -5,12 +5,7 @@ import ProductListView from './containers/productView/ProductListView';
 
 class App extends Component {
 	render() {
-		return (
-			<div className="App">
-				{/* <LoginView /> */}
-				<ProductListView />
-			</div>
-		);
+		return <div className="App" />;
 	}
 }
 

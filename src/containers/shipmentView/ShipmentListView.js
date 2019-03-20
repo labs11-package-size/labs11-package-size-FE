@@ -1,7 +1,8 @@
 import React from 'react';
+import Shipment from '../../components/shipment/Shipment';
 
 const ShipmentView = () => {
-	return <div>ShipmentView</div>;
+	return <Shipment />;
 };
 
 export default ShipmentView;

@@ -2,9 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -74,18 +71,10 @@ const styles = theme => ({
 	},
 });
 
-function SearchAppBar(props) {
+const SearchAppBar = props => {
 	const { classes } = props;
 	return (
 		<div className={classes.root}>
-			{/* <FormGroup>
-				<FormControlLabel
-					control={
-				// 		<Switch onChange={this.handleChange} aria-label="LoginSwitch" />
-				// 	}
-				// 	label={'Login'}
-				// />
-			</FormGroup> */}
 			<AppBar position="static">
 				<Toolbar>
 					<IconButton
@@ -122,7 +111,7 @@ function SearchAppBar(props) {
 			</AppBar>
 		</div>
 	);
-}
+};
 
 SearchAppBar.propTypes = {
 	classes: PropTypes.object.isRequired,

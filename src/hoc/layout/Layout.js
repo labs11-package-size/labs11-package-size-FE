@@ -1,12 +1,14 @@
 import React from 'react';
 import Navigation from '../../components/navigation/Navigation';
-import App from '../../App';
+import Footer from '../../components/footer/Footer';
+import Routes from '../../routes/Routes';
 
 const Layout = () => {
 	return (
 		<div>
 			<Navigation />
-			<App />
+			<Routes />
+			<Footer />
 		</div>
 	);
 };

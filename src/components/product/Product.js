@@ -1,20 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import Avatar from '@material-ui/core/Avatar';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
 	root: {
 		width: '100%',
+	},
+	bigAvatar: {
+		margin: 10,
+		width: 60,
+		height: 60,
 	},
 	heading: {
 		fontSize: theme.typography.pxToRem(15),
@@ -51,42 +54,37 @@ function DetailedExpansionPanel(props) {
 	const { classes } = props;
 	return (
 		<div className={classes.root}>
-			<ExpansionPanel defaultExpanded>
+			<ExpansionPanel>
 				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+					<Avatar alt="" src="" className={classes.bigAvatar} />
 					<div className={classes.column}>
-						<Typography className={classes.heading}>Location</Typography>
+						<Typography className={classes.heading}>
+							Product Name: 3 inch Knife
+						</Typography>
 					</div>
 					<div className={classes.column}>
-						<Typography className={classes.secondaryHeading}>
-							Select trip destination
+						<Typography className={classes.heading}>
+							Date created: Jan 13, 2019
 						</Typography>
 					</div>
 				</ExpansionPanelSummary>
 				<ExpansionPanelDetails className={classes.details}>
 					<div className={classes.column} />
-					<div className={classes.column}>
-						<Chip
-							label="Barbados"
-							className={classes.chip}
-							onDelete={() => {}}
-						/>
-					</div>
-					<div className={classNames(classes.column, classes.helper)}>
-						<Typography variant="caption">
-							Select your destination of choice
-							<br />
-							<a href="#sub-labels-and-columns" className={classes.link}>
-								Learn more
-							</a>
-							{/* {props.products} */}
-						</Typography>
-					</div>
 				</ExpansionPanelDetails>
-				<Divider />
+
 				<ExpansionPanelActions>
-					<Button size="small">Cancel</Button>
+					<div className={classes.column}>
+						<Typography className={classes.heading}>
+							Description: Small knife set.
+						</Typography>
+						<Typography className={classes.heading}>Height: 44cm</Typography>
+						<Typography className={classes.heading}>Width: 50cm</Typography>
+						<Typography className={classes.heading}>Depth: 44cm</Typography>
+						<Typography className={classes.heading}>Weight: 10lbs</Typography>
+					</div>
+					<Button size="small">Add Shipment</Button>
 					<Button size="small" color="primary">
-						Save
+						Edit
 					</Button>
 				</ExpansionPanelActions>
 			</ExpansionPanel>
