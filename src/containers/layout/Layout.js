@@ -16,6 +16,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import { Link } from 'react-router-dom';
 
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
@@ -207,7 +208,11 @@ class Layout extends React.Component {
 									}}
 								/>
 							</div>
-							<Button color="inherit">Login</Button>
+							<Link
+								style={{ textDecoration: 'none', color: 'white' }}
+								to="/login">
+								<Button color="inherit">Login</Button>
+							</Link>
 						</div>
 					</Toolbar>
 				</AppBar>
