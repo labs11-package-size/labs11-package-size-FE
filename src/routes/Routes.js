@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import ProductListView from '../containers/productView/ProductListView';
@@ -18,8 +18,7 @@ class Routes extends Component {
 					<Route path="/shipments/form" component={ShipmentInputView} />
 					<Route path="/products" component={ProductListView} />
 					<Route path="/products/form" component={ProductInputView} />
-					{/* <Route path="/register" component={Register} />
-					<Route path="/logout" component={Logout} /> */}
+					{/* <Route path="/register" component={Register} /> */}
 				</Switch>
 			</div>
 		);
