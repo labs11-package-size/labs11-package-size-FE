@@ -61,12 +61,21 @@ const Login = props => {
 				</Typography>
 				<form className={classes.form}>
 					<FormControl margin="normal" required fullWidth>
-						<InputLabel htmlFor="email">Email Address</InputLabel>
-						<Input id="email" name="email" autoComplete="email" autoFocus />
+						<InputLabel htmlFor="username">Username</InputLabel>
+						<Input
+							id="username"
+							value={props.username}
+							onChange={props.handleChange}
+							name="username"
+							autoComplete="username"
+							autoFocus
+						/>
 					</FormControl>
 					<FormControl margin="normal" required fullWidth>
 						<InputLabel htmlFor="password">Password</InputLabel>
 						<Input
+							onChange={props.handleChange}
+							value={props.password}
 							name="password"
 							type="password"
 							id="password"
@@ -82,7 +91,8 @@ const Login = props => {
 						fullWidth
 						variant="contained"
 						color="primary"
-						className={classes.submit}>
+						className={classes.submit}
+						onClick={props.loginSubmit}>
 						Sign in
 					</Button>
 				</form>
