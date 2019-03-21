@@ -7,7 +7,7 @@ import ProductInputView from '../containers/productView/productInputView';
 import LoginView from '../containers/loginView/LoginView';
 import ShipmentInputView from '../containers/shipmentView/ShipmentInputView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
-import Dashboard from '../containers/dashboadView/DashboardView';
+import DashboardView from '../containers/dashboardView/DashboardView';
 
 class Routes extends Component {
 	render() {
@@ -20,7 +20,7 @@ class Routes extends Component {
 					<Route exact path="/shipments" component={ShipmentListView} />
 					<Route exact path="/products" component={ProductListView} />
 					{/* <Route path="/register" component={Register} /> */}
-					{/* <Route exact path="/" component={Dashboard} /> */}
+					<Route exact path="/" component={DashboardView} />
 				</Switch>
 			</div>
 		);
