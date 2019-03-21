@@ -11,7 +11,7 @@ import {
 } from '../actions/userActions';
 
 const initialState = {
-	currentUser: null,
+	userToken: null,
 	isLoggedIn: false,
 	isLoggingIn: false,
 	error: null,
@@ -24,14 +24,14 @@ const userReducer = (state = initialState, action) => {
 		case USER_LOGIN_SUCCESSFUL:
 			return {
 				...state,
-				currentUser: action.payload,
+				userToken: action.payload,
 				isLoggedIn: true,
 				isLoggingIn: false,
 			};
 		case USER_LOGIN_FAILURE:
 			return {
 				...state,
-				currentUser: null,
+				userToken: null,
 				isLoggedIn: false,
 				error: action.payload,
 			};
