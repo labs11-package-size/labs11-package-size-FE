@@ -1,7 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/css/index.css';
-// import App from './App';
-import Layout from './hoc/layout/Layout';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
-ReactDOM.render(<Layout />, document.getElementById('root'));
+import rootReducer from './store/reducers/index';
+import Layout from './containers/layout/Layout';
+
+import './styles/css/index.css';
+
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+
+ReactDOM.render(
+	<Provider store={store}>
+		<Router>
+			<Layout />
+		</Router>
+	</Provider>,
+	document.getElementById('root'),
+);

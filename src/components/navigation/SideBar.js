@@ -2,42 +2,42 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
+// import DashboardIcon from '@material-ui/icons/Dashboard';
+import LocalShipping from '@material-ui/icons/LocalShipping';
+import Person from '@material-ui/icons/Person';
+import Eject from '@material-ui/icons/Eject';
+import Queue from '@material-ui/icons/Queue';
+import { Link } from 'react-router-dom';
 
 export const SideBar = (
 	<div>
 		<ListItem button>
 			<ListItemIcon>
-				<DashboardIcon />
+				<Person />
 			</ListItemIcon>
 			<ListItemText primary="Account" />
 		</ListItem>
+		<Link to="/products">
+			<ListItem button>
+				<ListItemIcon>
+					<Queue />
+				</ListItemIcon>
+				<ListItemText primary="Products" />
+			</ListItem>
+		</Link>
+		<Link to="/shipments">
+			<ListItem button>
+				<ListItemIcon>
+					<LocalShipping />
+				</ListItemIcon>
+				<ListItemText primary="Shipments" />
+			</ListItem>
+		</Link>
 		<ListItem button>
 			<ListItemIcon>
-				<ShoppingCartIcon />
+				<Eject />
 			</ListItemIcon>
-			<ListItemText primary="Products" />
-		</ListItem>
-		<ListItem button>
-			<ListItemIcon>
-				<PeopleIcon />
-			</ListItemIcon>
-			<ListItemText primary="Shipments" />
-		</ListItem>
-		<ListItem button>
-			<ListItemIcon>
-				<PeopleIcon />
-			</ListItemIcon>
-			<ListItemText primary="Customers" />
-		</ListItem>
-		<ListItem button>
-			<ListItemIcon>
-				<BarChartIcon />
-			</ListItemIcon>
-			<ListItemText primary="Reports" />
+			<ListItemText primary="Logout" />
 		</ListItem>
 	</div>
 );
