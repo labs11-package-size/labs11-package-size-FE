@@ -192,5 +192,4 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-//export default withStyles(styles)(MediaCard);
 export default withStyles(styles)(Dashboard);

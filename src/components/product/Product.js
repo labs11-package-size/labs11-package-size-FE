@@ -50,7 +50,7 @@ const styles = theme => ({
 	},
 });
 
-function DetailedExpansionPanel(props) {
+function Product(props) {
 	const { classes } = props;
 	return (
 		<div className={classes.root}>
@@ -96,4 +96,4 @@ DetailedExpansionPanel.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(DetailedExpansionPanel);
+export default withStyles(styles)(Product);
