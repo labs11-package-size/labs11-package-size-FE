@@ -18,32 +18,9 @@ export const loginUser = userInfo => dispatch => {
 		.post('https://scannar-be.herokuapp.com/api/users/login', userInfo)
 		.then(res => {
 			dispatch({ type: USER_LOGIN_SUCCESSFUL, payload: res.data });
+			localStorage.setItem('token', res.data);
 		})
 		.catch(err => {
 			dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
 		});
 };
-
-// export const logoutUser = stats => {
-// 	console.log(stats);
-// 	localStorage.removeItem('user');
-
-// 	return {
-// 		type: 'USER_LOGOUT',
-// 		payload: stats,
-// 	};
-// };
-
-// export const userRegister = userStats => {
-// 	return {
-// 		type: 'USER_REGISTER',
-// 		payload: userStats,
-// 	};
-// };
-
-// export const addUser = user => {
-// 	return {
-// 		type: ADD_USER,
-// 		payload: user,
-// 	};
-// };

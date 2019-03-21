@@ -27,7 +27,7 @@ class LoginView extends Component {
 		} else {
 			this.props.loginUser(userStats);
 			setTimeout(() => {
-				this.props.history.push('/login');
+				this.props.history.push('/');
 			}, 1000);
 		}
 	};
