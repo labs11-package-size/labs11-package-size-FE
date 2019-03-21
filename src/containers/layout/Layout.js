@@ -18,7 +18,7 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 
-import Footer from '../../components/footer/Footer';
+import Footer from '../../components/footer/footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
 
