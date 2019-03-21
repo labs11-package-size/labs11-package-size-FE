@@ -9,11 +9,11 @@ const Routes = () => {
 	return (
 		<div>
 			<App />
-			{/* <LoginView /> */}
+			<LoginView />
 			{/* <ProductListView /> */}
 			{/* <ShipmentInputView /> */}
 			{/* <ProductInputView /> */}
-			<ShipmentListView />
+			{/* <ShipmentListView /> */}
 		</div>
 	);
 };
