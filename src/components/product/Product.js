@@ -92,7 +92,7 @@ function Product(props) {
 	);
 }
 
-DetailedExpansionPanel.propTypes = {
+Product.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 

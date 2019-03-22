@@ -11,12 +11,14 @@ import { Link } from 'react-router-dom';
 
 export const SideBar = (
 	<div>
-		<ListItem button>
-			<ListItemIcon>
-				<Person />
-			</ListItemIcon>
-			<ListItemText primary="Account" />
-		</ListItem>
+		<Link to="/account">
+			<ListItem button>
+				<ListItemIcon>
+					<Person />
+				</ListItemIcon>
+				<ListItemText primary="Account" />
+			</ListItem>
+		</Link>
 		<Link to="/products">
 			<ListItem button>
 				<ListItemIcon>
@@ -33,11 +35,13 @@ export const SideBar = (
 				<ListItemText primary="Shipments" />
 			</ListItem>
 		</Link>
-		<ListItem button>
-			<ListItemIcon>
-				<Eject />
-			</ListItemIcon>
-			<ListItemText primary="Logout" />
-		</ListItem>
+		<Link to="/logout">
+			<ListItem button>
+				<ListItemIcon>
+					<Eject />
+				</ListItemIcon>
+				<ListItemText primary="Logout" />
+			</ListItem>
+		</Link>
 	</div>
 );
