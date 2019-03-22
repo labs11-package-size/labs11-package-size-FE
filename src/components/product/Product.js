@@ -9,6 +9,7 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import Auth from '../../hoc/auth/Auth';
 
 const styles = theme => ({
 	root: {
@@ -52,19 +53,19 @@ const styles = theme => ({
 
 function Product(props) {
 	const { classes } = props;
+	console.log(props.product);
 	return (
 		<div className={classes.root}>
 			<ExpansionPanel>
 				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Avatar alt="" src="" className={classes.bigAvatar} />
 					<div className={classes.column}>
 						<Typography className={classes.heading}>
-							Product Name: 3 inch Knife
+							Product Name: {props.product.name}
 						</Typography>
 					</div>
 					<div className={classes.column}>
 						<Typography className={classes.heading}>
-							Date created: Jan 13, 2019
+							Description: {props.product.description}
 						</Typography>
 					</div>
 				</ExpansionPanelSummary>
@@ -75,12 +76,17 @@ function Product(props) {
 				<ExpansionPanelActions>
 					<div className={classes.column}>
 						<Typography className={classes.heading}>
-							Description: Small knife set.
+							Fragile: {props.product.fragile}
 						</Typography>
-						<Typography className={classes.heading}>Height: 44cm</Typography>
-						<Typography className={classes.heading}>Width: 50cm</Typography>
-						<Typography className={classes.heading}>Depth: 44cm</Typography>
-						<Typography className={classes.heading}>Weight: 10lbs</Typography>
+						<Typography className={classes.heading}>
+							Height: {props.product.height}
+						</Typography>
+						<Typography className={classes.heading}>
+							Weight: {props.product.weight}
+						</Typography>
+						<Typography className={classes.heading}>
+							Value: {props.product.value}
+						</Typography>
 					</div>
 					<Button size="small">Add Shipment</Button>
 					<Button size="small" color="primary">

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import ProductListView from '../components/product/ProductList';
 import ProductInputView from '../containers/productView/productInputView';

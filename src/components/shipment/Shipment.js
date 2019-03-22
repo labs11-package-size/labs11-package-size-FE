@@ -9,6 +9,7 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import Auth from '../../hoc/auth/Auth';
 
 const styles = theme => ({
 	root: {
