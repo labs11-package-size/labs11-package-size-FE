@@ -1,6 +1,6 @@
 import React from 'react';
-import Product from '../../components/product/Product';
+import ProductList from '../../components/product/ProductList';
 
-const ProductView = props => <Product />;
+const ProductListView = props => <ProductList />;
 
-export default ProductView;
+export default ProductListView;

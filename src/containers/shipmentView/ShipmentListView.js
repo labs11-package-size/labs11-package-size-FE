@@ -1,8 +1,8 @@
 import React from 'react';
-import Shipment from '../../components/shipment/Shipment';
+import ShipmentList from '../../components/shipment/ShipmentList';
 
-const ShipmentView = () => {
-	return <Shipment />;
+const ShipmentListView = () => {
+	return <ShipmentList />;
 };
 
-export default ShipmentView;
+export default ShipmentListView;
