@@ -17,10 +17,10 @@ class Routes extends Component {
 			<div>
 				<Switch>
 					<Route path="/login" component={LoginView} />
-					<Route path="/shipments/form" component={ShipmentInputView} />
-					<Route path="/products/form" component={ProductInputView} />
 					<Route exact path="/shipments" component={ShipmentListView} />
 					<Route exact path="/products" component={ProductListView} />
+					<Route path="/shipments/form" component={ShipmentInputView} />
+					<Route path="/products/form" component={ProductInputView} />
 					{/* <Route path="/register" component={Register} /> */}
 					<Route exact path="/" component={DashboardView} />
 					<Route path="/signup" component={SignUpView} />
