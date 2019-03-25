@@ -65,7 +65,7 @@ function Product(props) {
 					</div>
 					<div className={classes.column}>
 						<Typography className={classes.heading}>
-							Description: {props.product.description}
+							Description: {props.product.productDescription}
 						</Typography>
 					</div>
 				</ExpansionPanelSummary>
