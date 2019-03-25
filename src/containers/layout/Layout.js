@@ -17,7 +17,9 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import { getAuth } from '../../store/actions/userActions';
 import Footer from '../../components/footer/footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
@@ -196,18 +198,20 @@ class Layout extends React.Component {
 								noWrap>
 								ScannAR
 							</Typography>
-							<div className={classes.search}>
-								<div className={classes.searchIcon}>
-									<SearchIcon />
+							{this.props.isAuthenticated ? (
+								<div className={classes.search}>
+									<div className={classes.searchIcon}>
+										<SearchIcon />
+									</div>
+									<InputBase
+										placeholder="Search…"
+										classes={{
+											root: classes.inputRoot,
+											input: classes.inputInput,
+										}}
+									/>
 								</div>
-								<InputBase
-									placeholder="Search…"
-									classes={{
-										root: classes.inputRoot,
-										input: classes.inputInput,
-									}}
-								/>
-							</div>
+							) : null}
 							<Link
 								style={{ textDecoration: 'none', color: 'white' }}
 								to="/login">
@@ -247,4 +251,13 @@ Layout.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Layout);
+const mapStateToProps = state => {
+	return {
+		isAuthenticated: state.userReducer.authenticated,
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ getAuth },
+)(withStyles(styles)(Layout));
