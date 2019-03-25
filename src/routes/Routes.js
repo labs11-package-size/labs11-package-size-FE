@@ -23,7 +23,7 @@ class Routes extends Component {
 				<Switch>
 					<Redirect from="/login" to="/" />
 					<Redirect from="/register" to="/" />
-					{/* <Route path="/logout" component={Logout} /> */}
+					<Route path="/logout" component={LogoutView} />
 					<Route
 						path="/shipments/form"
 						render={props => <ShipmentInputView {...props} />}

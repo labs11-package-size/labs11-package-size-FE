@@ -5,9 +5,9 @@ import {
 	USER_LOGGING_IN,
 	USER_LOGIN_SUCCESSFUL,
 	USER_LOGIN_FAILURE,
-	// USER_LOGGING_OUT,
-	// USER_LOGOUT_SUCCESSFUL,
-	// USER_LOGOUT_FAILURE,
+	USER_LOGGING_OUT,
+	USER_LOGOUT_SUCCESSFUL,
+	USER_LOGOUT_FAILURE,
 	AUTHENTICATING_USER,
 	AUTH_SUCCESSFUL,
 	AUTH_FAILURE,
@@ -16,6 +16,8 @@ import {
 const initialState = {
 	userToken: null,
 	isLoggedIn: false,
+	isLoggingOut: false,
+	isLoggedOut: false,
 	isLoggingIn: false,
 	authenticating: false,
 	authenticated: false,
@@ -59,6 +61,21 @@ const userReducer = (state = initialState, action) => {
 				isLoggedIn: false,
 				authenticated: false,
 				error: action.payload,
+			};
+
+		case USER_LOGGING_OUT:
+			return { ...state, isLoggingOut: true };
+		case USER_LOGOUT_SUCCESSFUL:
+			return {
+				...state,
+				userToken: null,
+				isLoggedIn: false,
+				isLoggingOut: false,
+				isLoggedOut: false,
+				isLoggingIn: false,
+				authenticating: false,
+				authenticated: false,
+				error: null,
 			};
 
 		default:

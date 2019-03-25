@@ -36,3 +36,9 @@ export const getAuth = () => dispatch => {
 		.then(res => dispatch({ type: AUTH_SUCCESSFUL, payload: res.data }))
 		.catch(err => dispatch({ type: AUTH_FAILURE, payload: err }));
 };
+
+export const logoutUser = () => dispatch => {
+	dispatch({ type: USER_LOGGING_OUT });
+	localStorage.removeItem('token');
+	dispatch({ type: AUTH_SUCCESSFUL });
+};
