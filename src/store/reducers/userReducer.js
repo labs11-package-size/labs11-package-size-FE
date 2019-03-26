@@ -7,7 +7,7 @@ import {
 	USER_LOGIN_FAILURE,
 	USER_LOGGING_OUT,
 	USER_LOGOUT_SUCCESSFUL,
-	USER_LOGOUT_FAILURE,
+	// USER_LOGOUT_FAILURE,
 	AUTHENTICATING_USER,
 	AUTH_SUCCESSFUL,
 	AUTH_FAILURE,
@@ -33,7 +33,12 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case USER_LOGGING_IN:
-			return { ...state, isLoggedIn: false, isLoggingIn: true, authenticating: true };
+			return {
+				...state,
+				isLoggedIn: false,
+				isLoggingIn: true,
+				authenticating: true,
+			};
 		case USER_LOGIN_SUCCESSFUL:
 			return {
 				...state,
@@ -53,7 +58,12 @@ const userReducer = (state = initialState, action) => {
 			};
 
 		case AUTHENTICATING_USER:
-			return { ...state, isLoggedIn: true, isLoggingIn: false, authenticating: true };
+			return {
+				...state,
+				isLoggedIn: true,
+				isLoggingIn: false,
+				authenticating: true,
+			};
 		case AUTH_SUCCESSFUL:
 			return {
 				...state,
@@ -83,9 +93,14 @@ const userReducer = (state = initialState, action) => {
 				authenticated: false,
 				error: null,
 			};
-		
+
 		case USER_REGISTERING:
-			return { ...state, isLoggingIn: true, isLoggedOut: false, authenticating: true};
+			return {
+				...state,
+				isLoggingIn: true,
+				isLoggedOut: false,
+				authenticating: true,
+			};
 		case USER_REGISTER_SUCCESSFUL:
 			return {
 				...state,
@@ -110,9 +125,10 @@ const userReducer = (state = initialState, action) => {
 				authenticated: false,
 				error: action.payload,
 			};
-		
+
 		case GETTING_ACCOUNT:
-			return { ...state, 
+			return {
+				...state,
 				isLoggedIn: true,
 				gettingUserInfo: true,
 				gotUserInfo: false,

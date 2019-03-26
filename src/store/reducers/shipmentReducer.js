@@ -1,12 +1,17 @@
 import {
-	GETTING_SHIPMENT,
-	GETTING_SHIPMENT_SUCCESSFUL,
-	GETTING_SHIPMENT_FAILURE,
+	GETTING_SHIPMENTS,
+	GETTING_SHIPMENTS_SUCCESSFUL,
+	GETTING_SHIPMENTS_FAILURE,
+	ADDING_SHIPMENT,
+	ADDING_SHIPMENT_SUCCESSFUL,
+	ADDING_SHIPMENT_FAILURE,
 } from '../actions/shipmentActions';
 
 const initialState = {
-	shipment: [],
+	shipments: [],
 	fetching: false,
+	adding: false,
+	added: false,
 	success: false,
 	failure: false,
 	error: null,
@@ -14,7 +19,7 @@ const initialState = {
 
 const shipmentReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case GETTING_SHIPMENT:
+		case GETTING_SHIPMENTS:
 			return {
 				...state,
 				fetching: true,
@@ -22,7 +27,36 @@ const shipmentReducer = (state = initialState, action) => {
 				failure: false,
 				error: null,
 			};
-		case GETTING_SHIPMENT_SUCCESSFUL:
+
+		case GETTING_SHIPMENTS_SUCCESSFUL:
+			return {
+				...state,
+				shipments: action.payload,
+				fetching: false,
+				success: true,
+				failure: false,
+				error: null,
+			};
+
+		case GETTING_SHIPMENTS_FAILURE:
+			return {
+				...state,
+				fetching: false,
+				success: false,
+				failure: true,
+				error: action.payload,
+			};
+
+		case ADDING_SHIPMENT:
+			return {
+				...state,
+				fetching: true,
+				success: false,
+				failure: false,
+				error: null,
+			};
+
+		case ADDING_SHIPMENT_SUCCESSFUL:
 			return {
 				...state,
 				products: action.payload,
@@ -31,7 +65,8 @@ const shipmentReducer = (state = initialState, action) => {
 				failure: false,
 				error: null,
 			};
-		case GETTING_SHIPMENT_FAILURE:
+
+		case ADDING_SHIPMENT_FAILURE:
 			return {
 				...state,
 				fetching: false,

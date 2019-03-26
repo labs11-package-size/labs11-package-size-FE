@@ -16,7 +16,7 @@ export const DELETING_PRODUCT = 'DELETING_PRODUCT';
 export const DELETING_PRODUCT_SUCCESSFUL = 'DELETING_PRODUCT_SUCCESSFUL';
 export const DELETING_PRODUCT_FAILURE = 'DELETING_PRODUCT_FAILURE';
 
-axios.defaults.baseURL = 'https://scannar-be.herokuapp.com/api';
+axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
 axios.interceptors.request.use(
 	function(options) {
 		options.headers.authorization = localStorage.getItem('token');

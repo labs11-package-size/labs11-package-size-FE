@@ -9,7 +9,6 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
-import Auth from '../../hoc/auth/Auth';
 
 const styles = theme => ({
 	root: {
@@ -60,19 +59,11 @@ const Shipment = props => {
 					<Avatar alt="" src="" className={classes.bigAvatar} />
 					<div className={classes.column}>
 						<Typography className={classes.heading}>
-							Customer Name: Paul Walker
+							Shipped To: {props.shipment.shippedTo}
 						</Typography>
 
 						<Typography className={classes.heading}>
-							Product Name: Beach ball
-						</Typography>
-
-						<Typography className={classes.heading}>
-							Destination: 123 main st
-						</Typography>
-
-						<Typography className={classes.heading}>
-							Shipment Date: Fed 12, 2019
+							Shipping Date: {props.shipment.dateShipped}
 						</Typography>
 					</div>
 				</ExpansionPanelSummary>
@@ -83,7 +74,16 @@ const Shipment = props => {
 				<ExpansionPanelActions>
 					<div className={classes.column}>
 						<Typography className={classes.heading}>
-							Tracking Number: 23456789sdozxjhbgvy
+							Tracking Number: {props.shipment.trackingNumber}
+						</Typography>
+						<Typography className={classes.heading}>
+							Carrier: {props.shipment.carrierName}
+						</Typography>
+						<Typography className={classes.heading}>
+							Shipping Type: {props.shipment.shippingType}
+						</Typography>
+						<Typography className={classes.heading}>
+							Status: {props.shipment.status}
 						</Typography>
 					</div>
 					<Button size="small" color="primary">
