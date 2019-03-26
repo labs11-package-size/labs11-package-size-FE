@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 // import { getAuth } from '../../store/actions/userActions';
 // import { connect } from 'react-redux';
 // import { withRouter, Route, Redirect } from 'react-router-dom';
@@ -53,3 +53,14 @@
 // 		};
 // 	}),
 // );
+
+export default function(Component) {
+	return class Authenticated extends React.Component {
+		render() {
+			const token = localStorage.getItem('token');
+			const notLoggedIn = <div>Please login</div>;
+
+			return <> {token ? <Component {...this.props} /> : notLoggedIn} </>;
+		}
+	};
+}
