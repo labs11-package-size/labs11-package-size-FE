@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import Avatar from '@material-ui/core/Avatar';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
-import Auth from '../../hoc/auth/Auth';
 
 const styles = theme => ({
 	root: {
@@ -75,7 +73,7 @@ function Product(props) {
 
 				<ExpansionPanelActions>
 					<div className={classes.column}>
-					<Typography className={classes.heading}>
+						<Typography className={classes.heading}>
 							Length: {props.product.length}
 						</Typography>
 						<Typography className={classes.heading}>

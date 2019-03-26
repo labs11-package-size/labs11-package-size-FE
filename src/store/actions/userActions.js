@@ -20,10 +20,12 @@ export const AUTHENTICATING_USER = 'AUTHENTICATING_USER';
 export const AUTH_SUCCESSFUL = 'AUTH_SUCCESSFUL';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 
+const baseURL = 'https://scannarserver.herokuapp.com/api/users';
+
 export const loginUser = userInfo => dispatch => {
 	dispatch({ type: USER_LOGGING_IN });
 	axios
-		.post('https://scannar-be.herokuapp.com/api/users/login', userInfo)
+		.post(`${baseURL}/login`, userInfo)
 		.then(res => {
 			dispatch({ type: USER_LOGIN_SUCCESSFUL, payload: res.data.token });
 			localStorage.setItem('token', res.data.token);
@@ -36,7 +38,7 @@ export const loginUser = userInfo => dispatch => {
 export const getAuth = () => dispatch => {
 	dispatch({ type: AUTHENTICATING_USER });
 	axios
-		.get('https://scannar-be.herokuapp.com/api/users/checkauth')
+		.get(`${baseURL}/checkauth`)
 		.then(res => dispatch({ type: AUTH_SUCCESSFUL, payload: res.data }))
 		.catch(err => dispatch({ type: AUTH_FAILURE, payload: err }));
 };
@@ -47,20 +49,24 @@ export const logoutUser = () => dispatch => {
 	dispatch({ type: AUTH_SUCCESSFUL });
 };
 
-
 export const register = newUser => dispatch => {
 	dispatch({ type: USER_REGISTERING });
 	axios
-		.post('https://scannar-be.herokuapp.com/api/users/register', newUser)
-		.then(res => dispatch({ type: USER_REGISTER_SUCCESSFUL, payload: res.data }))
+		.post(`${baseURL}/register`, newUser)
+		.then(res =>
+			dispatch({ type: USER_REGISTER_SUCCESSFUL, payload: res.data }),
+		)
 		.catch(err => dispatch({ type: USER_REGISTER_FAILURE, payload: err }));
 };
 
-export const getAccount = () => dispatch => {
+export const getAccountInfo = () => dispatch => {
 	dispatch({ type: GETTING_ACCOUNT });
 	axios
-		.get('https://scannar-be.herokuapp.com/api/users/account')
-		.then(res => dispatch({ type: GETTING_ACCOUNT_SUCCESSFUL, payload: res.data }))
-		.catch(err => dispatch({ type: GETTING_ACCOUNT_FAILURE, payload: err.data }));
+		.get(`${baseURL}/accountinfo`)
+		.then(res =>
+			dispatch({ type: GETTING_ACCOUNT_SUCCESSFUL, payload: res.data }),
+		)
+		.catch(err =>
+			dispatch({ type: GETTING_ACCOUNT_FAILURE, payload: err.data }),
+		);
 };
-

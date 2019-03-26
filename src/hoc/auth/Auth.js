@@ -1,34 +1,34 @@
-import React from 'react';
-import { getAuth } from '../../store/actions/userActions';
-import { connect } from 'react-redux';
-import { withRouter, Route, Redirect } from 'react-router-dom';
+// import React from 'react';
+// import { getAuth } from '../../store/actions/userActions';
+// import { connect } from 'react-redux';
+// import { withRouter, Route, Redirect } from 'react-router-dom';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-	<Route
-		{...rest}
-		render={props =>
-			props.isAuthenticated === true ? (
-				<Component {...props} />
-			) : (
-				<Redirect to="/login" />
-			)
-		}
-	/>
-);
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+// 	<Route
+// 		{...rest}
+// 		render={props =>
+// 			props.isAuthenticated === true ? (
+// 				<Component {...props} />
+// 			) : (
+// 				<Redirect to="/login" />
+// 			)
+// 		}
+// 	/>
+// );
 
-const mapStateToProps = state => {
-	console.log(state.userReducer.Authenticated);
-	return {
-		isAuthenticated: state.userReducer.Authenticated,
-	};
-};
+// const mapStateToProps = state => {
+// 	console.log(state.userReducer.Authenticated);
+// 	return {
+// 		isAuthenticated: state.userReducer.Authenticated,
+// 	};
+// };
 
-export default withRouter(
-	connect(
-		mapStateToProps,
-		{ getAuth },
-	)(PrivateRoute),
-);
+// export default withRouter(
+// 	connect(
+// 		mapStateToProps,
+// 		{ getAuth },
+// 	)(PrivateRoute),
+// );
 
 // export default withRouter(
 // 	connect(
