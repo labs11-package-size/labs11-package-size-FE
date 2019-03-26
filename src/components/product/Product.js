@@ -75,11 +75,17 @@ function Product(props) {
 
 				<ExpansionPanelActions>
 					<div className={classes.column}>
+					<Typography className={classes.heading}>
+							Length: {props.product.length}
+						</Typography>
 						<Typography className={classes.heading}>
-							Fragile: {props.product.fragile}
+							Width: {props.product.width}
 						</Typography>
 						<Typography className={classes.heading}>
 							Height: {props.product.height}
+						</Typography>
+						<Typography className={classes.heading}>
+							Fragile: {props.product.fragile}
 						</Typography>
 						<Typography className={classes.heading}>
 							Weight: {props.product.weight}

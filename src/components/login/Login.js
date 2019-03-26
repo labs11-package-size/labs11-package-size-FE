@@ -96,7 +96,7 @@ const Login = props => {
 						onClick={props.loginSubmit}>
 						Sign in
 					</Button>
-					<Link to="/signup">Sigin up</Link>
+					<Link to="/register">Register</Link>
 				</form>
 			</Paper>
 		</main>

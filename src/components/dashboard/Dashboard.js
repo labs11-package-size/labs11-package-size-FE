@@ -14,6 +14,7 @@ import ProductListView from '../../containers/productView/ProductListView';
 
 import { getProducts } from '../../store/actions/productActions';
 import { getShipment } from '../../store/actions/shipmentActions';
+import ShipmentListView from '../../containers/shipmentView/ShipmentListView';
 
 const styles = {
 	card: {
@@ -38,15 +39,16 @@ class Dashboard extends Component {
 	// };
 	componentDidMount() {
 		this.props.getProducts();
-		// this.props.getShipments();
+		//this.props.getShipments();
 	}
 	render() {
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
 				<ProductListView products={this.props.products} />
+				<ShipmentListView shipments={this.props.shipments} />
 
-				<Typography gutterBottom variant="h5" component="h2">
+				{/* <Typography gutterBottom variant="h5" component="h2">
 					Shipments
 				</Typography>
 				<div className={classes.cardContainer}>
@@ -115,11 +117,11 @@ class Dashboard extends Component {
 								View Details
 							</Button>
 						</CardActions>
-					</Card>
-					<Button size="small" color="primary">
+					</Card> */}
+					{/* <Button size="small" color="primary">
 						See All Shipments
 					</Button>
-				</div>
+				</div> */}
 			</div>
 		);
 	}
@@ -132,7 +134,7 @@ Dashboard.propTypes = {
 const mapStateToProps = state => {
 	return {
 		products: state.productReducer.products,
-		// shipment: state.shipmentReducer.shipment,
+		//shipment: state.shipmentReducer.shipment,
 	};
 };
 
