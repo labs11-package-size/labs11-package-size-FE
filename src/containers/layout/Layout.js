@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getAuth } from '../../store/actions/userActions';
-import Footer from '../../components/footer/footer';
+import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
 

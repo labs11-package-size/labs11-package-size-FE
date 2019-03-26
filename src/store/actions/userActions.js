@@ -4,6 +4,10 @@ export const USER_REGISTERING = 'USER_REGISTERING';
 export const USER_REGISTER_SUCCESSFUL = 'USER_REGISTER_SUCCESSFUL';
 export const USER_REGISTER_FAILURE = 'USER_REGISTER_FAILURE';
 
+export const GETTING_ACCOUNT = 'GETTING_ACCOUNT';
+export const GETTING_ACCOUNT_SUCCESSFUL = 'GETTING_ACCOUNT_SUCCESSFUL';
+export const GETTING_ACCOUNT_FAILURE = 'GETTING_ACCOUNT_FAILURE';
+
 export const USER_LOGGING_IN = 'USER_LOGGING_IN';
 export const USER_LOGIN_SUCCESSFUL = 'USER_LOGIN_SUCCESSFUL';
 export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
@@ -42,3 +46,21 @@ export const logoutUser = () => dispatch => {
 	localStorage.removeItem('token');
 	dispatch({ type: AUTH_SUCCESSFUL });
 };
+
+
+export const register = newUser => dispatch => {
+	dispatch({ type: USER_REGISTERING });
+	axios
+		.post('https://scannar-be.herokuapp.com/api/users/register', newUser)
+		.then(res => dispatch({ type: USER_REGISTER_SUCCESSFUL, payload: res.data }))
+		.catch(err => dispatch({ type: USER_REGISTER_FAILURE, payload: err }));
+};
+
+export const getAccount = () => dispatch => {
+	dispatch({ type: GETTING_ACCOUNT });
+	axios
+		.get('https://scannar-be.herokuapp.com/api/users/account')
+		.then(res => dispatch({ type: GETTING_ACCOUNT_SUCCESSFUL, payload: res.data }))
+		.catch(err => dispatch({ type: GETTING_ACCOUNT_FAILURE, payload: err.data }));
+};
+

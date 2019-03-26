@@ -8,7 +8,7 @@ import LoginView from '../containers/loginView/LoginView';
 import ShipmentInputView from '../containers/shipmentView/ShipmentInputView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
 import DashboardView from '../containers/dashboardView/DashboardView';
-import SignUpView from '../containers/signUpView/SignUpView';
+import RegisterView from '../containers/registerView/RegisterView';
 import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/logoutView/LogoutView';
 import { getAuth } from '../store/actions/userActions';
@@ -18,7 +18,6 @@ class Routes extends Component {
 		let routes;
 
 		if (this.props.isAuthenticated) {
-			console.log('Authenticated routes');
 			routes = (
 				<Switch>
 					<Redirect from="/login" to="/" />
@@ -45,12 +44,11 @@ class Routes extends Component {
 				</Switch>
 			);
 		} else {
-			console.log('unauthenticated routes');
 			routes = (
 				<Switch>
 					<Redirect exact from="/" to="/login" />
 					<Route path="/login" component={LoginView} />
-					<Route path="/signup" component={SignUpView} />
+					<Route path="/register" component={RegisterView} />
 					<Redirect to="/login" />
 				</Switch>
 			);
@@ -61,7 +59,6 @@ class Routes extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log(state.userReducer.authenticated);
 	return {
 		isAuthenticated: state.userReducer.authenticated,
 	};
