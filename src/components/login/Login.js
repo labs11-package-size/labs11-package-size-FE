@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
+
 import LoginView from '../../containers/loginView/LoginView';
 // import Avatar from '@material-ui/core/Avatar';
 // import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,7 +15,6 @@ import LoginView from '../../containers/loginView/LoginView';
 // import Typography from '@material-ui/core/Typography';
 // import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { firebase, googleAuth } from '../../firebase';
 
 const styles = theme => ({
 	main: {
@@ -50,16 +49,13 @@ const styles = theme => ({
 	},
 });
 
-class Login extends Component {
-	signIn = () => {
-		firebase.auth().signInWithPopup(googleAuth);
-	};
-	render() {
-		const { classes } = this.props;
+const Login = props => {
+	const { classes } = props;
 
-		return (
+	return (
+		<div>
 			<Button
-				onClick={this.signIn}
+				onClick={props.loginSubmit}
 				type="submit"
 				fullWidth
 				variant="contained"
@@ -67,9 +63,9 @@ class Login extends Component {
 				className={classes.submit}>
 				Sign in
 			</Button>
-		);
-	}
-}
+		</div>
+	);
+};
 
 Login.propTypes = {
 	classes: PropTypes.object.isRequired,

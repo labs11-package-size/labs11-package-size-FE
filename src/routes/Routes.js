@@ -12,7 +12,6 @@ import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/logoutView/LogoutView';
 
 const PrivateRoute = ({ isLoggedIn, component: Comp, ...rest }) => {
-	console.log(isLoggedIn);
 	return (
 		<Route
 			{...rest}
@@ -25,7 +24,7 @@ const PrivateRoute = ({ isLoggedIn, component: Comp, ...rest }) => {
 class Routes extends Component {
 	render() {
 		let routes;
-		console.log(this.props.isLoggedIn);
+
 		if (this.props.isLoggedIn) {
 			routes = (
 				<Switch>

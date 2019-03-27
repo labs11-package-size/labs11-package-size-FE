@@ -20,7 +20,6 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
-import { firebase } from '../../firebase';
 
 const drawerWidth = 240;
 
