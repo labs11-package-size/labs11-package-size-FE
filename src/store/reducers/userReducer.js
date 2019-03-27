@@ -27,6 +27,7 @@ const initialState = {
 	userInfo: [],
 	gettingUserInfo: false,
 	gotUserInfo: false,
+	registering: false,
 	error: null,
 };
 
@@ -100,6 +101,7 @@ const userReducer = (state = initialState, action) => {
 				isLoggingIn: true,
 				isLoggedOut: false,
 				authenticating: true,
+				registering: true,
 			};
 		case USER_REGISTER_SUCCESSFUL:
 			return {
