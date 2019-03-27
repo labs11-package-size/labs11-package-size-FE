@@ -19,9 +19,22 @@ const styles = theme => ({
 
 const ProductInput = props => {
 	const { classes } = props;
+	const handleClick = event => {
+		event.preventDefault();
+		if (!props.isEditing) {
+			props.addProduct();
+		} else {
+			// props.editProduct()
+		}
+		props.history.push('/dashboard');
+	};
+
 	return (
 		<form className={classes.container}>
 			<Input
+				onChange={props.handleChange}
+				name="name"
+				value={props.product.name}
 				placeholder="Product Name"
 				className={classes.input}
 				inputProps={{
@@ -30,6 +43,9 @@ const ProductInput = props => {
 			/>
 
 			<Input
+				onChange={props.handleChange}
+				name="description"
+				value={props.product.description}
 				placeholder="Description"
 				className={classes.input}
 				inputProps={{
@@ -38,6 +54,9 @@ const ProductInput = props => {
 			/>
 
 			<Input
+				onChange={props.handleChange}
+				name="height"
+				value={props.product.height}
 				placeholder="Height"
 				className={classes.input}
 				inputProps={{
@@ -46,6 +65,9 @@ const ProductInput = props => {
 			/>
 
 			<Input
+				onChange={props.handleChange}
+				name="length"
+				value={props.product.length}
 				placeholder="Length"
 				className={classes.input}
 				inputProps={{
@@ -53,20 +75,28 @@ const ProductInput = props => {
 				}}
 			/>
 			<Input
-				placeholder="Depth"
+				onChange={props.handleChange}
+				name="value"
+				value={props.product.value}
+				placeholder="Value"
 				className={classes.input}
 				inputProps={{
 					'aria-label': 'Description',
 				}}
 			/>
 			<Input
+				onChange={props.handleChange}
+				name="weight"
+				value={props.product.weight}
 				placeholder="Weight"
 				className={classes.input}
 				inputProps={{
 					'aria-label': 'Description',
 				}}
 			/>
-			<Button size="small">Submit</Button>
+			<Button onClick={handleClick} size="small">
+				Submit
+			</Button>
 		</form>
 	);
 };
