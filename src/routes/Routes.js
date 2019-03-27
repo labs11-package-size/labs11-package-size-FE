@@ -12,6 +12,7 @@ import RegisterView from '../containers/registerView/RegisterView';
 import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/logoutView/LogoutView';
 import { getAuth } from '../store/actions/userActions';
+import Auth from '../hoc/auth/Auth';
 
 class Routes extends Component {
 	render() {
@@ -37,7 +38,9 @@ class Routes extends Component {
 					/>
 					<Route
 						path="/products"
-						render={props => <ProductListView {...props} />}
+						render={props => (
+							<ProductListView {...props} searchTerm={props.searchTerm} />
+						)}
 					/>
 					<Route path="/account" render={props => <AccountView {...props} />} />
 					<Route path="/" render={props => <DashboardView {...props} />} />

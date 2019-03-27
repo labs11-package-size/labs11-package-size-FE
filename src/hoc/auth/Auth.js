@@ -1,4 +1,5 @@
-// import React from 'react';
+import React from 'react';
+import LoginView from '../../containers/loginView/LoginView';
 // import { getAuth } from '../../store/actions/userActions';
 // import { connect } from 'react-redux';
 // import { withRouter, Route, Redirect } from 'react-router-dom';
@@ -53,3 +54,22 @@
 // 		};
 // 	}),
 // );
+
+export default function(Component) {
+	return class Authenticated extends React.Component {
+		render() {
+			const token = localStorage.getItem('token');
+
+			return (
+				<>
+					{' '}
+					{token ? (
+						<Component {...this.props} />
+					) : (
+						<LoginView {...this.props} />
+					)}{' '}
+				</>
+			);
+		}
+	};
+}

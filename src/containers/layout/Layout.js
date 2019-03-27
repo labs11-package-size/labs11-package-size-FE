@@ -19,11 +19,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getProducts } from '../../store/actions/productActions';
 import { getAuth } from '../../store/actions/userActions';
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
+import Auth from '../../hoc/auth/Auth';
 
 const drawerWidth = 240;
 
@@ -154,15 +154,11 @@ const styles = theme => ({
 class Layout extends React.Component {
 	state = {
 		open: false,
-		products: [],
 		searchTerm: '',
 	};
 
 	componentDidMount() {
-		this.props.getProducts();
-		this.setState({
-			products: this.props.products,
-		});
+		this.props.getAuth();
 	}
 
 	handleDrawerOpen = () => {
@@ -175,15 +171,9 @@ class Layout extends React.Component {
 
 	handleInputChange = e => {
 		this.setState({
-			products: this.state.products.filter(
-				product => product.name === e.target.value,
-			),
+			searchTerm: e.target.value,
 		});
 	};
-
-	// productSearch = (term) => {
-	// 	this.state.products.filter(product => product.name === term)
-	// }
 
 	render() {
 		const { classes } = this.props;
@@ -226,6 +216,7 @@ class Layout extends React.Component {
 										<SearchIcon />
 									</div>
 									<InputBase
+										value={this.state.searchTerm}
 										onChange={this.handleInputChange}
 										placeholder="Search…"
 										classes={{
@@ -262,7 +253,7 @@ class Layout extends React.Component {
 				</Drawer>
 				<main className={classes.content}>
 					<div className={classes.appBarSpacer} />
-					<Routes product={this.state.products} />
+					<Routes product={this.state.searchTerm} />
 					<Footer />
 				</main>
 			</div>
@@ -277,12 +268,11 @@ Layout.propTypes = {
 const mapStateToProps = state => {
 	return {
 		isAuthenticated: state.userReducer.authenticated,
-
-		products: state.productReducer.products,
+		isLoggedIn: state.userReducer.isLoggedIn,
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	{ getAuth, getProducts },
-)(withStyles(styles)(Layout));
+	{ getAuth },
+)(withStyles(styles)(Auth(Layout)));
