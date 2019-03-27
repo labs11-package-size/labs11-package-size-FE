@@ -9,6 +9,7 @@ import logger from 'redux-logger';
 
 import rootReducer from './store/reducers/index';
 import Layout from './containers/layout/Layout';
+import { firebase } from './firebase';
 
 import './styles/css/index.css';
 
@@ -19,11 +20,13 @@ const store = createStore(
 	composeEnhancers(applyMiddleware(thunk, logger)),
 );
 
-ReactDOM.render(
-	<Provider store={store}>
-		<Router>
-			<Layout />
-		</Router>
-	</Provider>,
-	document.getElementById('root'),
-);
+firebase.auth().onAuthStateChanged(user => {
+	ReactDOM.render(
+		<Provider store={store}>
+			<Router>
+				<Layout auth={user} />
+			</Router>
+		</Provider>,
+		document.getElementById('root'),
+	);
+});

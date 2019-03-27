@@ -17,13 +17,10 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-
-import { getAuth } from '../../store/actions/userActions';
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
-import Auth from '../../hoc/auth/Auth';
+import { firebase } from '../../firebase';
 
 const drawerWidth = 240;
 
@@ -154,12 +151,7 @@ const styles = theme => ({
 class Layout extends React.Component {
 	state = {
 		open: false,
-		searchTerm: '',
 	};
-
-	componentDidMount() {
-		this.props.getAuth();
-	}
 
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
@@ -210,7 +202,7 @@ class Layout extends React.Component {
 								noWrap>
 								ScannAR
 							</Typography>
-							{this.props.isAuthenticated ? (
+							{this.props.auth ? (
 								<div className={classes.search}>
 									<div className={classes.searchIcon}>
 										<SearchIcon />
@@ -253,7 +245,7 @@ class Layout extends React.Component {
 				</Drawer>
 				<main className={classes.content}>
 					<div className={classes.appBarSpacer} />
-					<Routes product={this.state.searchTerm} />
+					<Routes isLoggedIn={this.props.auth} />
 					<Footer />
 				</main>
 			</div>
@@ -265,14 +257,4 @@ Layout.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
-	return {
-		isAuthenticated: state.userReducer.authenticated,
-		isLoggedIn: state.userReducer.isLoggedIn,
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	{ getAuth },
-)(withStyles(styles)(Auth(Layout)));
+export default withStyles(styles)(Layout);
