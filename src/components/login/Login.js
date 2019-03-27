@@ -60,7 +60,7 @@ const Login = props => {
 				<Typography component="h1" variant="h5">
 					Sign in
 				</Typography>
-				<form className={classes.form}>
+				<form onSubmit={props.loginSubmit} className={classes.form}>
 					<FormControl margin="normal" required fullWidth>
 						<InputLabel htmlFor="username">Username</InputLabel>
 						<Input
@@ -92,8 +92,7 @@ const Login = props => {
 						fullWidth
 						variant="contained"
 						color="primary"
-						className={classes.submit}
-						onClick={props.loginSubmit}>
+						className={classes.submit}>
 						Sign in
 					</Button>
 					<Link to="/register">Register</Link>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loginUser } from '../../store/actions/userActions';
+import { withRouter } from 'react-router-dom';
 import Login from '../../components/login/Login';
 
 class LoginView extends Component {
@@ -26,7 +27,7 @@ class LoginView extends Component {
 			});
 		} else {
 			this.props.loginUser(userStats);
-			setTimeout(() => {
+			return setTimeout(() => {
 				this.props.history.push('/');
 			}, 1000);
 		}
@@ -50,7 +51,9 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	{ loginUser },
-)(LoginView);
+export default withRouter(
+	connect(
+		mapStateToProps,
+		{ loginUser },
+	)(LoginView),
+);

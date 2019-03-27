@@ -23,6 +23,7 @@ import { getAuth } from '../../store/actions/userActions';
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
+import Auth from '../../hoc/auth/Auth';
 
 const drawerWidth = 240;
 
@@ -156,6 +157,10 @@ class Layout extends React.Component {
 		searchTerm: '',
 	};
 
+	componentDidMount() {
+		this.props.getAuth();
+	}
+
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
 	};
@@ -263,10 +268,11 @@ Layout.propTypes = {
 const mapStateToProps = state => {
 	return {
 		isAuthenticated: state.userReducer.authenticated,
+		isLoggedIn: state.userReducer.isLoggedIn,
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	{ getAuth },
-)(withStyles(styles)(Layout));
+)(withStyles(styles)(Auth(Layout)));
