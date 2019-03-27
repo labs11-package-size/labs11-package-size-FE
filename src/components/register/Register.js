@@ -47,6 +47,18 @@ class Register extends Component {
   onSubmit = e => {
     e.preventDefault();
     //this.setState({ submitted: true });
+    this.props.register({
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      address1: this.state.address1,
+      address2: this.state.address2,
+      city: this.state.city,
+      state: this.state.state,
+      zip: this.state.zip,
+      country: this.state.country,
+      emailAddress: this.state.emailAddress,
+    })
+    this.props.history.push('/dashboard')
   }
 
   render() {
