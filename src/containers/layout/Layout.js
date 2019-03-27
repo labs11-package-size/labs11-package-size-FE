@@ -17,8 +17,11 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Footer from '../../components/footer/footer';
+import { getProducts } from '../../store/actions/productActions';
+import { getAuth } from '../../store/actions/userActions';
+import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
 
@@ -151,7 +154,16 @@ const styles = theme => ({
 class Layout extends React.Component {
 	state = {
 		open: false,
+		products: [],
+		searchTerm: '',
 	};
+
+	componentDidMount() {
+		this.props.getProducts();
+		this.setState({
+			products: this.props.products,
+		});
+	}
 
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
@@ -160,6 +172,18 @@ class Layout extends React.Component {
 	handleDrawerClose = () => {
 		this.setState({ open: false });
 	};
+
+	handleInputChange = e => {
+		this.setState({
+			products: this.state.products.filter(
+				product => product.name === e.target.value,
+			),
+		});
+	};
+
+	// productSearch = (term) => {
+	// 	this.state.products.filter(product => product.name === term)
+	// }
 
 	render() {
 		const { classes } = this.props;
@@ -196,18 +220,21 @@ class Layout extends React.Component {
 								noWrap>
 								ScannAR
 							</Typography>
-							<div className={classes.search}>
-								<div className={classes.searchIcon}>
-									<SearchIcon />
+							{this.props.isAuthenticated ? (
+								<div className={classes.search}>
+									<div className={classes.searchIcon}>
+										<SearchIcon />
+									</div>
+									<InputBase
+										onChange={this.handleInputChange}
+										placeholder="Search…"
+										classes={{
+											root: classes.inputRoot,
+											input: classes.inputInput,
+										}}
+									/>
 								</div>
-								<InputBase
-									placeholder="Search…"
-									classes={{
-										root: classes.inputRoot,
-										input: classes.inputInput,
-									}}
-								/>
-							</div>
+							) : null}
 							<Link
 								style={{ textDecoration: 'none', color: 'white' }}
 								to="/login">
@@ -235,7 +262,7 @@ class Layout extends React.Component {
 				</Drawer>
 				<main className={classes.content}>
 					<div className={classes.appBarSpacer} />
-					<Routes />
+					<Routes product={this.state.products} />
 					<Footer />
 				</main>
 			</div>
@@ -247,4 +274,15 @@ Layout.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Layout);
+const mapStateToProps = state => {
+	return {
+		isAuthenticated: state.userReducer.authenticated,
+
+		products: state.productReducer.products,
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ getAuth, getProducts },
+)(withStyles(styles)(Layout));

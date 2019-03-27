@@ -1,34 +1,55 @@
-import React from 'react';
-import { getAuth } from '../../store/actions/userActions';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+// import React from 'react';
+// import { getAuth } from '../../store/actions/userActions';
+// import { connect } from 'react-redux';
+// import { withRouter, Route, Redirect } from 'react-router-dom';
 
-const mapStateToProps = state => {
-	return {
-		isAuth: state.userReducer.Authenticated,
-	};
-};
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+// 	<Route
+// 		{...rest}
+// 		render={props =>
+// 			props.isAuthenticated === true ? (
+// 				<Component {...props} />
+// 			) : (
+// 				<Redirect to="/login" />
+// 			)
+// 		}
+// 	/>
+// );
 
-export default withRouter(
-	connect(
-		mapStateToProps,
-		{ getAuth },
-	)(function(Component) {
-		return class Authenticated extends React.Component {
-			componentDidMount() {
-				this.props.getAuth();
-			}
-			render() {
-				return (
-					<>
-						{this.props.isAuth === true ? (
-							<Component {...this.props} />
-						) : (
-							this.props.history.push('/login')
-						)}
-					</>
-				);
-			}
-		};
-	}),
-);
+// const mapStateToProps = state => {
+// 	console.log(state.userReducer.Authenticated);
+// 	return {
+// 		isAuthenticated: state.userReducer.Authenticated,
+// 	};
+// };
+
+// export default withRouter(
+// 	connect(
+// 		mapStateToProps,
+// 		{ getAuth },
+// 	)(PrivateRoute),
+// );
+
+// export default withRouter(
+// 	connect(
+// 		mapStateToProps,
+// 		{ getAuth },
+// 	)(function(Component) {
+// 		return class Authenticated extends React.Component {
+// 			componentDidMount() {
+// 				this.props.getAuth();
+// 			}
+// 			render() {
+// 				return (
+// 					<>
+// 						{this.props.isAuth === true ? (
+// 							<Component {...this.props} />
+// 						) : (
+// 							this.props.history.push('/login')
+// 						)}
+// 					</>
+// 				);
+// 			}
+// 		};
+// 	}),
+// );

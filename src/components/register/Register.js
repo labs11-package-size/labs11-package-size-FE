@@ -20,7 +20,7 @@ const styles = theme => ({
 	},
 });
 
-const SignUp = () => {
+const Register = () => {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -104,4 +104,4 @@ const SignUp = () => {
   );
 }
 
-export default withStyles(styles)(SignUp);
+export default withStyles(styles)(Register);

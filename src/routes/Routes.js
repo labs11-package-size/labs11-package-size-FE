@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import ProductListView from '../components/product/ProductList';
 import ProductInputView from '../containers/productView/productInputView';
@@ -7,29 +8,63 @@ import LoginView from '../containers/loginView/LoginView';
 import ShipmentInputView from '../containers/shipmentView/ShipmentInputView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
 import DashboardView from '../containers/dashboardView/DashboardView';
-import SignUpView from '../containers/signUpView/SignUpView';
+import RegisterView from '../containers/registerView/RegisterView';
 import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/logoutView/LogoutView';
+import { getAuth } from '../store/actions/userActions';
 
 class Routes extends Component {
 	render() {
-		return (
-			<div>
+		let routes;
+
+		if (this.props.isAuthenticated) {
+			routes = (
 				<Switch>
-					<Route path="/shipments/form" component={ShipmentInputView} />
-					<Route path="/products/form" component={ProductInputView} />
-					{/* <Route path="/register" component={Register} /> */}
-					<Route path="/shipments" component={ShipmentListView} />
-					<Route path="/products" component={ProductListView} />
-					<Route path="/login" component={LoginView} />
+					<Redirect from="/login" to="/" />
+					<Redirect from="/register" to="/" />
 					<Route path="/logout" component={LogoutView} />
-					<Route path="/signup" component={SignUpView} />
-					<Route path="/account" component={AccountView} />
-					<Route path="/" component={DashboardView} />
+					<Route
+						path="/shipments/form"
+						render={props => <ShipmentInputView {...props} />}
+					/>
+					<Route
+						path="/products/form"
+						render={props => <ProductInputView {...props} />}
+					/>
+					<Route
+						path="/shipments"
+						render={props => <ShipmentListView {...props} />}
+					/>
+					<Route
+						path="/products"
+						render={props => <ProductListView {...props} />}
+					/>
+					<Route path="/account" render={props => <AccountView {...props} />} />
+					<Route path="/" render={props => <DashboardView {...props} />} />
 				</Switch>
-			</div>
-		);
+			);
+		} else {
+			routes = (
+				<Switch>
+					<Redirect exact from="/" to="/login" />
+					<Route path="/login" component={LoginView} />
+					<Route path="/register" component={RegisterView} />
+					<Redirect to="/login" />
+				</Switch>
+			);
+		}
+
+		return <div>{routes}</div>;
 	}
 }
 
-export default Routes;
+const mapStateToProps = state => {
+	return {
+		isAuthenticated: state.userReducer.authenticated,
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ getAuth },
+)(Routes);
