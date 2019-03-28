@@ -21,43 +21,43 @@ class Routes extends Component {
 				<Switch>
 					<Route
 						exact
-						isLoggedIn={this.props.user}
+						user={this.props.user}
 						path="/logout"
 						component={LogoutView}
 					/>
 					<Route
 						exact
-						isLoggedIn={this.props.user}
+						user={this.props.user}
 						path="/shipments/form"
 						component={ShipmentInputView}
 					/>
 					<Route
 						exact
-						isLoggedIn={this.props.user}
+						user={this.props.user}
 						path="/products/form"
 						component={ProductInputView}
 					/>
 					<Route
 						exact
-						isLoggedIn={this.props.user}
+						user={this.props.user}
 						path="/shipments"
 						component={ShipmentListView}
 					/>
 					<Route
 						exact
-						isLoggedIn={this.props.user}
+						user={this.props.user}
 						path="/products"
 						component={ProductListView}
 					/>
 					<Route
 						exact
-						isLoggedIn={this.props.user}
+						user={this.props.user}
 						path="/account"
 						component={AccountView}
 					/>
 					<Route
 						exact
-						isLoggedIn={this.props.user}
+						user={this.props.user}
 						path="/"
 						component={DashboardView}
 					/>

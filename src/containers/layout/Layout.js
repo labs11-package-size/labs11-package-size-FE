@@ -166,6 +166,21 @@ class Layout extends React.Component {
 		});
 	};
 
+	buttonLink = () => {
+		if (this.props.user) {
+			return (
+				<Link style={{ textDecoration: 'none', color: 'white' }} to="/logout">
+					<Button color="inherit">Logout</Button>
+				</Link>
+			);
+		} else {
+			return (
+				<Link style={{ textDecoration: 'none', color: 'white' }} to="/login">
+					<Button color="inherit">Login</Button>
+				</Link>
+			);
+		}
+	};
 	render() {
 		const { classes } = this.props;
 
@@ -201,7 +216,7 @@ class Layout extends React.Component {
 								noWrap>
 								ScannAR
 							</Typography>
-							{this.props.auth ? (
+							{this.props.user ? (
 								<div className={classes.search}>
 									<div className={classes.searchIcon}>
 										<SearchIcon />
@@ -217,11 +232,7 @@ class Layout extends React.Component {
 									/>
 								</div>
 							) : null}
-							<Link
-								style={{ textDecoration: 'none', color: 'white' }}
-								to="/login">
-								<Button color="inherit">Login</Button>
-							</Link>
+							{this.buttonLink()}
 						</div>
 					</Toolbar>
 				</AppBar>

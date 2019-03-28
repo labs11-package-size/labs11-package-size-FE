@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { firebase, googleAuth } from '../../firebase';
 import Login from '../../components/login/Login';
 
 class LoginView extends Component {
 	state = {
 		username: '',
+		email: '',
 		password: '',
-		error: '',
+		error: 'invalid credentials',
 	};
 
 	handleChanges = event => {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
-	loginSubmit = event => {
-		event.preventDefault();
-		firebase.auth().signInWithPopup(googleAuth);
-		return setTimeout(() => {
-			this.props.history.push('/');
-		}, 1000);
-	};
-
 	render() {
-		return <Login loginSubmit={this.loginSubmit} />;
+		return (
+			<Login
+				username={this.state.username}
+				password={this.UNSAFE_componentWillMount.state.password}
+				email={this.state.email}
+				error={this.state.error}
+				handleInputChange={this.handleChanges}
+			/>
+		);
 	}
 }
 
