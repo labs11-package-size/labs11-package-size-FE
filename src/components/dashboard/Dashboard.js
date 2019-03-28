@@ -26,10 +26,6 @@ const styles = {
 };
 
 class Dashboard extends Component {
-	componentDidMount() {
-		this.props.getProducts();
-		this.props.getShipments();
-	}
 	render() {
 		const { classes } = this.props;
 		return (
@@ -46,10 +42,7 @@ Dashboard.propTypes = {
 };
 
 const mapStateToProps = state => {
-	return {
-		products: state.productReducer.products,
-		shipments: state.shipmentReducer.shipments,
-	};
+	return {};
 };
 
 export default connect(

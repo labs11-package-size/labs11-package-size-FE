@@ -2,7 +2,6 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-// import DashboardIcon from '@material-ui/icons/Dashboard';
 import LocalShipping from '@material-ui/icons/LocalShipping';
 import Person from '@material-ui/icons/Person';
 import Eject from '@material-ui/icons/Eject';
@@ -41,8 +40,11 @@ export const SideBar = (
 				<ListItemIcon>
 					<Eject
 						onClick={() => {
-							firebase.auth().signOut();
-							return <Redirect to="/login" />;
+							console.log('logout btn sideNav');
+							firebase
+								.auth()
+								.signOut()
+								.then(<Redirect to="/login" />);
 						}}
 					/>
 				</ListItemIcon>

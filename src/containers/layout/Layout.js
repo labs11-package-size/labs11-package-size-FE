@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
+import { firebase } from '../../firebase';
 
 const drawerWidth = 240;
 
@@ -150,7 +151,25 @@ const styles = theme => ({
 class Layout extends React.Component {
 	state = {
 		open: false,
+		isLoggedIn: false,
+		uuid: null,
 	};
+
+	componentDidMount() {
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				this.setState({
+					isLoggedIn: true,
+					uuid: user.uid,
+				});
+			} else {
+				this.setState({
+					isLoggedIn: true,
+					uuid: null,
+				});
+			}
+		});
+	}
 
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
@@ -167,7 +186,7 @@ class Layout extends React.Component {
 	};
 
 	buttonLink = () => {
-		if (this.props.user) {
+		if (this.state.isLoggedIn) {
 			return (
 				<Link style={{ textDecoration: 'none', color: 'white' }} to="/logout">
 					<Button color="inherit">Logout</Button>
@@ -182,6 +201,7 @@ class Layout extends React.Component {
 		}
 	};
 	render() {
+		console.log(this.state);
 		const { classes } = this.props;
 
 		return (
@@ -216,7 +236,7 @@ class Layout extends React.Component {
 								noWrap>
 								ScannAR
 							</Typography>
-							{this.props.user ? (
+							{this.state.isLoggedIn ? (
 								<div className={classes.search}>
 									<div className={classes.searchIcon}>
 										<SearchIcon />

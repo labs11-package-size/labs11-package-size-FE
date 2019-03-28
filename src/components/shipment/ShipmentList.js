@@ -24,9 +24,7 @@ const styles = {
 };
 
 class ShipmentList extends Component {
-	componentDidMount() {
-		this.props.getShipments();
-	}
+	componentDidMount() {}
 
 	render() {
 		const { classes } = this.props;
@@ -49,9 +47,7 @@ class ShipmentList extends Component {
 }
 
 const mapStateToProps = state => {
-	return {
-		shipments: state.shipmentReducer.shipments, //shipments plural
-	};
+	return {};
 };
 
 export default connect(

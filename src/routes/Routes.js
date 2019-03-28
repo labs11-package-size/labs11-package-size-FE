@@ -10,15 +10,26 @@ import DashboardView from '../containers/dashboardView/DashboardView';
 import RegisterView from '../containers/registerView/RegisterView';
 import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/logoutView/LogoutView';
+import { firebase } from '../firebase';
 
 class Routes extends Component {
+	state = {
+		user: '',
+	};
+	componentDidMount() {
+		firebase.auth().onAuthStateChanged(user => {
+			this.setState({
+				user: user,
+			});
+		});
+	}
 	render() {
 		let routes;
 
-		if (this.props.user) {
-			console.log(this.props.user, 'is Logged in');
+		if (this.state.user) {
 			routes = (
 				<Switch>
+					<Redirect from="login" to="/" />
 					<Route
 						exact
 						user={this.props.user}
@@ -64,7 +75,6 @@ class Routes extends Component {
 				</Switch>
 			);
 		} else {
-			console.log(this.props.user, 'is not Logged in');
 			routes = (
 				<Switch>
 					<Route exact path="/login" component={LoginView} />
