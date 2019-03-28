@@ -1,10 +1,10 @@
 import React from 'react';
 import Account from '../../components/account/Account';
 
-const AccountView = () => {
+const AccountView = ({ user }) => {
 	return (
 		<div>
-			<Account />
+			<Account user={user} />
 		</div>
 	);
 };

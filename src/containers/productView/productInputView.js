@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addProduct } from '../../store/actions/productActions';
 import ProductInput from '../../components/product/ProductInput';
 
 class ProductInputView extends Component {
@@ -40,6 +39,7 @@ class ProductInputView extends Component {
 		return (
 			<div>
 				<ProductInput
+					user={this.props.user}
 					addProduct={this.addProduct}
 					handleChange={this.handleInputChange}
 					product={this.state.product}
@@ -49,12 +49,5 @@ class ProductInputView extends Component {
 		);
 	}
 }
-const mapStateToProps = state => {
-	return {
-		shipments: state.shipmentReducer.shipments,
-	};
-};
-export default connect(
-	mapStateToProps,
-	{ addProduct },
-)(ProductInputView);
+
+export default ProductInputView;
