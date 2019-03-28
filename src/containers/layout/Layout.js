@@ -22,11 +22,16 @@ import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
 import { firebase } from '../../firebase';
 
+import { createMuiTheme } from '@material-ui/core/styles';
+
 const drawerWidth = 240;
+
+
 
 const styles = theme => ({
 	root: {
 		display: 'flex',
+		fontFamily: '"Lato", sans-serif',
 	},
 	toolbar: {
 		paddingRight: 24, // keep right padding when drawer closed
@@ -42,6 +47,7 @@ const styles = theme => ({
 		...theme.mixins.toolbar,
 	},
 	appBar: {
+		backgroundColor: '#F2F3F4',
 		zIndex: theme.zIndex.drawer + 1,
 		transition: theme.transitions.create(['width', 'margin'], {
 			easing: theme.transitions.easing.sharp,
@@ -100,6 +106,7 @@ const styles = theme => ({
 	menuButton: {
 		marginLeft: 12,
 		marginRight: 36,
+		backgroundColor: '#72BDA2',
 	},
 	menuButtonHidden: {
 		display: 'none',
@@ -232,7 +239,7 @@ class Layout extends React.Component {
 							<Typography
 								className={classes.title}
 								variant="h6"
-								color="inherit"
+								color="0D2C54"
 								noWrap>
 								ScannAR
 							</Typography>
@@ -252,7 +259,15 @@ class Layout extends React.Component {
 									/>
 								</div>
 							) : null}
+<<<<<<< HEAD
+							<Link
+								style={{ textDecoration: 'none', color: '0D2C54' }}
+								to="/login">
+								<Button color="inherit">Login</Button>
+							</Link>
+=======
 							{this.buttonLink()}
+>>>>>>> 41b235957ae46c15ea452b50bfe4029d45164621
 						</div>
 					</Toolbar>
 				</AppBar>
