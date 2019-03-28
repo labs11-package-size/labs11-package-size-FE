@@ -11,82 +11,64 @@ import RegisterView from '../containers/registerView/RegisterView';
 import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/logoutView/LogoutView';
 
-const PrivateRoute = ({ isLoggedIn, component: Comp, ...rest }) => {
-	return (
-		<Route
-			{...rest}
-			component={props =>
-				isLoggedIn ? <Comp {...props} /> : <Redirect to="/login" />
-			}
-		/>
-	);
-};
 class Routes extends Component {
 	render() {
 		let routes;
 
-		if (this.props.isLoggedIn) {
+		if (this.props.user) {
+			console.log(this.props.user, 'is Logged in');
 			routes = (
 				<Switch>
-					<PrivateRoute
+					<Route
 						exact
-						isLoggedIn={this.props.isLoggedIn}
+						isLoggedIn={this.props.user}
 						path="/logout"
 						component={LogoutView}
 					/>
-					<PrivateRoute
+					<Route
 						exact
-						isLoggedIn={this.props.isLoggedIn}
+						isLoggedIn={this.props.user}
 						path="/shipments/form"
 						component={ShipmentInputView}
 					/>
-					<PrivateRoute
+					<Route
 						exact
-						isLoggedIn={this.props.isLoggedIn}
+						isLoggedIn={this.props.user}
 						path="/products/form"
 						component={ProductInputView}
 					/>
-					<PrivateRoute
+					<Route
 						exact
-						isLoggedIn={this.props.isLoggedIn}
+						isLoggedIn={this.props.user}
 						path="/shipments"
 						component={ShipmentListView}
 					/>
-					<PrivateRoute
+					<Route
 						exact
-						isLoggedIn={this.props.isLoggedIn}
+						isLoggedIn={this.props.user}
 						path="/products"
 						component={ProductListView}
 					/>
-					<PrivateRoute
+					<Route
 						exact
-						isLoggedIn={this.props.isLoggedIn}
+						isLoggedIn={this.props.user}
 						path="/account"
 						component={AccountView}
 					/>
-					<PrivateRoute
+					<Route
 						exact
-						isLoggedIn={this.props.isLoggedIn}
+						isLoggedIn={this.props.user}
 						path="/"
 						component={DashboardView}
 					/>
 				</Switch>
 			);
 		} else {
+			console.log(this.props.user, 'is not Logged in');
 			routes = (
 				<Switch>
-					<Route
-						exact
-						isLoggedIn={this.props.isLoggedIn}
-						path="/login"
-						component={LoginView}
-					/>
-					<Route
-						exact
-						isLoggedIn={this.props.isLoggedIn}
-						path="/register"
-						component={RegisterView}
-					/>
+					<Route exact path="/login" component={LoginView} />
+					<Route exact path="/register" component={RegisterView} />
 				</Switch>
 			);
 		}

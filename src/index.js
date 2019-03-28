@@ -12,19 +12,13 @@ import Layout from './containers/layout/Layout';
 
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
-ReactDOM.render(
-	<Provider store={store}>
-		<Router>
-			<Layout />
-		</Router>
-	</Provider>,
-	document.getElementById('root'),
-);
-
 firebase.auth().onAuthStateChanged(user => {
-	if (user) {
-		console.log('Logged in', user);
-	} else {
-		console.log('logged out', user);
-	}
+	ReactDOM.render(
+		<Provider store={store}>
+			<Router>
+				<Layout user={user} />
+			</Router>
+		</Provider>,
+		document.getElementById('root'),
+	);
 });
