@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
+import { firebase } from '../../firebase';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 
@@ -157,7 +158,25 @@ const styles = theme => ({
 class Layout extends React.Component {
 	state = {
 		open: false,
+		isLoggedIn: false,
+		uuid: null,
 	};
+
+	componentDidMount() {
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				this.setState({
+					isLoggedIn: true,
+					uuid: user.uid,
+				});
+			} else {
+				this.setState({
+					isLoggedIn: true,
+					uuid: null,
+				});
+			}
+		});
+	}
 
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
@@ -173,7 +192,23 @@ class Layout extends React.Component {
 		});
 	};
 
+	buttonLink = () => {
+		if (this.state.isLoggedIn) {
+			return (
+				<Link style={{ textDecoration: 'none', color: 'white' }} to="/logout">
+					<Button color="inherit">Logout</Button>
+				</Link>
+			);
+		} else {
+			return (
+				<Link style={{ textDecoration: 'none', color: 'white' }} to="/login">
+					<Button color="inherit">Login</Button>
+				</Link>
+			);
+		}
+	};
 	render() {
+		console.log(this.state);
 		const { classes } = this.props;
 
 		return (
@@ -208,7 +243,7 @@ class Layout extends React.Component {
 								noWrap>
 								ScannAR
 							</Typography>
-							{this.props.auth ? (
+							{this.state.isLoggedIn ? (
 								<div className={classes.search}>
 									<div className={classes.searchIcon}>
 										<SearchIcon />
@@ -224,11 +259,15 @@ class Layout extends React.Component {
 									/>
 								</div>
 							) : null}
+<<<<<<< HEAD
 							<Link
 								style={{ textDecoration: 'none', color: '0D2C54' }}
 								to="/login">
 								<Button color="inherit">Login</Button>
 							</Link>
+=======
+							{this.buttonLink()}
+>>>>>>> 41b235957ae46c15ea452b50bfe4029d45164621
 						</div>
 					</Toolbar>
 				</AppBar>

@@ -25,9 +25,6 @@ const styles = {
 };
 
 class ProductList extends Component {
-	componentDidMount() {
-		this.props.getProducts();
-	}
 	render() {
 		const { classes } = this.props;
 		return (
@@ -51,9 +48,7 @@ class ProductList extends Component {
 }
 
 const mapStateToProps = state => {
-	return {
-		products: state.productReducer.products,
-	};
+	return {};
 };
 
 export default connect(

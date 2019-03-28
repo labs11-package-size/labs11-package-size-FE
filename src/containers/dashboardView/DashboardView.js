@@ -1,10 +1,10 @@
 import React from 'react';
 import Dashboard from '../../components/dashboard/Dashboard';
 
-const DashboardView = () => {
+const DashboardView = ({ user }) => {
 	return (
 		<div>
-			<Dashboard />
+			<Dashboard user={user} />
 		</div>
 	);
 };
