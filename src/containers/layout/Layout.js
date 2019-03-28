@@ -244,7 +244,7 @@ class Layout extends React.Component {
 				</Drawer>
 				<main className={classes.content}>
 					<div className={classes.appBarSpacer} />
-					<Routes isLoggedIn={this.props.auth} />
+					<Routes />
 					<Footer />
 				</main>
 			</div>

@@ -22,6 +22,16 @@ export const AUTH_FAILURE = 'AUTH_FAILURE';
 
 const baseURL = 'https://scannarserver.herokuapp.com/api/users';
 
+export const SET_NEXT = 'SET_NEXT';
+export const RESET_NEXT = 'RESET_NEXT';
+
+export function setNext(next) {
+	return {
+		type: SET_NEXT,
+		next,
+	};
+}
+
 export const loginUser = userInfo => dispatch => {
 	dispatch({ type: USER_LOGGING_IN });
 	axios
