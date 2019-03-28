@@ -7,7 +7,8 @@ import LocalShipping from '@material-ui/icons/LocalShipping';
 import Person from '@material-ui/icons/Person';
 import Eject from '@material-ui/icons/Eject';
 import Queue from '@material-ui/icons/Queue';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { firebase } from '../../firebase';
 
 export const SideBar = (
 	<div>
@@ -38,7 +39,12 @@ export const SideBar = (
 		<Link to="/logout">
 			<ListItem button>
 				<ListItemIcon>
-					<Eject />
+					<Eject
+						onClick={() => {
+							firebase.auth().signOut();
+							return <Redirect to="/login" />;
+						}}
+					/>
 				</ListItemIcon>
 				<ListItemText primary="Logout" />
 			</ListItem>

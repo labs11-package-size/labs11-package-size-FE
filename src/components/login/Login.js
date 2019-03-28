@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+
+import LoginView from '../../containers/loginView/LoginView';
+// import Avatar from '@material-ui/core/Avatar';
+// import CssBaseline from '@material-ui/core/CssBaseline';
+// import FormControl from '@material-ui/core/FormControl';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
+// import Input from '@material-ui/core/Input';
+// import InputLabel from '@material-ui/core/InputLabel';
+// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+// import Paper from '@material-ui/core/Paper';
+// import Typography from '@material-ui/core/Typography';
+// import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Link } from 'react-router-dom';
 
 const styles = theme => ({
 	main: {
@@ -51,54 +53,17 @@ const Login = props => {
 	const { classes } = props;
 
 	return (
-		<main className={classes.main}>
-			<CssBaseline />
-			<Paper className={classes.paper}>
-				<Avatar className={classes.avatar}>
-					<LockOutlinedIcon />
-				</Avatar>
-				<Typography component="h1" variant="h5">
-					Sign in
-				</Typography>
-				<form onSubmit={props.loginSubmit} className={classes.form}>
-					<FormControl margin="normal" required fullWidth>
-						<InputLabel htmlFor="username">Username</InputLabel>
-						<Input
-							id="username"
-							value={props.username}
-							onChange={props.handleChange}
-							name="username"
-							autoComplete="username"
-							autoFocus
-						/>
-					</FormControl>
-					<FormControl margin="normal" required fullWidth>
-						<InputLabel htmlFor="password">Password</InputLabel>
-						<Input
-							onChange={props.handleChange}
-							value={props.password}
-							name="password"
-							type="password"
-							id="password"
-							autoComplete="current-password"
-						/>
-					</FormControl>
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="Remember me"
-					/>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}>
-						Sign in
-					</Button>
-					<Link to="/register">Register</Link>
-				</form>
-			</Paper>
-		</main>
+		<div>
+			<Button
+				onClick={props.loginSubmit}
+				type="submit"
+				fullWidth
+				variant="contained"
+				color="primary"
+				className={classes.submit}>
+				Sign in
+			</Button>
+		</div>
 	);
 };
 
@@ -107,3 +72,52 @@ Login.propTypes = {
 };
 
 export default withStyles(styles)(Login);
+
+// <main className={classes.main}>
+// 	<CssBaseline />
+// 	<Paper className={classes.paper}>
+// 		<Avatar className={classes.avatar}>
+// 			<LockOutlinedIcon />
+// 		</Avatar>
+// 		<Typography component="h1" variant="h5">
+// 			Sign in
+// 		</Typography>
+// 		<form onSubmit={props.loginSubmit} className={classes.form}>
+// 			<FormControl margin="normal" required fullWidth>
+// 				<InputLabel htmlFor="username">Username</InputLabel>
+// 				<Input
+// 					id="username"
+// 					value={props.username}
+// 					onChange={props.handleChange}
+// 					name="username"
+// 					autoComplete="username"
+// 					autoFocus
+// 				/>
+// 			</FormControl>
+// 			<FormControl margin="normal" required fullWidth>
+// 				<InputLabel htmlFor="password">Password</InputLabel>
+// 				<Input
+// 					onChange={props.handleChange}
+// 					value={props.password}
+// 					name="password"
+// 					type="password"
+// 					id="password"
+// 					autoComplete="current-password"
+// 				/>
+// 			</FormControl>
+// 			<FormControlLabel
+// 				control={<Checkbox value="remember" color="primary" />}
+// 				label="Remember me"
+// 			/>
+// 			<Button
+// 				type="submit"
+// 				fullWidth
+// 				variant="contained"
+// 				color="primary"
+// 				className={classes.submit}>
+// 				Sign in
+// 			</Button>
+// 			<Link to="/register">Register</Link>
+// 		</form>
+// 	</Paper>
+// </main>
