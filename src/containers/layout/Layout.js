@@ -161,22 +161,6 @@ class Layout extends React.Component {
 		uuid: null,
 	};
 
-	componentDidMount() {
-		firebase.auth().onAuthStateChanged(user => {
-			if (user) {
-				this.setState({
-					isLoggedIn: true,
-					uuid: user.uid,
-				});
-			} else {
-				this.setState({
-					isLoggedIn: true,
-					uuid: null,
-				});
-			}
-		});
-	}
-
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
 	};

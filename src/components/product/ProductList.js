@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { getProducts } from '../../store/actions/productActions';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 const styles = {
 	card: {
@@ -25,52 +24,13 @@ const styles = {
 	},
 };
 
-axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
-axios.interceptors.request.use(
-	function(options) {
-		options.headers.authorization = localStorage.getItem('token');
-
-		return options;
-	},
-	function(error) {
-		return Promise.reject(error);
-	},
-);
-
 class ProductList extends Component {
 	state = {
 		products: [],
-		isEditing: false,
-	};
-
-	editProduct = (event, id) => {
-		event.preventDefault();
-		console.log('clicked', id);
-		this.setState({
-			isEditing: true,
-		});
-	};
-
-	handleEditSubmit = event => {
-		event.preventDefault();
-		console.log('clicked', event.target);
-		// axios
-		// .put(`/products/add${this.state.product}`, this.state.product)
-		// .then(res => {
-		// 	console.log(res.data);
-		// })
-		// .catch(err => console.log(err));
 	};
 
 	componentDidMount() {
-		axios
-			.get('/products')
-			.then(res => {
-				this.setState({
-					products: res.data,
-				});
-			})
-			.catch(err => console.log(err));
+		this.props.getProducts();
 	}
 	render() {
 		const { classes } = this.props;
@@ -103,7 +63,9 @@ class ProductList extends Component {
 }
 
 const mapStateToProps = state => {
-	return {};
+	return {
+		products: state.productReducer.products,
+	};
 };
 
 export default connect(

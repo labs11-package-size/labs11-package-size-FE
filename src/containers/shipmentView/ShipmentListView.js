@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ShipmentList from '../../components/shipment/ShipmentList';
+import { connect } from 'react-redux';
+import { getAuth } from '../../store/actions/userActions';
 
-const ShipmentListView = props => {
-	return <ShipmentList user={props.user} />;
+class ShipmentListView extends Component {
+	componentDidMount() {
+		this.props.getAuth();
+	}
+	render() {
+		return <ShipmentList />;
+	}
+}
+
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: state.userReducer.isLoggedIn,
+	};
 };
 
-export default ShipmentListView;
+export default connect(
+	mapStateToProps,
+	{ getAuth },
+)(ShipmentListView);

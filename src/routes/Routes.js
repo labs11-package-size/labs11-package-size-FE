@@ -10,23 +10,13 @@ import DashboardView from '../containers/dashboardView/DashboardView';
 import RegisterView from '../containers/registerView/RegisterView';
 import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/logoutView/LogoutView';
-import { firebase } from '../firebase';
+import { connect } from 'react-redux';
 
 class Routes extends Component {
-	state = {
-		user: '',
-	};
-	componentDidMount() {
-		firebase.auth().onAuthStateChanged(user => {
-			this.setState({
-				user: user,
-			});
-		});
-	}
 	render() {
 		let routes;
 
-		if (this.state.user) {
+		if (this.props.isLoggedIn) {
 			routes = (
 				<Switch>
 					<Redirect from="/login" to="/" />
@@ -55,5 +45,13 @@ class Routes extends Component {
 		return <div>{routes}</div>;
 	}
 }
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: state.userReducer.isLoggedIn,
+	};
+};
 
-export default Routes;
+export default connect(
+	mapStateToProps,
+	{},
+)(Routes);

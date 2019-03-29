@@ -11,6 +11,7 @@ import {
 	AUTHENTICATING_USER,
 	AUTH_SUCCESSFUL,
 	AUTH_FAILURE,
+	AUTH_ERROR,
 	// GETTING_ACCOUNT,
 	// GETTING_ACCOUNT_SUCCESSFUL,
 	// GETTING_ACCOUNT_FAILURE,
@@ -72,6 +73,12 @@ const userReducer = (state = initialState, action) => {
 				authenticated: action.payload,
 			};
 		case AUTH_FAILURE:
+			return {
+				...state,
+				isLoggedIn: false,
+				authenticated: action.payload,
+			};
+		case AUTH_ERROR:
 			return {
 				...state,
 				isLoggedIn: false,

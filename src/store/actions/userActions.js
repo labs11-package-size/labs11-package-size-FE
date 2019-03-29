@@ -22,6 +22,7 @@ export const USER_LOGOUT_FAILURE = 'USER_LOGOUT_FAILURE';
 export const AUTHENTICATING_USER = 'AUTHENTICATING_USER';
 export const AUTH_SUCCESSFUL = 'AUTH_SUCCESSFUL';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
+export const AUTH_ERROR = 'AUTH_ERROR';
 
 axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
 axios.interceptors.request.use(
@@ -64,8 +65,14 @@ export const getAuth = () => dispatch => {
 
 	axios
 		.get(`/users/checkauth`)
-		.then(res => dispatch({ type: AUTH_SUCCESSFUL, payload: res.data }))
-		.catch(err => dispatch({ type: AUTH_FAILURE, payload: err }));
+		.then(res => {
+			if (res.data === false) {
+				dispatch({ type: AUTH_FAILURE, payload: res.data });
+			} else {
+				dispatch({ type: AUTH_SUCCESSFUL, payload: res.data });
+			}
+		})
+		.catch(err => dispatch({ type: AUTH_ERROR, payload: err }));
 };
 
 export const logoutUser = () => dispatch => {

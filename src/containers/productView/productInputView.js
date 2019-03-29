@@ -1,35 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import { addProduct } from '../../store/actions/productActions';
+import { getAuth } from '../../store/actions/userActions';
 
 import ProductInput from '../../components/product/ProductInput';
-
-axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
-axios.interceptors.request.use(
-	function(options) {
-		options.headers.authorization = localStorage.getItem('token');
-
-		return options;
-	},
-	function(error) {
-		return Promise.reject(error);
-	},
-);
 
 class ProductInputView extends Component {
 	state = {
 		product: {
 			name: '',
-			description: '',
+			productDescription: '',
 			weight: '',
 			length: '',
 			width: '',
 			height: '',
-			fragile: null,
+			fragile: false,
 			value: '',
 		},
 		isEditing: false,
 	};
+	componentDidMount() {
+		this.props.getAuth();
+	}
 
 	handleInputChange = event => {
 		this.setState({
@@ -40,26 +32,21 @@ class ProductInputView extends Component {
 		});
 	};
 
-	// addProduct = () => {
-	// 	axios
-	// 		.post('/products/add', this.state.product)
-	// 		.then(res => {
-
-	// 			this.setState({
-	// 				product: {
-	// 					name: '',
-	// 					description: '',
-	// 					weight: '',
-	// 					length: '',
-	// 					width: '',
-	// 					height: '',
-	// 					fragile: null,
-	// 					value: '',
-	// 				},
-	// 			});
-	// 		})
-	// 		.catch(err => console.log(err));
-	// };
+	addProduct = () => {
+		this.props.addProduct(this.state.product);
+		this.setState({
+			product: {
+				name: '',
+				productDescription: '',
+				weight: '',
+				length: '',
+				width: '',
+				height: '',
+				fragile: false,
+				value: '',
+			},
+		});
+	};
 
 	editProduct = event => {
 		console.log('clicked');
@@ -68,24 +55,13 @@ class ProductInputView extends Component {
 		});
 	};
 
-	handleEditSubmit = event => {
-		console.log('clicked', event.target);
-		// axios
-		// .put(`/products/add${this.state.product}`, this.state.product)
-		// .then(res => {
-		// 	console.log(res.data);
-		// })
-		// .catch(err => console.log(err));
-	};
-
 	render() {
+		console.log(this.state);
 		return (
 			<div>
 				<ProductInput
-					user={this.props.user}
 					addProduct={this.addProduct}
 					handleChange={this.handleInputChange}
-					handleEditSubmit={this.handleEditSubmit}
 					product={this.state.product}
 					isEditing={this.state.isEditing}
 				/>
@@ -93,5 +69,10 @@ class ProductInputView extends Component {
 		);
 	}
 }
-
-export default ProductInputView;
+const mapStateToProps = state => {
+	return { success: state.productReducer.success };
+};
+export default connect(
+	mapStateToProps,
+	{ addProduct, getAuth },
+)(ProductInputView);
