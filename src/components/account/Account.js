@@ -53,31 +53,31 @@ function Account(props) {
 		<div className={classes.root}>
 			<div className={classes.column}>
 				<Typography className={classes.heading}>
-					First Name: {props.user.firstName}
+					First Name: {props.firstName}
 				</Typography>
 				<Typography className={classes.heading}>
-					Last Name: {props.user.lasttName}
+					Last Name: {props.lastName}
 				</Typography>
 				<Typography className={classes.heading}>
-					Address 1: {props.user.address1}
+					Address 1: {props.address1}
 				</Typography>
 				<Typography className={classes.heading}>
-					Address 2: {props.user.address2}
+					Address 2: {props.address2}
 				</Typography>
 				<Typography className={classes.heading}>
-					City: {props.user.city}
+					City: {props.city}
 				</Typography>
 				<Typography className={classes.heading}>
-					State: {props.user.state}
+					State: {props.state}
 				</Typography>
 				<Typography className={classes.heading}>
-					Zip Code: {props.user.zip}
+					Zip Code: {props.zip}
 				</Typography>
 				<Typography className={classes.heading}>
-					Country: {props.user.country}
+					Country: {props.country}
 				</Typography>
 				<Typography className={classes.heading}>
-					Email Address: {props.user.emailAddress}
+					Email Address: {props.emailAddress}
 				</Typography>
 			</div>
 
