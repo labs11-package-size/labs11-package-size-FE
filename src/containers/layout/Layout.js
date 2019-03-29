@@ -21,6 +21,7 @@ import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
 import { firebase } from '../../firebase';
+import { Redirect } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -201,7 +202,8 @@ class Layout extends React.Component {
 		}
 	};
 	render() {
-		console.log(this.state);
+		console.log('layout render', this.state);
+
 		const { classes } = this.props;
 
 		return (

@@ -40,11 +40,11 @@ export const SideBar = (
 				<ListItemIcon>
 					<Eject
 						onClick={() => {
-							console.log('logout btn sideNav');
 							firebase
 								.auth()
 								.signOut()
-								.then(<Redirect to="/login" />);
+								.then(<Redirect to="/login" />)
+								.catch(err => console.log(err));
 						}}
 					/>
 				</ListItemIcon>
