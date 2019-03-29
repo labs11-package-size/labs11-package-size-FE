@@ -10,7 +10,12 @@ class ProductListView extends Component {
 		this.props.getProducts();
 	}
 	render() {
-		return <ProductList products={this.props.products} />;
+		return (
+			<ProductList
+				delete={this.props.deleteProduct}
+				products={this.props.products}
+			/>
+		);
 	}
 }
 

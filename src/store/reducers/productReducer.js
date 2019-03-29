@@ -5,9 +5,9 @@ import {
 	ADDING_PRODUCT,
 	ADDING_PRODUCT_SUCCESSFUL,
 	ADDING_PRODUCT_FAILURE,
-	// DELETING_PRODUCT,
-	// DELETING_PRODUCT_SUCCESSFUL,
-	// DELETING_PRODUCT_FAILURE,
+	DELETING_PRODUCT,
+	DELETING_PRODUCT_SUCCESSFUL,
+	DELETING_PRODUCT_FAILURE,
 	EDITING_PRODUCT,
 	EDITING_PRODUCT_SUCCESSFUL,
 	EDITING_PRODUCT_FAILURE,
@@ -124,40 +124,40 @@ const productReducer = (state = initialState, action) => {
 				error: action.payload,
 			};
 
-		// case DELETING_PRODUCT:
-		// 	return {
-		// 		...state,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: true,
-		// 		success: false,
-		// 		failure: false,
-		// 		error: null,
-		// 	};
-		// case DELETING_PRODUCT_SUCCESSFUL:
-		// 	return {
-		// 		...state,
-		// 		products: action.payload,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: false,
-		// 		success: true,
-		// 		failure: false,
-		// 		error: null,
-		// 	};
-		// case DELETING_PRODUCT_FAILURE:
-		// 	return {
-		// 		...state,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: false,
-		// 		success: false,
-		// 		failure: true,
-		// 		error: action.payload,
-		// 	};
+		case DELETING_PRODUCT:
+			return {
+				...state,
+				fetching: false,
+				adding: false,
+				editing: false,
+				deleting: true,
+				success: false,
+				failure: false,
+				error: null,
+			};
+		case DELETING_PRODUCT_SUCCESSFUL:
+			return {
+				...state,
+				products: action.payload,
+				fetching: false,
+				adding: false,
+				editing: false,
+				deleting: false,
+				success: true,
+				failure: false,
+				error: null,
+			};
+		case DELETING_PRODUCT_FAILURE:
+			return {
+				...state,
+				fetching: false,
+				adding: false,
+				editing: false,
+				deleting: false,
+				success: false,
+				failure: true,
+				error: action.payload,
+			};
 
 		default:
 			return state;

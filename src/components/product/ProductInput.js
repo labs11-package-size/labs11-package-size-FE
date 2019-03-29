@@ -95,7 +95,7 @@ const ProductInput = props => {
 					'aria-label': 'Description',
 				}}
 			/>
-			<Button onClick={props.addProduct} size="small">
+			<Button onClick={props.editProduct} size="small">
 				Submit
 			</Button>
 		</form>

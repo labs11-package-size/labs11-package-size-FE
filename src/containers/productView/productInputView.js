@@ -17,7 +17,7 @@ class ProductInputView extends Component {
 			fragile: this.props.default.fragile,
 			value: this.props.default.value,
 		},
-		currentProduct: this.props.productUid,
+		currentProduct: this.props.productUuid,
 		isEditing: false,
 	};
 	componentDidMount() {
@@ -58,6 +58,7 @@ class ProductInputView extends Component {
 	};
 
 	render() {
+		console.log(this.props.default);
 		return (
 			<div>
 				<ProductInput

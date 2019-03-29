@@ -12,9 +12,9 @@ export const EDITING_PRODUCT = 'EDITING_PRODUCT';
 export const EDITING_PRODUCT_SUCCESSFUL = 'EDITING_PRODUCT_SUCCESSFUL';
 export const EDITING_PRODUCT_FAILURE = 'EDITING_PRODUCT_FAILURE';
 
-// export const DELETING_PRODUCT = 'DELETING_PRODUCT';
-// export const DELETING_PRODUCT_SUCCESSFUL = 'DELETING_PRODUCT_SUCCESSFUL';
-// export const DELETING_PRODUCT_FAILURE = 'DELETING_PRODUCT_FAILURE';
+export const DELETING_PRODUCT = 'DELETING_PRODUCT';
+export const DELETING_PRODUCT_SUCCESSFUL = 'DELETING_PRODUCT_SUCCESSFUL';
+export const DELETING_PRODUCT_FAILURE = 'DELETING_PRODUCT_FAILURE';
 
 axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
 axios.interceptors.request.use(
@@ -56,7 +56,7 @@ export const addProduct = newProd => dispatch => {
 export const editProduct = (uuid, product) => dispatch => {
 	dispatch({ type: EDITING_PRODUCT });
 	axios
-		.put(`/products/edit/${product.uuid}`, uuid, product)
+		.put(`/products/edit/${uuid}`, uuid, product)
 		.then(res =>
 			dispatch({ type: EDITING_PRODUCT_SUCCESSFUL, payload: res.data }),
 		)
@@ -65,10 +65,12 @@ export const editProduct = (uuid, product) => dispatch => {
 		);
 };
 
-// export const deleteProduct = uuid => dispatch => {
-// 	dispatch({ type: DELETING_PRODUCT});
-// 	axios
-// 		.delete(`/products/delete/${uuid}`)
-// 		.then(res => dispatch({ type: DELETING_PRODUCT_SUCCESSFUL, payload: uuid}))
-// 		.catch(err => dispatch({ type: DELETING_PRODUCT_FAILURE, payload: err.data}))
-// }
+export const deleteProduct = uuid => dispatch => {
+	dispatch({ type: DELETING_PRODUCT });
+	axios
+		.delete(`/products/delete/${uuid}`)
+		.then(res => dispatch({ type: DELETING_PRODUCT_SUCCESSFUL, payload: uuid }))
+		.catch(err =>
+			dispatch({ type: DELETING_PRODUCT_FAILURE, payload: err.data }),
+		);
+};

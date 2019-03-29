@@ -9,8 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import { Link, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import ShipmentInputView from '../../containers/shipmentView/ShipmentInputView';
 import ProductInputView from '../../containers/productView/productInputView';
+import { deleteProduct } from '../../store/actions/productActions';
 
 const styles = theme => ({
 	root: {
@@ -57,7 +60,6 @@ const styles = theme => ({
 
 function Product(props) {
 	const { classes } = props;
-
 	return (
 		<div className={classes.root}>
 			<ExpansionPanel>
@@ -102,14 +104,14 @@ function Product(props) {
 						<Button size="small">Add Shipment</Button>
 					</Link>
 
-					{/* <Link to="/products/form">
-						<Button size="small" color="primary">
-							Edit
-						</Button>
-					</Link> */}
+					<Button size="small" color="primary">
+						<span onClick={() => props.deleteProduct(props.product.uuid)}>
+							Delete
+						</span>
+					</Button>
 				</ExpansionPanelActions>
 				<ProductInputView
-					productUid={props.product.uuid}
+					productUuid={props.product.uuid}
 					default={props.product}
 				/>
 			</ExpansionPanel>
@@ -121,4 +123,13 @@ Product.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Product);
+const mapStateToProps = state => {
+	return {
+		products: state.productReducer.products,
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ deleteProduct },
+)(withStyles(styles)(Product));
