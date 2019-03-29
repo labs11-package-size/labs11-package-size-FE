@@ -40,30 +40,43 @@ class ProductInputView extends Component {
 		});
 	};
 
-	addProduct = () => {
-		axios
-			.post('/products/add', this.state.product)
-			.then(res => {
-				console.log(res.data);
-				this.setState({
-					product: {
-						name: '',
-						description: '',
-						weight: '',
-						length: '',
-						width: '',
-						height: '',
-						fragile: null,
-						value: '',
-					},
-				});
-			})
-			.catch(err => console.log(err));
+	// addProduct = () => {
+	// 	axios
+	// 		.post('/products/add', this.state.product)
+	// 		.then(res => {
+
+	// 			this.setState({
+	// 				product: {
+	// 					name: '',
+	// 					description: '',
+	// 					weight: '',
+	// 					length: '',
+	// 					width: '',
+	// 					height: '',
+	// 					fragile: null,
+	// 					value: '',
+	// 				},
+	// 			});
+	// 		})
+	// 		.catch(err => console.log(err));
+	// };
+
+	editProduct = event => {
+		console.log('clicked');
+		this.setState({
+			isEditing: true,
+		});
 	};
 
-	// editProduct = () => {
-
-	// }
+	handleEditSubmit = event => {
+		console.log('clicked', event.target);
+		// axios
+		// .put(`/products/add${this.state.product}`, this.state.product)
+		// .then(res => {
+		// 	console.log(res.data);
+		// })
+		// .catch(err => console.log(err));
+	};
 
 	render() {
 		return (
@@ -72,6 +85,7 @@ class ProductInputView extends Component {
 					user={this.props.user}
 					addProduct={this.addProduct}
 					handleChange={this.handleInputChange}
+					handleEditSubmit={this.handleEditSubmit}
 					product={this.state.product}
 					isEditing={this.state.isEditing}
 				/>

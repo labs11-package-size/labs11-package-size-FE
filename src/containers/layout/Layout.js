@@ -19,7 +19,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
-import { SideBar } from '../../components/navigation/SideBar';
+import SideBar from '../../components/navigation/SideBar';
 import { firebase } from '../../firebase';
 import { Redirect } from 'react-router-dom';
 

@@ -107,7 +107,7 @@ function Product(props) {
 
 					<Link to="/products/form">
 						<Button size="small" color="primary">
-							Edit
+							<span>Edit</span>
 						</Button>
 					</Link>
 				</ExpansionPanelActions>

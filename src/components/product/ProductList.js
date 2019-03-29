@@ -40,6 +40,26 @@ axios.interceptors.request.use(
 class ProductList extends Component {
 	state = {
 		products: [],
+		isEditing: false,
+	};
+
+	editProduct = (event, id) => {
+		event.preventDefault();
+		console.log('clicked', id);
+		this.setState({
+			isEditing: true,
+		});
+	};
+
+	handleEditSubmit = event => {
+		event.preventDefault();
+		console.log('clicked', event.target);
+		// axios
+		// .put(`/products/add${this.state.product}`, this.state.product)
+		// .then(res => {
+		// 	console.log(res.data);
+		// })
+		// .catch(err => console.log(err));
 	};
 
 	componentDidMount() {
@@ -63,7 +83,15 @@ class ProductList extends Component {
 					<h5>...loading</h5>
 				) : (
 					this.state.products.map(p => {
-						return <Product key={p.identifier} product={p} />;
+						return (
+							<Product
+								editProduct={this.editProduct}
+								uid={p.uid}
+								isEditing={this.state.isEditing}
+								key={p.identifier}
+								product={p}
+							/>
+						);
 					})
 				)}
 				<Link to="/products/form">

@@ -22,10 +22,10 @@ const ProductInput = props => {
 	const { classes } = props;
 	const handleClick = event => {
 		event.preventDefault();
-		if (!props.isEditing) {
-			props.addProduct();
+		if (props.isEditing) {
+			props.handleEditSubmit();
 		} else {
-			// props.editProduct()
+			props.addProduct();
 		}
 		props.history.push('/');
 	};
