@@ -196,13 +196,13 @@ class Layout extends React.Component {
 	buttonLink = () => {
 		if (this.state.isLoggedIn) {
 			return (
-				<Link style={{ textDecoration: 'none', color: 'white' }} to="/logout">
+				<Link style={{ textDecoration: 'none', color: '0D2C54', borderRadius: '50px' }} to="/logout">
 					<Button color="inherit">Logout</Button>
 				</Link>
 			);
 		} else {
 			return (
-				<Link style={{ textDecoration: 'none', color: 'white' }} to="/login">
+				<Link style={{ textDecoration: 'none', color: '0D2C54', borderRadius: '50px' }} to="/login">
 					<Button color="inherit">Login</Button>
 				</Link>
 			);
@@ -261,15 +261,7 @@ class Layout extends React.Component {
 									/>
 								</div>
 							) : null}
-<<<<<<< HEAD
-							<Link
-								style={{ textDecoration: 'none', color: '0D2C54' }}
-								to="/login">
-								<Button color="inherit">Login</Button>
-							</Link>
-=======
 							{this.buttonLink()}
->>>>>>> 41b235957ae46c15ea452b50bfe4029d45164621
 						</div>
 					</Toolbar>
 				</AppBar>

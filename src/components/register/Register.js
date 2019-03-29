@@ -74,7 +74,7 @@ class Register extends Component {
 									id="firstName"
 									name="firstName"
 									label="First name"
-									value={this.state.firstname}
+									value={this.state.firstName}
 									onChange={this.onChange}
 									fullWidth
 								/>
@@ -85,7 +85,7 @@ class Register extends Component {
 									id="lastName"
 									name="lastName"
 									label="Last name"
-									value={this.state.lastname}
+									value={this.state.lastName}
 									onChange={this.onChange}
 									fullWidth
 								/>
@@ -128,7 +128,7 @@ class Register extends Component {
 									id="state"
 									name="state"
 									label="State/Province/Region"
-									value={this.state.state} //whooooaaaaa
+									value={this.state.state} 
 									onChange={this.onChange}
 									fullWidth
 								/>

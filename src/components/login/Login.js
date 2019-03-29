@@ -36,7 +36,7 @@ const styles = theme => ({
 	},
 	avatar: {
 		margin: theme.spacing.unit,
-		backgroundColor: theme.palette.secondary.main,
+		backgroundColor: '#72BDA2',
 	},
 	form: {
 		width: '100%', // Fix IE 11 issue.
@@ -44,6 +44,13 @@ const styles = theme => ({
 	},
 	submit: {
 		marginTop: theme.spacing.unit * 3,
+		backgroundColor: '#72BDA2',
+		color: 'white',	
+		"&:hover": {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+			border: 'solid 5px #72BDA2',
+		}
 	},
 });
 
@@ -93,7 +100,6 @@ const Login = props => {
 							type="submit"
 							fullWidth
 							variant="contained"
-							color="primary"
 							className={classes.submit}>
 							Sign in
 						</Button>
