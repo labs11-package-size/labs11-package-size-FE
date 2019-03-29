@@ -29,7 +29,8 @@ class Routes extends Component {
 		if (this.state.user) {
 			routes = (
 				<Switch>
-					<Redirect from="login" to="/" />
+					<Redirect from="/login" to="/" />
+					<Redirect from="/register" to="/" />
 					<Route
 						exact
 						user={this.props.user}
@@ -77,8 +78,11 @@ class Routes extends Component {
 		} else {
 			routes = (
 				<Switch>
+					<Redirect exact from="/" to="/login" />
+
 					<Route exact path="/login" component={LoginView} />
 					<Route exact path="/register" component={RegisterView} />
+					<Redirect to="/login" />
 				</Switch>
 			);
 		}
