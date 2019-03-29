@@ -10,47 +10,45 @@ import { Link } from 'react-router-dom';
 import { logoutUser } from '../../store/actions/userActions';
 import { connect } from 'react-redux';
 
-const SideBar = props => {
-	const logoutBtn = () => {
-		props.logoutUser();
-	};
-	return (
-		<div>
-			<Link to="/account">
-				<ListItem button>
-					<ListItemIcon>
-						<Person />
-					</ListItemIcon>
-					<ListItemText primary="Account" />
-				</ListItem>
-			</Link>
-			<Link to="/products">
-				<ListItem button>
-					<ListItemIcon>
-						<Queue />
-					</ListItemIcon>
-					<ListItemText primary="Products" />
-				</ListItem>
-			</Link>
-			<Link to="/shipments">
-				<ListItem button>
-					<ListItemIcon>
-						<LocalShipping />
-					</ListItemIcon>
-					<ListItemText primary="Shipments" />
-				</ListItem>
-			</Link>
-			<Link to="/logout">
-				<ListItem button>
-					<ListItemIcon>
-						<Eject onClick={logoutBtn} />
-					</ListItemIcon>
-					<ListItemText primary="Logout" />
-				</ListItem>
-			</Link>
-		</div>
-	);
+const logoutBtn = props => {
+	props.logoutUser();
 };
+export const SideBar = (
+	<div>
+		<Link to="/account">
+			<ListItem button>
+				<ListItemIcon>
+					<Person />
+				</ListItemIcon>
+				<ListItemText primary="Account" />
+			</ListItem>
+		</Link>
+		<Link to="/products">
+			<ListItem button>
+				<ListItemIcon>
+					<Queue />
+				</ListItemIcon>
+				<ListItemText primary="Products" />
+			</ListItem>
+		</Link>
+		<Link to="/shipments">
+			<ListItem button>
+				<ListItemIcon>
+					<LocalShipping />
+				</ListItemIcon>
+				<ListItemText primary="Shipments" />
+			</ListItem>
+		</Link>
+		<Link to="/logout">
+			<ListItem button>
+				<ListItemIcon>
+					<Eject onClick={props => props.logoutUser} />
+				</ListItemIcon>
+				<ListItemText primary="Logout" />
+			</ListItem>
+		</Link>
+	</div>
+);
 
 const mapStateToProps = state => {
 	return {
@@ -61,4 +59,4 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{ logoutUser },
-)(SideBar);
+)(logoutBtn);

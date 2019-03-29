@@ -8,9 +8,9 @@ export const ADDING_PRODUCT = 'ADDING_PRODUCT';
 export const ADDING_PRODUCT_SUCCESSFUL = 'ADDING_PRODUCT_SUCCESSFUL';
 export const ADDING_PRODUCT_FAILURE = 'ADDING_PRODUCT_FAILURE';
 
-// export const EDITING_PRODUCT = 'EDITING_PRODUCT';
-// export const EDITING_PRODUCT_SUCCESSFUL = 'EDITING_PRODUCT_SUCCESSFUL';
-// export const EDITING_PRODUCT_FAILURE = 'EDITING_PRODUCT_FAILURE';
+export const EDITING_PRODUCT = 'EDITING_PRODUCT';
+export const EDITING_PRODUCT_SUCCESSFUL = 'EDITING_PRODUCT_SUCCESSFUL';
+export const EDITING_PRODUCT_FAILURE = 'EDITING_PRODUCT_FAILURE';
 
 // export const DELETING_PRODUCT = 'DELETING_PRODUCT';
 // export const DELETING_PRODUCT_SUCCESSFUL = 'DELETING_PRODUCT_SUCCESSFUL';
@@ -53,13 +53,17 @@ export const addProduct = newProd => dispatch => {
 		);
 };
 
-// export const editProduct = product => dispatch => {
-// 	dispatch({ type: EDITING_PRODUCT});
-// 	axios
-// 		.put(`/products/edit/${product.uuid}`, product)
-// 		.then(res => dispatch ({ type: EDITING_PRODUCT_SUCCESSFUL, payload: res.data }))
-// 		.catch(err => dispatch ({ type: DELETING_PRODUCT_FAILURE, payload: err.data }))
-// };
+export const editProduct = (uuid, product) => dispatch => {
+	dispatch({ type: EDITING_PRODUCT });
+	axios
+		.put(`/products/edit/${product.uuid}`, uuid, product)
+		.then(res =>
+			dispatch({ type: EDITING_PRODUCT_SUCCESSFUL, payload: res.data }),
+		)
+		.catch(err =>
+			dispatch({ type: EDITING_PRODUCT_FAILURE, payload: err.data }),
+		);
+};
 
 // export const deleteProduct = uuid => dispatch => {
 // 	dispatch({ type: DELETING_PRODUCT});

@@ -8,9 +8,9 @@ import {
 	// DELETING_PRODUCT,
 	// DELETING_PRODUCT_SUCCESSFUL,
 	// DELETING_PRODUCT_FAILURE,
-	// EDITING_PRODUCT,
-	// EDITING_PRODUCT_SUCCESSFUL,
-	// EDITING_PRODUCT_FAILURE,
+	EDITING_PRODUCT,
+	EDITING_PRODUCT_SUCCESSFUL,
+	EDITING_PRODUCT_FAILURE,
 } from '../actions/productActions';
 
 const initialState = {
@@ -29,12 +29,7 @@ const productReducer = (state = initialState, action) => {
 		case GETTING_PRODUCTS:
 			return {
 				...state,
-				products: [],
 				fetching: true,
-				editing: false,
-				deleting: false,
-				success: false,
-				failure: false,
 				error: null,
 			};
 		case GETTING_PRODUCTS_SUCCESSFUL:
@@ -94,40 +89,40 @@ const productReducer = (state = initialState, action) => {
 				error: action.payload,
 			};
 
-		// case EDITING_PRODUCT:
-		// 	return {
-		// 		...state,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: true,
-		// 		deleting: false,
-		// 		success: false,
-		// 		failure: false,
-		// 		error: null,
-		// 	};
-		// case EDITING_PRODUCT_SUCCESSFUL:
-		// 	return {
-		// 		...state,
-		// 		products: action.payload,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: false,
-		// 		success: true,
-		// 		failure: false,
-		// 		error: null,
-		// 	};
-		// case EDITING_PRODUCT_FAILURE:
-		// 	return {
-		// 		...state,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: false,
-		// 		success: false,
-		// 		failure: true,
-		// 		error: action.payload,
-		// 	};
+		case EDITING_PRODUCT:
+			return {
+				...state,
+				fetching: false,
+				adding: false,
+				editing: true,
+				deleting: false,
+				success: false,
+				failure: false,
+				error: null,
+			};
+		case EDITING_PRODUCT_SUCCESSFUL:
+			return {
+				...state,
+				products: action.payload,
+				fetching: false,
+				adding: false,
+				editing: false,
+				deleting: false,
+				success: true,
+				failure: false,
+				error: null,
+			};
+		case EDITING_PRODUCT_FAILURE:
+			return {
+				...state,
+				fetching: false,
+				adding: false,
+				editing: false,
+				deleting: false,
+				success: false,
+				failure: true,
+				error: action.payload,
+			};
 
 		// case DELETING_PRODUCT:
 		// 	return {

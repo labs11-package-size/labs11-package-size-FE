@@ -7,8 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-// import { register } from '../../store/actions/userActions';
-
 const styles = theme => ({
 	container: {
 		margin: '20px auto',

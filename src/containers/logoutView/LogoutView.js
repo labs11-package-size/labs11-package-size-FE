@@ -4,9 +4,6 @@ import Logout from '../../components/logout/Logout';
 import { connect } from 'react-redux';
 
 class LogoutView extends Component {
-	componentDidMount() {
-		this.props.getAuth();
-	}
 	render() {
 		const redir = () => {
 			this.props.logoutUser();

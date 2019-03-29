@@ -81,13 +81,12 @@ export const logoutUser = () => dispatch => {
 		.auth()
 		.signOut()
 		.then(res => {
-			dispatch({ type: AUTH_SUCCESSFUL });
+			dispatch({ type: USER_LOGOUT_SUCCESSFUL });
 			console.log('logout res', res);
 			localStorage.removeItem('token');
-			return <Redirect to="/login" />;
 		})
 		.catch(err => {
-			dispatch({ type: AUTH_FAILURE });
+			dispatch({ type: USER_LOGOUT_FAILURE });
 			console.log('logout', err);
 		});
 };

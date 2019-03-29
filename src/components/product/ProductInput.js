@@ -46,7 +46,7 @@ const ProductInput = props => {
 			<Input
 				onChange={props.handleChange}
 				name="description"
-				value={props.product.description}
+				value={props.product.productDescription}
 				placeholder="Description"
 				className={classes.input}
 				inputProps={{

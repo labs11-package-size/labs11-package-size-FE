@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Product from './Product';
-import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { getProducts } from '../../store/actions/productActions';
+
 import { Link } from 'react-router-dom';
 
 const styles = {
@@ -25,13 +24,6 @@ const styles = {
 };
 
 class ProductList extends Component {
-	state = {
-		products: [],
-	};
-
-	componentDidMount() {
-		this.props.getProducts();
-	}
 	render() {
 		const { classes } = this.props;
 		return (
@@ -39,15 +31,14 @@ class ProductList extends Component {
 				<Typography gutterBottom variant="h5" component="h2">
 					Products
 				</Typography>
-				{!this.state.products ? (
+				{!this.props.products ? (
 					<h5>...loading</h5>
 				) : (
-					this.state.products.map(p => {
+					this.props.products.map(p => {
 						return (
 							<Product
 								editProduct={this.editProduct}
 								uid={p.uid}
-								isEditing={this.state.isEditing}
 								key={p.identifier}
 								product={p}
 							/>
@@ -62,15 +53,4 @@ class ProductList extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		products: state.productReducer.products,
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	{
-		getProducts,
-	},
-)(withStyles(styles)(ProductList));
+export default withStyles(styles)(ProductList);

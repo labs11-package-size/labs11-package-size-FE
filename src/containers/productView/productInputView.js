@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addProduct } from '../../store/actions/productActions';
+import { addProduct, editProduct } from '../../store/actions/productActions';
 import { getAuth } from '../../store/actions/userActions';
 
 import ProductInput from '../../components/product/ProductInput';
@@ -8,15 +8,16 @@ import ProductInput from '../../components/product/ProductInput';
 class ProductInputView extends Component {
 	state = {
 		product: {
-			name: '',
-			productDescription: '',
-			weight: '',
-			length: '',
-			width: '',
-			height: '',
-			fragile: false,
-			value: '',
+			name: this.props.default.name,
+			productDescription: this.props.default.productDescription,
+			weight: this.props.default.weight,
+			length: this.props.default.length,
+			width: this.props.default.width,
+			height: this.props.default.height,
+			fragile: this.props.default.fragile,
+			value: this.props.default.value,
 		},
+		currentProduct: this.props.productUid,
 		isEditing: false,
 	};
 	componentDidMount() {
@@ -27,7 +28,7 @@ class ProductInputView extends Component {
 		this.setState({
 			product: {
 				...this.state.product,
-				[event.target.name]: event.target.value,
+				[event.target.name]: event.target.defaultValue,
 			},
 		});
 	};
@@ -45,22 +46,23 @@ class ProductInputView extends Component {
 				fragile: false,
 				value: '',
 			},
+			isEditing: false,
 		});
 	};
 
-	editProduct = event => {
-		console.log('clicked');
+	editProduct = () => {
+		this.props.editProduct(this.state.currentProduct, this.state.product);
 		this.setState({
-			isEditing: true,
+			isEditing: false,
 		});
 	};
 
 	render() {
-		console.log(this.state);
 		return (
 			<div>
 				<ProductInput
 					addProduct={this.addProduct}
+					editProduct={this.editProduct}
 					handleChange={this.handleInputChange}
 					product={this.state.product}
 					isEditing={this.state.isEditing}
@@ -74,5 +76,5 @@ const mapStateToProps = state => {
 };
 export default connect(
 	mapStateToProps,
-	{ addProduct, getAuth },
+	{ addProduct, getAuth, editProduct },
 )(ProductInputView);

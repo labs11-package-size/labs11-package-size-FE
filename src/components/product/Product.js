@@ -10,6 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import { Link, Route } from 'react-router-dom';
 import ShipmentInputView from '../../containers/shipmentView/ShipmentInputView';
+import ProductInputView from '../../containers/productView/productInputView';
 
 const styles = theme => ({
 	root: {
@@ -41,6 +42,9 @@ const styles = theme => ({
 	helper: {
 		borderLeft: `2px solid ${theme.palette.divider}`,
 		padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+	},
+	ProductInputView: {
+		display: 'none',
 	},
 	link: {
 		color: theme.palette.primary.main,
@@ -95,22 +99,19 @@ function Product(props) {
 						</Typography>
 					</div>
 					<Link to="/shipments/form">
-						<Route
-							exact
-							path="/shipments/form"
-							render={props => (
-								<ShipmentInputView {...props} product={props.product} />
-							)}
-						/>
 						<Button size="small">Add Shipment</Button>
 					</Link>
 
-					<Link to="/products/form">
+					{/* <Link to="/products/form">
 						<Button size="small" color="primary">
-							<span>Edit</span>
+							Edit
 						</Button>
-					</Link>
+					</Link> */}
 				</ExpansionPanelActions>
+				<ProductInputView
+					productUid={props.product.uuid}
+					default={props.product}
+				/>
 			</ExpansionPanel>
 		</div>
 	);
