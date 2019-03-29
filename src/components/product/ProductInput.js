@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
 	container: {
@@ -26,7 +27,7 @@ const ProductInput = props => {
 		} else {
 			// props.editProduct()
 		}
-		props.history.push('/dashboard');
+		props.history.push('/');
 	};
 
 	return (
@@ -105,4 +106,4 @@ ProductInput.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductInput);
+export default withRouter(withStyles(styles)(ProductInput));

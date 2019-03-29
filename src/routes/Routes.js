@@ -31,48 +31,13 @@ class Routes extends Component {
 				<Switch>
 					<Redirect from="/login" to="/" />
 					<Redirect from="/register" to="/" />
-					<Route
-						exact
-						user={this.props.user}
-						path="/logout"
-						component={LogoutView}
-					/>
-					<Route
-						exact
-						user={this.props.user}
-						path="/shipments/form"
-						component={ShipmentInputView}
-					/>
-					<Route
-						exact
-						user={this.props.user}
-						path="/products/form"
-						component={ProductInputView}
-					/>
-					<Route
-						exact
-						user={this.props.user}
-						path="/shipments"
-						component={ShipmentListView}
-					/>
-					<Route
-						exact
-						user={this.props.user}
-						path="/products"
-						component={ProductListView}
-					/>
-					<Route
-						exact
-						user={this.props.user}
-						path="/account"
-						component={AccountView}
-					/>
-					<Route
-						exact
-						user={this.props.user}
-						path="/"
-						component={DashboardView}
-					/>
+					<Route exact path="/logout" component={LogoutView} />
+					<Route exact path="/shipments/form" component={ShipmentInputView} />
+					<Route exact path="/products/form" component={ProductInputView} />
+					<Route exact path="/shipments" component={ShipmentListView} />
+					<Route exact path="/products" component={ProductListView} />
+					<Route exact path="/account" component={AccountView} />
+					<Route exact path="/" component={DashboardView} />
 				</Switch>
 			);
 		} else {

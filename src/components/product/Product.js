@@ -8,7 +8,8 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import ShipmentInputView from '../../containers/shipmentView/ShipmentInputView';
 
 const styles = theme => ({
 	root: {
@@ -52,7 +53,7 @@ const styles = theme => ({
 
 function Product(props) {
 	const { classes } = props;
-	console.log(props.product);
+
 	return (
 		<div className={classes.root}>
 			<ExpansionPanel>
@@ -94,8 +95,16 @@ function Product(props) {
 						</Typography>
 					</div>
 					<Link to="/shipments/form">
+						<Route
+							exact
+							path="/shipments/form"
+							render={props => (
+								<ShipmentInputView {...props} product={props.product} />
+							)}
+						/>
 						<Button size="small">Add Shipment</Button>
 					</Link>
+
 					<Link to="/products/form">
 						<Button size="small" color="primary">
 							Edit

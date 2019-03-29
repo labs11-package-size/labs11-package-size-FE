@@ -27,8 +27,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
 
-
-
 const styles = theme => ({
 	root: {
 		display: 'flex',
@@ -209,8 +207,6 @@ class Layout extends React.Component {
 		}
 	};
 	render() {
-		console.log('layout render', this.state);
-
 		const { classes } = this.props;
 
 		return (
@@ -261,15 +257,7 @@ class Layout extends React.Component {
 									/>
 								</div>
 							) : null}
-<<<<<<< HEAD
-							<Link
-								style={{ textDecoration: 'none', color: '0D2C54' }}
-								to="/login">
-								<Button color="inherit">Login</Button>
-							</Link>
-=======
 							{this.buttonLink()}
->>>>>>> 41b235957ae46c15ea452b50bfe4029d45164621
 						</div>
 					</Toolbar>
 				</AppBar>

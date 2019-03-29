@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import ProductInput from '../../components/product/ProductInput';
+
+axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
+axios.interceptors.request.use(
+	function(options) {
+		options.headers.authorization = localStorage.getItem('token');
+
+		return options;
+	},
+	function(error) {
+		return Promise.reject(error);
+	},
+);
 
 class ProductInputView extends Component {
 	state = {
@@ -28,7 +41,24 @@ class ProductInputView extends Component {
 	};
 
 	addProduct = () => {
-		this.props.addProduct(this.state.product);
+		axios
+			.post('/products/add', this.state.product)
+			.then(res => {
+				console.log(res.data);
+				this.setState({
+					product: {
+						name: '',
+						description: '',
+						weight: '',
+						length: '',
+						width: '',
+						height: '',
+						fragile: null,
+						value: '',
+					},
+				});
+			})
+			.catch(err => console.log(err));
 	};
 
 	// editProduct = () => {
