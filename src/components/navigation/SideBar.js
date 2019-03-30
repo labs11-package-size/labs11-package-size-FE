@@ -10,13 +10,14 @@ import { Link } from 'react-router-dom';
 import { logoutUser } from '../../store/actions/userActions';
 import { connect } from 'react-redux';
 
+
 const logoutBtn = props => {
 	props.logoutUser();
 };
 export const SideBar = (
 	<div>
 		<Link to="/account">
-			<ListItem button>
+			<ListItem button style={{ color: '#72BDA2'}}>
 				<ListItemIcon>
 					<Person />
 				</ListItemIcon>

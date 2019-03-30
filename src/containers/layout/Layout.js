@@ -175,13 +175,13 @@ class Layout extends React.Component {
 	buttonLink = () => {
 		if (this.props.isLoggedIn) {
 			return (
-				<Link style={{ textDecoration: 'none', color: 'white' }} to="/logout">
+				<Link style={{ textDecoration: 'none', color: '0D2C54', borderRadius: '50px' }} to="/logout">
 					<Button color="inherit">Logout</Button>
 				</Link>
 			);
 		} else {
 			return (
-				<Link style={{ textDecoration: 'none', color: 'white' }} to="/login">
+				<Link style={{ textDecoration: 'none', color: '0D2C54', borderRadius: '50px' }} to="/login">
 					<Button color="inherit">Login</Button>
 				</Link>
 			);
