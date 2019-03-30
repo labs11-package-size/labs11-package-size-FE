@@ -8,7 +8,12 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import ShipmentInputView from '../../containers/shipmentView/ShipmentInputView';
+import ProductInputView from '../../containers/productView/productInputView';
+import { deleteProduct } from '../../store/actions/productActions';
 
 const styles = theme => ({
 	root: {
@@ -41,6 +46,9 @@ const styles = theme => ({
 		borderLeft: `2px solid ${theme.palette.divider}`,
 		padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
 	},
+	ProductInputView: {
+		display: 'none',
+	},
 	link: {
 		color: theme.palette.primary.main,
 		textDecoration: 'none',
@@ -52,7 +60,6 @@ const styles = theme => ({
 
 function Product(props) {
 	const { classes } = props;
-	console.log(props.product);
 	return (
 		<div className={classes.root}>
 			<ExpansionPanel>
@@ -96,12 +103,17 @@ function Product(props) {
 					<Link to="/shipments/form">
 						<Button size="small">Add Shipment</Button>
 					</Link>
-					<Link to="/products/form">
-						<Button size="small" color="primary">
-							Edit
-						</Button>
-					</Link>
+
+					<Button size="small" color="primary">
+						<span onClick={() => props.deleteProduct(props.product.uuid)}>
+							Delete
+						</span>
+					</Button>
 				</ExpansionPanelActions>
+				<ProductInputView
+					productUuid={props.product.uuid}
+					default={props.product}
+				/>
 			</ExpansionPanel>
 		</div>
 	);
@@ -111,4 +123,13 @@ Product.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Product);
+const mapStateToProps = state => {
+	return {
+		products: state.productReducer.products,
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ deleteProduct },
+)(withStyles(styles)(Product));

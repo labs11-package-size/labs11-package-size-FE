@@ -7,8 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-import { register } from '../../store/actions/userActions';
-
 const styles = theme => ({
 	container: {
 		margin: '20px auto',
@@ -177,12 +175,10 @@ class Register extends Component {
 }
 
 const mapStateToProps = state => {
-	return {
-		registering: state.userReducer.registering,
-	};
+	return {};
 };
 
 export default connect(
 	mapStateToProps,
-	{ register },
+	{},
 )(withStyles(styles)(Register));
