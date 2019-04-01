@@ -30,8 +30,8 @@ class Dashboard extends Component {
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
-				<ProductListView products={this.props.products} />
-				<ShipmentListView shipments={this.props.shipments} />
+				<ProductListView />
+				<ShipmentListView />
 			</div>
 		);
 	}

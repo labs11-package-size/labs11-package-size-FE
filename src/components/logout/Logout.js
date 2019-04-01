@@ -4,7 +4,7 @@ const Logout = props => {
 	return (
 		<div>
 			Sorry to see you go.
-			{props.redir}
+			{props.redir()}
 		</div>
 	);
 };

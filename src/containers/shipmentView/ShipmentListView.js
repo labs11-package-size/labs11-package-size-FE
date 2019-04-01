@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import ShipmentList from '../../components/shipment/ShipmentList';
 import { connect } from 'react-redux';
-import { getAuth } from '../../store/actions/userActions';
+
+import ShipmentList from '../../components/shipment/ShipmentList';
 import { getShipments } from '../../store/actions/shipmentActions';
 
 class ShipmentListView extends Component {
 	componentDidMount() {
-		this.props.getAuth();
 		this.props.getShipments();
 	}
 	render() {
@@ -22,5 +21,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getAuth, getShipments },
+	{ getShipments },
 )(ShipmentListView);

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Product from './Product';
 import Button from '@material-ui/core/Button';
-
 import { Link } from 'react-router-dom';
+
+import Product from './Product';
 
 const styles = {
 	card: {
@@ -25,6 +25,7 @@ const styles = {
 
 class ProductList extends Component {
 	render() {
+		console.log(this.props);
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
