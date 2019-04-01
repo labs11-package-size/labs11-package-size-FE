@@ -35,7 +35,7 @@ const ProductInput = props => {
 			<Input
 				onChange={props.handleChange}
 				name="name"
-				value={props.product.name}
+				// value={props.product.name}
 				placeholder="Product Name"
 				className={classes.input}
 				inputProps={{
@@ -57,7 +57,7 @@ const ProductInput = props => {
 			<Input
 				onChange={props.handleChange}
 				name="height"
-				value={props.product.height}
+				// value={props.product.height}
 				placeholder="Height"
 				className={classes.input}
 				inputProps={{
@@ -68,7 +68,7 @@ const ProductInput = props => {
 			<Input
 				onChange={props.handleChange}
 				name="length"
-				value={props.product.length}
+				// value={props.product.length}
 				placeholder="Length"
 				className={classes.input}
 				inputProps={{

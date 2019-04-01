@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addProduct, editProduct } from '../../store/actions/productActions';
-import { getAuth } from '../../store/actions/userActions';
 
 import ProductInput from '../../components/product/ProductInput';
 
@@ -20,9 +19,6 @@ class ProductInputView extends Component {
 		currentProduct: this.props.productUuid,
 		isEditing: false,
 	};
-	componentDidMount() {
-		this.props.getAuth();
-	}
 
 	handleInputChange = event => {
 		this.setState({
@@ -58,7 +54,6 @@ class ProductInputView extends Component {
 	};
 
 	render() {
-		console.log(this.props.default);
 		return (
 			<div>
 				<ProductInput
@@ -77,5 +72,5 @@ const mapStateToProps = state => {
 };
 export default connect(
 	mapStateToProps,
-	{ addProduct, getAuth, editProduct },
+	{ addProduct, editProduct },
 )(ProductInputView);

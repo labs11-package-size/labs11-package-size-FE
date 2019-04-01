@@ -21,6 +21,7 @@ import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
 import { connect } from 'react-redux';
+import { getAuth } from '../../store/actions/userActions';
 
 const drawerWidth = 240;
 
@@ -175,20 +176,31 @@ class Layout extends React.Component {
 	buttonLink = () => {
 		if (this.props.isLoggedIn) {
 			return (
-				<Link style={{ textDecoration: 'none', color: '0D2C54', borderRadius: '50px' }} to="/logout">
+				<Link
+					style={{
+						textDecoration: 'none',
+						color: '0D2C54',
+						borderRadius: '50px',
+					}}
+					to="/logout">
 					<Button color="inherit">Logout</Button>
 				</Link>
 			);
 		} else {
 			return (
-				<Link style={{ textDecoration: 'none', color: '0D2C54', borderRadius: '50px' }} to="/login">
+				<Link
+					style={{
+						textDecoration: 'none',
+						color: '0D2C54',
+						borderRadius: '50px',
+					}}
+					to="/login">
 					<Button color="inherit">Login</Button>
 				</Link>
 			);
 		}
 	};
 	render() {
-		console.log(this.props);
 		const { classes } = this.props;
 
 		return (
@@ -219,7 +231,7 @@ class Layout extends React.Component {
 							<Typography
 								className={classes.title}
 								variant="h6"
-								color="0D2C54"
+								color="inherit"
 								noWrap>
 								ScannAR
 							</Typography>
@@ -280,5 +292,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{},
+	{ getAuth },
 )(withStyles(styles)(Layout));

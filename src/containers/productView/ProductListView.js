@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { getAuth } from '../../store/actions/userActions';
-import { getProducts } from '../../store/actions/productActions';
 import { connect } from 'react-redux';
+
 import ProductList from '../../components/product/ProductList';
+import { getProducts } from '../../store/actions/productActions';
 
 class ProductListView extends Component {
 	componentDidMount() {
-		this.props.getAuth();
 		this.props.getProducts();
 	}
 	render() {
@@ -27,5 +26,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getAuth, getProducts },
+	{ getProducts },
 )(ProductListView);

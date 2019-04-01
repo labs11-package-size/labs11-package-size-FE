@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Account from '../../components/account/Account';
 import { connect } from 'react-redux';
-import { getAuth } from '../../store/actions/userActions';
 
 class AccountView extends Component {
 	componentDidMount() {
@@ -24,5 +23,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getAuth },
+	{},
 )(AccountView);
