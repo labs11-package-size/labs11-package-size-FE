@@ -107,14 +107,14 @@ function Product(props) {
 						<Button size="small">Add Shipment</Button>
 					</Link>
 
-					<Button size="small" color="primary">
-						<span onClick={event => console.log(event)}>Delete</span>
+					<Button onClick={props.deleteProduct} size="small" color="primary">
+						Delete
 					</Button>
 				</ExpansionPanelActions>
-				<ProductEditView
+				{/* <ProductEditView
 					productUuid={props.product.uuid}
 					default={props.product}
-				/>
+				/> */}
 			</ExpansionPanel>
 		</div>
 	);
