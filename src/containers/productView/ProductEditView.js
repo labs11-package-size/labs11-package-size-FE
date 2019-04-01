@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addProduct, editProduct } from '../../store/actions/productActions';
 
-import ProductInput from '../../components/product/ProductInput';
+import ProductEdit from '../../components/product/ProductEdit';
 
-class ProductInputView extends Component {
+class ProductEditView extends Component {
 	state = {
 		product: {
 			name: this.props.default.name,
@@ -56,7 +56,7 @@ class ProductInputView extends Component {
 	render() {
 		return (
 			<div>
-				<ProductInput
+				<ProductEdit
 					addProduct={this.addProduct}
 					editProduct={this.editProduct}
 					handleChange={this.handleInputChange}
@@ -73,4 +73,4 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{ addProduct, editProduct },
-)(ProductInputView);
+)(ProductEditView);

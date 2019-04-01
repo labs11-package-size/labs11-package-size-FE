@@ -3,9 +3,9 @@ import Account from '../../components/account/Account';
 import { connect } from 'react-redux';
 
 class AccountView extends Component {
-	componentDidMount() {
-		this.props.getAuth();
-	}
+	// componentDidMount() {
+	// 	this.props.getAuth();
+	// }
 	render() {
 		return (
 			<div>

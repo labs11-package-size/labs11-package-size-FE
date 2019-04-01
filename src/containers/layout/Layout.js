@@ -158,6 +158,9 @@ class Layout extends React.Component {
 		isLoggedIn: false,
 		uuid: null,
 	};
+	componentDidMount() {
+		this.props.getAuth()
+	}
 
 	handleDrawerOpen = () => {
 		this.setState({ open: true });

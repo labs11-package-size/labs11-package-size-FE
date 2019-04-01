@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import Product from './Product';
 
-const styles = {
+const styles = theme => ({
 	card: {
 		maxWidth: 250,
 		margin: 20,
@@ -21,11 +21,23 @@ const styles = {
 	mainContainer: {
 		maxWidth: 1100,
 	},
-};
+	submit: {
+		marginTop: theme.spacing.unit * 3,
+		backgroundColor: '#72BDA2',
+		color: 'white',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+			border: 'solid 5px #72BDA2',
+		},
+	},
+});
 
 class ProductList extends Component {
+	productAdd = () => {
+		return <Redirect to="/product/add" />;
+	};
 	render() {
-		console.log(this.props);
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
@@ -46,9 +58,9 @@ class ProductList extends Component {
 						);
 					})
 				)}
-				<Link to="/products/form">
-					<Button size="small">Add Product</Button>
-				</Link>
+				<Button variant="contained" className={classes.submit} size="small">
+					Add Product
+				</Button>
 			</div>
 		);
 	}

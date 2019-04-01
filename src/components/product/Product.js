@@ -11,8 +11,8 @@ import Button from '@material-ui/core/Button';
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import ShipmentInputView from '../../containers/shipmentView/ShipmentInputView';
-import ProductInputView from '../../containers/productView/productInputView';
+import ShipmentEditView from '../../containers/shipmentView/ShipmentAddView';
+import ProductEditView from '../../containers/productView/productAddView';
 import { deleteProduct } from '../../store/actions/productActions';
 
 const styles = theme => ({
@@ -69,35 +69,38 @@ function Product(props) {
 							Product Name: {props.product.name}
 						</Typography>
 					</div>
-					<div className={classes.column}>
-						<Typography className={classes.heading}>
-							Description: {props.product.productDescription}
-						</Typography>
-					</div>
+					<Typography className={classes.heading}>
+						Value: {props.product.value}
+					</Typography>
 				</ExpansionPanelSummary>
 				<ExpansionPanelDetails className={classes.details}>
 					<div className={classes.column} />
 				</ExpansionPanelDetails>
 
 				<ExpansionPanelActions>
-					<div className={classes.column}>
-						<Typography className={classes.heading}>
+					{/* <Typography className={classes.heading}>
 							Length: {props.product.length}
-						</Typography>
-						<Typography className={classes.heading}>
+							</Typography>
+							<Typography className={classes.heading}>
 							Width: {props.product.width}
-						</Typography>
-						<Typography className={classes.heading}>
+							</Typography>
+							<Typography className={classes.heading}>
 							Height: {props.product.height}
-						</Typography>
-						<Typography className={classes.heading}>
+							</Typography>
+							<Typography className={classes.heading}>
 							Fragile: {props.product.fragile}
-						</Typography>
+						</Typography> */}
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							margin: '10px',
+						}}>
 						<Typography className={classes.heading}>
 							Weight: {props.product.weight}
 						</Typography>
 						<Typography className={classes.heading}>
-							Value: {props.product.value}
+							Description: {props.product.productDescription}
 						</Typography>
 					</div>
 					<Link to="/shipments/form">
@@ -105,12 +108,10 @@ function Product(props) {
 					</Link>
 
 					<Button size="small" color="primary">
-						<span onClick={() => props.deleteProduct(props.product.uuid)}>
-							Delete
-						</span>
+						<span onClick={event => console.log(event)}>Delete</span>
 					</Button>
 				</ExpansionPanelActions>
-				<ProductInputView
+				<ProductEditView
 					productUuid={props.product.uuid}
 					default={props.product}
 				/>
