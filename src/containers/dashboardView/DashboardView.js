@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Dashboard from '../../components/dashboard/Dashboard';
+import { getAuth } from '../../store/actions/userActions';
+import { connect } from 'react-redux';
 
-const DashboardView = () => {
-	return (
-		<div>
-			<Dashboard />
-		</div>
-	);
+class DashboardView extends Component {
+	componentDidMount() {
+		this.props.getAuth();
+	}
+	render() {
+		return (
+			<div>
+				<Dashboard />
+			</div>
+		);
+	}
+}
+
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: state.userReducer.isLoggedIn,
+	};
 };
 
-export default DashboardView;
+export default connect(
+	mapStateToProps,
+	{ getAuth },
+)(DashboardView);

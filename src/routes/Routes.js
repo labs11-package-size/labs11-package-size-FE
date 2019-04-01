@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import ProductListView from '../components/product/ProductList';
 import ProductInputView from '../containers/productView/productInputView';
@@ -11,47 +10,33 @@ import DashboardView from '../containers/dashboardView/DashboardView';
 import RegisterView from '../containers/registerView/RegisterView';
 import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/logoutView/LogoutView';
-import { getAuth } from '../store/actions/userActions';
-import Auth from '../hoc/auth/Auth';
+import { connect } from 'react-redux';
 
 class Routes extends Component {
 	render() {
 		let routes;
 
-		if (this.props.isAuthenticated) {
+		if (this.props.isLoggedIn) {
 			routes = (
 				<Switch>
 					<Redirect from="/login" to="/" />
 					<Redirect from="/register" to="/" />
-					<Route path="/logout" component={LogoutView} />
-					<Route
-						path="/shipments/form"
-						render={props => <ShipmentInputView {...props} />}
-					/>
-					<Route
-						path="/products/form"
-						render={props => <ProductInputView {...props} />}
-					/>
-					<Route
-						path="/shipments"
-						render={props => <ShipmentListView {...props} />}
-					/>
-					<Route
-						path="/products"
-						render={props => (
-							<ProductListView {...props} searchTerm={props.searchTerm} />
-						)}
-					/>
-					<Route path="/account" render={props => <AccountView {...props} />} />
-					<Route path="/" render={props => <DashboardView {...props} />} />
+					<Route exact path="/logout" component={LogoutView} />
+					<Route exact path="/shipments/form" component={ShipmentInputView} />
+					<Route exact path="/products/form" component={ProductInputView} />
+					<Route exact path="/shipments" component={ShipmentListView} />
+					<Route exact path="/products" component={ProductListView} />
+					<Route exact path="/account" component={AccountView} />
+					<Route exact path="/" component={DashboardView} />
 				</Switch>
 			);
 		} else {
 			routes = (
 				<Switch>
 					<Redirect exact from="/" to="/login" />
-					<Route path="/login" component={LoginView} />
-					<Route path="/register" component={RegisterView} />
+
+					<Route exact path="/login" component={LoginView} />
+					<Route exact path="/register" component={RegisterView} />
 					<Redirect to="/login" />
 				</Switch>
 			);
@@ -60,14 +45,13 @@ class Routes extends Component {
 		return <div>{routes}</div>;
 	}
 }
-
 const mapStateToProps = state => {
 	return {
-		isAuthenticated: state.userReducer.authenticated,
+		isLoggedIn: state.userReducer.isLoggedIn,
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	{ getAuth },
+	{},
 )(Routes);

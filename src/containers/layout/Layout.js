@@ -17,19 +17,18 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-
-import { getAuth } from '../../store/actions/userActions';
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
-import Auth from '../../hoc/auth/Auth';
+import { connect } from 'react-redux';
+import { getAuth } from '../../store/actions/userActions';
 
 const drawerWidth = 240;
 
 const styles = theme => ({
 	root: {
 		display: 'flex',
+		fontFamily: '"Lato", sans-serif',
 	},
 	toolbar: {
 		paddingRight: 24, // keep right padding when drawer closed
@@ -45,6 +44,7 @@ const styles = theme => ({
 		...theme.mixins.toolbar,
 	},
 	appBar: {
+		backgroundColor: '#F2F3F4',
 		zIndex: theme.zIndex.drawer + 1,
 		transition: theme.transitions.create(['width', 'margin'], {
 			easing: theme.transitions.easing.sharp,
@@ -103,6 +103,7 @@ const styles = theme => ({
 	menuButton: {
 		marginLeft: 12,
 		marginRight: 36,
+		backgroundColor: '#72BDA2',
 	},
 	menuButtonHidden: {
 		display: 'none',
@@ -154,12 +155,9 @@ const styles = theme => ({
 class Layout extends React.Component {
 	state = {
 		open: false,
-		searchTerm: '',
+		isLoggedIn: false,
+		uuid: null,
 	};
-
-	componentDidMount() {
-		this.props.getAuth();
-	}
 
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
@@ -175,6 +173,33 @@ class Layout extends React.Component {
 		});
 	};
 
+	buttonLink = () => {
+		if (this.props.isLoggedIn) {
+			return (
+				<Link
+					style={{
+						textDecoration: 'none',
+						color: '0D2C54',
+						borderRadius: '50px',
+					}}
+					to="/logout">
+					<Button color="inherit">Logout</Button>
+				</Link>
+			);
+		} else {
+			return (
+				<Link
+					style={{
+						textDecoration: 'none',
+						color: '0D2C54',
+						borderRadius: '50px',
+					}}
+					to="/login">
+					<Button color="inherit">Login</Button>
+				</Link>
+			);
+		}
+	};
 	render() {
 		const { classes } = this.props;
 
@@ -210,7 +235,7 @@ class Layout extends React.Component {
 								noWrap>
 								ScannAR
 							</Typography>
-							{this.props.isAuthenticated ? (
+							{this.props.isLoggedIn ? (
 								<div className={classes.search}>
 									<div className={classes.searchIcon}>
 										<SearchIcon />
@@ -226,11 +251,7 @@ class Layout extends React.Component {
 									/>
 								</div>
 							) : null}
-							<Link
-								style={{ textDecoration: 'none', color: 'white' }}
-								to="/login">
-								<Button color="inherit">Login</Button>
-							</Link>
+							{this.buttonLink()}
 						</div>
 					</Toolbar>
 				</AppBar>
@@ -253,7 +274,7 @@ class Layout extends React.Component {
 				</Drawer>
 				<main className={classes.content}>
 					<div className={classes.appBarSpacer} />
-					<Routes product={this.state.searchTerm} />
+					<Routes />
 					<Footer />
 				</main>
 			</div>
@@ -266,13 +287,10 @@ Layout.propTypes = {
 };
 
 const mapStateToProps = state => {
-	return {
-		isAuthenticated: state.userReducer.authenticated,
-		isLoggedIn: state.userReducer.isLoggedIn,
-	};
+	return { isLoggedIn: state.userReducer.isLoggedIn };
 };
 
 export default connect(
 	mapStateToProps,
 	{ getAuth },
-)(withStyles(styles)(Auth(Layout)));
+)(withStyles(styles)(Layout));

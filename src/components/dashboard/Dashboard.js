@@ -26,16 +26,12 @@ const styles = {
 };
 
 class Dashboard extends Component {
-	componentDidMount() {
-		this.props.getProducts();
-		this.props.getShipments();
-	}
 	render() {
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
-				<ProductListView products={this.props.products} />
-				<ShipmentListView shipments={this.props.shipments} />
+				<ProductListView />
+				<ShipmentListView />
 			</div>
 		);
 	}
@@ -46,10 +42,7 @@ Dashboard.propTypes = {
 };
 
 const mapStateToProps = state => {
-	return {
-		products: state.productReducer.products,
-		shipments: state.shipmentReducer.shipments,
-	};
+	return {};
 };
 
 export default connect(

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { connect } from 'react-redux';
 
 import Shipment from './Shipment';
-import { getShipments } from '../../store/actions/shipmentActions';
 
 const styles = {
 	card: {
@@ -24,10 +22,6 @@ const styles = {
 };
 
 class ShipmentList extends Component {
-	componentDidMount() {
-		this.props.getShipments();
-	}
-
 	render() {
 		const { classes } = this.props;
 		return (
@@ -35,11 +29,10 @@ class ShipmentList extends Component {
 				<Typography gutterBottom variant="h5" component="h2">
 					Shipments
 				</Typography>
-				{!this.props.shipments ? ( //shipments plural
+				{!this.props.shipments ? ( 
 					<h5>...loading</h5>
 				) : (
 					this.props.shipments.map(shipment => {
-						//shipments plural
 						return <Shipment key={shipment.identifier} shipment={shipment} />;
 					})
 				)}
@@ -48,13 +41,4 @@ class ShipmentList extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		shipments: state.shipmentReducer.shipments, //shipments plural
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	{ getShipments },
-)(withStyles(styles)(ShipmentList));
+export default withStyles(styles)(ShipmentList);

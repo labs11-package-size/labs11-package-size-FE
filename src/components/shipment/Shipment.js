@@ -9,6 +9,7 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
 	root: {
@@ -86,9 +87,11 @@ const Shipment = props => {
 							Status: {props.shipment.status}
 						</Typography>
 					</div>
-					<Button size="small" color="primary">
-						Edit
-					</Button>
+					<Link to="/shipments/form">
+						<Button size="small" color="primary">
+							Edit Shipment Info
+						</Button>
+					</Link>
 				</ExpansionPanelActions>
 			</ExpansionPanel>
 		</div>

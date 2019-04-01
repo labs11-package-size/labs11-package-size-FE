@@ -44,11 +44,33 @@ export const getProducts = () => dispatch => {
 export const addProduct = newProd => dispatch => {
 	dispatch({ type: ADDING_PRODUCT });
 	axios
-		.post('/add', newProd)
+		.post('/products/add', newProd)
 		.then(res =>
 			dispatch({ type: ADDING_PRODUCT_SUCCESSFUL, payload: res.data }),
 		)
 		.catch(err =>
 			dispatch({ type: ADDING_PRODUCT_FAILURE, payload: err.data }),
+		);
+};
+
+export const editProduct = (uuid, product) => dispatch => {
+	dispatch({ type: EDITING_PRODUCT });
+	axios
+		.put(`/products/edit/${uuid}`, uuid, product)
+		.then(res =>
+			dispatch({ type: EDITING_PRODUCT_SUCCESSFUL, payload: res.data }),
+		)
+		.catch(err =>
+			dispatch({ type: EDITING_PRODUCT_FAILURE, payload: err.data }),
+		);
+};
+
+export const deleteProduct = uuid => dispatch => {
+	dispatch({ type: DELETING_PRODUCT });
+	axios
+		.delete(`/products/delete/${uuid}`)
+		.then(res => dispatch({ type: DELETING_PRODUCT_SUCCESSFUL, payload: uuid }))
+		.catch(err =>
+			dispatch({ type: DELETING_PRODUCT_FAILURE, payload: err.data }),
 		);
 };

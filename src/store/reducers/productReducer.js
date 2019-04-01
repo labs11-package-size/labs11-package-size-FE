@@ -29,12 +29,7 @@ const productReducer = (state = initialState, action) => {
 		case GETTING_PRODUCTS:
 			return {
 				...state,
-				products: [],
 				fetching: true,
-				editing: false,
-				deleting: false,
-				success: false,
-				failure: false,
 				error: null,
 			};
 		case GETTING_PRODUCTS_SUCCESSFUL:

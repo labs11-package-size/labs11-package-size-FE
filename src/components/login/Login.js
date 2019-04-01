@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -11,8 +11,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
 	main: {
@@ -36,7 +36,7 @@ const styles = theme => ({
 	},
 	avatar: {
 		margin: theme.spacing.unit,
-		backgroundColor: theme.palette.secondary.main,
+		backgroundColor: '#72BDA2',
 	},
 	form: {
 		width: '100%', // Fix IE 11 issue.
@@ -44,6 +44,13 @@ const styles = theme => ({
 	},
 	submit: {
 		marginTop: theme.spacing.unit * 3,
+		backgroundColor: '#72BDA2',
+		color: 'white',	
+		"&:hover": {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+			border: 'solid 5px #72BDA2',
+		}
 	},
 });
 
@@ -51,54 +58,56 @@ const Login = props => {
 	const { classes } = props;
 
 	return (
-		<main className={classes.main}>
-			<CssBaseline />
-			<Paper className={classes.paper}>
-				<Avatar className={classes.avatar}>
-					<LockOutlinedIcon />
-				</Avatar>
-				<Typography component="h1" variant="h5">
-					Sign in
-				</Typography>
-				<form onSubmit={props.loginSubmit} className={classes.form}>
-					<FormControl margin="normal" required fullWidth>
-						<InputLabel htmlFor="username">Username</InputLabel>
-						<Input
-							id="username"
-							value={props.username}
-							onChange={props.handleChange}
-							name="username"
-							autoComplete="username"
-							autoFocus
-						/>
-					</FormControl>
-					<FormControl margin="normal" required fullWidth>
-						<InputLabel htmlFor="password">Password</InputLabel>
-						<Input
-							onChange={props.handleChange}
-							value={props.password}
-							name="password"
-							type="password"
-							id="password"
-							autoComplete="current-password"
-						/>
-					</FormControl>
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="Remember me"
-					/>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}>
+		<div>
+			<main className={classes.main}>
+				<CssBaseline />
+				<Paper className={classes.paper}>
+					<Avatar className={classes.avatar}>
+						<LockOutlinedIcon />
+					</Avatar>
+					<Typography component="h1" variant="h5">
 						Sign in
-					</Button>
-					<Link to="/register">Register</Link>
-				</form>
-			</Paper>
-		</main>
+					</Typography>
+					<form onSubmit={props.loginSubmit} className={classes.form}>
+						<FormControl margin="normal" required fullWidth>
+							<InputLabel htmlFor="username">Username</InputLabel>
+							<Input
+								id="username"
+								value={props.username}
+								onChange={props.handleChange}
+								name="username"
+								autoComplete="username"
+								autoFocus
+							/>
+						</FormControl>
+						<FormControl margin="normal" required fullWidth>
+							<InputLabel htmlFor="password">Password</InputLabel>
+							<Input
+								onChange={props.handleChange}
+								value={props.password}
+								name="password"
+								type="password"
+								id="password"
+								autoComplete="current-password"
+							/>
+						</FormControl>
+						<FormControlLabel
+							control={<Checkbox value="remember" color="primary" />}
+							label="Remember me"
+						/>
+						<Button
+							onClick={props.handleLogin}
+							type="submit"
+							fullWidth
+							variant="contained"
+							className={classes.submit}>
+							Sign in
+						</Button>
+						<Link to="/register">Register</Link>
+					</form>
+				</Paper>
+			</main>
+		</div>
 	);
 };
 

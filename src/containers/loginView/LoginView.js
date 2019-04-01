@@ -1,59 +1,46 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { loginUser } from '../../store/actions/userActions';
-import { withRouter } from 'react-router-dom';
 import Login from '../../components/login/Login';
 
 class LoginView extends Component {
 	state = {
 		username: '',
+		email: '',
 		password: '',
-		error: '',
+		error: 'invalid credentials',
 	};
 
 	handleChanges = event => {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
-	loginSubmit = event => {
-		event.preventDefault();
-		const userStats = {
-			username: this.state.username,
-			password: this.state.password,
-		};
-		if (!this.state.password) {
-			this.setState({
-				error: 'You must enter a password to continue.',
-			});
-		} else {
-			this.props.loginUser(userStats);
-			return setTimeout(() => {
-				this.props.history.push('/');
-			}, 1000);
-		}
+	handleLogin = () => {
+		this.props.loginUser();
 	};
 
 	render() {
 		return (
 			<Login
-				handleChange={this.handleChanges}
-				loginSubmit={this.loginSubmit}
 				username={this.state.username}
 				password={this.state.password}
+				email={this.state.email}
+				error={this.state.error}
+				handleInputChange={this.handleChanges}
+				handleLogin={this.handleLogin}
 			/>
 		);
 	}
 }
 const mapStateToProps = state => {
 	return {
-		loggedIn: state.userReducer.isLoggedIn,
-		loggingIn: state.userReducer.isLoggingIn,
+		isLoggedIn: state.userReducer.isLoggedIn,
 	};
 };
 
-export default withRouter(
-	connect(
-		mapStateToProps,
-		{ loginUser },
-	)(LoginView),
-);
+export default connect(
+	mapStateToProps,
+	{ loginUser },
+)(withRouter(LoginView));

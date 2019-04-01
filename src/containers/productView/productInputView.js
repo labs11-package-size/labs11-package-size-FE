@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addProduct, editProduct } from '../../store/actions/productActions';
 
-import { addProduct } from '../../store/actions/productActions';
 import ProductInput from '../../components/product/ProductInput';
 
 class ProductInputView extends Component {
 	state = {
 		product: {
-			name: '',
-			description: '',
-			weight: '',
-			length: '',
-			width: '',
-			height: '',
-			fragile: null,
-			value: '',
+			name: this.props.default.name,
+			productDescription: this.props.default.productDescription,
+			weight: this.props.default.weight,
+			length: this.props.default.length,
+			width: this.props.default.width,
+			height: this.props.default.height,
+			fragile: this.props.default.fragile,
+			value: this.props.default.value,
 		},
+		currentProduct: this.props.productUuid,
 		isEditing: false,
 	};
 
@@ -23,24 +24,41 @@ class ProductInputView extends Component {
 		this.setState({
 			product: {
 				...this.state.product,
-				[event.target.name]: event.target.value,
+				[event.target.name]: event.target.defaultValue,
 			},
 		});
 	};
 
 	addProduct = () => {
 		this.props.addProduct(this.state.product);
+		this.setState({
+			product: {
+				name: '',
+				productDescription: '',
+				weight: '',
+				length: '',
+				width: '',
+				height: '',
+				fragile: false,
+				value: '',
+			},
+			isEditing: false,
+		});
 	};
 
-	// editProduct = () => {
-
-	// }
+	editProduct = () => {
+		this.props.editProduct(this.state.currentProduct, this.state.product);
+		this.setState({
+			isEditing: false,
+		});
+	};
 
 	render() {
 		return (
 			<div>
 				<ProductInput
 					addProduct={this.addProduct}
+					editProduct={this.editProduct}
 					handleChange={this.handleInputChange}
 					product={this.state.product}
 					isEditing={this.state.isEditing}
@@ -50,11 +68,9 @@ class ProductInputView extends Component {
 	}
 }
 const mapStateToProps = state => {
-	return {
-		shipments: state.shipmentReducer.shipments,
-	};
+	return { success: state.productReducer.success };
 };
 export default connect(
 	mapStateToProps,
-	{ addProduct },
+	{ addProduct, editProduct },
 )(ProductInputView);

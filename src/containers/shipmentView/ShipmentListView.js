@@ -1,8 +1,25 @@
-import React from 'react';
-import ShipmentList from '../../components/shipment/ShipmentList';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-const ShipmentListView = () => {
-	return <ShipmentList />;
+import ShipmentList from '../../components/shipment/ShipmentList';
+import { getShipments } from '../../store/actions/shipmentActions';
+
+class ShipmentListView extends Component {
+	componentDidMount() {
+		this.props.getShipments();
+	}
+	render() {
+		return <ShipmentList shipments={this.props.shipments} />;
+	}
+}
+
+const mapStateToProps = state => {
+	return {
+		shipments: state.shipmentReducer.shipments,
+	};
 };
 
-export default ShipmentListView;
+export default connect(
+	mapStateToProps,
+	{ getShipments },
+)(ShipmentListView);
