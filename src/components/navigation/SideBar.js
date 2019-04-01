@@ -8,13 +8,12 @@ import Eject from '@material-ui/icons/Eject';
 import Queue from '@material-ui/icons/Queue';
 import { Link, Redirect } from 'react-router-dom';
 import { firebase } from '../../firebase';
-import { withStyles } from '@material-ui/core/styles';
 
 
 export const SideBar = (
 	<div>
 		<Link to="/account">
-			<ListItem button style={{ color: '#72BDA2'}}>
+			<ListItem button>
 				<ListItemIcon>
 					<Person />
 				</ListItemIcon>

@@ -33,11 +33,10 @@ class ShipmentList extends Component {
 				<Typography gutterBottom variant="h5" component="h2">
 					Shipments
 				</Typography>
-				{!this.props.shipments ? ( //shipments plural
+				{!this.props.shipments ? ( 
 					<h5>...loading</h5>
 				) : (
 					this.props.shipments.map(shipment => {
-						//shipments plural
 						return <Shipment key={shipment.identifier} shipment={shipment} />;
 					})
 				)}
