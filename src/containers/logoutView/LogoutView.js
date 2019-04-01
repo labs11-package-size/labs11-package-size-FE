@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { logoutUser, getAuth } from '../../store/actions/userActions';
+import Logout from '../../components/logout/Logout';
+import { connect } from 'react-redux';
 
-const LogoutView = props => (
-	<div>
-		Sorry to see you go.
-		{setTimeout(() => {
-			props.history.push('/login');
-		}, 2000)}
-	</div>
-);
+class LogoutView extends Component {
+	render() {
+		const redir = () => {
+			this.props.logoutUser();
+			setTimeout(() => {
+				this.props.history.push('/login');
+			}, 2000);
+		};
+		return (
+			<div>
+				<Logout redir={redir} />
+			</div>
+		);
+	}
+}
 
-export default LogoutView;
+const mapStateToProps = state => {
+	return {
+		loggedOut: state.userReducer.isLoggedOut,
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ logoutUser, getAuth },
+)(LogoutView);

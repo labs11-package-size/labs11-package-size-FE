@@ -7,9 +7,15 @@ import Person from '@material-ui/icons/Person';
 import Eject from '@material-ui/icons/Eject';
 import Queue from '@material-ui/icons/Queue';
 import { Link, Redirect } from 'react-router-dom';
+import { logoutUser } from '../../store/actions/userActions';
+import { connect } from 'react-redux';
 import { firebase } from '../../firebase';
 
 
+
+const logoutBtn = props => {
+	props.logoutUser();
+};
 export const SideBar = (
 	<div>
 		<Link to="/account">
@@ -39,18 +45,21 @@ export const SideBar = (
 		<Link to="/logout">
 			<ListItem button>
 				<ListItemIcon>
-					<Eject
-						onClick={() => {
-							firebase
-								.auth()
-								.signOut()
-								.then(<Redirect to="/login" />)
-								.catch(err => console.log(err));
-						}}
-					/>
+					<Eject onClick={props => props.logoutUser} />
 				</ListItemIcon>
 				<ListItemText primary="Logout" />
 			</ListItem>
 		</Link>
 	</div>
 );
+
+const mapStateToProps = state => {
+	return {
+		loggedOut: state.userReducer.isLoggedOut,
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ logoutUser },
+)(logoutBtn);

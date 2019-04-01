@@ -20,14 +20,10 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/Footer';
 import Routes from '../../routes/Routes';
 import { SideBar } from '../../components/navigation/SideBar';
-import { firebase } from '../../firebase';
-import { Redirect } from 'react-router-dom';
-
-import { createMuiTheme } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { getAuth } from '../../store/actions/userActions';
 
 const drawerWidth = 240;
-
-
 
 const styles = theme => ({
 	root: {
@@ -163,22 +159,6 @@ class Layout extends React.Component {
 		uuid: null,
 	};
 
-	componentDidMount() {
-		firebase.auth().onAuthStateChanged(user => {
-			if (user) {
-				this.setState({
-					isLoggedIn: true,
-					uuid: user.uid,
-				});
-			} else {
-				this.setState({
-					isLoggedIn: true,
-					uuid: null,
-				});
-			}
-		});
-	}
-
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
 	};
@@ -194,23 +174,33 @@ class Layout extends React.Component {
 	};
 
 	buttonLink = () => {
-		if (this.state.isLoggedIn) {
+		if (this.props.isLoggedIn) {
 			return (
-				<Link style={{ textDecoration: 'none', color: '0D2C54', borderRadius: '50px' }} to="/logout">
+				<Link
+					style={{
+						textDecoration: 'none',
+						color: '0D2C54',
+						borderRadius: '50px',
+					}}
+					to="/logout">
 					<Button color="inherit">Logout</Button>
 				</Link>
 			);
 		} else {
 			return (
-				<Link style={{ textDecoration: 'none', color: '0D2C54', borderRadius: '50px' }} to="/login">
+				<Link
+					style={{
+						textDecoration: 'none',
+						color: '0D2C54',
+						borderRadius: '50px',
+					}}
+					to="/login">
 					<Button color="inherit">Login</Button>
 				</Link>
 			);
 		}
 	};
 	render() {
-		console.log('layout render', this.state);
-
 		const { classes } = this.props;
 
 		return (
@@ -241,11 +231,11 @@ class Layout extends React.Component {
 							<Typography
 								className={classes.title}
 								variant="h6"
-								color="0D2C54"
+								color="inherit"
 								noWrap>
 								ScannAR
 							</Typography>
-							{this.state.isLoggedIn ? (
+							{this.props.isLoggedIn ? (
 								<div className={classes.search}>
 									<div className={classes.searchIcon}>
 										<SearchIcon />
@@ -296,4 +286,11 @@ Layout.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Layout);
+const mapStateToProps = state => {
+	return { isLoggedIn: state.userReducer.isLoggedIn };
+};
+
+export default connect(
+	mapStateToProps,
+	{ getAuth },
+)(withStyles(styles)(Layout));

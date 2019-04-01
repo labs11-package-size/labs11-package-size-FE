@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
 	container: {
@@ -21,12 +22,12 @@ const ProductInput = props => {
 	const { classes } = props;
 	const handleClick = event => {
 		event.preventDefault();
-		if (!props.isEditing) {
-			props.addProduct();
+		if (props.isEditing) {
+			props.handleEditSubmit();
 		} else {
-			// props.editProduct()
+			props.addProduct();
 		}
-		props.history.push('/dashboard');
+		props.history.push('/');
 	};
 
 	return (
@@ -34,7 +35,7 @@ const ProductInput = props => {
 			<Input
 				onChange={props.handleChange}
 				name="name"
-				value={props.product.name}
+				// value={props.product.name}
 				placeholder="Product Name"
 				className={classes.input}
 				inputProps={{
@@ -45,7 +46,7 @@ const ProductInput = props => {
 			<Input
 				onChange={props.handleChange}
 				name="description"
-				value={props.product.description}
+				value={props.product.productDescription}
 				placeholder="Description"
 				className={classes.input}
 				inputProps={{
@@ -56,7 +57,7 @@ const ProductInput = props => {
 			<Input
 				onChange={props.handleChange}
 				name="height"
-				value={props.product.height}
+				// value={props.product.height}
 				placeholder="Height"
 				className={classes.input}
 				inputProps={{
@@ -67,7 +68,7 @@ const ProductInput = props => {
 			<Input
 				onChange={props.handleChange}
 				name="length"
-				value={props.product.length}
+				// value={props.product.length}
 				placeholder="Length"
 				className={classes.input}
 				inputProps={{
@@ -94,7 +95,7 @@ const ProductInput = props => {
 					'aria-label': 'Description',
 				}}
 			/>
-			<Button onClick={handleClick} size="small">
+			<Button onClick={props.editProduct} size="small">
 				Submit
 			</Button>
 		</form>
@@ -105,4 +106,4 @@ ProductInput.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductInput);
+export default withRouter(withStyles(styles)(ProductInput));

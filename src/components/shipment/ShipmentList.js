@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { connect } from 'react-redux';
 
 import Shipment from './Shipment';
-import { getShipments } from '../../store/actions/shipmentActions';
 
 const styles = {
 	card: {
@@ -24,8 +22,6 @@ const styles = {
 };
 
 class ShipmentList extends Component {
-	componentDidMount() {}
-
 	render() {
 		const { classes } = this.props;
 		return (
@@ -45,11 +41,4 @@ class ShipmentList extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {};
-};
-
-export default connect(
-	mapStateToProps,
-	{ getShipments },
-)(withStyles(styles)(ShipmentList));
+export default withStyles(styles)(ShipmentList);
