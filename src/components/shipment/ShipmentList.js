@@ -11,7 +11,13 @@ class ShipmentList extends Component {
 				) : (
 					this.props.shipments.map(shipment => {
 						//shipments plural
-						return <Shipment key={shipment.identifier} shipment={shipment} />;
+						return (
+							<Shipment
+								deleteShipment={() => this.props.deleteShipment(shipment.uuid)}
+								key={shipment.identifier}
+								shipment={shipment}
+							/>
+						);
 					})
 				)}
 			</div>

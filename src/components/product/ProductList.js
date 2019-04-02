@@ -9,11 +9,10 @@ const ProductList = props => {
 				<h5>...loading</h5>
 			) : (
 				props.products.map(p => {
-					console.log(p.uuid);
 					return (
 						<Product
 							// editProduct={props.editProduct(p.uuid, p)}
-							deleteProduct={props => props.deleteProduct(p.uuid)}
+							deleteProduct={props.deleteProduct}
 							key={p.identifier}
 							product={p}
 						/>

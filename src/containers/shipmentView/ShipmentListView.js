@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
 
 import ShipmentList from '../../components/shipment/ShipmentList';
-import { getShipments } from '../../store/actions/shipmentActions';
+import {
+	getShipments,
+	addShipment,
+	deleteShipment,
+} from '../../store/actions/shipmentActions';
 
 const styles = {
 	card: {
@@ -27,6 +33,14 @@ class ShipmentListView extends Component {
 	componentDidMount() {
 		this.props.getShipments();
 	}
+	addShipment = (tracId, prodId) => {
+		this.props.addShipment(tracId, prodId);
+		return <Redirect to="/" />;
+	};
+	deleteShipment = uuid => {
+		this.props.deleteShipment(uuid);
+		return <Redirect to="/" />;
+	};
 	render() {
 		const { classes } = this.props;
 		return (
@@ -34,7 +48,14 @@ class ShipmentListView extends Component {
 				<Typography gutterBottom variant="h5" component="h2">
 					Shipments
 				</Typography>
-				<ShipmentList shipments={this.props.shipments} />
+				<ShipmentList
+					addShipment={this.addShipment}
+					deleteShipment={this.deleteShipment}
+					shipments={this.props.shipments}
+				/>
+				<Button variant="contained" className={classes.submit} size="small">
+					Add Product
+				</Button>
 			</div>
 		);
 	}
@@ -48,5 +69,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getShipments },
+	{ getShipments, addShipment, deleteShipment },
 )(withStyles(styles)(ShipmentListView));

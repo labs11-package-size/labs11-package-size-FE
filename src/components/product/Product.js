@@ -107,14 +107,17 @@ function Product(props) {
 						<Button size="small">Add Shipment</Button>
 					</Link>
 
-					<Button onClick={props.deleteProduct} size="small" color="primary">
+					<Button
+						onClick={() => props.deleteProduct(props.product.uuid)}
+						size="small"
+						color="primary">
 						Delete
 					</Button>
 				</ExpansionPanelActions>
-				{/* <ProductEditView
+				<ProductEditView
 					productUuid={props.product.uuid}
 					default={props.product}
-				/> */}
+				/>
 			</ExpansionPanel>
 		</div>
 	);
@@ -124,13 +127,4 @@ Product.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
-	return {
-		products: state.productReducer.products,
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	{ deleteProduct },
-)(withStyles(styles)(Product));
+export default withStyles(styles)(Product);

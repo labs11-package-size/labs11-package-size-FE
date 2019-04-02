@@ -12,9 +12,9 @@ export const ADDING_SHIPMENT_FAILURE = 'ADDING_SHIPMENT_FAILURE';
 // export const EDITING_SHIPMENT_SUCCESSFUL = 'EDITING_SHIPMENT_SUCCESSFUL';
 // export const EDITING_SHIPMENT_FAILURE = 'EDITING_SHIPMENT_FAILURE';
 
-// export const DELETING_SHIPMENT = 'DELETING_SHIPMENT';
-// export const DELETING_SHIPMENT_SUCCESSFUL = 'DELETING_SHIPMENT_SUCCESSFUL';
-// export const DELETING_SHIPMENT_FAILURE = 'DELETING_SHIPMENT_FAILURE';
+export const DELETING_SHIPMENT = 'DELETING_SHIPMENT';
+export const DELETING_SHIPMENT_SUCCESSFUL = 'DELETING_SHIPMENT_SUCCESSFUL';
+export const DELETING_SHIPMENT_FAILURE = 'DELETING_SHIPMENT_FAILURE';
 
 export const addShipment = (trackingNumber, productId) => dispatch => {
 	dispatch({ type: ADDING_SHIPMENT });
@@ -49,10 +49,14 @@ export const getShipments = () => dispatch => {
 // // 		.catch(err => dispatch({ type: EDITING_SHIPMENT_FAILURE, payload: err.data }))
 // // };
 
-// // export const deleteShipment = uuid => dispatch {
-// // 	dispatch({ type: DELETING_SHIPMENT})
-// // 	axios
-// // 		.delete(`/shipments/delete/${uuid}`, uuid)
-// // 		.then(res => dispatch({ type: DELETING_SHIPMENT_SUCCESSFUL, payload: uuid }))
-// // 		.catch(err => dispatch({ type: DELETING_SHIPMENT_FAILURE, payload: err.data }))
-// // };
+export const deleteShipment = uuid => dispatch => {
+	dispatch({ type: DELETING_SHIPMENT });
+	axios
+		.delete(`/shipments/delete/${uuid}`, uuid)
+		.then(res =>
+			dispatch({ type: DELETING_SHIPMENT_SUCCESSFUL, payload: uuid }),
+		)
+		.catch(err =>
+			dispatch({ type: DELETING_SHIPMENT_FAILURE, payload: err.data }),
+		);
+};

@@ -9,7 +9,7 @@ import ProductList from '../../components/product/ProductList';
 import {
 	getProducts,
 	addProduct,
-	// editProduct,
+	editProduct,
 	deleteProduct,
 } from '../../store/actions/productActions';
 
@@ -44,17 +44,20 @@ class ProductListView extends Component {
 	componentDidMount() {
 		this.props.getProducts();
 	}
-	productAdd = () => {
+
+	productAdd = prod => {
+		this.props.addProduct(prod);
 		return <Redirect to="/product/add" />;
 	};
-	productDelete = id => {
+
+	deleteProduct = id => {
 		this.props.deleteProduct(id);
 		return <Redirect to="/products" />;
 	};
-	// productEdit = (id, prod) => {
-	// 	const updated = {}
-	// 	return <Redirect to="/product/add" />;
-	// };
+	editProduct = (id, prod) => {
+		this.props.editProduct(id, prod);
+		return <Redirect to="/" />;
+	};
 	render() {
 		const { classes } = this.props;
 		return (
@@ -83,5 +86,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getProducts, addProduct, deleteProduct },
+	{ getProducts, addProduct, editProduct, deleteProduct },
 )(withStyles(styles)(ProductListView));
