@@ -18,6 +18,7 @@ class DashboardView extends Component {
 
 const mapStateToProps = state => {
 	return {
+		userInfo: state.userReducer.userInfo,
 		isLoggedIn: state.userReducer.isLoggedIn,
 	};
 };
