@@ -13,10 +13,14 @@ export const DELETING_SHIPMENT_SUCCESSFUL = 'DELETING_SHIPMENT_SUCCESSFUL';
 export const DELETING_SHIPMENT_FAILURE = 'DELETING_SHIPMENT_FAILURE';
 
 export const addShipment = (trackingNumber, productId) => dispatch => {
+	const trackingRequest = {
+		trackingNumber,
+		productId,
+	};
 	dispatch({ type: ADDING_SHIPMENT });
 
 	axios
-		.add('/shipments/add', trackingNumber, productId)
+		.post('/shipments/add', trackingRequest)
 		.then(res =>
 			dispatch({ type: ADDING_SHIPMENT_SUCCESSFUL, payload: res.data }),
 		)

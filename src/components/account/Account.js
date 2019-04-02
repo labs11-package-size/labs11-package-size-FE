@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Link, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-
-import { getAccountInfo, editUser } from '../../store/actions/userActions';
 
 const styles = theme => ({
 	root: {
@@ -48,56 +44,35 @@ const styles = theme => ({
 	},
 });
 
-
-
-// function Account(props) {
-// 	const { classes } = this.props;
-// 	//const { uid, displayName, email } = this.props.userInfo;
-// 	return (
-// 	<div className={classes.column}>
-// 		<Typography gutterBottom variant="h5" component="h2">
-// 			User Account
-// 		</Typography>
-// 		<Typography className={classes.heading}>
-// 			User ID: {uid}
-			
-// 		</Typography>
-// 	</div>
-// 	)
-// }
-	
-
-
 function Account(props) {
-	console.log(props);
 	const { classes } = props;
 	return (
-		<div className={classes.root}>
-			<div className={classes.column}>
-			<Typography gutterBottom variant="h5" component="h2">
-				User Account
-			</Typography>
-			<Typography className={classes.heading}>
-				User ID: {props.uid}
-			</Typography>
-			<Typography className={classes.heading}>
-				Display Name: {props.displayName}
-			</Typography>
-			<Typography className={classes.heading}>
-				Email Address: {props.email}
-			</Typography>
-			{/* photoURL */}
-			</div>
-		<Button size="small" color="primary">
-			<span onClick={() => props.editUser(this.userInfo)}>
-				Edit
-			</span>
-		</Button>
+		<div>
+			{!props.user ? (
+				<div>...Loading</div>
+			) : (
+				<div className={classes.root}>
+					<div className={classes.column}>
+						<Typography gutterBottom variant="h5" component="h2">
+							User Account
+						</Typography>
+						<Typography className={classes.heading}>
+							Display Name: {props.user.displayName}
+						</Typography>
+
+						<Typography className={classes.heading}>
+							Email Address: {props.user.email}
+						</Typography>
+						{/* photoURL */}
+					</div>
+					<Button size="small" color="primary">
+						<span onClick={() => props.editUser(this.userInfo)}>Edit</span>
+					</Button>
+				</div>
+			)}
 		</div>
-	)
+	);
 }
-
-
 
 Account.propTypes = {
 	classes: PropTypes.object.isRequired,
