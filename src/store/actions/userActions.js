@@ -24,6 +24,10 @@ export const AUTH_SUCCESSFUL = 'AUTH_SUCCESSFUL';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
+export const EDITING_USER = 'EDITING_USER';
+export const EDITING_USER_SUCCESSFUL = 'EDITING_USER_SUCCESSFUL';
+export const EDITING_USER_FAILURE = 'EDITING_USER_FAILURE';
+
 axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
 axios.interceptors.request.use(
 	function(options) {
@@ -91,24 +95,34 @@ export const logoutUser = () => dispatch => {
 		});
 };
 
+export const getAccountInfo = () => dispatch => {
+	dispatch({ type: GETTING_ACCOUNT });
+	axios
+		.get('users/accountinfo')
+		.then(res => {
+			dispatch({ type: GETTING_ACCOUNT_SUCCESSFUL, payload: res.data })
+			console.log(res, 'then reducer')
+		}
+		)
+		.catch(err =>
+			dispatch({ type: GETTING_ACCOUNT_FAILURE, payload: err.data }),
+		);
+};
+
+export const editUser = userInfo => dispatch => {
+	dispatch({ type: EDITING_USER });
+	axios
+		.put('/users/accountinfo/edit', userInfo)
+		.then(res => dispatch({ type: EDITING_USER_SUCCESSFUL}))
+		.catch(res => ({ type: EDITING_USER_FAILURE}))
+};
+
 // export const register = newUser => dispatch => {
 // 	dispatch({ type: USER_REGISTERING });
 // 	axios
-// 		.post(`${baseURL}/register`, newUser)
+// 		.post(`users/register`, newUser)
 // 		.then(res =>
 // 			dispatch({ type: USER_REGISTER_SUCCESSFUL, payload: res.data }),
 // 		)
 // 		.catch(err => dispatch({ type: USER_REGISTER_FAILURE, payload: err }));
-// };
-
-// export const getAccountInfo = () => dispatch => {
-// 	dispatch({ type: GETTING_ACCOUNT });
-// 	axios
-// 		.get(`${baseURL}/accountinfo`)
-// 		.then(res =>
-// 			dispatch({ type: GETTING_ACCOUNT_SUCCESSFUL, payload: res.data }),
-// 		)
-// 		.catch(err =>
-// 			dispatch({ type: GETTING_ACCOUNT_FAILURE, payload: err.data }),
-// 		);
 // };
