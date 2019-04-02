@@ -33,13 +33,19 @@ class ShipmentListView extends Component {
 	componentDidMount() {
 		this.props.getShipments();
 	}
+	componentDidUpdate(prevProps) {
+		// Typical usage (don't forget to compare props):
+		if (this.props.shipments.length !== prevProps.shipments.length) {
+			this.props.getShipments();
+		}
+	}
 	addShipment = (tracId, prodId) => {
 		this.props.addShipment(tracId, prodId);
 		return <Redirect to="/" />;
 	};
 	deleteShipment = uuid => {
 		this.props.deleteShipment(uuid);
-		return <Redirect to="/" />;
+		this.props.getShipments();
 	};
 	render() {
 		const { classes } = this.props;
@@ -54,7 +60,7 @@ class ShipmentListView extends Component {
 					shipments={this.props.shipments}
 				/>
 				<Button variant="contained" className={classes.submit} size="small">
-					Add Product
+					Add Shipment
 				</Button>
 			</div>
 		);

@@ -54,7 +54,7 @@ export const deleteShipment = uuid => dispatch => {
 	axios
 		.delete(`/shipments/delete/${uuid}`, uuid)
 		.then(res =>
-			dispatch({ type: DELETING_SHIPMENT_SUCCESSFUL, payload: uuid }),
+			dispatch({ type: DELETING_SHIPMENT_SUCCESSFUL, payload: res.data }),
 		)
 		.catch(err =>
 			dispatch({ type: DELETING_SHIPMENT_FAILURE, payload: err.data }),
