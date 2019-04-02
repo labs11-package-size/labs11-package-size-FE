@@ -8,12 +8,10 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
-import { Link, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-
-import ShipmentEditView from '../../containers/shipmentView/ShipmentAddView';
-import ProductEditView from '../../containers/productView/productAddView';
-import { deleteProduct } from '../../store/actions/productActions';
+import Input from '@material-ui/core/Input';
+import DeleteModal from '../modals/DeleteModal';
+import AddShipmentModal from '../modals/AddShimpentModal';
+import EditProductModal from '../modals/EditProductModal';
 
 const styles = theme => ({
 	root: {
@@ -104,18 +102,88 @@ function Product(props) {
 						</Typography>
 					</div>
 					{/* modal popup for tracking number will come here */}
-					<Button size="small">Add Shipment</Button>
-					<Button
-						onClick={() => props.deleteProduct(props.product.uuid)}
-						size="small"
-						color="primary">
-						Delete
-					</Button>
+					<AddShipmentModal>
+						<Button size="small">Add Shipment</Button>
+					</AddShipmentModal>
+					<DeleteModal>
+						<Button
+							onClick={() => props.deleteProduct(props.product.uuid)}
+							size="small"
+							color="primary">
+							Delete
+						</Button>
+					</DeleteModal>
 				</ExpansionPanelActions>
-				<ProductEditView
-					productUuid={props.product.uuid}
-					default={props.product}
-				/>
+				<EditProductModal>
+					<form className={classes.container}>
+						<Input
+							onChange={props.handleChange}
+							name="name"
+							// value={props.product.name}
+							placeholder="Product Name"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+
+						<Input
+							onChange={props.handleChange}
+							name="description"
+							value={props.product.productDescription}
+							placeholder="Description"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+
+						<Input
+							onChange={props.handleChange}
+							name="height"
+							// value={props.product.height}
+							placeholder="Height"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+
+						<Input
+							onChange={props.handleChange}
+							name="length"
+							// value={props.product.length}
+							placeholder="Length"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+						<Input
+							onChange={props.handleChange}
+							name="value"
+							value={props.product.value}
+							placeholder="Value"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+						<Input
+							onChange={props.handleChange}
+							name="weight"
+							value={props.product.weight}
+							placeholder="Weight"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+						<Button onClick={props.editProduct} size="small">
+							Submit
+						</Button>
+					</form>
+				</EditProductModal>
 			</ExpansionPanel>
 		</div>
 	);
