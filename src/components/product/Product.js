@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 
 import ShipmentEditView from '../../containers/shipmentView/ShipmentAddView';
 import ProductEditView from '../../containers/productView/productAddView';
-import { deleteProduct } from '../../store/actions/productActions';
+import DeleterModal from '../modals/deleteModal';
 
 const styles = theme => ({
 	root: {
@@ -105,12 +105,14 @@ function Product(props) {
 					</div>
 					{/* modal popup for tracking number will come here */}
 					<Button size="small">Add Shipment</Button>
-					<Button
-						onClick={() => props.deleteProduct(props.product.uuid)}
-						size="small"
-						color="primary">
-						Delete
-					</Button>
+					<DeleterModal>
+						<Button
+							onClick={() => props.deleteProduct(props.product.uuid)}
+							size="small"
+							color="primary">
+							Delete
+						</Button>
+					</DeleterModal>
 				</ExpansionPanelActions>
 				<ProductEditView
 					productUuid={props.product.uuid}
