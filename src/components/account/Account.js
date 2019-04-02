@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-
 const styles = theme => ({
 	root: {
 		width: '100%',
@@ -64,9 +63,7 @@ function Account(props) {
 				<Typography className={classes.heading}>
 					Address 2: {props.address2}
 				</Typography>
-				<Typography className={classes.heading}>
-					City: {props.city}
-				</Typography>
+				<Typography className={classes.heading}>City: {props.city}</Typography>
 				<Typography className={classes.heading}>
 					State: {props.state}
 				</Typography>
@@ -84,10 +81,6 @@ function Account(props) {
 			<Button size="small" color="primary">
 				Edit
 			</Button>
-			{/* <Link to={`/edit/${id}`}>
-            	<h4  className="edit-link">Edit</h4>
-          	</Link> */}
-
 		</div>
 	);
 }
