@@ -12,9 +12,13 @@ import {
 	AUTH_SUCCESSFUL,
 	AUTH_FAILURE,
 	AUTH_ERROR,
-	// GETTING_ACCOUNT,
-	// GETTING_ACCOUNT_SUCCESSFUL,
-	// GETTING_ACCOUNT_FAILURE,
+	GETTING_ACCOUNT,
+	GETTING_ACCOUNT_SUCCESSFUL,
+	GETTING_ACCOUNT_FAILURE,
+	EDITING_USER,
+	EDITING_USER_SUCCESSFUL,
+	EDITING_USER_FAILURE,
+
 } from '../actions/userActions';
 
 const initialState = {
@@ -29,6 +33,9 @@ const initialState = {
 	gettingUserInfo: false,
 	gotUserInfo: false,
 	registering: false,
+	editingUserInfo: false,
+	editingUserInfoSuccess: false,
+	editingUserInfoFailure: false,
 	error: null,
 };
 
@@ -102,6 +109,55 @@ const userReducer = (state = initialState, action) => {
 			};
 		case USER_LOGOUT_FAILURE:
 			return { ...state, error: action.payload };
+
+		case GETTING_ACCOUNT:
+			return {
+				isLoggedIn: true,
+				gettingUserInfo: true,
+				gotUserInfo: false,
+				error: null,
+			};
+		case GETTING_ACCOUNT_SUCCESSFUL:
+			return {
+				...state,
+				userInfo: action.payload,
+				gettingUserInfo: false,
+				gotUserInfo: true,
+				error: null,
+			};
+		case GETTING_ACCOUNT_FAILURE:
+			return {
+				...state,
+				isLoggedIn: true,
+				gettingUserInfo: false,
+				gotUserInfo: false,
+				error: action.payload,
+			};
+		
+		case EDITING_USER:
+			return {
+				...state,
+				editingUserInfo: true,
+				editingUserInfoSuccess: false,
+				editingUserInfoFailure: false,
+			};
+		case EDITING_USER_SUCCESSFUL:
+			return {
+				...state,
+				userInfo: action.payload,
+				editingUserInfo: false,
+				editingUserInfoSuccess: true,
+				editingUserInfoFailure: false,
+			}
+		case EDITING_USER_FAILURE:
+			return {
+				...state,
+				editingUserInfo: false,
+				editingUserInfoSuccess: false,
+				editingUserInfoFailure: true,
+				error: action.payload,
+			}
+
 		default:
 			return state;
 	}
@@ -140,35 +196,5 @@ const userReducer = (state = initialState, action) => {
 // 				error: action.payload,
 // 			};
 
-// 		case GETTING_ACCOUNT:
-// 			return {
-// 				...state,
-// 				isLoggedIn: true,
-// 				gettingUserInfo: true,
-// 				gotUserInfo: false,
-// 				error: null,
-// 			};
-// 		case GETTING_ACCOUNT_SUCCESSFUL:
-// 			return {
-// 				...state,
-// 				isLoggedIn: true,
-// 				userInfo: action.payload,
-// 				gettingUserInfo: false,
-// 				gotUserInfo: true,
-// 				error: null,
-// 			};
-// 		case GETTING_ACCOUNT_FAILURE:
-// 			return {
-// 				...state,
-// 				isLoggedIn: true,
-// 				gettingUserInfo: false,
-// 				gotUserInfo: false,
-// 				error: action.payload,
-// 			};
-
-// 		default:
-// 			return state;
-// 	}
-// };
 
 export default userReducer;
