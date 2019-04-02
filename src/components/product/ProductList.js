@@ -13,6 +13,7 @@ const ProductList = props => {
 						<Product
 							// editProduct={props.editProduct(p.uuid, p)}
 							deleteProduct={props.deleteProduct}
+							addShipment={props.addShipment}
 							key={p.identifier}
 							product={p}
 						/>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Shipment from './Shipment';
 
@@ -25,4 +26,4 @@ class ShipmentList extends Component {
 	}
 }
 
-export default ShipmentList;
+export default withRouter(ShipmentList);

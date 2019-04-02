@@ -24,8 +24,7 @@ class Routes extends Component {
 					<Redirect from="/login" to="/" />
 					<Redirect from="/register" to="/" />
 					<Route exact path="/logout" component={LogoutView} />
-					<Route exact path="/shipment/add" component={ShipmentEditView} />
-					<Route exact path="/shipment/edit" component={ShipmentAddView} />
+					<Route exact path="/shipment/add" component={ShipmentAddView} />
 					<Route exact path="/product/add" component={ProductEditView} />
 					<Route exact path="/product/edit" component={ProductAddView} />
 					<Route exact path="/shipments" component={ShipmentListView} />
