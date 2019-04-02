@@ -9,7 +9,6 @@ import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
 import ShipmentEditView from '../containers/shipmentView/ShipmentEditView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
 import DashboardView from '../containers/dashboardView/DashboardView';
-import RegisterView from '../containers/registerView/RegisterView';
 import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/logoutView/LogoutView';
 import { connect } from 'react-redux';
@@ -39,7 +38,6 @@ class Routes extends Component {
 					<Redirect exact from="/" to="/login" />
 
 					<Route exact path="/login" component={LoginView} />
-					<Route exact path="/register" component={RegisterView} />
 					<Redirect to="/login" />
 				</Switch>
 			);

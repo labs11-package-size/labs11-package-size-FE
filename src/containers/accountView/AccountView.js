@@ -14,7 +14,7 @@ class AccountView extends Component {
 		console.log(this.props)
 		return (
 			<div>
-				<Account />
+				<Account user={this.props.userInfo} />
 			</div>
 		);
 	}

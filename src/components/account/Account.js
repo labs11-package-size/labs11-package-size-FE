@@ -74,19 +74,16 @@ function Account(props) {
 	return (
 		<div className={classes.root}>
 			<div className={classes.column}>
-			<Typography gutterBottom variant="h5" component="h2">
-				User Account
-			</Typography>
-			<Typography className={classes.heading}>
-				User ID: {props.uid}
-			</Typography>
-			<Typography className={classes.heading}>
-				Display Name: {props.displayName}
-			</Typography>
-			<Typography className={classes.heading}>
-				Email Address: {props.email}
-			</Typography>
-			{/* photoURL */}
+				<Typography gutterBottom variant="h5" component="h2">
+					User Account
+				</Typography>
+				<Typography className={classes.heading}>
+					Display Name: {props.user.displayName}
+				</Typography>
+				<Typography className={classes.heading}>
+					Email Address: {props.user.email}
+				</Typography>
+				{/* photoURL */}
 			</div>
 		<Button size="small" color="primary">
 			<span onClick={() => props.editUser(this.userInfo)}>
@@ -96,8 +93,6 @@ function Account(props) {
 		</div>
 	)
 }
-
-
 
 Account.propTypes = {
 	classes: PropTypes.object.isRequired,
