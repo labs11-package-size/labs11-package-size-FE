@@ -18,7 +18,7 @@ const styles = theme => ({
 	},
 });
 
-const ProductInput = props => {
+const ProductAdd = props => {
 	const { classes } = props;
 	const handleClick = event => {
 		event.preventDefault();
@@ -102,8 +102,8 @@ const ProductInput = props => {
 	);
 };
 
-ProductInput.propTypes = {
+ProductAdd.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(ProductInput));
+export default withRouter(withStyles(styles)(ProductAdd));

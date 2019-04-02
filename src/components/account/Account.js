@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 
 import { getAccountInfo, editUser } from '../../store/actions/userActions';
 
-
 const styles = theme => ({
 	root: {
 		width: '100%',

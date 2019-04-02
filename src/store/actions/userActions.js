@@ -50,6 +50,8 @@ export const loginUser = () => dispatch => {
 				uid: res.user.uid,
 				displayName: res.user.displayName,
 				email: res.user.email,
+				accessToken: res.credential.accessToken,
+				idToken: res.credential.idToken,
 			};
 			axios
 				.post(`/users/login`, user)
