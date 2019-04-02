@@ -31,7 +31,7 @@ const styles = theme => ({
 	},
 });
 
-class DeleteModal extends React.Component {
+class EditProductModal extends React.Component {
 	state = {
 		open: false,
 	};
@@ -49,7 +49,7 @@ class DeleteModal extends React.Component {
 
 		return (
 			<div>
-				<Button onClick={this.handleOpen}>Delete Product</Button>
+				<Button onClick={this.handleOpen}>Edit Product</Button>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
@@ -57,11 +57,11 @@ class DeleteModal extends React.Component {
 					onClose={this.handleClose}>
 					<div style={getModalStyle()} className={classes.paper}>
 						<Typography variant="h6" id="modal-title">
-							Are you sure you want to delete?
+							Are you sure you want to edit this product?
 						</Typography>
 						<div>
-							<Button onClick={this.handleClose}> Cancel</Button>
 							{this.props.children}
+							<Button onClick={this.handleClose}> Cancel</Button>
 						</div>
 					</div>
 				</Modal>
@@ -70,8 +70,8 @@ class DeleteModal extends React.Component {
 	}
 }
 
-DeleteModal.propTypes = {
+EditProductModal.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(DeleteModal);
+export default withStyles(styles)(EditProductModal);

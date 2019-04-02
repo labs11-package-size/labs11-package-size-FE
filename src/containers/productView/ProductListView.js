@@ -42,6 +42,15 @@ const styles = theme => ({
 });
 
 class ProductListView extends Component {
+	state = {
+		name: '',
+		productDescription: '',
+		weight: '',
+		length: '',
+		width: '',
+		height: '',
+		value: '',
+	};
 	componentDidMount() {
 		this.props.getProducts();
 	}
