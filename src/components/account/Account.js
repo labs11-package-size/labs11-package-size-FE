@@ -1,11 +1,8 @@
 import React from 'react';
-// import { Link } from "react-router-dom";
-// import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
 
 const styles = theme => ({
 	root: {
@@ -50,44 +47,29 @@ const styles = theme => ({
 function Account(props) {
 	const { classes } = props;
 	return (
-		<div className={classes.root}>
-			<div className={classes.column}>
-				<Typography className={classes.heading}>
-					First Name: {props.firstName}
-				</Typography>
-				<Typography className={classes.heading}>
-					Last Name: {props.lastName}
-				</Typography>
-				<Typography className={classes.heading}>
-					Address 1: {props.address1}
-				</Typography>
-				<Typography className={classes.heading}>
-					Address 2: {props.address2}
-				</Typography>
-				<Typography className={classes.heading}>
-					City: {props.city}
-				</Typography>
-				<Typography className={classes.heading}>
-					State: {props.state}
-				</Typography>
-				<Typography className={classes.heading}>
-					Zip Code: {props.zip}
-				</Typography>
-				<Typography className={classes.heading}>
-					Country: {props.country}
-				</Typography>
-				<Typography className={classes.heading}>
-					Email Address: {props.emailAddress}
-				</Typography>
-			</div>
+		<div>
+			{!props.user ? (
+				<div>...Loading</div>
+			) : (
+				<div className={classes.root}>
+					<div className={classes.column}>
+						<Typography gutterBottom variant="h5" component="h2">
+							User Account
+						</Typography>
+						<Typography className={classes.heading}>
+							Display Name: {props.user.displayName}
+						</Typography>
 
-			<Button size="small" color="primary">
-				Edit
-			</Button>
-			{/* <Link to={`/edit/${id}`}>
-            	<h4  className="edit-link">Edit</h4>
-          	</Link> */}
-
+						<Typography className={classes.heading}>
+							Email Address: {props.user.email}
+						</Typography>
+						{/* photoURL */}
+					</div>
+					<Button size="small" color="primary">
+						<span onClick={() => props.editUser(this.userInfo)}>Edit</span>
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 }

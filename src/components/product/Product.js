@@ -8,16 +8,24 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
-import { Link, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-
-import ShipmentInputView from '../../containers/shipmentView/ShipmentInputView';
-import ProductInputView from '../../containers/productView/productInputView';
-import { deleteProduct } from '../../store/actions/productActions';
+import Input from '@material-ui/core/Input';
+import DeleteModal from '../modals/deleteModal';
+import AddShipmentModal from '../modals/AddShimpentModal';
+import EditProductModal from '../modals/EditProductModal';
 
 const styles = theme => ({
 	root: {
 		width: '100%',
+	},
+	container: {
+		margin: '20px auto',
+		width: 'auto',
+		display: 'flex',
+		flexDirection: 'column',
+	},
+
+	input: {
+		margin: theme.spacing.unit,
 	},
 	bigAvatar: {
 		margin: 10,
@@ -69,51 +77,148 @@ function Product(props) {
 							Product Name: {props.product.name}
 						</Typography>
 					</div>
-					<div className={classes.column}>
-						<Typography className={classes.heading}>
-							Description: {props.product.productDescription}
-						</Typography>
-					</div>
+					<Typography className={classes.heading}>
+						Value: {props.product.value}
+					</Typography>
 				</ExpansionPanelSummary>
 				<ExpansionPanelDetails className={classes.details}>
 					<div className={classes.column} />
 				</ExpansionPanelDetails>
 
 				<ExpansionPanelActions>
-					<div className={classes.column}>
-						<Typography className={classes.heading}>
-							Length: {props.product.length}
-						</Typography>
-						<Typography className={classes.heading}>
-							Width: {props.product.width}
-						</Typography>
-						<Typography className={classes.heading}>
-							Height: {props.product.height}
-						</Typography>
-						<Typography className={classes.heading}>
-							Fragile: {props.product.fragile}
-						</Typography>
+					<Typography className={classes.heading}>
+						Length: {props.product.length}
+					</Typography>
+					<Typography className={classes.heading}>
+						Width: {props.product.width}
+					</Typography>
+					<Typography className={classes.heading}>
+						Height: {props.product.height}
+					</Typography>
+					<Typography className={classes.heading}>
+						Fragile: {props.product.fragile}
+					</Typography>
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							margin: '10px',
+						}}>
 						<Typography className={classes.heading}>
 							Weight: {props.product.weight}
 						</Typography>
 						<Typography className={classes.heading}>
-							Value: {props.product.value}
+							Description: {props.product.productDescription}
 						</Typography>
 					</div>
-					<Link to="/shipments/form">
-						<Button size="small">Add Shipment</Button>
-					</Link>
+					<AddShipmentModal>
+						<form className={classes.container}>
+							<Input
+								onChange={props.handleChange}
+								name="trackingNumber"
+								value={props.trackingNumber}
+								inputProps={{
+									'aria-label': 'Tracking number',
+								}}
+							/>
 
-					<Button size="small" color="primary">
-						<span onClick={() => props.deleteProduct(props.product.uuid)}>
+							<Button
+								onClick={() =>
+									props.addShipment(
+										props.trackingNumber,
+										props.product.identifier,
+									)
+								}
+								size="small">
+								Add Shipment
+							</Button>
+						</form>
+					</AddShipmentModal>
+					<DeleteModal>
+						<Button
+							onClick={() => props.deleteProduct(props.product.uuid)}
+							size="small"
+							color="primary">
 							Delete
-						</span>
-					</Button>
+						</Button>
+					</DeleteModal>
 				</ExpansionPanelActions>
-				<ProductInputView
-					productUuid={props.product.uuid}
-					default={props.product}
-				/>
+				<EditProductModal>
+					<form className={classes.container}>
+						<Input
+							onChange={props.handleChange}
+							name="name"
+							value={props.name}
+							label={props.product.name}
+							placeholder="Product Name"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+
+						<Input
+							onChange={props.handleChange}
+							name="description"
+							value={props.productDescription}
+							label={props.product.productDescription}
+							placeholder="Description"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+
+						<Input
+							onChange={props.handleChange}
+							name="height"
+							value={props.height}
+							label={props.product.height}
+							placeholder="Height"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+
+						<Input
+							onChange={props.handleChange}
+							name="length"
+							value={props.length}
+							label={props.product.length}
+							placeholder="Length"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+						<Input
+							onChange={props.handleChange}
+							name="value"
+							value={props.value}
+							label={props.product.value}
+							placeholder="Value"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+						<Input
+							onChange={props.handleChange}
+							name="weight"
+							value={props.weight}
+							label={props.product.weight}
+							placeholder="Weight"
+							className={classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+						<Button onClick={props.editProduct} size="small">
+							Submit
+						</Button>
+					</form>
+				</EditProductModal>
 			</ExpansionPanel>
 		</div>
 	);
@@ -123,13 +228,4 @@ Product.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
-	return {
-		products: state.productReducer.products,
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	{ deleteProduct },
-)(withStyles(styles)(Product));
+export default withStyles(styles)(Product);

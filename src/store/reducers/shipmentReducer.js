@@ -5,12 +5,9 @@ import {
 	ADDING_SHIPMENT,
 	ADDING_SHIPMENT_SUCCESSFUL,
 	ADDING_SHIPMENT_FAILURE,
-	// EDITING_SHIPMENT,
-	// EDITING_SHIPMENT_SUCCESSFUL,
-	// EDITING_SHIPMENT_FAILURE,
-	// DELETING_SHIPMENT,
-	// DELETING_SHIPMENT_SUCCESSFUL,
-	// DELETING_SHIPMENT_FAILURE,
+	DELETING_SHIPMENT,
+	DELETING_SHIPMENT_SUCCESSFUL,
+	DELETING_SHIPMENT_FAILURE,
 } from '../actions/shipmentActions';
 
 const initialState = {
@@ -67,7 +64,7 @@ const shipmentReducer = (state = initialState, action) => {
 		case ADDING_SHIPMENT_SUCCESSFUL:
 			return {
 				...state,
-				products: action.payload,
+				shipments: action.payload,
 				fetching: false,
 				success: true,
 				failure: false,
@@ -83,75 +80,40 @@ const shipmentReducer = (state = initialState, action) => {
 				error: action.payload,
 			};
 
-		// case EDITING_SHIPMENT:
-		// 	return {
-		// 		...state,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: true,
-		// 		deleting: false,
-		// 		success: false,
-		// 		failure: false,
-		// 		error: null,
-		// 	};
-		// case EDITING_SHIPMENT_SUCCESSFUL:
-		// 	return {
-		// 		...state,
-		// 		products: action.payload,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: false,
-		// 		success: true,
-		// 		failure: false,
-		// 		error: null,
-		// 	};
-		// case EDITING_SHIPMENT_FAILURE:
-		// 	return {
-		// 		...state,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: false,
-		// 		success: false,
-		// 		failure: true,
-		// 		error: action.payload,
-		// 	};
-
-		// case DELETING_SHIPMENT:
-		// 	return {
-		// 		...state,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: true,
-		// 		success: false,
-		// 		failure: false,
-		// 		error: null,
-		// 	};
-		// case DELETING_SHIPMENT_SUCCESSFUL:
-		// 	return {
-		// 		...state,
-		// 		products: action.payload,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: false,
-		// 		success: true,
-		// 		failure: false,
-		// 		error: null,
-		// 	};
-		// case DELETING_SHIPMENT_FAILURE:
-		// 	return {
-		// 		...state,
-		// 		fetching: false,
-		// 		adding: false,
-		// 		editing: false,
-		// 		deleting: false,
-		// 		success: false,
-		// 		failure: true,
-		// 		error: action.payload,
-		// 	};
+		case DELETING_SHIPMENT:
+			return {
+				...state,
+				fetching: false,
+				adding: false,
+				editing: false,
+				deleting: true,
+				success: false,
+				failure: false,
+				error: null,
+			};
+		case DELETING_SHIPMENT_SUCCESSFUL:
+			return {
+				...state,
+				shipments: action.payload,
+				fetching: false,
+				adding: false,
+				editing: false,
+				deleting: false,
+				success: true,
+				failure: false,
+				error: null,
+			};
+		case DELETING_SHIPMENT_FAILURE:
+			return {
+				...state,
+				fetching: false,
+				adding: false,
+				editing: false,
+				deleting: false,
+				success: false,
+				failure: true,
+				error: action.payload,
+			};
 
 		default:
 			return state;

@@ -9,7 +9,7 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const styles = theme => ({
 	root: {
@@ -93,6 +93,9 @@ const Shipment = props => {
 						</Button>
 					</Link>
 				</ExpansionPanelActions>
+				<Button onClick={props.deleteShipment} size="small" color="primary">
+					Delete Shipment
+				</Button>
 			</ExpansionPanel>
 		</div>
 	);
@@ -102,4 +105,4 @@ Shipment.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Shipment);
+export default withRouter(withStyles(styles)(Shipment));
