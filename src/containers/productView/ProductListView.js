@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import ProductList from '../../components/product/ProductList';
 import {
@@ -50,7 +50,10 @@ class ProductListView extends Component {
 		width: '',
 		height: '',
 		value: '',
+		trackingNumber: '',
+		products: this.props.products,
 	};
+
 	componentDidMount() {
 		this.props.getProducts();
 	}
@@ -62,6 +65,9 @@ class ProductListView extends Component {
 
 	addShipment = (tracId, prod) => {
 		this.props.addShipment(tracId, prod);
+		this.setState({
+			trackingNumber: '',
+		});
 	};
 
 	deleteProduct = id => {
@@ -71,7 +77,19 @@ class ProductListView extends Component {
 
 	editProduct = (id, prod) => {
 		this.props.editProduct(id, prod);
-		return <Redirect to="/" />;
+		this.setState({
+			name: '',
+			productDescription: '',
+			weight: '',
+			length: '',
+			width: '',
+			height: '',
+			value: '',
+		});
+	};
+
+	handleInputChange = event => {
+		this.setState({ [event.target.name]: event.target.value });
 	};
 
 	render() {
@@ -86,6 +104,15 @@ class ProductListView extends Component {
 					deleteProduct={this.deleteProduct}
 					addShipment={this.addShipment}
 					products={this.props.products}
+					handleChange={this.handleInputChange}
+					trackingNumber={this.state.trackingNumber}
+					name={this.state.name}
+					productDescription={this.state.productDescription}
+					weight={this.state.width}
+					length={this.state.length}
+					width={this.state.width}
+					height={this.state.height}
+					value={this.state.value}
 				/>
 				<Button variant="contained" className={classes.submit} size="small">
 					Add Product
@@ -101,7 +128,15 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	{ getProducts, addProduct, editProduct, deleteProduct, addShipment },
-)(withStyles(styles)(ProductListView));
+export default withRouter(
+	connect(
+		mapStateToProps,
+		{
+			getProducts,
+			addProduct,
+			editProduct,
+			deleteProduct,
+			addShipment,
+		},
+	)(withStyles(styles)(ProductListView)),
+);

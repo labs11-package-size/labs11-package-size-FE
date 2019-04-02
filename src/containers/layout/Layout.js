@@ -236,7 +236,9 @@ class Layout extends React.Component {
 								variant="h6"
 								color="inherit"
 								noWrap>
+								<Link to='/'>
 								ScannAR
+								</Link>
 							</Typography>
 							{this.props.isLoggedIn ? (
 								<div className={classes.search}>

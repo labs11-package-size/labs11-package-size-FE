@@ -88,7 +88,6 @@ export const logoutUser = () => dispatch => {
 		.signOut()
 		.then(res => {
 			dispatch({ type: USER_LOGOUT_SUCCESSFUL });
-			console.log('logout res', res);
 			localStorage.removeItem('token');
 		})
 		.catch(err => {
@@ -102,10 +101,8 @@ export const getAccountInfo = () => dispatch => {
 	axios
 		.get('users/accountinfo')
 		.then(res => {
-			dispatch({ type: GETTING_ACCOUNT_SUCCESSFUL, payload: res.data })
-			console.log(res, 'then reducer')
-		}
-		)
+			dispatch({ type: GETTING_ACCOUNT_SUCCESSFUL, payload: res.data });
+		})
 		.catch(err =>
 			dispatch({ type: GETTING_ACCOUNT_FAILURE, payload: err.data }),
 		);
@@ -115,8 +112,8 @@ export const editUser = userInfo => dispatch => {
 	dispatch({ type: EDITING_USER });
 	axios
 		.put('/users/accountinfo/edit', userInfo)
-		.then(res => dispatch({ type: EDITING_USER_SUCCESSFUL}))
-		.catch(res => ({ type: EDITING_USER_FAILURE}))
+		.then(res => dispatch({ type: EDITING_USER_SUCCESSFUL }))
+		.catch(res => ({ type: EDITING_USER_FAILURE }));
 };
 
 // export const register = newUser => dispatch => {
