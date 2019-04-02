@@ -12,6 +12,7 @@ import {
 	editProduct,
 	deleteProduct,
 } from '../../store/actions/productActions';
+import { addShipment } from '../../store/actions/shipmentActions';
 
 const styles = theme => ({
 	card: {
@@ -50,14 +51,20 @@ class ProductListView extends Component {
 		return <Redirect to="/product/add" />;
 	};
 
+	addShipment = (tracId, prod) => {
+		this.props.addShipment(tracId, prod);
+	};
+
 	deleteProduct = id => {
 		this.props.deleteProduct(id);
 		return <Redirect to="/products" />;
 	};
+
 	editProduct = (id, prod) => {
 		this.props.editProduct(id, prod);
 		return <Redirect to="/" />;
 	};
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -68,6 +75,7 @@ class ProductListView extends Component {
 				<ProductList
 					editProduct={this.editProduct}
 					deleteProduct={this.deleteProduct}
+					addShipment={this.addShipment}
 					products={this.props.products}
 				/>
 				<Button variant="contained" className={classes.submit} size="small">
@@ -86,5 +94,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getProducts, addProduct, editProduct, deleteProduct },
+	{ getProducts, addProduct, editProduct, deleteProduct, addShipment },
 )(withStyles(styles)(ProductListView));

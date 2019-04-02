@@ -103,10 +103,8 @@ function Product(props) {
 							Description: {props.product.productDescription}
 						</Typography>
 					</div>
-					<Link to="/shipments/form">
-						<Button size="small">Add Shipment</Button>
-					</Link>
-
+					{/* modal popup for tracking number will come here */}
+					<Button size="small">Add Shipment</Button>
 					<Button
 						onClick={() => props.deleteProduct(props.product.uuid)}
 						size="small"

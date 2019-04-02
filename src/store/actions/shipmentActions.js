@@ -8,10 +8,6 @@ export const ADDING_SHIPMENT = 'ADDING_SHIPMENT';
 export const ADDING_SHIPMENT_SUCCESSFUL = 'ADDING_SHIPMENT_SUCCESSFUL';
 export const ADDING_SHIPMENT_FAILURE = 'ADDING_SHIPMENT_FAILURE';
 
-// export const EDITING_SHIPMENT = 'EDITING_SHIPMENT';
-// export const EDITING_SHIPMENT_SUCCESSFUL = 'EDITING_SHIPMENT_SUCCESSFUL';
-// export const EDITING_SHIPMENT_FAILURE = 'EDITING_SHIPMENT_FAILURE';
-
 export const DELETING_SHIPMENT = 'DELETING_SHIPMENT';
 export const DELETING_SHIPMENT_SUCCESSFUL = 'DELETING_SHIPMENT_SUCCESSFUL';
 export const DELETING_SHIPMENT_FAILURE = 'DELETING_SHIPMENT_FAILURE';
@@ -40,14 +36,6 @@ export const getShipments = () => dispatch => {
 			dispatch({ type: GETTING_SHIPMENTS_FAILURE, payload: err.data }),
 		);
 };
-
-// // export const editShipment = () = dispatch => {
-// // 	dispatch({ type: EDITING_SHIPMENT })
-// // 	axios
-// // 		.put(`/shipments/edit/${}`, )
-// // 		.then(res => dispatch({ type: EDITING_SHIPMENT_SUCCESSFUL, payload: res.data }))
-// // 		.catch(err => dispatch({ type: EDITING_SHIPMENT_FAILURE, payload: err.data }))
-// // };
 
 export const deleteShipment = uuid => dispatch => {
 	dispatch({ type: DELETING_SHIPMENT });

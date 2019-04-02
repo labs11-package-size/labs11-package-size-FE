@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 import ShipmentList from '../../components/shipment/ShipmentList';
 import {
@@ -33,20 +33,24 @@ class ShipmentListView extends Component {
 	componentDidMount() {
 		this.props.getShipments();
 	}
+
 	componentDidUpdate(prevProps) {
 		// Typical usage (don't forget to compare props):
 		if (this.props.shipments.length !== prevProps.shipments.length) {
 			this.props.getShipments();
 		}
 	}
+
 	addShipment = (tracId, prodId) => {
 		this.props.addShipment(tracId, prodId);
 		return <Redirect to="/" />;
 	};
+
 	deleteShipment = uuid => {
 		this.props.deleteShipment(uuid);
 		this.props.getShipments();
 	};
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -60,7 +64,7 @@ class ShipmentListView extends Component {
 					shipments={this.props.shipments}
 				/>
 				<Button variant="contained" className={classes.submit} size="small">
-					Add Shipment
+					<Link to="/shipment/add">Add Shipment</Link>
 				</Button>
 			</div>
 		);
