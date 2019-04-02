@@ -59,21 +59,20 @@ function Account(props) {
 						<Typography className={classes.heading}>
 							Display Name: {props.user.displayName}
 						</Typography>
-
 						<Typography className={classes.heading}>
 							Email Address: {props.user.email}
 						</Typography>
 						{/* photoURL */}
 					</div>
 					<Button size="small" color="primary">
-						<span onClick={() => props.editUser(this.userInfo)}>Edit</span>
+						<span onClick={props.editUser}>Edit</span>
 					</Button>
 				</div>
 			)}
 		</div>
 	);
 }
-//email test!
+
 Account.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
