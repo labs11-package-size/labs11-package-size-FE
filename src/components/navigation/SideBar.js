@@ -6,9 +6,11 @@ import LocalShipping from '@material-ui/icons/LocalShipping';
 import Person from '@material-ui/icons/Person';
 import Eject from '@material-ui/icons/Eject';
 import Queue from '@material-ui/icons/Queue';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { logoutUser } from '../../store/actions/userActions';
 import { connect } from 'react-redux';
+import { firebase } from '../../firebase';
+
 
 
 const logoutBtn = props => {
@@ -17,7 +19,7 @@ const logoutBtn = props => {
 export const SideBar = (
 	<div>
 		<Link to="/account">
-			<ListItem button style={{ color: '#72BDA2'}}>
+			<ListItem button>
 				<ListItemIcon>
 					<Person />
 				</ListItemIcon>
