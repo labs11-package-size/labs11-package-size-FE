@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./PackagingView.css";
 import axios from "axios";
 import PackageFactory from "../../components/packaging/components/PackageFactory";
 import Packages from "../../components/packaging/components/Packages";
 
-const apiurl = "https://scannarserver.herokuapp.com/";
+const apiurl = "https://scannarserver.herokuapp.com/api";
 
-class App extends Component {
+class PackagingView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,16 +22,16 @@ class App extends Component {
     axios
       .post(`${apiurl}/users/login`, { uid: "q1lHIM09fnWMAxZ6t116rkaS92E2" })
       .then(res => {
+        localStorage.setItem("token", res.data.token);
         axios
-          .get(`${apiurl}/products`, {
-            headers: {
-              Authorization: res.data.token
-            }
-          })
+          .get(`${apiurl}/products`)
           .then(res => {
             this.setState(currentState => ({
               data: currentState.data.concat(res.data)
             }));
+          })
+          .catch(err => {
+            console.log(err);
           });
       })
       .catch(err => {
@@ -45,17 +45,9 @@ class App extends Component {
 
   packItems = () => {
     axios
-      .post(`${apiurl}/users/login`, { uid: "q1lHIM09fnWMAxZ6t116rkaS92E2" })
+      .post(`${apiurl}/packaging/preview`, this.state.selectedProducts, {})
       .then(res => {
-        axios
-          .post(`${apiurl}/packaging/preview`, this.state.selectedProducts, {
-            headers: {
-              Authorization: res.data.token
-            }
-          })
-          .then(res => {
-            this.setState({ previewBoxes: res.data });
-          });
+        this.setState({ previewBoxes: res.data });
       })
       .catch(err => {
         console.log(err);
@@ -94,7 +86,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="PackageFactoryView">
         <PackageFactory
           allData={this.state.data}
           handleSearch={this.handleSearch}
@@ -112,4 +104,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default PackagingView;
