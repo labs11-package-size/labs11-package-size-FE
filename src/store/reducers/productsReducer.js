@@ -24,7 +24,7 @@ const initialState = {
 	error: null,
 };
 
-const productReducer = (state = initialState, action) => {
+const productsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case GETTING_PRODUCTS:
 			return {
@@ -37,18 +37,14 @@ const productReducer = (state = initialState, action) => {
 				...state,
 				products: action.payload,
 				fetching: false,
-				editing: false,
-				deleting: false,
 				success: true,
-				failure: false,
 				error: null,
 			};
+
 		case GETTING_PRODUCTS_FAILURE:
 			return {
 				...state,
 				fetching: false,
-				editing: false,
-				deleting: false,
 				success: false,
 				failure: true,
 				error: action.payload,
@@ -57,11 +53,7 @@ const productReducer = (state = initialState, action) => {
 		case ADDING_PRODUCT:
 			return {
 				...state,
-				fetching: false,
 				adding: true,
-				editing: false,
-				deleting: false,
-				success: false,
 				failure: false,
 				error: null,
 			};
@@ -71,8 +63,6 @@ const productReducer = (state = initialState, action) => {
 				products: action.payload,
 				fetching: false,
 				adding: false,
-				editing: false,
-				deleting: false,
 				success: true,
 				failure: false,
 				error: null,
@@ -81,9 +71,6 @@ const productReducer = (state = initialState, action) => {
 			return {
 				...state,
 				fetching: false,
-				adding: false,
-				editing: false,
-				deleting: false,
 				success: false,
 				failure: true,
 				error: action.payload,
@@ -164,4 +151,4 @@ const productReducer = (state = initialState, action) => {
 	}
 };
 
-export default productReducer;
+export default productsReducer;

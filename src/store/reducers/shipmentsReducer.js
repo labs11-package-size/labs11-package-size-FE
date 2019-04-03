@@ -22,14 +22,12 @@ const initialState = {
 	error: null,
 };
 
-const shipmentReducer = (state = initialState, action) => {
+const shipmentsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case GETTING_SHIPMENTS:
 			return {
 				...state,
 				fetching: true,
-				success: false,
-				failure: false,
 				error: null,
 			};
 
@@ -55,7 +53,7 @@ const shipmentReducer = (state = initialState, action) => {
 		case ADDING_SHIPMENT:
 			return {
 				...state,
-				fetching: true,
+				adding: true,
 				success: false,
 				failure: false,
 				error: null,
@@ -66,6 +64,7 @@ const shipmentReducer = (state = initialState, action) => {
 				...state,
 				shipments: action.payload,
 				fetching: false,
+				adding: false,
 				success: true,
 				failure: false,
 				error: null,
@@ -120,4 +119,4 @@ const shipmentReducer = (state = initialState, action) => {
 	}
 };
 
-export default shipmentReducer;
+export default shipmentsReducer;
