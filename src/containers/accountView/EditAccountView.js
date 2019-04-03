@@ -21,8 +21,8 @@ class EditAccountView extends Component {
         })
     };
     
-    editAccount = () => {
-        this.props.editAccount(this.state.updatedUser)
+    editAccount = (user) => {
+        this.props.editAccount(user)
         this.setState({ editingUserInfo: false });
     };
 

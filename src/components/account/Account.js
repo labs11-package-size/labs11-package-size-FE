@@ -49,6 +49,7 @@ const styles = theme => ({
 
 function Account(props) {
 	const { classes } = props;
+	console.log(props, 'account props')
 	return (
 		<div>
 			{!props.user ? (
@@ -60,40 +61,40 @@ function Account(props) {
 							User Account
 						</Typography>
 						<Typography className={classes.heading}>
-							Display Name: {props.user.displayName}
+							Display Name: {props.userInfo.displayName}
 						</Typography>
 						<Typography className={classes.heading}>
-							Email Address: {props.user.email}
+							Email Address: {props.userInfo.email}
 						</Typography>
 						{/* photoURL */}
 					</div>
-					<Button size="small" color="primary">
-						<span onClick={props.editUser}>Edit</span>
-					</Button>
 					<EditAccountModal>
 						<form className={classes.container}>
 							<Input
-								type="text"
-								name="Display Name"
+								//type="text"
+								name="displayName"
 								placeholder="Display Name"
 								onChange={props.handleInputChange}
-								value={props.displayName}
+								value={props.user.displayName}
 								className={classes.input}
 								inputProps={{
 									'aria-label': 'Description',
 								}}
 							/>
 							<Input
-								type="text"
-								name="Email Address"
+								//type="text"
+								name="email"
 								placeholder="Email Address"
 								onChange={props.handleInputChange}
-								value={props.email}
+								value={props.user.email}
 								className={classes.input}
 								inputProps={{
 									'aria-label': 'Description',
 								}}
 							/>
+							<Button size="small" color="primary">
+								<span onClick={props.editUser}>Edit</span>
+							</Button>
 						</form>
 					</EditAccountModal>
 				</div>
