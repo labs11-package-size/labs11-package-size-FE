@@ -56,7 +56,7 @@ align-items: center;
 }
 
 .SelectedProductsPanelContainer {
-  height: 500px;
+  height: 400px;
   width: 45%;
 
 }
@@ -104,4 +104,13 @@ align-items: center;
 
 .SelectedProductContainerName, .SelectedProductContainerSize {
   margin: 5px 0 0 0
+}
+
+.PackagesContainer {
+  display: flex;
+  padding: 0 3%;
+}
+
+.SuggestedPackagesTitle {
+  text-align: center;
 }

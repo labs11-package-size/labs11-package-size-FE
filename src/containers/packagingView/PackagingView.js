@@ -4,7 +4,7 @@ import axios from "axios";
 import PackageFactory from "../../components/packaging/components/PackageFactory";
 import Packages from "../../components/packaging/components/Packages";
 
-const apiurl = "https://scannarserver.herokuapp.com/api";
+const apiurl = "http://localhost:5000/api";
 
 class PackagingView extends Component {
   constructor(props) {
@@ -45,7 +45,7 @@ class PackagingView extends Component {
 
   packItems = () => {
     axios
-      .post(`${apiurl}/packaging/preview`, this.state.selectedProducts, {})
+      .post(`${apiurl}/packaging/preview`, this.state.selectedProducts)
       .then(res => {
         this.setState({ previewBoxes: res.data });
       })
@@ -98,6 +98,7 @@ class PackagingView extends Component {
           clearItems={this.clearItems}
           packItems={this.packItems}
         />
+        {this.state.previewBoxes.length && <h3 className="SuggestedPackagesTitle">Suggested Packages Preview</h3>}
         <Packages previewBoxes={this.state.previewBoxes} />
       </div>
     );

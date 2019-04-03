@@ -6,8 +6,18 @@ const SelectedProductsPanel = props => {
     <div className="SelectedProductsPanelContainer">
       <div className="SelectedProductsTitle">
         <h3> Selected Products</h3>
-        <button className="SelectedProductsTitleButton" onClick={props.packItems}>Pack Items</button>
-        <button className="SelectedProductsTitleButton" onClick={props.clearItems}>Clear Items</button>
+        <button
+          className="SelectedProductsTitleButton"
+          onClick={props.packItems}
+        >
+          Pack Items
+        </button>
+        <button
+          className="SelectedProductsTitleButton"
+          onClick={props.clearItems}
+        >
+          Clear Items
+        </button>
       </div>
       <div className="InnerSelectedProductsPanel">
         {props.selectedProducts.map(productId => {
