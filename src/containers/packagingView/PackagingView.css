@@ -1,25 +1,24 @@
-*{
+* {
   box-sizing: border-box;
 }
 
 body {
   margin: auto;
   max-width: 1300px;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p {
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 .SearchBar {
-  width: 100%
+  width: 100%;
+  margin-top: 10px;
 }
 
 .SearchContainer {
@@ -27,6 +26,7 @@ code {
 }
 
 .PackageFactoryContainer {
+  margin-top: 20px;
   display: flex;
   justify-content: space-around;
 }
@@ -38,14 +38,14 @@ code {
   text-overflow: ellipsis;
   max-height: 750px;
   overflow: hidden;
-white-space: nowrap;
+  white-space: nowrap;
 }
 
 .SearchProductContainer {
   display: flex;
   justify-content: space-between;
   padding: 0px 5%;
-align-items: center;
+  align-items: center;
 }
 
 .ProductButton {
@@ -56,13 +56,12 @@ align-items: center;
 }
 
 .SelectedProductsPanelContainer {
-  height: 400px;
+  height: 475px;
   width: 45%;
-
 }
 
 .InnerSelectedProductsPanel {
-  height: 100%;
+  height: 450px;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
@@ -72,21 +71,20 @@ align-items: center;
 }
 
 .ProductName {
-  margin: 0
+  margin: 0;
 }
 
 .ProductDimensions {
-  margin: 0
+  margin: 0;
 }
 
 .ProductInfo {
   margin-top: 10px;
 }
 
-.SelectedProductsTitle {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+.SelectedProductsTitle p {
+  display: inline-block;
+  font-weight: bolder;
 }
 
 .SelectedProductsTitleButton {
@@ -96,14 +94,22 @@ align-items: center;
   color: white;
   height: 45px;
   font-size: 15px;
+  margin-left: 5%;
 }
 
-.SelectedProductContainer {
-  margin: 0
+.SelectedProductContainer p {
+  text-align: center;
+  margin: 5px 0 0 0;
+  
 }
 
-.SelectedProductContainerName, .SelectedProductContainerSize {
-  margin: 5px 0 0 0
+.SelectedProductContainerName {
+font-size: 12px;
+text-decoration: underline;
+}
+
+.SelectedProductContainerSize {
+font-size: 10px;
 }
 
 .PackagesContainer {
@@ -111,6 +117,40 @@ align-items: center;
   padding: 0 3%;
 }
 
+.PackageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 3%;
+  padding: 15px;
+  border: 1px solid #72bda3;
+  width: 32%;
+}
+
 .SuggestedPackagesTitle {
   text-align: center;
+  margin: 75px 0 35px;
+}
+
+.BoxImage {
+  width: auto;
+}
+
+.PackagedBoxSize {
+  margin: 10px 0 0 0;
+}
+
+.PackagedItemList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.PackagedItem {
+  text-align: center;
+  margin-right: 20px;
+  border: 1px dotted black;
+}
+
+.PackagedItem p {
+  padding: 5px;
 }

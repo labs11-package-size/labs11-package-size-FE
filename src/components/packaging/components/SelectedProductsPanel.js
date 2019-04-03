@@ -5,7 +5,7 @@ const SelectedProductsPanel = props => {
   return (
     <div className="SelectedProductsPanelContainer">
       <div className="SelectedProductsTitle">
-        <h3> Selected Products</h3>
+        <p> Selected Products</p>
         <button
           className="SelectedProductsTitleButton"
           onClick={props.packItems}
