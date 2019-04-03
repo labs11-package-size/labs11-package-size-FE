@@ -52,7 +52,8 @@ class EditAccountModal extends React.Component {
 					onClose={this.handleClose}>
 					<div style={getModalStyle()} className={classes.paper}>
                         {this.props.children}
-                        <Button onClick={this.handleClose}> Cancel</Button>
+                        <Button onClick={this.handleClose}>Cancel</Button>
+                        <Button onClick={this.handleClose}>Save Changes</Button>
                     </div>
 				</Modal>
 			</div>
