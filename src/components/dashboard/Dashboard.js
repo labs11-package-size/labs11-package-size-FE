@@ -27,11 +27,11 @@ const styles = {
 
 class Dashboard extends Component {
 	render() {
-		const { classes } = this.props;
+		console.log(this.props);
 		return (
-			<div className={classes.mainContainer}>
-				<ProductListView />
-				<ShipmentListView />
+			<div className={this.props.classes.mainContainer}>
+				<ProductListView products={this.props.products} />
+				<ShipmentListView shipments={this.props.shipments} />
 			</div>
 		);
 	}
@@ -41,14 +41,4 @@ Dashboard.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
-	return {};
-};
-
-export default connect(
-	mapStateToProps,
-	{
-		getProducts,
-		getShipments,
-	},
-)(withStyles(styles)(Dashboard));
+export default withStyles(styles)(Dashboard);

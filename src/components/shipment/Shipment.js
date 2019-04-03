@@ -1,108 +1,173 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import classnames from 'classnames';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import red from '@material-ui/core/colors/red';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Button from '@material-ui/core/Button';
-import { Link, withRouter } from 'react-router-dom';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Icon from '@material-ui/core/Icon';
+import classNames from 'classnames';
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
+
+import DeleteModal from '../modals/deleteModal';
+// import AddShipmentModal from '../modals/AddShimpentModal';
+// import EditProductModal from '../modals/EditProductModal';
 
 const styles = theme => ({
+	card: {
+		maxWidth: 400,
+	},
+	container: {
+		margin: 40,
+		width: 'auto',
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space between',
+	},
 	root: {
-		width: '100%',
-	},
-	bigAvatar: {
-		margin: 10,
-		width: 60,
-		height: 60,
-	},
-	heading: {
-		fontSize: theme.typography.pxToRem(15),
-	},
-	secondaryHeading: {
-		fontSize: theme.typography.pxToRem(15),
-		color: theme.palette.text.secondary,
+		display: 'flex',
+		flexWrap: 'wrap',
 	},
 	icon: {
-		verticalAlign: 'bottom',
-		height: 20,
-		width: 20,
+		margin: theme.spacing.unit * 2,
 	},
-	details: {
-		alignItems: 'center',
-	},
-	column: {
-		flexBasis: '33.33%',
-	},
-	helper: {
-		borderLeft: `2px solid ${theme.palette.divider}`,
-		padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
-	},
-	link: {
-		color: theme.palette.primary.main,
-		textDecoration: 'none',
+	iconHover: {
+		margin: theme.spacing.unit * 2,
 		'&:hover': {
-			textDecoration: 'underline',
+			color: red[800],
 		},
+	},
+
+	input: {
+		margin: theme.spacing.unit,
+	},
+	media: {
+		height: 0,
+		paddingTop: '56.25%', // 16:9
+	},
+	actions: {
+		display: 'flex',
+	},
+	expand: {
+		transform: 'rotate(0deg)',
+		marginLeft: 'auto',
+		transition: theme.transitions.create('transform', {
+			duration: theme.transitions.duration.shortest,
+		}),
+	},
+	expandOpen: {
+		transform: 'rotate(180deg)',
+	},
+	avatar: {
+		backgroundColor: red[500],
 	},
 });
 
-const Shipment = props => {
-	const { classes } = props;
-	return (
-		<div className={classes.root}>
-			<ExpansionPanel>
-				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Avatar alt="" src="" className={classes.bigAvatar} />
-					<div className={classes.column}>
-						<Typography className={classes.heading}>
-							Shipped To: {props.shipment.shippedTo}
-						</Typography>
+class Shipment extends Component {
+	state = { expanded: false };
+	componentDidMount() {
+		loadCSS(
+			'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+			document.querySelector('#insertion-point-jss'),
+		);
+	}
 
-						<Typography className={classes.heading}>
-							Shipping Date: {props.shipment.dateShipped}
-						</Typography>
-					</div>
-				</ExpansionPanelSummary>
-				<ExpansionPanelDetails className={classes.details}>
-					<div className={classes.column} />
-				</ExpansionPanelDetails>
+	handleExpandClick = () => {
+		this.setState(state => ({ expanded: !state.expanded }));
+	};
 
-				<ExpansionPanelActions>
-					<div className={classes.column}>
-						<Typography className={classes.heading}>
-							Tracking Number: {props.shipment.trackingNumber}
-						</Typography>
-						<Typography className={classes.heading}>
-							Carrier: {props.shipment.carrierName}
-						</Typography>
-						<Typography className={classes.heading}>
-							Shipping Type: {props.shipment.shippingType}
-						</Typography>
-						<Typography className={classes.heading}>
-							Status: {props.shipment.status}
-						</Typography>
-					</div>
-					<Link to="/shipments/form">
-						<Button size="small" color="primary">
-							Edit Shipment Info
-						</Button>
-					</Link>
-				</ExpansionPanelActions>
-				<Button onClick={props.deleteShipment} size="small" color="primary">
-					Delete Shipment
-				</Button>
-			</ExpansionPanel>
-		</div>
-	);
-};
+	render() {
+		const { classes } = this.props;
+
+		return (
+			<div className={classes.container}>
+				<div className={classes.root}>
+					<Card className={classes.card}>
+						<CardHeader
+							avatar={
+								<Avatar aria-label="Recipe" className={classes.avatar}>
+									S
+								</Avatar>
+							}
+							action={
+								<IconButton>
+									<MoreVertIcon />
+								</IconButton>
+							}
+							title={this.props.shipment.productName}
+							subheader={` Date Shipped: ${this.props.shipment.dateShipped}`}
+						/>
+						<CardMedia
+							className={classes.media}
+							image="/static/images/cards/paella.jpg"
+							title="Paella dish"
+						/>
+						<CardContent>
+							<Typography className={classes.heading}>
+								Shipped To: {this.props.shipment.shippedTo}
+							</Typography>
+						</CardContent>
+						<CardActions className={classes.actions} disableActionSpacing>
+							<IconButton aria-label="Add to packages">
+								<Icon
+									className={classNames(classes.icon, 'fas fa-list-ul')}
+									color="primary"
+								/>
+							</IconButton>
+							<DeleteModal>
+								<IconButton
+									onClick={this.props.deleteShipment}
+									aria-label="Share">
+									Delete
+								</IconButton>
+							</DeleteModal>
+							<IconButton
+								className={classnames(classes.expand, {
+									[classes.expandOpen]: this.state.expanded,
+								})}
+								onClick={this.handleExpandClick}
+								aria-expanded={this.state.expanded}
+								aria-label="Show more">
+								<ExpandMoreIcon />
+							</IconButton>
+						</CardActions>
+						<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+							<CardContent>
+								<Typography className={classes.heading}>
+									Last Updated: {this.props.shipment.lastUpdated}
+								</Typography>
+								<Typography className={classes.heading}>
+									Tracking Number: {this.props.shipment.trackingNumber}
+								</Typography>
+								<Typography className={classes.heading}>
+									Carrier: {this.props.shipment.carrierName}
+								</Typography>
+								<Typography className={classes.heading}>
+									Shipping Type: {this.props.shipment.shippingType}
+								</Typography>
+								<Typography className={classes.heading}>
+									Status: {this.props.shipment.status}
+								</Typography>
+							</CardContent>
+						</Collapse>
+					</Card>
+				</div>
+			</div>
+		);
+	}
+}
 
 Shipment.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(Shipment));
+export default withStyles(styles)(Shipment);

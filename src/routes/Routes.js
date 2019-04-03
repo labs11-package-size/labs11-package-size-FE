@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import ProductListView from '../components/product/ProductList';
 import ProductAddView from '../containers/productView/productAddView';
-import ProductEditView from '../containers/productView/ProductEditView';
 import LoginView from '../containers/loginView/LoginView';
 import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
@@ -24,8 +23,7 @@ class Routes extends Component {
 					<Redirect from="/register" to="/" />
 					<Route exact path="/logout" component={LogoutView} />
 					<Route exact path="/shipment/add" component={ShipmentAddView} />
-					<Route exact path="/product/add" component={ProductEditView} />
-					<Route exact path="/product/edit" component={ProductAddView} />
+					<Route exact path="/product/add" component={ProductAddView} />
 					<Route exact path="/shipments" component={ShipmentListView} />
 					<Route exact path="/products" component={ProductListView} />
 					<Route exact path="/account" component={AccountView} />

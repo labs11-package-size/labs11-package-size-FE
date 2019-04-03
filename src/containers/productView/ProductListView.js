@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect, withRouter, Link } from 'react-router-dom';
 
 import ProductList from '../../components/product/ProductList';
 import {
@@ -43,6 +43,7 @@ const styles = theme => ({
 
 class ProductListView extends Component {
 	state = {
+		products: [],
 		name: '',
 		productDescription: '',
 		weight: '',
@@ -51,7 +52,6 @@ class ProductListView extends Component {
 		height: '',
 		value: '',
 		trackingNumber: '',
-		products: this.props.products,
 	};
 
 	componentDidMount() {
@@ -68,6 +68,7 @@ class ProductListView extends Component {
 		this.setState({
 			trackingNumber: '',
 		});
+		this.props.history.push('/');
 	};
 
 	deleteProduct = id => {
@@ -86,6 +87,7 @@ class ProductListView extends Component {
 			height: '',
 			value: '',
 		});
+		this.props.history.push('/');
 	};
 
 	handleInputChange = event => {
@@ -93,30 +95,33 @@ class ProductListView extends Component {
 	};
 
 	render() {
+		console.log(this.state.products);
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
 				<Typography gutterBottom variant="h5" component="h2">
 					Products
 				</Typography>
-				<ProductList
-					editProduct={this.editProduct}
-					deleteProduct={this.deleteProduct}
-					addShipment={this.addShipment}
-					products={this.props.products}
-					handleChange={this.handleInputChange}
-					trackingNumber={this.state.trackingNumber}
-					name={this.state.name}
-					productDescription={this.state.productDescription}
-					weight={this.state.width}
-					length={this.state.length}
-					width={this.state.width}
-					height={this.state.height}
-					value={this.state.value}
-				/>
-				<Button variant="contained" className={classes.submit} size="small">
-					Add Product
-				</Button>
+				<div>
+					<Button variant="contained" className={classes.submit} size="small">
+						<Link to="/product/add">Add Product</Link>
+					</Button>
+					<ProductList
+						editProduct={this.editProduct}
+						deleteProduct={this.deleteProduct}
+						addShipment={this.addShipment}
+						products={this.props.products}
+						handleChange={this.handleInputChange}
+						trackingNumber={this.state.trackingNumber}
+						name={this.state.name}
+						productDescription={this.state.productDescription}
+						weight={this.state.width}
+						length={this.state.length}
+						width={this.state.width}
+						height={this.state.height}
+						value={this.state.value}
+					/>
+				</div>
 			</div>
 		);
 	}
@@ -124,7 +129,7 @@ class ProductListView extends Component {
 
 const mapStateToProps = state => {
 	return {
-		products: state.productReducer.products,
+		products: state.productsReducer.products,
 	};
 };
 
