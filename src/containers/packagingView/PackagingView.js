@@ -44,9 +44,9 @@ class PackagingView extends Component {
     this.setState({ selectedProducts: [] });
   };
 
-  packItems = () => {
+  packItems = (boxType) => {
     axios
-      .post(`${apiurl}/packaging/preview`, this.state.selectedProducts)
+      .post(`${apiurl}/packaging/preview`, {products: this.state.selectedProducts, boxType})
       .then(res => {
         this.setState({ previewBoxes: res.data });
       })
