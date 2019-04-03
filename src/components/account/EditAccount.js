@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
+import { editUser } from '../../store/actions/userActions';
 
 const styles = theme => ({
 	container: {
@@ -18,39 +19,57 @@ const styles = theme => ({
 	},
 });
 
-const EditAccount = props => {
+const EditAccount = props => {	
+	// componentDidMount() {
+	// 	if (this.props.user) {
+	// 		const { displayName, email } = this.props.user;
+	// 		this.setState({ displayName, email});
+	// 	}
+	// };
+
+	// handleInputChange = e => {
+	// 	this.setState({ [e.target.name]: e.value.name })
+	// };
+
+	// handleFormSubmit = e => {
+	// 	e.preventDefault();
+	// 	const { displayName, email } = this.state;
+	// 	this.props.editUser({ displayName, email });
+	// };
+
 	const { classes } = props;
-	const handleClick = event => {
-		event.preventDefault();
-		props.handleEditSubmit();
-		props.history.push('/Account');
+	const handleFormSubmit = e => {
+		e.preventDefault();
+		props.handleFormSubmit();
+		props.history.push('/account');
 	};
 
 	return (
-		<form className={classes.container}>
+		<form onSubmit={props.handleFormSubmit} className={classes.container}>
 			<Input
-				onChange={props.handleChange}
-                name="Display Name"
-                value={props.userInfo.displayName}
+				type="text"
+				name="Display Name"
 				placeholder="Display Name"
+				onChange={props.handleInputChange}
+				value={props.displayName}
 				className={classes.input}
 				inputProps={{
 					'aria-label': 'Description',
 				}}
 			/>
-            <Input
-				onChange={props.handleChange}
-                name="Email Address"
-                value={props.userInfo.email}
+			<Input
+				type="text"
+				name="Email Address"
 				placeholder="Email Address"
+				onChange={props.handleInputChange}
+				value={props.email}
 				className={classes.input}
 				inputProps={{
 					'aria-label': 'Description',
 				}}
 			/>
-
-			<Button onClick={props.editUser} size="small">
-				Submit
+			<Button size="small">
+				Save
 			</Button>
 		</form>
 	);

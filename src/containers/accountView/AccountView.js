@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Account from '../../components/account/Account';
 import { connect } from 'react-redux';
 
-import { getAuth, getAccountInfo } from '../../store/actions/userActions';
+import { getAuth, getAccountInfo, editUser } from '../../store/actions/userActions';
+import EditAccount from '../../components/account/EditAccount';
 
 class AccountView extends Component {
 	componentDidMount() {
@@ -12,7 +13,13 @@ class AccountView extends Component {
 	render() {
 		return (
 			<div>
-				<Account user={this.props.userInfo} />
+				<Account 
+					user={this.props.userInfo}
+				/>
+				<EditAccount 
+					user={this.props.userInfo} 
+					editUser={this.editUser}
+				/>
 			</div>
 		);
 	}
@@ -27,5 +34,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getAuth, getAccountInfo },
+	{ getAuth, getAccountInfo, editUser },
 )(AccountView);
