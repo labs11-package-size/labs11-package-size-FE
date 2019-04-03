@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
+import { editUser } from '../../store/actions/userActions';
 
 const styles = theme => ({
 	container: {
@@ -18,12 +19,7 @@ const styles = theme => ({
 	},
 });
 
-class EditAccount extends Component {
-	state = {
-		displayName: '',
-		email: '',
-	};
-	
+const EditAccount = props => {	
 	// componentDidMount() {
 	// 	if (this.props.user) {
 	// 		const { displayName, email } = this.props.user;
@@ -41,40 +37,42 @@ class EditAccount extends Component {
 	// 	this.props.editUser({ displayName, email });
 	// };
 
-	render() {
-		const { classes } = this.props;
-		const { displayName, email } = this.state;
-		return (
-			<form onSubmit={this.handFormSubmit} className={classes.container}>
-				<Input
-					type="text"
-					name="Display Name"
-					placeholder="Display Name"
-					onChange={this.handleInputChange}
-					value={displayName}
-					className={classes.input}
-					inputProps={{
-						'aria-label': 'Description',
-					}}
-				/>
-				<Input
-					type="text"
-					name="Email Address"
-					placeholder="Email Address"
-					onChange={this.handleInputChange}
-					value={email}
-					className={classes.input}
-					inputProps={{
-						'aria-label': 'Description',
-					}}
-				/>
-
-				<Button size="small">
-					Save
-				</Button>
-			</form>
-		);
+	const { classes } = props;
+	const handleFormSubmit = e => {
+		e.preventDefault();
+		props.handleFormSubmit();
+		props.history.push('/account');
 	};
+
+	return (
+		<form onSubmit={props.handleFormSubmit} className={classes.container}>
+			<Input
+				type="text"
+				name="Display Name"
+				placeholder="Display Name"
+				onChange={props.handleInputChange}
+				value={props.displayName}
+				className={classes.input}
+				inputProps={{
+					'aria-label': 'Description',
+				}}
+			/>
+			<Input
+				type="text"
+				name="Email Address"
+				placeholder="Email Address"
+				onChange={props.handleInputChange}
+				value={props.email}
+				className={classes.input}
+				inputProps={{
+					'aria-label': 'Description',
+				}}
+			/>
+			<Button size="small">
+				Save
+			</Button>
+		</form>
+	);
 };
 
 EditAccount.propTypes = {

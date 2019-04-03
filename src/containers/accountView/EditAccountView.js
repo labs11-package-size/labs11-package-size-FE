@@ -32,7 +32,7 @@ class EditAccountView extends Component {
                 <EditAccount 
                     editAccount={this.editAccount}
                     handleInputChange={this.handleInputChange}
-                    //user={this.state.user}
+                    user={this.state.user}
                     editingUserInfo={this.editingUserInfo}
                 />
             </div>

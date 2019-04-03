@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+
+import EditAccountModal from '../modals/EditAccountModal';
 
 const styles = theme => ({
 	root: {
@@ -67,6 +70,32 @@ function Account(props) {
 					<Button size="small" color="primary">
 						<span onClick={props.editUser}>Edit</span>
 					</Button>
+					<EditAccountModal>
+						<form className={classes.container}>
+							<Input
+								type="text"
+								name="Display Name"
+								placeholder="Display Name"
+								onChange={props.handleInputChange}
+								value={props.displayName}
+								className={classes.input}
+								inputProps={{
+									'aria-label': 'Description',
+								}}
+							/>
+							<Input
+								type="text"
+								name="Email Address"
+								placeholder="Email Address"
+								onChange={props.handleInputChange}
+								value={props.email}
+								className={classes.input}
+								inputProps={{
+									'aria-label': 'Description',
+								}}
+							/>
+						</form>
+					</EditAccountModal>
 				</div>
 			)}
 		</div>
