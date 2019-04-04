@@ -5,7 +5,7 @@ import axios from "axios";
 import PackageFactory from "../../components/packaging/components/PackageFactory";
 import Packages from "../../components/packaging/components/Packages";
 
-const apiurl = "http://scannarserver.herokuapp.com/api";
+const apiurl = "https://scannarserver.herokuapp.com/api";
 
 class PackagingView extends Component {
   constructor(props) {
@@ -16,7 +16,8 @@ class PackagingView extends Component {
       searchInput: "",
       searchData: [],
       previewBoxes: [],
-      boxType: ""
+      boxType: "",
+      limitError: false
     };
   }
 
