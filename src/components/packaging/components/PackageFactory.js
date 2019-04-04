@@ -16,7 +16,7 @@ const PackageFactory = props => {
           type="text"
           name="searchInput"
           placeholder="Search for Products to Package..."
-          onChange={props.handleChanges}
+          onChange={props.handleChangesSearch}
         />
         <SearchPanel
           searchData={props.searchData}
@@ -28,6 +28,8 @@ const PackageFactory = props => {
         packItems={props.packItems}
         allData={props.allData}
         selectedProducts={props.selectedProducts}
+        handleChanges={props.handleChanges}
+        boxType={props.boxType}
       />
     </div>
   );

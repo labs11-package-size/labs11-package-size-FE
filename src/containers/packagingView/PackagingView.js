@@ -15,7 +15,8 @@ class PackagingView extends Component {
       selectedProducts: [],
       searchInput: "",
       searchData: [],
-      previewBoxes: []
+      previewBoxes: [],
+      boxType: ""
     };
   }
 
@@ -44,9 +45,12 @@ class PackagingView extends Component {
     this.setState({ selectedProducts: [] });
   };
 
-  packItems = (boxType) => {
+  packItems = boxType => {
     axios
-      .post(`${apiurl}/packaging/preview`, {products: this.state.selectedProducts, boxType})
+      .post(`${apiurl}/packaging/preview`, {
+        products: this.state.selectedProducts,
+        boxType
+      })
       .then(res => {
         this.setState({ previewBoxes: res.data });
       })
@@ -74,6 +78,10 @@ class PackagingView extends Component {
   };
 
   handleChanges = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleChangesSearch = event => {
     this.setState({ [event.target.name]: event.target.value }, () => {
       this.handleSearch();
     });
@@ -93,13 +101,28 @@ class PackagingView extends Component {
           handleSearch={this.handleSearch}
           searchInput={this.state.searchInput}
           searchData={this.state.searchData}
-          handleChanges={this.handleChanges}
+          handleChangesSearch={this.handleChangesSearch}
           selectedProducts={this.state.selectedProducts}
           selectProduct={this.selectProduct}
           clearItems={this.clearItems}
           packItems={this.packItems}
+          handleChanges={this.handleChanges}
+          boxType={this.state.boxType}
         />
-        {this.state.previewBoxes.length && <h3 className="SuggestedPackagesTitle">Suggested Packages Preview</h3>}
+        {this.state.previewBoxes.length ? (
+          <p className="SuggestedPackagesTitle">Suggested Packages Preview</p>
+        ) : (<div className="ItemLimitsContainer"><p>Limits for Packaging Items</p>
+        <div className="ItemLimit">
+        <h5>Mailer</h5>
+        <p>62 items</p>
+          </div>  
+        <div className="ItemLimit">
+        <h5>Shipper</h5>
+        <p>50 Items</p>
+        </div>
+        <div className="ItemLimit">
+        <h5>Not Specified (Either)</h5>
+        <p>29 Items</p></div></div>)}
         <Packages previewBoxes={this.state.previewBoxes} />
       </div>
     );

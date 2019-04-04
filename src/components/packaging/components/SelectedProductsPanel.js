@@ -5,7 +5,21 @@ const SelectedProductsPanel = props => {
   return (
     <div className="SelectedProductsPanelContainer">
       <div className="SelectedProductsTitle">
-        <p> Selected Products</p>
+          <p>Box Type:</p>
+        <div className="BoxTypeSelectorContainer">
+          <div>
+          <input className="BoxTypeSelector" type="radio" id="mailer" name="boxType" value="mailer" onChange={props.handleChanges} checked={props.boxType === 'mailer'}/>
+          <label for="mailer">Mailer</label>
+          </div>
+          <div>
+          <input className="BoxTypeSelector" type="radio" id="shipper" name="boxType" value="shipper" onChange={props.handleChanges} checked={props.boxType === 'shipper'}/>
+          <label for="shipper">Shipper</label>
+          </div>
+          <div>
+          <input className="BoxTypeSelector" type="radio" id="either" name="boxType" value="" onChange={props.handleChanges} checked={props.boxType === ''}/>
+          <label for="either">Not Specified</label>
+          </div>
+        </div>
         <button
           className="SelectedProductsTitleButton"
           onClick={props.packItems}
