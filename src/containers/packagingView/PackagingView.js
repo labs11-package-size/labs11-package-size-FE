@@ -56,13 +56,29 @@ class PackagingView extends Component {
           boxType: this.state.boxType
         })
         .then(res => {
-          this.setState({ previewBoxes: res.data });
+          this.setState({ previewBoxes: res.data }, () => {this.scrollToPackages()});
         })
         .catch(err => {
           console.log(err);
         });
-    });
+    })
   };
+
+  scrollToPackages = () => {
+    if (window.innerWidth<= 900) {
+      window.scroll({
+        top: 850,
+        left: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      window.scroll({
+        top: 500,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  }
 
   handleSearch = () => {
     if (!this.state.searchInput) {
