@@ -33,6 +33,7 @@ const SelectedProductsPanel = props => {
           Clear Items
         </button>
       </div>
+      <p>Selected Products - Click a Product to Remove</p>
       <div className="InnerSelectedProductsPanel">
         {props.selectedProducts.map(productId => {
           const foundProduct = props.allData.find(product => {

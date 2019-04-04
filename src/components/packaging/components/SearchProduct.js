@@ -15,7 +15,7 @@ const SearchProduct = props => {
         className="ProductButton"
         onClick={() => props.selectProduct(props.product.identifier)}
       >
-        Add to Packaging..
+        Add
       </button>
     </div>
   );
