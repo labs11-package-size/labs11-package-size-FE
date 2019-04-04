@@ -22,13 +22,13 @@ const SelectedProductsPanel = props => {
         </div>
         <button
           className="SelectedProductsTitleButton"
-          onClick={props.packItems}
+          onClick={() => props.packItems()}
         >
           Pack Items
         </button>
         <button
           className="SelectedProductsTitleButton"
-          onClick={props.clearItems}
+          onClick={() => props.clearItems()}
         >
           Clear Items
         </button>

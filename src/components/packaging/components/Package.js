@@ -7,7 +7,7 @@ const Package = props => {
         
       <div className="PackageButtonsContainer">
         <button className="PackageButton">Save Package Config</button>
-        <button className="PackageButton">View 3d Model</button>
+        <button className="PackageButton" onClick={() => props.getModel(props.box)}>View 3d Model</button>
       </div>
       <div className="PackageBoxDetailsContainer">
       {(props.box.size === "6 x 6 x 6" || props.box.size === "8 x 6 x 4" || props.box.size === "8 x 8 x 8" || props.box.size === "10 x 8 x 6" || props.box.size === "10 x 10 x 10" || props.box.size === "12 x 6 x 6" || props.box.size === "12 x 12 x 8" || props.box.size === "12 x 12 x 12" || props.box.size === "16 x 12 x 8") ? (

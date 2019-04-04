@@ -5,7 +5,8 @@ import axios from "axios";
 import PackageFactory from "../../components/packaging/components/PackageFactory";
 import Packages from "../../components/packaging/components/Packages";
 
-const apiurl = "https://scannarserver.herokuapp.com/api";
+// const apiurl = "https://scannarserver.herokuapp.com/api";
+const apiurl = "http://localhost:5000/api";
 
 class PackagingView extends Component {
   constructor(props) {
@@ -56,29 +57,31 @@ class PackagingView extends Component {
           boxType: this.state.boxType
         })
         .then(res => {
-          this.setState({ previewBoxes: res.data }, () => {this.scrollToPackages()});
+          this.setState({ previewBoxes: res.data }, () => {
+            this.scrollToPackages();
+          });
         })
         .catch(err => {
           console.log(err);
         });
-    })
+    });
   };
 
   scrollToPackages = () => {
-    if (window.innerWidth<= 900) {
+    if (window.innerWidth <= 900) {
       window.scroll({
         top: 850,
         left: 0,
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     } else {
       window.scroll({
         top: 500,
         left: 0,
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     }
-  }
+  };
 
   handleSearch = () => {
     if (!this.state.searchInput) {
@@ -112,6 +115,22 @@ class PackagingView extends Component {
     this.setState(currentState => ({
       selectedProducts: currentState.selectedProducts.concat(id)
     }));
+  };
+
+  getModel = box => {
+    const mapItemsURL = () => {
+      return box.items
+        .map(item => {
+          return `${item.id}:${item.constraints}:${item.weight}:${
+            item.size_1
+          }x${item.size_2}x${item.size_3}`;
+        })
+        .join();
+    };
+    const modelURL = `bins=0:${
+      box.weight_limit
+    }:${box.size_1}x${box.size_2}x${box.size_3}&items=${mapItemsURL()}&binId=0`;
+    window.open(`${apiurl}/packaging/getModel/${modelURL}`, "_blank")
   };
 
   render() {
@@ -154,6 +173,7 @@ class PackagingView extends Component {
           limitError={this.state.limitError}
           addedPackages={this.state.addedPackages}
           duplicatePackages={this.state.duplicatePackges}
+          getModel={this.getModel}
         />
       </div>
     );
