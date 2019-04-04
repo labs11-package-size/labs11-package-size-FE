@@ -204,16 +204,25 @@ font-size: 10px;
 }
 
 .BoxImage {
-  width: auto;
+  width: 60px;
+  height: 48px;
 }
 
 .PackagedBoxSize {
-  margin: 10px 0 0 0;
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+@media (max-width: 900px) {
+  .PackagedBoxSize {
+    margin: 0 0 0 .3%;
+  }
 }
 
 .PackagedItemList {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 5px;
 }
 
 .PackagedItem {
@@ -224,6 +233,32 @@ font-size: 10px;
 
 .PackagedItem p {
   padding: 5px;
+}
+
+.PackageBoxDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .PackageBoxDetailsContainer {
+  flex-direction: row;
+  }
+  }
+
+.PackageButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+.PackageContainerTopSection {
+display: flex;
+align-items: center;
+justify-content: space-around;
+}
 }
 
 .BoxTypeSelectorContainer {

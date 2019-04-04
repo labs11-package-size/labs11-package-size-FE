@@ -17,7 +17,9 @@ class PackagingView extends Component {
       searchData: [],
       previewBoxes: [],
       boxType: "",
-      limitError: false
+      limitError: false,
+      addedPackages: [],
+      duplicatePackages: []
     };
   }
 
@@ -47,17 +49,19 @@ class PackagingView extends Component {
   };
 
   packItems = () => {
-    axios
-      .post(`${apiurl}/packaging/preview`, {
-        products: this.state.selectedProducts,
-        boxType: this.state.boxType
-      })
-      .then(res => {
-        this.setState({ previewBoxes: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.setState({ addedPackages: [], duplicatePackages: [] }, () => {
+      axios
+        .post(`${apiurl}/packaging/preview`, {
+          products: this.state.selectedProducts,
+          boxType: this.state.boxType
+        })
+        .then(res => {
+          this.setState({ previewBoxes: res.data });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    });
   };
 
   handleSearch = () => {
@@ -112,19 +116,29 @@ class PackagingView extends Component {
         />
         {this.state.previewBoxes.length ? (
           <p className="SuggestedPackagesTitle">Suggested Packages Preview</p>
-        ) : (<div className="ItemLimitsContainer"><p>Limits for Packaging Items</p>
-        <div className="ItemLimit">
-        <h5>Mailer</h5>
-        <p>62 items</p>
-          </div>  
-        <div className="ItemLimit">
-        <h5>Shipper</h5>
-        <p>50 Items</p>
-        </div>
-        <div className="ItemLimit">
-        <h5>Not Specified (Either)</h5>
-        <p>29 Items</p></div></div>)}
-        <Packages previewBoxes={this.state.previewBoxes} />
+        ) : (
+          <div className="ItemLimitsContainer">
+            <p>Limits for Packaging Items</p>
+            <div className="ItemLimit">
+              <h5>Mailer</h5>
+              <p>62 items</p>
+            </div>
+            <div className="ItemLimit">
+              <h5>Shipper</h5>
+              <p>50 Items</p>
+            </div>
+            <div className="ItemLimit">
+              <h5>Not Specified (Either)</h5>
+              <p>29 Items</p>
+            </div>
+          </div>
+        )}
+        <Packages
+          previewBoxes={this.state.previewBoxes}
+          limitError={this.state.limitError}
+          addedPackages={this.state.addedPackages}
+          duplicatePackages={this.state.duplicatePackges}
+        />
       </div>
     );
   }
