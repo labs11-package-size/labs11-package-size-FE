@@ -111,9 +111,9 @@ class PackagingView extends Component {
     });
   };
 
-  selectProduct = id => {
+  selectProduct = uuid => {
     this.setState(currentState => ({
-      selectedProducts: currentState.selectedProducts.concat(id)
+      selectedProducts: currentState.selectedProducts.concat(uuid)
     }));
   };
 

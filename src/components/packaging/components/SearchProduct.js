@@ -13,7 +13,7 @@ const SearchProduct = props => {
 
       <button
         className="ProductButton"
-        onClick={() => props.selectProduct(props.product.identifier)}
+        onClick={() => props.selectProduct(props.product.uuid)}
       >
         Add
       </button>
