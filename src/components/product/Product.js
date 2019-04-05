@@ -153,7 +153,7 @@ class Product extends Component {
 
 										<Input
 											onChange={this.props.handleChange}
-											name="description"
+											name="productDescription"
 											value={this.props.productDescription}
 											label={this.props.product.productDescription}
 											placeholder="Description"

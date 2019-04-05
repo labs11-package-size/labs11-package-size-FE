@@ -2,56 +2,64 @@ import React, { Component } from 'react';
 import Account from '../../components/account/Account';
 import { connect } from 'react-redux';
 
-import { getAuth, getAccountInfo, editUser } from '../../store/actions/userActions';
+import {
+	getAuth,
+	getAccountInfo,
+	editUser,
+} from '../../store/actions/userActions';
 import EditAccount from '../../components/account/EditAccount';
 
 class AccountView extends Component {
 	state = {
-        user: {
-            displayName: this.props.displayName,
-            email: this.props.email,
+		user: {
+			displayName: '',
+			email: '',
 		},
 		userInfo: '',
 	};
 
 	handleInputChange = e => {
-		this.setState({ 
+		this.setState({
 			user: {
 				[e.target.name]: e.target.value,
-			}
-        })
-    };
-    
-    editAccount = (user) => {
-        this.props.editAccount(user)
-        this.setState({ editingUserInfo: false });
+			},
+		});
+	};
+
+	editAccount = user => {
+		this.props.editAccount(user);
+		this.setState({ editingUserInfo: false });
 	};
 
 	componentDidUpdate(prevProps) {
 		if (this.state.userInfo !== this.props.userInfo) {
-			this.setState({ userInfo: this.props.userInfo })
-		} 
-	};
-	
+			this.setState({ userInfo: this.props.userInfo });
+		}
+	}
+
 	componentDidMount() {
 		this.props.getAuth();
 		this.props.getAccountInfo();
-	};
+		console.log(this.props);
+		// this.setState({
+		// 	user: {
+		// 		displayName: this.props.userInfo.displayName,
+		// 		email: this.props.userInfo.email,
+		// 	},
+		// });
+	}
 
 	render() {
 		return (
 			<div>
-				<Account 
+				<Account
 					editAccount={() => this.editAccount(this.state.user)}
-                    handleInputChange={this.handleInputChange}
-                    user={this.state.user}
+					handleInputChange={this.handleInputChange}
+					user={this.state.user}
 					editingUserInfo={this.editingUserInfo}
 					userInfo={this.state.userInfo}
 				/>
-				<EditAccount 
-					user={this.props.userInfo} 
-					editUser={this.editUser}
-				/>
+				<EditAccount user={this.props.userInfo} editUser={this.editUser} />
 			</div>
 		);
 	}
