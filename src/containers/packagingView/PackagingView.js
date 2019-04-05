@@ -124,6 +124,14 @@ class PackagingView extends Component {
     }));
   };
 
+  deleteSelectedProduct = index => {
+    const deletionResult = this.state.selectedProducts.slice()
+    deletionResult.splice(index, 1)
+    this.setState(currentState => ({
+      selectedProducts: deletionResult
+    }));
+  };
+
   getModel = box => {
     const mapItemsURL = () => {
       return box.items
@@ -134,10 +142,10 @@ class PackagingView extends Component {
         })
         .join();
     };
-    const modelURL = `bins=0:${
-      box.weight_limit
-    }:${box.size_1}x${box.size_2}x${box.size_3}&items=${mapItemsURL()}&binId=0`;
-    window.open(`${apiurl}/packaging/getModel/${modelURL}`, "_blank")
+    const modelURL = `bins=0:${box.weight_limit}:${box.size_1}x${box.size_2}x${
+      box.size_3
+    }&items=${mapItemsURL()}&binId=0`;
+    window.open(`${apiurl}/packaging/getModel/${modelURL}`, "_blank");
   };
 
   render() {
@@ -151,13 +159,18 @@ class PackagingView extends Component {
           handleChangesSearch={this.handleChangesSearch}
           selectedProducts={this.state.selectedProducts}
           selectProduct={this.selectProduct}
+          deleteSelectedProduct={this.deleteSelectedProduct}
           clearItems={this.clearItems}
           packItems={this.packItems}
           handleChanges={this.handleChanges}
           boxType={this.state.boxType}
         />
         {this.state.limitError && (
-          <p className="LimitErrorWarning">Your packaging list contains too many items to process the boxes preview. Please click some items to remove them from the list, and then try again.</p>
+          <p className="LimitErrorWarning">
+            Your packaging list contains too many items to process the boxes
+            preview. Please click some items to remove them from the list, and
+            then try again.
+          </p>
         )}
         {this.state.previewBoxes.length ? (
           <p className="SuggestedPackagesTitle">Suggested Packages Preview</p>

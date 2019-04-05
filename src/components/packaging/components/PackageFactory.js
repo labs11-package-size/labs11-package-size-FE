@@ -24,6 +24,7 @@ const PackageFactory = props => {
         />
       </div>
       <SelectedProductsPanel
+        deleteSelectedProduct={props.deleteSelectedProduct}
         clearItems={props.clearItems}
         packItems={props.packItems}
         allData={props.allData}

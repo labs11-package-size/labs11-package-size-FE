@@ -35,11 +35,11 @@ const SelectedProductsPanel = props => {
       </div>
       <p>Selected Products - Click a Product to Remove</p>
       <div className="InnerSelectedProductsPanel">
-        {props.selectedProducts.map(uuid => {
+        {props.selectedProducts.map((uuid, index) => {
           const foundProduct = props.allData.find(product => {
             return product.uuid === uuid;
           });
-          return <SelectedProduct product={foundProduct} />;
+          return <SelectedProduct product={foundProduct} selectedProductIndex={index} deleteSelectedProduct={props.deleteSelectedProduct}/>;
         })}
       </div>
     </div>
