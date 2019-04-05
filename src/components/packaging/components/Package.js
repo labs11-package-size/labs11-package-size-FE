@@ -32,8 +32,8 @@ const Package = props => {
         {props.box.items.map(item => {
           return (
             <div className="PackagedItem">
-              <p>{item.id}</p>
-              <p>{item.orig_size}</p>
+              <p className="PackagedItemId">Item #{item.id}</p>
+              <p className="PackagedItemSize">{item.orig_size}</p>
             </div>
           );
         })}

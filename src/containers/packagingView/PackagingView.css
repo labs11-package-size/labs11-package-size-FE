@@ -163,6 +163,8 @@ font-size: 10px;
 .PackagesContainer {
   display: flex;
   padding: 0 3%;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 @media (max-width: 900px) {
@@ -178,10 +180,10 @@ font-size: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 3%;
+  margin-top: 10px;
   padding: 15px;
   border: 1px solid #72bda3;
-  width: 32%;
+  width: 30%;
 }
 
 @media (max-width: 900px) {
@@ -221,13 +223,15 @@ font-size: 10px;
 
 .PackagedItemList {
   display: flex;
+  width: 100%;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   margin-top: 5px;
 }
 
 .PackagedItem {
+  margin-top: 5px;
   text-align: center;
-  margin-right: 20px;
   border: 1px dotted black;
 }
 
@@ -301,5 +305,14 @@ justify-content: space-around;
 }
 
 label {
+  font-size: 12px;
+}
+
+.PackagedItemId {
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.PackagedItemSize {
   font-size: 12px;
 }

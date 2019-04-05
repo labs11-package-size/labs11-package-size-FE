@@ -49,6 +49,13 @@ class PackagingView extends Component {
     this.setState({ selectedProducts: [] });
   };
 
+  // switch (this.state.boxType) {
+  //   case "mailer":
+  //   if (this.state.selectedProducts.length > 62) {
+  //     return this.setState({ limitError: "mailer "})
+  //   }
+  // }
+
   packItems = () => {
     this.setState({ addedPackages: [], duplicatePackages: [] }, () => {
       axios
