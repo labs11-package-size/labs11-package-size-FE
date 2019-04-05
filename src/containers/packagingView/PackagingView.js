@@ -5,8 +5,8 @@ import axios from "axios";
 import PackageFactory from "../../components/packaging/components/PackageFactory";
 import Packages from "../../components/packaging/components/Packages";
 
-// const apiurl = "https://scannarserver.herokuapp.com/api";
-const apiurl = "http://localhost:5000/api";
+const apiurl = "https://scannarserver.herokuapp.com/api";
+// const apiurl = "http://localhost:5000/api";
 
 class PackagingView extends Component {
   constructor(props) {
@@ -149,6 +149,9 @@ class PackagingView extends Component {
           handleChanges={this.handleChanges}
           boxType={this.state.boxType}
         />
+        {this.state.limitError && (
+          <p className="LimitErrorWarning">Your packaging list contains too many items to process the boxes preview. Please click some items to remove them from the list, and then try again.</p>
+        )}
         {this.state.previewBoxes.length ? (
           <p className="SuggestedPackagesTitle">Suggested Packages Preview</p>
         ) : (
