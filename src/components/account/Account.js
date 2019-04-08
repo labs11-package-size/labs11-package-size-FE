@@ -61,10 +61,10 @@ function Account(props) {
 							User Account
 						</Typography>
 						<Typography className={classes.heading}>
-							Display Name: {props.userInfo.displayName}
+							Display Name: {props.user.displayName}
 						</Typography>
 						<Typography className={classes.heading}>
-							Email Address: {props.userInfo.email}
+							Email Address: {props.user.email}
 						</Typography>
 						{/* photoURL */}
 					</div>
@@ -93,7 +93,7 @@ function Account(props) {
 								}}
 							/>
 							<Button size="small" color="primary">
-								<span onClick={props.editUser}>Edit</span>
+								<span onClick={props.editUser}>Save Changes</span>
 							</Button>
 						</form>
 					</EditAccountModal>
