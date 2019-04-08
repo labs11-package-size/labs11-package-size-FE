@@ -49,7 +49,7 @@ const styles = theme => ({
 
 function Account(props) {
 	const { classes } = props;
-	console.log(props, 'account props')
+	console.log(props, 'account props');
 	return (
 		<div>
 			{!props.user ? (
@@ -61,10 +61,10 @@ function Account(props) {
 							User Account
 						</Typography>
 						<Typography className={classes.heading}>
-							Display Name: {props.userInfo.displayName}
+							Display Name: {props.user.displayName}
 						</Typography>
 						<Typography className={classes.heading}>
-							Email Address: {props.userInfo.email}
+							Email Address: {props.user.email}
 						</Typography>
 						{/* photoURL */}
 					</div>
