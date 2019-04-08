@@ -5,7 +5,7 @@ const Package = props => {
     <div className="PackageContainer">
       <div className="PackageContainerTopSection">
         <div className="PackageButtonsContainer">
-          <button className="PackageButton">Save Package Config</button>
+          <button className="PackageButton" onClick={() => props.savePackage(props.boxindex)}>Save Package Config</button>
           <button
             className="PackageButton"
             onClick={() => props.getModel(props.box)}

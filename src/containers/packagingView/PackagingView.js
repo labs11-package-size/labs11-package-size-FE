@@ -5,8 +5,8 @@ import axios from "axios";
 import PackageFactory from "../../components/packaging/components/PackageFactory";
 import Packages from "../../components/packaging/components/Packages";
 
-const apiurl = "https://scannarserver.herokuapp.com/api";
-// const apiurl = "http://localhost:5000/api";
+// const apiurl = "https://scannarserver.herokuapp.com/api";
+const apiurl = "http://localhost:5000/api";
 
 class PackagingView extends Component {
   constructor(props) {
@@ -97,7 +97,6 @@ class PackagingView extends Component {
     this.setState({
       searchData: this.state.data
         .filter(products => {
-          console.log(this.state.searchInput);
           return (
             products.name
               .toLowerCase()
@@ -148,6 +147,14 @@ class PackagingView extends Component {
     window.open(`${apiurl}/packaging/getModel/${modelURL}`, "_blank");
   };
 
+  savePackageArray = () => {
+    axios.post(`${apiurl}/packaging/add`, this.state.previewBoxes)
+  }
+
+  savePackage = packageIndex => {
+    axios.post(`${apiurl}/packaging/add`, this.state.previewBoxes[packageIndex])
+  }
+
   render() {
     return (
       <div className="PackageFactoryView">
@@ -197,6 +204,8 @@ class PackagingView extends Component {
           addedPackages={this.state.addedPackages}
           duplicatePackages={this.state.duplicatePackges}
           getModel={this.getModel}
+          savePackageArray={this.savePackageArray}
+          savePackage={this.savePackage}
         />
       </div>
     );
