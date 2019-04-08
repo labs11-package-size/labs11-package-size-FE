@@ -44,6 +44,7 @@ const styles = theme => ({
 class ProductListView extends Component {
 	state = {
 		products: [],
+		product: {
 		name: '',
 		productDescription: '',
 		weight: '',
@@ -51,6 +52,7 @@ class ProductListView extends Component {
 		width: '',
 		height: '',
 		value: '',
+		},
 		trackingNumber: '',
 	};
 
@@ -79,6 +81,7 @@ class ProductListView extends Component {
 	editProduct = (id, prod) => {
 		this.props.editProduct(id, prod);
 		this.setState({
+			product: {
 			name: '',
 			productDescription: '',
 			weight: '',
@@ -86,6 +89,7 @@ class ProductListView extends Component {
 			width: '',
 			height: '',
 			value: '',
+			},
 		});
 		this.props.history.push('/');
 	};
@@ -95,7 +99,6 @@ class ProductListView extends Component {
 	};
 
 	render() {
-		console.log(this.state.products);
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
@@ -113,13 +116,14 @@ class ProductListView extends Component {
 						products={this.props.products}
 						handleChange={this.handleInputChange}
 						trackingNumber={this.state.trackingNumber}
-						name={this.state.name}
-						productDescription={this.state.productDescription}
-						weight={this.state.width}
-						length={this.state.length}
-						width={this.state.width}
-						height={this.state.height}
-						value={this.state.value}
+						name={this.state.product.name}
+						productDescription={this.state.product.productDescription}
+						weight={this.state.product.width}
+						length={this.state.product.length}
+						width={this.state.product.width}
+						height={this.state.product.height}
+						value={this.state.product.value}
+						product={this.state.product}
 					/>
 				</div>
 			</div>
