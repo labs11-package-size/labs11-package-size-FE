@@ -23,7 +23,7 @@ import EditProductModal from '../modals/EditProductModal';
 
 const styles = theme => ({
 	card: {
-		maxWidth: 400,
+		maxWidth: 350,
 	},
 	container: {
 		margin: 40,
@@ -77,7 +77,7 @@ class Product extends Component {
 						<CardHeader
 							avatar={
 								<Avatar aria-label="Recipe" className={classes.avatar}>
-									R
+									P
 								</Avatar>
 							}
 							action={

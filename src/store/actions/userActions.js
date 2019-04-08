@@ -66,6 +66,33 @@ export const loginUser = () => dispatch => {
 		});
 };
 
+export const emailLogin = credentials => dispatch => {
+	dispatch({ type: USER_LOGGING_IN });
+	firebase
+		.auth()
+		.signInWithEmailAndPassword(credentials.email, credentials.password)
+		.then(res => {
+			// const user = {
+			// 	uid: res.user.uid,
+			// 	displayName: res.user.displayName,
+			// 	email: res.user.email,
+			// 	accessToken: res.credential.accessToken,
+			// 	idToken: res.credential.idToken,
+			// };
+			console.log(res);
+			axios
+				.post(`/users/login`)
+				.then(res => {
+					dispatch({ type: USER_LOGIN_SUCCESSFUL, payload: res.data.token });
+					localStorage.setItem('token', res.data.token);
+				})
+				.catch(err => console.log('error', err));
+		})
+		.catch(err => {
+			dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
+		});
+};
+
 export const getAuth = () => dispatch => {
 	dispatch({ type: AUTHENTICATING_USER });
 

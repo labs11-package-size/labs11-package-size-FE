@@ -49,7 +49,7 @@ const styles = theme => ({
 
 function Account(props) {
 	const { classes } = props;
-	console.log(props, 'account props')
+	console.log(props, 'account props');
 	return (
 		<div>
 			{!props.user ? (

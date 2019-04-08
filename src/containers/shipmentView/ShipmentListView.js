@@ -31,7 +31,7 @@ const styles = {
 
 class ShipmentListView extends Component {
 	componentDidMount() {
-		this.props.getShipments();
+		return this.props.shipments;
 	}
 
 	addShipment = (tracId, prodId) => {

@@ -3,15 +3,21 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import ProductListView from '../components/product/ProductList';
 import ProductAddView from '../containers/productView/productAddView';
-import LoginView from '../containers/loginView/LoginView';
+import LoginView from '../containers/adminViews/loginView/LoginView';
 import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
-import DashboardView from '../containers/dashboardView/DashboardView';
+
 import AccountView from '../containers/accountView/AccountView';
-import LogoutView from '../containers/logoutView/LogoutView';
+import LogoutView from '../containers/adminViews/logoutView/LogoutView';
+import Layout from '../hoc/layout/Layout';
 import { connect } from 'react-redux';
+import DashboardView from '../containers/dashboardView/DashboardView';
+import { getAuth } from '../store/actions/userActions';
 
 class Routes extends Component {
+	componentWillMount() {
+		this.props.getAuth();
+	}
 	render() {
 		let routes;
 
@@ -40,7 +46,7 @@ class Routes extends Component {
 			);
 		}
 
-		return <div>{routes}</div>;
+		return <Layout>{routes}</Layout>;
 	}
 }
 const mapStateToProps = state => {
@@ -51,5 +57,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{},
+	{ getAuth },
 )(Routes);

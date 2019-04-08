@@ -1,15 +1,30 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { getProducts } from '../../store/actions/productActions';
 
 import Product from './Product';
 
+const styles = theme => ({
+	container: {
+		margin: 40,
+		width: 650,
+		display: 'flex',
+	},
+	root: {
+		display: 'flex',
+		flexWrap: 'wrap',
+	},
+});
+
 class ProductList extends Component {
 	render() {
+		const { classes } = this.props;
 		return (
-			<div>
-				{!this.props.products ? (
-					<h5>...loading</h5>
-				) : (
+			<div className={classes.container}>
+				{this.props.products ? (
 					this.props.products.map(product => {
 						return (
 							<div key={product.uuid}>
@@ -39,10 +54,22 @@ class ProductList extends Component {
 							</div>
 						);
 					})
+				) : (
+					<div>no list yet</div>
 				)}
 			</div>
 		);
 	}
 }
+const mapStateToProps = state => {
+	return {
+		products: state.productsReducer.products,
+	};
+};
 
-export default withRouter(ProductList);
+export default compose(
+	connect(
+		mapStateToProps,
+		{ getProducts },
+	)(withStyles(styles)(ProductList)),
+);
