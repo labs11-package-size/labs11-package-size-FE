@@ -93,7 +93,7 @@ function Account(props) {
 								}}
 							/>
 							<Button size="small" color="primary">
-								<span onClick={props.editUser}>Edit</span>
+								<span onClick={props.editUser}>Save Changes</span>
 							</Button>
 						</form>
 					</EditAccountModal>

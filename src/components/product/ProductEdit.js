@@ -20,22 +20,13 @@ const styles = theme => ({
 
 const ProductEdit = props => {
 	const { classes } = props;
-	const handleClick = event => {
-		event.preventDefault();
-		if (props.isEditing) {
-			props.handleEditSubmit();
-		} else {
-			props.addProduct();
-		}
-		props.history.push('/');
-	};
 
 	return (
 		<form className={classes.container}>
 			<Input
 				onChange={props.handleChange}
 				name="name"
-				// value={props.product.name}
+				value={props.product.name}
 				placeholder="Product Name"
 				className={classes.input}
 				inputProps={{

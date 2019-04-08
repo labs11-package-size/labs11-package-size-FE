@@ -35,14 +35,13 @@ class ProductList extends Component {
 										flexDirection: 'column',
 									}}
 									editProduct={() =>
-										this.props.editProduct(product.uuid, product)
+										this.props.editProduct(product.uuid, this.props.product)
 									}
 									handleChange={this.props.handleChange}
 									trackingNumber={this.props.trackingNumber}
 									deleteProduct={this.props.deleteProduct}
 									addShipment={this.props.addShipment}
 									key={product.identifier}
-									product={product}
 									name={this.props.name}
 									productDescription={this.props.productDescription}
 									weight={this.props.width}
@@ -50,6 +49,7 @@ class ProductList extends Component {
 									width={this.props.width}
 									height={this.props.height}
 									value={this.props.value}
+									product={product}
 								/>
 							</div>
 						);
