@@ -15,7 +15,10 @@ class AccountView extends Component {
 			displayName: '',
 			email: '',
 		},
-		userInfo: '',
+		userInfo: {
+			displayName: '',
+			email: '',
+		},
 	};
 
 	handleInputChange = e => {
@@ -40,7 +43,7 @@ class AccountView extends Component {
 	componentDidMount() {
 		this.props.getAuth();
 		this.props.getAccountInfo();
-		console.log(this.props);
+		// console.log(this.props);
 		// this.setState({
 		// 	user: {
 		// 		displayName: this.props.userInfo.displayName,
@@ -59,7 +62,7 @@ class AccountView extends Component {
 					editingUserInfo={this.editingUserInfo}
 					userInfo={this.state.userInfo}
 				/>
-				<EditAccount user={this.props.userInfo} editUser={() => this.editUser(this.state.user)} />
+				{/* <EditAccount user={this.props.userInfo} editUser={() => this.editUser(this.state.user)} /> */}
 			</div>
 		);
 	}

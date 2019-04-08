@@ -71,7 +71,6 @@ function Account(props) {
 					<EditAccountModal>
 						<form className={classes.container}>
 							<Input
-								//type="text"
 								name="displayName"
 								placeholder="Display Name"
 								onChange={props.handleInputChange}
@@ -82,7 +81,6 @@ function Account(props) {
 								}}
 							/>
 							<Input
-								//type="text"
 								name="email"
 								placeholder="Email Address"
 								onChange={props.handleInputChange}
