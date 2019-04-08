@@ -151,7 +151,7 @@ class ProductListView extends Component {
 	};
 
 	handleInputChange = event => {
-		this.setState({ [event.target.name]: event.target.value });
+		this.setState({ product: {[event.target.name]: event.target.value }});
 	};
 
 	filterProducts = () => {

@@ -142,7 +142,7 @@ class Product extends Component {
 										<Input
 											onChange={this.props.handleChange}
 											name="name"
-											value={this.props.name}
+											value={this.props.product.name}
 											label={this.props.product.name}
 											placeholder="Product Name"
 											className={classes.input}
@@ -154,7 +154,7 @@ class Product extends Component {
 										<Input
 											onChange={this.props.handleChange}
 											name="productDescription"
-											value={this.props.productDescription}
+											value={this.props.product.productDescription}
 											label={this.props.product.productDescription}
 											placeholder="Description"
 											className={classes.input}
@@ -189,7 +189,7 @@ class Product extends Component {
 										<Input
 											onChange={this.props.handleChange}
 											name="value"
-											value={this.props.value}
+											value={this.props.product.value}
 											label={this.props.product.value}
 											placeholder="Value"
 											className={classes.input}
@@ -200,7 +200,7 @@ class Product extends Component {
 										<Input
 											onChange={this.props.handleChange}
 											name="weight"
-											value={this.props.weight}
+											value={this.props.product.weight}
 											label={this.props.product.weight}
 											placeholder="Weight"
 											className={classes.input}
