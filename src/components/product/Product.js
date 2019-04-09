@@ -110,9 +110,12 @@ class Product extends Component {
 							</div>
 
 							<div aria-label="delete">
-								<EditProductModal>
+								<EditProductModal
+									product={this.props.product}
+									updateState={this.props.updateState}>
 									<form className={classes.formContainer}>
 										<Input
+											required
 											onChange={this.props.handleChange}
 											name="name"
 											defaultValue={this.props.product.name}
@@ -125,6 +128,7 @@ class Product extends Component {
 										/>
 
 										<Input
+											required
 											onChange={this.props.handleChange}
 											name="productDescription"
 											defaultValue={this.props.product.productDescription}
@@ -137,6 +141,7 @@ class Product extends Component {
 										/>
 
 										<Input
+											required
 											onChange={this.props.handleChange}
 											name="value"
 											defaultValue={this.props.product.value}
@@ -148,6 +153,7 @@ class Product extends Component {
 											}}
 										/>
 										<Input
+											required
 											onChange={this.props.handleChange}
 											name="weight"
 											defaultValue={this.props.product.weight}
@@ -160,16 +166,10 @@ class Product extends Component {
 										/>
 										<Button
 											onClick={() => {
-												if (this.props.updatedProduct === undefined) {
-													this.props.updateState(this.props.product);
-												} else {
-													setTimeout(() => {
-														this.props.editProduct(
-															this.props.product.uuid,
-															this.props.updatedProduct,
-														);
-													}, 100);
-												}
+												this.props.editProduct(
+													this.props.product.uuid,
+													this.props.updatedProduct,
+												);
 											}}
 											size="small">
 											Save Changes
