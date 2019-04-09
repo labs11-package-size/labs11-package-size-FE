@@ -108,7 +108,7 @@ class Product extends Component {
 							</div>
 
 							<div aria-label="delete">
-								<EditProductModal>
+								<EditProductModal test={"TESTING"}>
 									<form className={classes.formContainer}>
 										<Input
 											onChange={this.props.handleChange}
