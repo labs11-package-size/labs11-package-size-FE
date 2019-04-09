@@ -56,7 +56,7 @@ export const addProduct = newProd => dispatch => {
 export const editProduct = (uuid, product) => dispatch => {
 	dispatch({ type: EDITING_PRODUCT });
 	axios
-		.put(`/products/edit/${uuid}`, uuid, product)
+		.put(`/products/edit/${uuid}`, product)
 		.then(res =>
 			dispatch({ type: EDITING_PRODUCT_SUCCESSFUL, payload: res.data }),
 		)

@@ -44,7 +44,6 @@ const styles = theme => ({
 		margin: theme.spacing.unit,
 	},
 	media: {
-		height: 0,
 		paddingTop: '56.25%', // 16:9
 	},
 	actions: {
@@ -72,9 +71,12 @@ class Product extends Component {
 		this.setState(state => ({ expanded: !state.expanded }));
 	};
 
+	// componentDidMount() {
+
+	// }
+
 	render() {
 		const { classes } = this.props;
-
 		return (
 			<div className={classes.container}>
 				<div className={classes.root}>
@@ -89,8 +91,8 @@ class Product extends Component {
 						/>
 						<CardMedia
 							className={classes.media}
-							image="/static/images/cards/paella.jpg"
-							title="Paella dish"
+							image={this.props.product.thumbnail}
+							title="main img"
 						/>
 
 						<CardActions className={classes.actions} disableActionSpacing>
@@ -111,9 +113,10 @@ class Product extends Component {
 								<EditProductModal>
 									<form className={classes.formContainer}>
 										<Input
+											autoFocus="true"
 											onChange={this.props.handleChange}
 											name="name"
-											value={this.props.product.name}
+											defaultValue={this.props.product.name}
 											label={this.props.product.name}
 											placeholder="Product Name"
 											className={classes.input}
@@ -125,7 +128,7 @@ class Product extends Component {
 										<Input
 											onChange={this.props.handleChange}
 											name="productDescription"
-											value={this.props.product.productDescription}
+											defaultValue={this.props.product.productDescription}
 											label={this.props.product.productDescription}
 											placeholder="Description"
 											className={classes.input}
@@ -136,31 +139,8 @@ class Product extends Component {
 
 										<Input
 											onChange={this.props.handleChange}
-											name="height"
-											value={this.props.height}
-											label={this.props.product.height}
-											placeholder="Height"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
-											}}
-										/>
-
-										<Input
-											onChange={this.props.handleChange}
-											name="length"
-											value={this.props.length}
-											label={this.props.product.length}
-											placeholder="Length"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
-											}}
-										/>
-										<Input
-											onChange={this.props.handleChange}
 											name="value"
-											value={this.props.product.value}
+											defaultValue={this.props.product.value}
 											label={this.props.product.value}
 											placeholder="Value"
 											className={classes.input}
@@ -171,7 +151,7 @@ class Product extends Component {
 										<Input
 											onChange={this.props.handleChange}
 											name="weight"
-											value={this.props.product.weight}
+											defaultValue={this.props.product.weight}
 											label={this.props.product.weight}
 											placeholder="Weight"
 											className={classes.input}
@@ -179,7 +159,20 @@ class Product extends Component {
 												'aria-label': 'Description',
 											}}
 										/>
-										<Button onClick={this.props.editProduct} size="small">
+										<Button
+											onClick={() => {
+												if (this.props.updatedProduct === undefined) {
+													this.props.updateState(this.props.product);
+												} else {
+													setTimeout(() => {
+														this.props.editProduct(
+															this.props.product.uuid,
+															this.props.updatedProduct,
+														);
+													}, 100);
+												}
+											}}
+											size="small">
 											Save Changes
 										</Button>
 									</form>
