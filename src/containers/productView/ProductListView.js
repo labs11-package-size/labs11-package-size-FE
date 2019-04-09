@@ -50,17 +50,14 @@ class ProductListView extends Component {
 	}
 
 	updateModalState = item => {
-		this.setState(
-			{
-				product: {
-					name: item.name,
-					productDescription: item.productDescription,
-					weight: item.weight,
-					value: item.value,
-				},
+		this.setState({
+			product: {
+				name: item.name,
+				productDescription: item.productDescription,
+				weight: item.weight,
+				value: item.value,
 			},
-			() => console.log(this.state.product),
-		);
+		});
 	};
 
 	searchUpdated(term) {
