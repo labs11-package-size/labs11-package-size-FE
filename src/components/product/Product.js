@@ -113,7 +113,6 @@ class Product extends Component {
 								<EditProductModal>
 									<form className={classes.formContainer}>
 										<Input
-											autoFocus="true"
 											onChange={this.props.handleChange}
 											name="name"
 											defaultValue={this.props.product.name}

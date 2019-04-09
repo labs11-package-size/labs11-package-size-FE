@@ -167,15 +167,15 @@ class ProductList extends Component {
 		);
 	}
 }
-// const mapStateToProps = state => {
-// 	return {
-// 		products: state.productsReducer.products,
-// 	};
-// };
+const mapStateToProps = state => {
+	return {
+		products: state.productsReducer.products,
+	};
+};
 
 export default compose(
 	connect(
-		null,
+		mapStateToProps,
 		{ getProducts, addProduct },
 	)(withStyles(styles)(ProductList)),
 );
