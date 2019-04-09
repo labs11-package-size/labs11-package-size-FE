@@ -25,19 +25,11 @@ class PackagingView extends Component {
 
   componentDidMount = () => {
     axios
-      .post(`${apiurl}/users/login`, { uid: "q1lHIM09fnWMAxZ6t116rkaS92E2" })
+      .get(`${apiurl}/products`)
       .then(res => {
-        localStorage.setItem("token", res.data.token);
-        axios
-          .get(`${apiurl}/products`)
-          .then(res => {
-            this.setState(currentState => ({
-              data: currentState.data.concat(res.data)
-            }));
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        this.setState(currentState => ({
+          data: currentState.data.concat(res.data)
+        }));
       })
       .catch(err => {
         console.log(err);
@@ -51,32 +43,42 @@ class PackagingView extends Component {
   packItems = () => {
     if (this.state.boxType === "" && this.state.selectedProducts.length > 29) {
       return this.setState({ previewBoxes: [], limitError: true }, () => {
-        this.scrollToPackages()})
+        this.scrollToPackages();
+      });
     }
-    if (this.state.boxType === "shipper" && this.state.selectedProducts.length > 50) {
+    if (
+      this.state.boxType === "shipper" &&
+      this.state.selectedProducts.length > 50
+    ) {
       return this.setState({ previewBoxes: [], limitError: true }, () => {
-        this.scrollToPackages()})
+        this.scrollToPackages();
+      });
     }
-    if (this.state.boxType === "mailer" && this.state.selectedProducts.length > 62) {
+    if (
+      this.state.boxType === "mailer" &&
+      this.state.selectedProducts.length > 62
+    ) {
       return this.setState({ previewBoxes: [], limitError: true }, () => {
-        this.scrollToPackages()})
+        this.scrollToPackages();
+      });
     }
-    this.setState({ limitError: false } , () => {
-    this.setState({ addedPackages: [], addedAll: false }, () => {
-      axios
-        .post(`${apiurl}/packaging/preview`, {
-          products: this.state.selectedProducts,
-          boxType: this.state.boxType
-        })
-        .then(res => {
-          this.setState({ previewBoxes: res.data }, () => {
-            this.scrollToPackages();
+    this.setState({ limitError: false }, () => {
+      this.setState({ addedPackages: [], addedAll: false }, () => {
+        axios
+          .post(`${apiurl}/packaging/preview`, {
+            products: this.state.selectedProducts,
+            boxType: this.state.boxType
+          })
+          .then(res => {
+            this.setState({ previewBoxes: res.data }, () => {
+              this.scrollToPackages();
+            });
+          })
+          .catch(err => {
+            console.log(err);
           });
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    })})
+      });
+    });
   };
 
   scrollToPackages = () => {
@@ -124,10 +126,10 @@ class PackagingView extends Component {
 
   selectProduct = uuid => {
     if (this.state.selectedProducts.length < 62) {
-    this.setState(currentState => ({
-      selectedProducts: currentState.selectedProducts.concat(uuid)
-    }))
-  }
+      this.setState(currentState => ({
+        selectedProducts: currentState.selectedProducts.concat(uuid)
+      }));
+    }
   };
 
   deleteSelectedProduct = index => {
@@ -155,13 +157,18 @@ class PackagingView extends Component {
   };
 
   savePackageArray = () => {
-    const allPackagesAdded = this.state.previewBoxes.map((previewbox, index) => {
-      return index
-    })
+    const allPackagesAdded = this.state.previewBoxes.map(
+      (previewbox, index) => {
+        return index;
+      }
+    );
     axios
       .post(`${apiurl}/packaging/add`, this.state.previewBoxes)
       .then(res => {
-        this.setState(currentState => ({ addedAll: true, addedPackages: currentState.addedPackages.concat(allPackagesAdded) }))
+        this.setState(currentState => ({
+          addedAll: true,
+          addedPackages: currentState.addedPackages.concat(allPackagesAdded)
+        }));
       })
       .catch(err => {
         console.log(err);
