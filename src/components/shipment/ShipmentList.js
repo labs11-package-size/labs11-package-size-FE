@@ -34,17 +34,16 @@ class ShipmentList extends Component {
 						<Link to="/shipment/add">Add Shipments</Link>
 					</Button>
 					<div className={classes.root}>
-						{!this.props.shipments ? ( //shipments plural
+						{!this.props.shipments ? (
 							<h5>...loading</h5>
 						) : (
 							this.props.shipments.map(shipment => {
-								//shipments plural
 								return (
 									<Shipment
+										key={shipment.uuid}
 										deleteShipment={() =>
 											this.props.deleteShipment(shipment.uuid)
 										}
-										key={shipment.identifier}
 										shipment={shipment}
 									/>
 								);
