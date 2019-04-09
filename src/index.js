@@ -5,10 +5,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+<<<<<<< HEAD
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 
 import { firebase } from './firebase';
 
+=======
+>>>>>>> jacob-bryan
 import rootReducer from './store/reducers/index';
 import Routes from './routes/Routes';
 
