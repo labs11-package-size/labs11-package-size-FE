@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import ProductListView from '../components/product/ProductList';
+import PackagingView from '../containers/packagingView/PackagingView';
 import ProductAddView from '../containers/productView/productAddView';
 import LoginView from '../containers/loginView/LoginView';
 import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
@@ -24,6 +25,7 @@ class Routes extends Component {
 					<Route exact path="/shipment/add" component={ShipmentAddView} />
 					<Route exact path="/product/add" component={ProductAddView} />
 					<Route exact path="/shipments" component={ShipmentListView} />
+					<Route exact path="/packaging" component={PackagingView} />
 					<Route exact path="/products" component={ProductListView} />
 					<Route exact path="/account" component={AccountView} />
 					<Route exact path="/" component={DashboardView} />

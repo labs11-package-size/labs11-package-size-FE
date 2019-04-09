@@ -6,7 +6,6 @@ import PackageFactory from "../../components/packaging/PackageFactory";
 import Packages from "../../components/packaging/Packages";
 
 const apiurl = "https://scannarserver.herokuapp.com/api";
-// const apiurl = "http://localhost:5000/api";
 
 class PackagingView extends Component {
   constructor(props) {
@@ -48,13 +47,6 @@ class PackagingView extends Component {
   clearItems = () => {
     this.setState({ selectedProducts: [] });
   };
-
-  // switch (this.state.boxType) {
-  //   case "mailer":
-  //   if (this.state.selectedProducts.length > 62) {
-  //     return this.setState({ limitError: "mailer "})
-  //   }
-  // }
 
   packItems = () => {
     if (this.state.boxType === "" && this.state.selectedProducts.length > 29) {

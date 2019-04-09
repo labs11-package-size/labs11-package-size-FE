@@ -6,6 +6,7 @@ import LocalShipping from '@material-ui/icons/LocalShipping';
 import Person from '@material-ui/icons/Person';
 import Eject from '@material-ui/icons/Eject';
 import Queue from '@material-ui/icons/Queue';
+import Send from '@material-ui/icons/Send';
 import { Link, Redirect } from 'react-router-dom';
 import { logoutUser } from '../../store/actions/userActions';
 import { connect } from 'react-redux';
@@ -32,6 +33,14 @@ export const SideBar = (
 					<Queue />
 				</ListItemIcon>
 				<ListItemText primary="Products" />
+			</ListItem>
+		</Link>
+		<Link to="/packaging">
+			<ListItem button>
+				<ListItemIcon>
+					<Send />
+				</ListItemIcon>
+				<ListItemText primary="Packaging" />
 			</ListItem>
 		</Link>
 		<Link to="/shipments">
