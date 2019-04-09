@@ -32,10 +32,6 @@ class EditProductModal extends React.Component {
 		open: false,
 	};
 
-	componentDidMount() {
-		console.log(this.props.test)
-	}
-
 	handleOpen = () => {
 		this.setState({ open: true }, () =>
 			this.props.updateState(this.props.product),
