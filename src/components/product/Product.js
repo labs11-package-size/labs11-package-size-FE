@@ -180,7 +180,7 @@ class Product extends Component {
 											}}
 										/>
 										<Button onClick={this.props.editProduct} size="small">
-											Submit
+											Save Changes
 										</Button>
 									</form>
 								</EditProductModal>

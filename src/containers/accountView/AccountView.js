@@ -59,7 +59,7 @@ class AccountView extends Component {
 					editingUserInfo={this.editingUserInfo}
 					userInfo={this.state.userInfo}
 				/>
-				<EditAccount user={this.props.userInfo} editUser={this.editUser} />
+				<EditAccount user={this.props.userInfo} editUser={() => this.editUser(this.state.user)} />
 			</div>
 		);
 	}
