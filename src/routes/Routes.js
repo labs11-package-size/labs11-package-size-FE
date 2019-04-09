@@ -13,6 +13,7 @@ import Layout from '../hoc/layout/Layout';
 import { connect } from 'react-redux';
 import DashboardView from '../containers/dashboardView/DashboardView';
 import { getAuth } from '../store/actions/userActions';
+import SignupView from '../containers/adminViews/signupView/SignupView';
 
 class Routes extends Component {
 	componentWillMount() {
@@ -25,7 +26,7 @@ class Routes extends Component {
 			routes = (
 				<Switch>
 					<Redirect from="/login" to="/" />
-					<Redirect from="/register" to="/" />
+					<Redirect from="/signup" to="/" />
 					<Route exact path="/logout" component={LogoutView} />
 					<Route exact path="/shipment/add" component={ShipmentAddView} />
 					<Route exact path="/product/add" component={ProductAddView} />
@@ -40,6 +41,7 @@ class Routes extends Component {
 				<Switch>
 					<Redirect exact from="/" to="/login" />
 
+					<Route exact path="/signup" component={SignupView} />
 					<Route exact path="/login" component={LoginView} />
 					<Redirect to="/login" />
 				</Switch>

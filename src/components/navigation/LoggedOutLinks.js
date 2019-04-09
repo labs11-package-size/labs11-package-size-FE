@@ -23,14 +23,14 @@ const LoggedOutLinks = props => {
 			<Button>
 				<NavLink
 					style={{ textDecorationLine: 'none', color: 'white' }}
-					to="/account">
+					to="/signup">
 					Sign Up
 				</NavLink>
 			</Button>
 			<Button color="inherit">
 				<NavLink
 					style={{ textDecorationLine: 'none', color: 'white' }}
-					to="/products">
+					to="/login">
 					Sign In
 				</NavLink>
 			</Button>

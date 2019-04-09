@@ -18,17 +18,22 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import DeleteModal from '../modals/deleteModal';
-import AddShipmentModal from '../modals/AddShimpentModal';
 import EditProductModal from '../modals/EditProductModal';
 
 const styles = theme => ({
 	card: {
-		maxWidth: 350,
+		width: 275,
 	},
 	container: {
 		margin: 40,
 		width: 'auto',
 		display: 'flex',
+	},
+	formContainer: {
+		margin: 40,
+		width: 'auto',
+		display: 'flex',
+		flexDirection: 'column',
 	},
 	root: {
 		display: 'flex',
@@ -80,11 +85,6 @@ class Product extends Component {
 									P
 								</Avatar>
 							}
-							action={
-								<IconButton>
-									<MoreVertIcon />
-								</IconButton>
-							}
 							title={this.props.product.name}
 						/>
 						<CardMedia
@@ -92,37 +92,8 @@ class Product extends Component {
 							image="/static/images/cards/paella.jpg"
 							title="Paella dish"
 						/>
-						<CardContent>
-							<Typography className={classes.heading}>
-								Description: {this.props.product.productDescription}
-							</Typography>
-						</CardContent>
-						<CardActions className={classes.actions} disableActionSpacing>
-							<div aria-label="Add Shipment">
-								<AddShipmentModal>
-									<form className={classes.container}>
-										<Input
-											onChange={this.props.handleChange}
-											name="trackingNumber"
-											value={this.props.trackingNumber}
-											inputProps={{
-												'aria-label': 'Tracking number',
-											}}
-										/>
 
-										<Button
-											onClick={() =>
-												this.props.addShipment(
-													this.props.trackingNumber,
-													this.props.product.identifier,
-												)
-											}
-											size="small">
-											Add Shipment
-										</Button>
-									</form>
-								</AddShipmentModal>
-							</div>
+						<CardActions className={classes.actions} disableActionSpacing>
 							<div aria-label="delete">
 								<DeleteModal>
 									<Button
@@ -138,7 +109,7 @@ class Product extends Component {
 
 							<div aria-label="delete">
 								<EditProductModal>
-									<form className={classes.container}>
+									<form className={classes.formContainer}>
 										<Input
 											onChange={this.props.handleChange}
 											name="name"
@@ -226,6 +197,10 @@ class Product extends Component {
 						</CardActions>
 						<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 							<CardContent>
+								<Typography>
+									Description: {this.props.product.productDescription}
+								</Typography>
+
 								<Typography className={classes.heading}>
 									Value: {this.props.product.value}
 								</Typography>

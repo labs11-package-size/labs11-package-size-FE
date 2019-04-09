@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAuth } from '../../store/actions/userActions';
-import Register from '../../components/register/Register';
+import { getAuth } from '../../../store/actions/userActions';
+import Signup from '../../../components/admin/siginup/Signup';
 
-class RegisterView extends Component {
+class SignupView extends Component {
 	componentDidMount() {
 		this.props.getAuth();
 	}
 	render() {
-		return <Register />;
+		return <Signup />;
 	}
 }
 
@@ -21,4 +21,4 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{ getAuth },
-)(RegisterView);
+)(SignupView);
