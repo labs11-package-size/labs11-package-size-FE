@@ -45,7 +45,7 @@ class EditProductModal extends React.Component {
 
 		return (
 			<div>
-				<Button onClick={this.handleOpen}>Edit Product</Button>
+				<Button onClick={this.handleOpen}>Edit</Button>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"

@@ -49,7 +49,9 @@ const LoggedInLinks = props => {
 				</NavLink>
 			</Button>
 			<Button color="inherit">
-				<NavLink style={{ textDecorationLine: 'none', color: 'white' }} to="/">
+				<NavLink
+					style={{ textDecorationLine: 'none', color: 'white' }}
+					to="/logout">
 					Logout
 				</NavLink>
 			</Button>

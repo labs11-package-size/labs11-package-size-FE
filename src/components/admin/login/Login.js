@@ -9,6 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import GoogleButton from 'react-google-button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
@@ -45,18 +46,17 @@ const styles = theme => ({
 	submit: {
 		marginTop: theme.spacing.unit * 3,
 		backgroundColor: '#72BDA2',
-		color: 'white',	
-		"&:hover": {
+		color: 'white',
+		'&:hover': {
 			color: '#72BDA2',
 			backgroundColor: 'white',
 			border: 'solid 5px #72BDA2',
-		}
+		},
 	},
 });
 
 const Login = props => {
 	const { classes } = props;
-
 	return (
 		<div>
 			<main className={classes.main}>
@@ -68,22 +68,22 @@ const Login = props => {
 					<Typography component="h1" variant="h5">
 						Sign in
 					</Typography>
-					<form onSubmit={props.loginSubmit} className={classes.form}>
+					<form className={classes.form}>
 						<FormControl margin="normal" required fullWidth>
-							<InputLabel htmlFor="username">Username</InputLabel>
+							<InputLabel htmlFor="email">Email</InputLabel>
 							<Input
-								id="username"
-								value={props.username}
-								onChange={props.handleChange}
-								name="username"
-								autoComplete="username"
+								id="email"
+								value={props.email}
+								onChange={props.handleInputChange}
+								name="email"
+								autoComplete="email"
 								autoFocus
 							/>
 						</FormControl>
 						<FormControl margin="normal" required fullWidth>
 							<InputLabel htmlFor="password">Password</InputLabel>
 							<Input
-								onChange={props.handleChange}
+								onChange={props.handleInputChange}
 								value={props.password}
 								name="password"
 								type="password"
@@ -95,15 +95,22 @@ const Login = props => {
 							control={<Checkbox value="remember" color="primary" />}
 							label="Remember me"
 						/>
-						<Button
-							onClick={props.handleLogin}
-							type="submit"
-							fullWidth
-							variant="contained"
-							className={classes.submit}>
-							Sign in
-						</Button>
-						<Link to="/register">Register</Link>
+						<div>
+							<Button
+								onClick={props.handleEmailLogin}
+								type="submit"
+								fullWidth
+								variant="contained"
+								className={classes.submit}>
+								Sign in
+							</Button>
+							<div>OR</div>
+							<GoogleButton
+								onClick={() => {
+									props.handleLogin();
+								}}
+							/>
+						</div>
 					</form>
 				</Paper>
 			</main>

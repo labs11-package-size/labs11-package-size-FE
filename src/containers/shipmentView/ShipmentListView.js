@@ -53,9 +53,6 @@ class ShipmentListView extends Component {
 					Shipments
 				</Typography>
 				<div>
-					<Button variant="contained" className={classes.submit} size="small">
-						<Link to="/shipment/add">Add Shipment</Link>
-					</Button>
 					<ShipmentList
 						addShipment={this.addShipment}
 						deleteShipment={this.deleteShipment}

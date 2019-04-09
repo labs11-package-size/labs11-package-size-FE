@@ -2,19 +2,28 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { loginUser } from '../../../store/actions/userActions';
+import { loginUser, emailLogin } from '../../../store/actions/userActions';
 import Login from '../../../components/admin/login/Login';
 
 class LoginView extends Component {
 	state = {
-		username: '',
-		email: '',
-		password: '',
+		user: {
+			email: '',
+			password: '',
+		},
 		error: 'invalid credentials',
 	};
 
 	handleChanges = event => {
-		this.setState({ [event.target.name]: event.target.value });
+		this.setState({
+			user: {
+				[event.target.name]: event.target.value,
+			},
+		});
+	};
+
+	handleEmailLogin = () => {
+		this.props.emailLogin();
 	};
 
 	handleLogin = () => {
@@ -24,11 +33,12 @@ class LoginView extends Component {
 	render() {
 		return (
 			<Login
-				username={this.state.username}
-				password={this.state.password}
-				email={this.state.email}
+				password={this.state.user.password}
+				email={this.state.user.email}
+				user={this.state.user}
 				error={this.state.error}
 				handleInputChange={this.handleChanges}
+				handleEmailLogin={() => this.handleEmailLogin(this.state.user)}
 				handleLogin={this.handleLogin}
 			/>
 		);
@@ -42,5 +52,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ loginUser },
+	{ loginUser, emailLogin },
 )(withRouter(LoginView));
