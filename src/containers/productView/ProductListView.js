@@ -14,7 +14,7 @@ import {
 	deleteProduct,
 } from '../../store/actions/productActions';
 import { addShipment } from '../../store/actions/shipmentActions';
-import { compose } from '../../../../../Library/Caches/typescript/3.4/node_modules/redux';
+import { compose } from 'redux';
 
 const styles = theme => ({
 	mainContainer: {
