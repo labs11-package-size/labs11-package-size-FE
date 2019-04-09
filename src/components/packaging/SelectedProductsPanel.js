@@ -33,7 +33,7 @@ const SelectedProductsPanel = props => {
           Clear Items
         </button>
       </div>
-      <p>Selected Products - Click a Product to Remove</p>
+      
       <div className="InnerSelectedProductsPanel">
         {props.selectedProducts.map((uuid, index) => {
           const foundProduct = props.allData.find(product => {
@@ -41,7 +41,24 @@ const SelectedProductsPanel = props => {
           });
           return <SelectedProduct product={foundProduct} selectedProductIndex={index} deleteSelectedProduct={props.deleteSelectedProduct}/>;
         })}
+        
       </div>
+      <p className="ProductsCounter">{props.selectedProducts.length}{" "}Selected Products - Click a Product to Remove</p>
+      <div className="ItemLimitsContainer">
+            <p>Limits for Packaging Items</p>
+            <div className="ItemLimit">
+              <h5>Mailer</h5>
+              <p>62 items</p>
+            </div>
+            <div className="ItemLimit">
+              <h5>Shipper</h5>
+              <p>50 Items</p>
+            </div>
+            <div className="ItemLimit">
+              <h5>Not Specified (Either)</h5>
+              <p>29 Items</p>
+            </div>
+          </div>
     </div>
   );
 };

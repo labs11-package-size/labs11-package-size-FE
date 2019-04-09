@@ -7,8 +7,8 @@ const PackageFactory = props => {
     <div className="PackageFactoryContainer">
       <div className="SearchContainer">
         <p>
-          Enter product names, and then select the products you'd like to
-          package.
+          Enter product names, and then click on the products you'd like to
+          package to select them.
         </p>
         <input
           className="SearchBar"

@@ -11,7 +11,7 @@ const SearchPanel = props => {
             key={product.uuid}
             selectProduct={props.selectProduct}
           />
-        );
+        )
       })}
     </div>
   );

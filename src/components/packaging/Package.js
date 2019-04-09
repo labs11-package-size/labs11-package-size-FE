@@ -1,18 +1,44 @@
 import React from "react";
 
 const Package = props => {
+  const packageCount = () => {
+    let count = 0;
+    for (let i = 0; i < props.addedPackages.length; i++) {
+      if (props.addedPackages[i] == props.boxindex) 
+      {count++}
+    }
+    return count;
+  };
   return (
     <div className="PackageContainer">
       <div className="PackageContainerTopSection">
-        <div className="PackageButtonsContainer">
-          <button className="PackageButton" onClick={() => props.savePackage(props.boxindex)}>Save Package Config</button>
-          <button
-            className="PackageButton"
-            onClick={() => props.getModel(props.box)}
-          >
-            View 3d Model
-          </button>
-        </div>
+        {props.addedPackages.includes(props.boxindex) ? (
+          <div className="PackageButtonsContainer">
+            <p>You've saved {packageCount()} copies of this package.</p>
+            <button
+              className="PackageSaveButton"
+              onClick={() => props.savePackage(props.boxindex)}
+            >
+              Save another copy
+            </button>
+          </div>
+        ) : (
+          <div className="PackageButtonsContainer">
+            <button
+              className="PackageSaveButton"
+              onClick={() => props.savePackage(props.boxindex)}
+            >
+              Save Package Config
+            </button>
+            <button
+              className="PackageSaveButton"
+              onClick={() => props.getModel(props.box)}
+            >
+              View 3d Model
+            </button>
+          </div>
+        )}
+
         <div className="PackageBoxDetailsContainer">
           {props.box.size === "6 x 6 x 6" ||
           props.box.size === "8 x 6 x 4" ||
