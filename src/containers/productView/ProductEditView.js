@@ -68,7 +68,7 @@ class ProductEditView extends Component {
 	}
 }
 const mapStateToProps = state => {
-	return { success: state.productReducer.success };
+	return { success: state.productsReducer.success };
 };
 export default connect(
 	mapStateToProps,

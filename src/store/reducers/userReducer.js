@@ -18,7 +18,6 @@ import {
 	EDITING_USER,
 	EDITING_USER_SUCCESSFUL,
 	EDITING_USER_FAILURE,
-
 } from '../actions/userActions';
 
 const initialState = {
@@ -51,6 +50,7 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				userToken: action.payload,
+				userInfo: action.user,
 				isLoggedIn: true,
 				authenticated: true,
 				isLoggingIn: false,
@@ -133,7 +133,7 @@ const userReducer = (state = initialState, action) => {
 				gotUserInfo: false,
 				error: action.payload,
 			};
-		
+
 		case EDITING_USER:
 			return {
 				...state,
@@ -148,7 +148,7 @@ const userReducer = (state = initialState, action) => {
 				editingUserInfo: false,
 				editingUserInfoSuccess: true,
 				editingUserInfoFailure: false,
-			}
+			};
 		case EDITING_USER_FAILURE:
 			return {
 				...state,
@@ -156,7 +156,7 @@ const userReducer = (state = initialState, action) => {
 				editingUserInfoSuccess: false,
 				editingUserInfoFailure: true,
 				error: action.payload,
-			}
+			};
 
 		default:
 			return state;
@@ -195,6 +195,5 @@ const userReducer = (state = initialState, action) => {
 // 				authenticated: false,
 // 				error: action.payload,
 // 			};
-
 
 export default userReducer;

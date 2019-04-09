@@ -31,14 +31,7 @@ const styles = {
 
 class ShipmentListView extends Component {
 	componentDidMount() {
-		this.props.getShipments();
-	}
-
-	componentDidUpdate(prevProps) {
-		// Typical usage (don't forget to compare props):
-		if (this.props.shipments.length !== prevProps.shipments.length) {
-			this.props.getShipments();
-		}
+		return this.props.shipments;
 	}
 
 	addShipment = (tracId, prodId) => {
@@ -49,6 +42,7 @@ class ShipmentListView extends Component {
 	deleteShipment = uuid => {
 		this.props.deleteShipment(uuid);
 		this.props.getShipments();
+		return <Redirect to="/" />;
 	};
 
 	render() {
@@ -58,14 +52,13 @@ class ShipmentListView extends Component {
 				<Typography gutterBottom variant="h5" component="h2">
 					Shipments
 				</Typography>
-				<ShipmentList
-					addShipment={this.addShipment}
-					deleteShipment={this.deleteShipment}
-					shipments={this.props.shipments}
-				/>
-				<Button variant="contained" className={classes.submit} size="small">
-					<Link to="/shipment/add">Add Shipment</Link>
-				</Button>
+				<div>
+					<ShipmentList
+						addShipment={this.addShipment}
+						deleteShipment={this.deleteShipment}
+						shipments={this.props.shipments}
+					/>
+				</div>
 			</div>
 		);
 	}
@@ -73,7 +66,7 @@ class ShipmentListView extends Component {
 
 const mapStateToProps = state => {
 	return {
-		shipments: state.shipmentReducer.shipments,
+		shipments: state.shipmentsReducer.shipments,
 	};
 };
 

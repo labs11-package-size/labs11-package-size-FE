@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 
@@ -27,7 +26,7 @@ const styles = theme => ({
 	},
 });
 
-class EditProductModal extends React.Component {
+class EditAccountModal extends React.Component {
 	state = {
 		open: false,
 	};
@@ -45,29 +44,24 @@ class EditProductModal extends React.Component {
 
 		return (
 			<div>
-				<Button onClick={this.handleOpen}>Edit</Button>
+				<Button onClick={this.handleOpen}>Edit Account</Button>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
 					open={this.state.open}
 					onClose={this.handleClose}>
 					<div style={getModalStyle()} className={classes.paper}>
-						<Typography variant="h6" id="modal-title">
-							Are you sure you want to edit this product?
-						</Typography>
-						<div>
-							{this.props.children}
-							<Button onClick={this.handleClose}> Cancel</Button>
-						</div>
-					</div>
+                        {this.props.children}
+                        <Button onClick={this.handleClose}>Cancel</Button>
+                    </div>
 				</Modal>
 			</div>
 		);
 	}
 }
 
-EditProductModal.propTypes = {
+EditAccountModal.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(EditProductModal);
+export default withStyles(styles)(EditAccountModal);

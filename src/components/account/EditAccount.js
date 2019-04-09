@@ -1,63 +1,82 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import Button from '@material-ui/core/Button';
-import { withRouter } from 'react-router-dom';
+// import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
+// import { withStyles } from '@material-ui/core/styles';
+// import Input from '@material-ui/core/Input';
+// import Button from '@material-ui/core/Button';
+// import { withRouter } from 'react-router-dom';
+// import { editUser } from '../../store/actions/userActions';
 
-const styles = theme => ({
-	container: {
-		margin: '20px auto',
-		width: '500px',
-		display: 'flex',
-		flexDirection: 'column',
-	},
+// const styles = theme => ({
+// 	container: {
+// 		margin: '20px auto',
+// 		width: '500px',
+// 		display: 'flex',
+// 		flexDirection: 'column',
+// 	},
 
-	input: {
-		margin: theme.spacing.unit,
-	},
-});
+// 	input: {
+// 		margin: theme.spacing.unit,
+// 	},
+// });
 
-const EditAccount = props => {
-	const { classes } = props;
-	const handleClick = event => {
-		event.preventDefault();
-		props.handleEditSubmit();
-		props.history.push('/Account');
-	};
+// const EditAccount = props => {	
+// 	// componentDidMount() {
+// 	// 	if (this.props.user) {
+// 	// 		const { displayName, email } = this.props.user;
+// 	// 		this.setState({ displayName, email});
+// 	// 	}
+// 	// };
 
-	return (
-		<form className={classes.container}>
-			<Input
-				onChange={props.handleChange}
-                name="Display Name"
-                value={props.userInfo.displayName}
-				placeholder="Display Name"
-				className={classes.input}
-				inputProps={{
-					'aria-label': 'Description',
-				}}
-			/>
-            <Input
-				onChange={props.handleChange}
-                name="Email Address"
-                value={props.userInfo.email}
-				placeholder="Email Address"
-				className={classes.input}
-				inputProps={{
-					'aria-label': 'Description',
-				}}
-			/>
+// 	// handleInputChange = e => {
+// 	// 	this.setState({ [e.target.name]: e.value.name })
+// 	// };
 
-			<Button onClick={props.editUser} size="small">
-				Submit
-			</Button>
-		</form>
-	);
-};
+// 	// handleFormSubmit = e => {
+// 	// 	e.preventDefault();
+// 	// 	const { displayName, email } = this.state;
+// 	// 	this.props.editUser({ displayName, email });
+// 	// };
 
-EditAccount.propTypes = {
-	classes: PropTypes.object.isRequired,
-};
+// 	const { classes } = props;
+// 	const handleFormSubmit = e => {
+// 		e.preventDefault();
+// 		props.handleFormSubmit();
+// 		props.history.push('/account');
+// 	};
 
-export default withRouter(withStyles(styles)(EditAccount));
+// 	return (
+// 		<form onSubmit={props.handleFormSubmit} className={classes.container}>
+// 			<Input
+// 				type="text"
+// 				name="Display Name"
+// 				placeholder="Display Name"
+// 				onChange={props.handleInputChange}
+// 				value={props.displayName}
+// 				className={classes.input}
+// 				inputProps={{
+// 					'aria-label': 'Description',
+// 				}}
+// 			/>
+// 			<Input
+// 				type="text"
+// 				name="Email Address"
+// 				placeholder="Email Address"
+// 				onChange={props.handleInputChange}
+// 				value={props.email}
+// 				className={classes.input}
+// 				inputProps={{
+// 					'aria-label': 'Description',
+// 				}}
+// 			/>
+// 			<Button size="small">
+// 				Save
+// 			</Button>
+// 		</form>
+// 	);
+// };
+
+// EditAccount.propTypes = {
+// 	classes: PropTypes.object.isRequired,
+// };
+
+// export default withRouter(withStyles(styles)(EditAccount));

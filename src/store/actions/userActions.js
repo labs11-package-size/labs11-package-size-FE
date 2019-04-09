@@ -56,6 +56,37 @@ export const loginUser = () => dispatch => {
 			axios
 				.post(`/users/login`, user)
 				.then(res => {
+					dispatch({
+						type: USER_LOGIN_SUCCESSFUL,
+						payload: res.data.token,
+						user,
+					});
+					localStorage.setItem('token', res.data.token);
+				})
+				.catch(err => console.log('error', err));
+		})
+		.catch(err => {
+			dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
+		});
+};
+
+export const emailLogin = credentials => dispatch => {
+	console.log('SDFGHJK', credentials);
+	dispatch({ type: USER_LOGGING_IN });
+	firebase
+		.auth()
+		.signInWithEmailAndPassword(credentials)
+		.then(res => {
+			const user = {
+				uid: res.user.uid,
+				displayName: res.user.displayName,
+				email: res.user.email,
+				accessToken: res.credential.accessToken,
+				idToken: res.credential.idToken,
+			};
+			axios
+				.post(`/users/login`, user)
+				.then(res => {
 					dispatch({ type: USER_LOGIN_SUCCESSFUL, payload: res.data.token });
 					localStorage.setItem('token', res.data.token);
 				})

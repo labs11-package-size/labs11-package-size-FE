@@ -3,16 +3,22 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import ProductListView from '../components/product/ProductList';
 import ProductAddView from '../containers/productView/productAddView';
-import ProductEditView from '../containers/productView/ProductEditView';
-import LoginView from '../containers/loginView/LoginView';
+import LoginView from '../containers/adminViews/loginView/LoginView';
 import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
-import DashboardView from '../containers/dashboardView/DashboardView';
+
 import AccountView from '../containers/accountView/AccountView';
-import LogoutView from '../containers/logoutView/LogoutView';
+import LogoutView from '../containers/adminViews/logoutView/LogoutView';
+import Layout from '../hoc/layout/Layout';
 import { connect } from 'react-redux';
+import DashboardView from '../containers/dashboardView/DashboardView';
+import { getAuth } from '../store/actions/userActions';
+import SignupView from '../containers/adminViews/signupView/SignupView';
 
 class Routes extends Component {
+	componentWillMount() {
+		this.props.getAuth();
+	}
 	render() {
 		let routes;
 
@@ -20,11 +26,10 @@ class Routes extends Component {
 			routes = (
 				<Switch>
 					<Redirect from="/login" to="/" />
-					<Redirect from="/register" to="/" />
+					<Redirect from="/signup" to="/" />
 					<Route exact path="/logout" component={LogoutView} />
 					<Route exact path="/shipment/add" component={ShipmentAddView} />
-					<Route exact path="/product/add" component={ProductEditView} />
-					<Route exact path="/product/edit" component={ProductAddView} />
+					<Route exact path="/product/add" component={ProductAddView} />
 					<Route exact path="/shipments" component={ShipmentListView} />
 					<Route exact path="/products" component={ProductListView} />
 					<Route exact path="/account" component={AccountView} />
@@ -36,13 +41,14 @@ class Routes extends Component {
 				<Switch>
 					<Redirect exact from="/" to="/login" />
 
+					<Route exact path="/signup" component={SignupView} />
 					<Route exact path="/login" component={LoginView} />
 					<Redirect to="/login" />
 				</Switch>
 			);
 		}
 
-		return <div>{routes}</div>;
+		return <Layout>{routes}</Layout>;
 	}
 }
 const mapStateToProps = state => {
@@ -53,5 +59,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{},
+	{ getAuth },
 )(Routes);

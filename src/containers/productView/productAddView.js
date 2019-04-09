@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addProduct, editProduct } from '../../store/actions/productActions';
+import { withRouter } from 'react-router-dom';
 
+import { addProduct } from '../../store/actions/productActions';
 import ProductAdd from '../../components/product/ProductAdd';
 
 class ProductAddView extends Component {
 	state = {
 		product: {
-			name: this.props.default.name,
-			productDescription: this.props.default.productDescription,
-			weight: this.props.default.weight,
-			length: this.props.default.length,
-			width: this.props.default.width,
-			height: this.props.default.height,
-			fragile: this.props.default.fragile,
-			value: this.props.default.value,
+			name: '',
+			productDescription: '',
+			weight: '',
+			length: '',
+			width: '',
+			height: '',
+			fragile: '',
+			value: '',
 		},
-		currentProduct: this.props.productUuid,
-		isEditing: false,
+		currentProduct: '',
 	};
 
 	handleInputChange = event => {
@@ -39,38 +39,30 @@ class ProductAddView extends Component {
 				length: '',
 				width: '',
 				height: '',
-				fragile: false,
 				value: '',
 			},
-			isEditing: false,
 		});
-	};
-
-	editProduct = () => {
-		this.props.editProduct(this.state.currentProduct, this.state.product);
-		this.setState({
-			isEditing: false,
-		});
+		this.props.history.push('/');
 	};
 
 	render() {
 		return (
 			<div>
 				<ProductAdd
-					addProduct={this.addProduct}
-					editProduct={this.editProduct}
+					addProduct={() => this.addProduct(this.state.product)}
 					handleChange={this.handleInputChange}
 					product={this.state.product}
-					isEditing={this.state.isEditing}
 				/>
 			</div>
 		);
 	}
 }
 const mapStateToProps = state => {
-	return { success: state.productReducer.success };
+	return { success: state.productsReducer.success };
 };
-export default connect(
-	mapStateToProps,
-	{ addProduct, editProduct },
-)(ProductAddView);
+export default withRouter(
+	connect(
+		mapStateToProps,
+		{ addProduct },
+	)(ProductAddView),
+);
