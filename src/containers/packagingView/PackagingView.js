@@ -23,27 +23,6 @@ class PackagingView extends Component {
     };
   }
 
-  componentDidMount = () => {
-    axios
-      .post(`${apiurl}/users/login`, { uid: "q1lHIM09fnWMAxZ6t116rkaS92E2" })
-      .then(res => {
-        localStorage.setItem("token", res.data.token);
-        axios
-          .get(`${apiurl}/products`)
-          .then(res => {
-            this.setState(currentState => ({
-              data: currentState.data.concat(res.data)
-            }));
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
   clearItems = () => {
     this.setState({ selectedProducts: [] });
   };
