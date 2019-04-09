@@ -19,19 +19,21 @@ import classNames from 'classnames';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 
 import DeleteModal from '../modals/deleteModal';
-// import AddShipmentModal from '../modals/AddShimpentModal';
-// import EditProductModal from '../modals/EditProductModal';
 
 const styles = theme => ({
 	card: {
-		maxWidth: 400,
+		width: 275,
 	},
 	container: {
 		margin: 40,
 		width: 'auto',
 		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space between',
+	},
+	formContainer: {
+		margin: 40,
+		width: 'auto',
+		display: 'flex',
+		flexDirection: 'column',
 	},
 	root: {
 		display: 'flex',
@@ -98,11 +100,6 @@ class Shipment extends Component {
 									S
 								</Avatar>
 							}
-							action={
-								<IconButton>
-									<MoreVertIcon />
-								</IconButton>
-							}
 							title={this.props.shipment.productName}
 							subheader={` Date Shipped: ${this.props.shipment.dateShipped}`}
 						/>
@@ -117,12 +114,6 @@ class Shipment extends Component {
 							</Typography>
 						</CardContent>
 						<CardActions className={classes.actions} disableActionSpacing>
-							<IconButton aria-label="Add to packages">
-								<Icon
-									className={classNames(classes.icon, 'fas fa-list-ul')}
-									color="primary"
-								/>
-							</IconButton>
 							<DeleteModal>
 								<IconButton
 									onClick={this.props.deleteShipment}

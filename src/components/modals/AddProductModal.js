@@ -27,15 +27,13 @@ const styles = theme => ({
 	},
 });
 
-class EditProductModal extends React.Component {
+class AddProductModal extends React.Component {
 	state = {
 		open: false,
 	};
 
 	handleOpen = () => {
-		this.setState({ open: true }, () =>
-			this.props.updateState(this.props.product),
-		);
+		this.setState({ open: true });
 	};
 
 	handleClose = () => {
@@ -47,7 +45,7 @@ class EditProductModal extends React.Component {
 
 		return (
 			<div>
-				<Button onClick={this.handleOpen}>Edit</Button>
+				<Button onClick={this.handleOpen}>Add Product</Button>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
@@ -55,7 +53,7 @@ class EditProductModal extends React.Component {
 					onClose={this.handleClose}>
 					<div style={getModalStyle()} className={classes.paper}>
 						<Typography variant="h6" id="modal-title">
-							Are you sure you want to edit this product?
+							Add a new product
 						</Typography>
 						<div>
 							{this.props.children}
@@ -68,8 +66,8 @@ class EditProductModal extends React.Component {
 	}
 }
 
-EditProductModal.propTypes = {
+AddProductModal.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(EditProductModal);
+export default withStyles(styles)(AddProductModal);

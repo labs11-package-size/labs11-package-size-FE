@@ -49,12 +49,34 @@ class ProductListView extends Component {
 		return this.props.products;
 	}
 
+	updateModalState = item => {
+		this.setState({
+			product: {
+				name: item.name,
+				productDescription: item.productDescription,
+				weight: item.weight,
+				value: item.value,
+			},
+		});
+	};
+
 	searchUpdated(term) {
 		this.setState({ searchTerm: term });
 	}
 
 	productAdd = prod => {
 		this.props.addProduct(prod);
+		this.setState({
+			product: {
+				name: '',
+				productDescription: '',
+				weight: '',
+				length: '',
+				width: '',
+				height: '',
+				value: '',
+			},
+		});
 		return <Redirect to="/product/add" />;
 	};
 
@@ -88,7 +110,12 @@ class ProductListView extends Component {
 	};
 
 	handleInputChange = event => {
-		this.setState({ product: {[event.target.name]: event.target.value }});
+		this.setState({
+			product: {
+				...this.state.product,
+				[event.target.name]: event.target.value,
+			},
+		});
 	};
 
 	filterProducts = () => {
@@ -104,6 +131,7 @@ class ProductListView extends Component {
 			<div className={this.props.classes.mainContainer}>
 				<div>
 					<ProductList
+						updateModalState={this.updateModalState}
 						editProduct={this.editProduct}
 						deleteProduct={this.deleteProduct}
 						addShipment={this.addShipment}
@@ -118,12 +146,13 @@ class ProductListView extends Component {
 						trackingNumber={this.state.trackingNumber}
 						name={this.state.product.name}
 						productDescription={this.state.product.productDescription}
-						weight={this.state.product.width}
+						weight={this.state.product.weight}
 						length={this.state.product.length}
 						width={this.state.product.width}
 						height={this.state.product.height}
 						value={this.state.product.value}
 						product={this.state.product}
+						addProduct={this.productAdd}
 					/>
 				</div>
 			</div>

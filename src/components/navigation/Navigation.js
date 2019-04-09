@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +15,8 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 import LoggedOutLinks from '../navigation/LoggedOutLinks';
 import LoggedInLinks from '../navigation/LoggedInLinks';
@@ -28,6 +31,9 @@ const styles = {
 	menuButton: {
 		marginLeft: -12,
 		marginRight: 20,
+	},
+	avatar: {
+		margin: 2,
 	},
 };
 
@@ -59,9 +65,10 @@ class Navigation extends React.Component {
 				<AppBar position="sticky">
 					<Toolbar>
 						<Typography variant="h6" color="inherit" className={classes.grow}>
+							{/* <img src="src/assets/scannar-logo1.png" alt="" /> */}
 							ScannAR
 						</Typography>
-						{auth ? (
+						{this.props.isLoggedIn ? (
 							// <LoggedInLinks />
 							<div>
 								<IconButton
@@ -69,7 +76,11 @@ class Navigation extends React.Component {
 									aria-haspopup="true"
 									onClick={this.handleMenu}
 									color="inherit">
-									<AccountCircle />
+									<Avatar
+										alt={this.props.userInfo.displayName}
+										src={this.props.userInfo.photoURL}
+										className={classes.avatar}
+									/>
 								</IconButton>
 								<Menu
 									id="menu-appbar"
@@ -108,7 +119,7 @@ class Navigation extends React.Component {
 									<MenuItem onClick={this.handleClose}>
 										<NavLink
 											style={{ textDecorationLine: 'none' }}
-											to="/packages">
+											to="/packaging">
 											Packages
 										</NavLink>
 									</MenuItem>
@@ -124,16 +135,39 @@ class Navigation extends React.Component {
 						) : (
 							// <LoggedOutLinks />
 							<div>
-								<MenuItem onClick={this.handleClose}>
-									<NavLink style={{ textDecorationLine: 'none' }} to="/login">
-										Login
-									</NavLink>
-								</MenuItem>
-								<MenuItem onClick={this.handleClose}>
-									<NavLink style={{ textDecorationLine: 'none' }} to="/signup">
-										Sign Up
-									</NavLink>
-								</MenuItem>
+								<IconButton
+									aria-owns={open ? 'menu-appbar' : undefined}
+									aria-haspopup="true"
+									onClick={this.handleMenu}
+									color="inherit">
+									<AccountCircle />
+								</IconButton>
+								<Menu
+									id="menu-appbar"
+									anchorEl={anchorEl}
+									anchorOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									open={open}
+									onClose={this.handleClose}>
+									<MenuItem onClick={this.handleClose}>
+										<NavLink style={{ textDecorationLine: 'none' }} to="/login">
+											Login
+										</NavLink>
+									</MenuItem>
+									<MenuItem onClick={this.handleClose}>
+										<NavLink
+											style={{ textDecorationLine: 'none' }}
+											to="/signup">
+											Sign Up
+										</NavLink>
+									</MenuItem>
+								</Menu>
 							</div>
 						)}
 					</Toolbar>
@@ -147,4 +181,16 @@ Navigation.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Navigation);
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: state.userReducer.isLoggedIn,
+		userInfo: state.firebaseReducer.auth,
+	};
+};
+
+export default compose(
+	connect(
+		mapStateToProps,
+		{},
+	),
+)(withStyles(styles)(Navigation));
