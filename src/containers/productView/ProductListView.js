@@ -4,8 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import { Redirect, Link, withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import ProductList from '../../components/product/ProductList';
 import {
@@ -25,18 +24,19 @@ const styles = theme => ({
 });
 
 class ProductListView extends Component {
-
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			name: '',
-			productDescription: '',
-			weight: '',
-			length: '',
-			width: '',
-			height: '',
-			value: '',
+			product: {
+				name: '',
+				productDescription: '',
+				weight: '',
+				length: '',
+				width: '',
+				height: '',
+				value: '',
+			},
 			trackingNumber: '',
 			searchTerm: '',
 			filteredProductList: [],
@@ -44,7 +44,6 @@ class ProductListView extends Component {
 		};
 		this.searchUpdated = this.searchUpdated.bind(this);
 	}
-
 
 	componentDidMount() {
 		return this.props.products;
@@ -76,13 +75,13 @@ class ProductListView extends Component {
 		this.props.editProduct(id, prod);
 		this.setState({
 			product: {
-			name: '',
-			productDescription: '',
-			weight: '',
-			length: '',
-			width: '',
-			height: '',
-			value: '',
+				name: '',
+				productDescription: '',
+				weight: '',
+				length: '',
+				width: '',
+				height: '',
+				value: '',
 			},
 		});
 		this.props.history.push('/');
@@ -95,16 +94,14 @@ class ProductListView extends Component {
 	filterProducts = () => {
 		const filteredList = this.props.products.map(product => {
 			if (product === this.state.searchTerm) {
-				console.log(product);
 			}
 		});
 		return filteredList;
 	};
 
 	render() {
-		const { classes } = this.props;
 		return (
-			<div className={classes.mainContainer}>
+			<div className={this.props.classes.mainContainer}>
 				<div>
 					<ProductList
 						editProduct={this.editProduct}
