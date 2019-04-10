@@ -39,14 +39,7 @@ class ProductListView extends Component {
 			},
 			trackingNumber: '',
 			searchTerm: '',
-			filteredProductList: [],
-			products: [],
 		};
-		this.searchUpdated = this.searchUpdated.bind(this);
-	}
-
-	componentDidMount() {
-		return this.props.products;
 	}
 
 	updateModalState = item => {
@@ -60,8 +53,18 @@ class ProductListView extends Component {
 		});
 	};
 
-	searchUpdated(term) {
-		this.setState({ searchTerm: term });
+	updateSearch = (e) => {
+		this.setState({ searchTerm: e.target.value })
+	}
+
+	filteredProducts = () => {
+		return this.props.products.filter(product => {
+			return (
+				product.name
+				.toLowerCase()
+				.indexOf(this.state.searchTerm.toLowerCase()) !== -1
+			)
+		})
 	}
 
 	productAdd = prod => {
@@ -118,14 +121,6 @@ class ProductListView extends Component {
 		});
 	};
 
-	filterProducts = () => {
-		const filteredList = this.props.products.map(product => {
-			if (product === this.state.searchTerm) {
-			}
-		});
-		return filteredList;
-	};
-
 	render() {
 		return (
 			<div className={this.props.classes.mainContainer}>
@@ -135,13 +130,7 @@ class ProductListView extends Component {
 						editProduct={this.editProduct}
 						deleteProduct={this.deleteProduct}
 						addShipment={this.addShipment}
-						products={
-							this.props.products ? (
-								this.props.products
-							) : (
-								<div>No Products yet</div>
-							)
-						}
+						products={this.state.searchTerm ? this.filteredProducts() : this.props.products}
 						handleChange={this.handleInputChange}
 						trackingNumber={this.state.trackingNumber}
 						name={this.state.product.name}
@@ -153,6 +142,8 @@ class ProductListView extends Component {
 						value={this.state.product.value}
 						product={this.state.product}
 						addProduct={this.productAdd}
+						searchTerm={this.state.searchTerm}
+						updateSearch={this.updateSearch}
 					/>
 				</div>
 			</div>

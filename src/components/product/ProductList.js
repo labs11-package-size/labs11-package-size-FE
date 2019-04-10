@@ -33,7 +33,7 @@ class ProductList extends Component {
 					Products
 				</Typography>
 				<div>
-					<input placeholder="search" label="search" type="text" />
+					<input placeholder="Search by name..." label="search" type="text" name="search" value={this.props.searchTerm} onChange={this.props.updateSearch} />
 					<AddProductModal>
 						<form className={this.props.classes.container}>
 							<Input
@@ -167,15 +167,11 @@ class ProductList extends Component {
 		);
 	}
 }
-const mapStateToProps = state => {
-	return {
-		products: state.productsReducer.products,
-	};
-};
+
 
 export default compose(
 	connect(
-		mapStateToProps,
+		null,
 		{ getProducts, addProduct },
 	)(withStyles(styles)(ProductList)),
 );
