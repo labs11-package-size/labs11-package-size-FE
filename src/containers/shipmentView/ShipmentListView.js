@@ -60,7 +60,11 @@ class ShipmentListView extends Component {
 						shipments={this.props.shipments}
 					/>
 				</div>)
-				: (<p>No shipments yet</p>)
+				: (<ShipmentList
+						addShipment={this.addShipment}
+						deleteShipment={this.deleteShipment}
+						shipments={this.props.shipments}
+					/>)
 				}
 			</div>
 		);

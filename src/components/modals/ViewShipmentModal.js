@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
+import PopoutIcon from '@material-ui/icons/LibraryBooks'
 import Tooltip from '@material-ui/core/Tooltip';
 
 
@@ -30,7 +30,7 @@ const styles = theme => ({
 	},
 });
 
-class DeleteModal extends React.Component {
+class ViewShipmentModal extends React.Component {
 	state = {
 		open: false,
 	};
@@ -47,13 +47,12 @@ class DeleteModal extends React.Component {
 		const { classes } = this.props;
 
 		return (
-			
 			<div>
-			<Tooltip title="Delete" disableFocusListener={this.state.open}>
 				<span onClick={this.handleOpen}>
-					<DeleteIcon />
-				</span>
+				<Tooltip title="Expand Shipment" disableFocusListener={this.state.open}>
+					<PopoutIcon />
 				</Tooltip>
+				</span>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
@@ -61,10 +60,25 @@ class DeleteModal extends React.Component {
 					onClose={this.handleClose}>
 					<div style={getModalStyle()} className={classes.paper}>
 						<Typography variant="h6" id="modal-title">
-							Are you sure you want to delete?
+							Shipment Info for package to {this.props.shipment.shippedTo}
+						</Typography>
+						<Typography variant="h6" id="modal-title">
+							Contains: {this.props.shipment.productNames.join(", ")}
+						</Typography>
+						<Typography variant="h6" id="modal-title">
+							Tracking Number: {this.props.shipment.trackingNumber}
+						</Typography>
+						<Typography variant="h6" id="modal-title">
+							{this.props.shipment.shippingType}
+						</Typography>
+						<Typography variant="h6" id="modal-title">
+							Box Dimensions: {this.props.shipment.dimensions}
+						</Typography>
+						<Typography variant="h6" id="modal-title">
+							Total Item Weight:{this.props.shipment.totalWeight}
 						</Typography>
 						<div>
-							<Button onClick={this.handleClose}> Cancel</Button>
+							<Button onClick={this.handleClose}>Go Back to List</Button>
 							{this.props.children}
 						</div>
 					</div>
@@ -74,8 +88,8 @@ class DeleteModal extends React.Component {
 	}
 }
 
-DeleteModal.propTypes = {
+ViewShipmentModal.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(DeleteModal);
+export default withStyles(styles)(ViewShipmentModal);
