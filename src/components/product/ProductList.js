@@ -9,8 +9,15 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProducts, addProduct } from '../../store/actions/productActions';
 import AddProductModal from '../modals/AddProductModal';
+// import {useDropzone} from 'react-dropzone'
+import Dropzone from 'react-dropzone';
+import request from 'superagent';
 
 import Product from './Product';
+
+const CLOUDINARY_UPLOAD_PRESET = 'bmzjbxoq';
+const CLOUDINARY_UPLOAD_URL =
+	'https://api.cloudinary.com/v1_1/react-cloudinary/upload';
 
 const styles = theme => ({
 	root: {
@@ -26,7 +33,43 @@ const styles = theme => ({
 });
 
 class ProductList extends Component {
+	constructor() {
+		super();
+		this.onDrop = files => {
+			this.setState({ files });
+		};
+		this.state = {
+			files: [],
+			uploadedFileCloudinaryUrl: '',
+		};
+	}
+
+	handleImageUpload(file) {
+		let upload = request
+			.post(CLOUDINARY_UPLOAD_URL)
+			.field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+			.field('file', file);
+
+		upload.end((err, response) => {
+			if (err) {
+				console.error(err);
+			}
+
+			if (response.body.secure_url !== '') {
+				this.setState({
+					uploadedFileCloudinaryUrl: response.body.secure_url,
+				});
+			}
+		});
+	}
+
 	render() {
+		const files = this.state.files.map(file => (
+			<li key={file.name}>
+				{file.name} - {file.size} bytes
+			</li>
+		));
+
 		return (
 			<div className={this.props.classes.container}>
 				<Typography gutterBottom variant="h5" component="h2">
@@ -123,6 +166,30 @@ class ProductList extends Component {
 									'aria-label': 'Description',
 								}}
 							/>
+							<Dropzone onDrop={this.onDrop} multiple={false} accept="image/*">
+								{({ getRootProps, getInputProps }) => (
+									<section className="container">
+										<div {...getRootProps({ className: 'dropzone' })}>
+											<input {...getInputProps()} />
+											<p>
+												Drag 'n' drop some files here, or click to select files
+											</p>
+										</div>
+										{/* <div>
+					{this.state.uploadedFileCloudinaryUrl === '' ? null : (
+						<div>
+							<p>{this.state.uploadedFile.name}</p>
+							<img src={this.state.uploadedFileCloudinaryUrl} />
+						</div>
+					)}
+				</div> */}
+										<aside>
+											<h4>Files</h4>
+											<ul>{files}</ul>
+										</aside>
+									</section>
+								)}
+							</Dropzone>
 							<div onClick={() => this.props.addProduct(this.props.product)}>
 								<Button
 									variant="contained"

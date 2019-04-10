@@ -20,7 +20,11 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { deleteShipment } from '../../store/actions/shipmentActions';
+import { withRouter } from 'react-router-dom';
+import {
+	deleteShipment,
+	getShipments,
+} from '../../store/actions/shipmentActions';
 import DeleteModal from '../modals/deleteModal';
 import { Button } from '@material-ui/core';
 
@@ -172,6 +176,7 @@ let EnhancedTableToolbar = props => {
 								<Button
 									onClick={() => {
 										props.deleteShipment(props.selected);
+										props.history.push('/');
 									}}>
 									Delete
 								</Button>
@@ -282,6 +287,7 @@ class EnhancedTable extends React.Component {
 		return (
 			<Paper className={classes.root}>
 				<EnhancedTableToolbar
+					{...this.props}
 					deleteShipment={this.props.deleteShipment}
 					selected={selected}
 					numSelected={selected.length}
@@ -360,10 +366,13 @@ const mapStateToProps = state => {
 	};
 };
 export default compose(
-	connect(
-		null,
-		{
-			deleteShipment,
-		},
-	)(withStyles(styles)(EnhancedTable)),
+	withRouter(
+		connect(
+			mapStateToProps,
+			{
+				deleteShipment,
+				getShipments,
+			},
+		)(withStyles(styles)(EnhancedTable)),
+	),
 );
