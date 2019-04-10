@@ -64,7 +64,7 @@ class Navigation extends React.Component {
 			<div className={classes.root}>
 				<AppBar position="sticky">
 					<Toolbar>
-						<Typography variant="h6" color="inherit" className={classes.grow}>
+						<Typography variant="h6" className={classes.grow}>
 							{/* <img src="src/assets/scannar-logo1.png" alt="" /> */}
 							ScannAR
 						</Typography>
