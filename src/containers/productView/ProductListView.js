@@ -114,7 +114,7 @@ class ProductListView extends Component {
 	};
 	addThumbnail = file => {
 		console.log(file);
-		const thumbnailUrl = file;
+		const thumbnailUrl = file.secure_url;
 		this.setState(
 			{
 				product: {
