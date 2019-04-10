@@ -89,6 +89,7 @@ class Product extends Component {
 							className={classes.media}
 							image={this.props.product.thumbnail}
 							title="main img"
+							alt="main"
 						/>
 
 						<CardActions className={classes.actions} disableActionSpacing>
