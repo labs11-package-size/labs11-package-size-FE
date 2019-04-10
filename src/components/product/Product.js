@@ -71,10 +71,6 @@ class Product extends Component {
 		this.setState(state => ({ expanded: !state.expanded }));
 	};
 
-	// componentDidMount() {
-
-	// }
-
 	render() {
 		const { classes } = this.props;
 		return (

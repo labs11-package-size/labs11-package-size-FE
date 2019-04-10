@@ -7,10 +7,11 @@ import { getProducts } from '../../store/actions/productActions';
 import { getShipments } from '../../store/actions/shipmentActions';
 
 class DashboardView extends Component {
-	componentWillMount() {
+	async componentDidMount() {
 		this.props.getProducts();
 		this.props.getShipments();
 	}
+	
 	render() {
 		return (
 			<div className="">
