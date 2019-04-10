@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import { Redirect, Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProducts, addProduct } from '../../store/actions/productActions';
 import AddProductModal from '../modals/AddProductModal';

@@ -66,7 +66,11 @@ class Navigation extends React.Component {
 					<Toolbar>
 						<Typography variant="h6" color="inherit" className={classes.grow}>
 							{/* <img src="src/assets/scannar-logo1.png" alt="" /> */}
-							ScannAR
+							<NavLink
+								style={{ textDecorationLine: 'none', color: 'white' }}
+								to="/">
+								ScannAR
+							</NavLink>
 						</Typography>
 						{this.props.isLoggedIn ? (
 							// <LoggedInLinks />
