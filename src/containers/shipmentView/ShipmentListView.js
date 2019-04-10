@@ -40,7 +40,7 @@ class ShipmentListView extends Component {
 	};
 
 	deleteShipment = uuid => {
-		this.props.deleteShipment(uuid);
+		this.props.deleteShipment(uuid.join());
 		this.props.getShipments();
 		return <Redirect to="/" />;
 	};
@@ -52,13 +52,16 @@ class ShipmentListView extends Component {
 				<Typography gutterBottom variant="h5" component="h2">
 					Shipments
 				</Typography>
+				{(this.props.shipments.length > 0) ? (
 				<div>
 					<ShipmentList
 						addShipment={this.addShipment}
 						deleteShipment={this.deleteShipment}
 						shipments={this.props.shipments}
 					/>
-				</div>
+				</div>)
+				: (<p>No shipments yet</p>)
+				}
 			</div>
 		);
 	}

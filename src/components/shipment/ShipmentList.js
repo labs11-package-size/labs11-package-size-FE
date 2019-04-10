@@ -175,7 +175,6 @@ let EnhancedTableToolbar = props => {
 								<Button
 									onClick={() => {
 										props.deleteShipment(props.selected);
-										props.history.push('/');
 									}}>
 									Delete
 								</Button>
@@ -359,11 +358,7 @@ ShipmentList.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-// const mapStateToProps = state => {
-// 	return {
-// 		shipments: state.shipmentsReducer.shipments,
-// 	};
-// };
+
 export default compose(
 	withRouter(
 		connect(
