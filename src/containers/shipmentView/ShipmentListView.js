@@ -30,6 +30,11 @@ const styles = {
 };
 
 class ShipmentListView extends Component {
+	state = {
+		searchTerm: '',
+		filteredShipments: "",
+		searching: false
+	}
 	componentDidMount() {
 		return this.props.shipments;
 	}
@@ -45,6 +50,25 @@ class ShipmentListView extends Component {
 		return <Redirect to="/" />;
 	};
 
+	filterShipments = (e) => {
+		e.preventDefault();
+		this.setState({ searching: true, filteredShipments: this.props.shipments.filter(shipment => {
+			return (
+				shipment.shippedTo
+				.toLowerCase()
+				.indexOf(this.state.searchTerm.toLowerCase()) !== -1
+			)
+		})
+	})}
+
+	clearSearch = () => {
+		this.setState({ filteredShipments: "", searching: false })
+	}
+
+	handleChanges = (e) => {
+		this.setState({ [e.target.name]: e.target.value })
+	}
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -56,7 +80,13 @@ class ShipmentListView extends Component {
 					<ShipmentList
 						addShipment={this.addShipment}
 						deleteShipment={this.deleteShipment}
-						shipments={this.props.shipments}
+						shipments={(this.state.filteredShipments.length > 0) ? (this.state.filteredShipments) : (this.props.shipments)}
+						searchTerm={this.state.searchTerm}
+						filterShipments={this.filterShipments}
+						filteredShipments={this.state.filteredShipments}
+						handleChanges={this.handleChanges}
+						clearSearch={this.clearSearch}
+						searching={this.state.searching}
 					/>
 				</div>
 			</div>
@@ -64,13 +94,8 @@ class ShipmentListView extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		shipments: state.shipmentsReducer.shipments,
-	};
-};
 
 export default connect(
-	mapStateToProps,
+	null,
 	{ getShipments, addShipment, deleteShipment },
 )(withStyles(styles)(ShipmentListView));

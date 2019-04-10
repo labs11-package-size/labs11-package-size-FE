@@ -29,7 +29,16 @@ class ShipmentList extends Component {
 					Shipments
 				</Typography>
 				<div>
-					<input placeholder="search" label="search" type="text" />
+					{this.props.searching ? (<div>
+						<Button ariant="contained" className={classes.submit} size="med" onClick={this.props.clearSearch}>{this.props.filteredShipments.length} Result(s) found - Click to Reset List`</Button></div>
+						) : (<div>
+					<form onSubmit={this.props.filterShipments}>
+					<input placeholder="Search by city..." label="search" type="text" name="searchTerm" value={this.props.searchTerm} onChange={this.props.handleChanges}/>
+					<Button type="submit" variant="contained" className={classes.submit} size="med">Search</Button>
+					</form>
+					</div>
+						)
+					}
 					<Button variant="contained" className={classes.submit} size="small">
 						<Link to="/shipment/add">Add Shipments</Link>
 					</Button>
