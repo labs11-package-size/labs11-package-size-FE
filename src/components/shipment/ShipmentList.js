@@ -15,7 +15,6 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { connect } from 'react-redux';
@@ -215,7 +214,7 @@ const styles = theme => ({
 	},
 });
 
-class EnhancedTable extends React.Component {
+class ShipmentList extends React.Component {
 	state = {
 		order: 'asc',
 		orderBy: 'calories',
@@ -356,23 +355,23 @@ class EnhancedTable extends React.Component {
 	}
 }
 
-EnhancedTable.propTypes = {
+ShipmentList.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
-	return {
-		shipments: state.shipmentsReducer.shipments,
-	};
-};
+// const mapStateToProps = state => {
+// 	return {
+// 		shipments: state.shipmentsReducer.shipments,
+// 	};
+// };
 export default compose(
 	withRouter(
 		connect(
-			mapStateToProps,
+			null,
 			{
 				deleteShipment,
 				getShipments,
 			},
-		)(withStyles(styles)(EnhancedTable)),
+		)(withStyles(styles)(ShipmentList)),
 	),
 );
