@@ -13,10 +13,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
+import PopoutIcon from '@material-ui/icons/LibraryBooks'
 import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
@@ -25,7 +26,9 @@ import {
 	getShipments,
 } from '../../store/actions/shipmentActions';
 import DeleteModal from '../modals/deleteModal';
+import ViewShipmentModal from '../modals/ViewShipmentModal';
 import { Button } from '@material-ui/core';
+import { helpers } from 'handlebars';
 
 function desc(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -61,10 +64,10 @@ const shipmentTitles = [
 		label: 'Date Shipped',
 	},
 	{
-		id: 'updatedAt',
-		numeric: true,
-		disablePadding: false,
-		label: 'Last Updated',
+		id: 'status',
+		numeric: false,
+		disablePadding: true,
+		label: 'Shipping Status',
 	},
 	{
 		id: 'shippedTo',
@@ -78,7 +81,7 @@ const shipmentTitles = [
 		disablePadding: false,
 		label: 'Dimensions',
 	},
-	{ id: 'totalWeight', numeric: true, disablePadding: false, label: 'Weight' },
+	{ id: 'productNames', numeric: false, disablePadding: true, label: 'Included Products' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -169,7 +172,7 @@ let EnhancedTableToolbar = props => {
 			<div className={classes.spacer} />
 			<div className={classes.actions}>
 				{numSelected > 0 ? (
-					<Tooltip title="Delete">
+					
 						<IconButton aria-label="Delete">
 							<DeleteModal>
 								<Button
@@ -180,7 +183,7 @@ let EnhancedTableToolbar = props => {
 								</Button>
 							</DeleteModal>
 						</IconButton>
-					</Tooltip>
+
 				) : (
 					<Tooltip title="Filter list">
 						<IconButton aria-label="Filter list">
@@ -220,7 +223,7 @@ class ShipmentList extends React.Component {
 		selected: [],
 		data: [],
 		page: 0,
-		rowsPerPage: 5,
+		rowsPerPage: 10,
 	};
 	componentDidMount() {
 		this.setState({ data: this.props.shipments });
@@ -306,23 +309,71 @@ class ShipmentList extends React.Component {
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map(n => {
 									const isSelected = this.isSelected(n.uuid);
+									const parsedStatus = () => {
+										if (n.status === 0) {
+											return "Unknown"
+										}
+										if (n.status === 1) {
+											return "Shipping"
+										}
+										if (n.status === 2) {
+											return "En-Route"
+										}
+										if (n.status === 3) {
+											return "Out-For-Delivery"
+										}
+										if (n.status === 4) {
+											return "Delivered"
+										}
+										if (n.status === 5) {
+											return "Delayed"
+										}
+									}
+									const statusStyling = () => {
+										if (n.status === 0) {
+											return {backgroundColor: '#ffa9a8', borderRadius: "25px", paddingRight: "5px"}
+										}
+										if (n.status === 1) {
+											return {backgroundColor: '#ffc642', borderRadius: "25px", paddingRight: "5px"}
+										}
+										if (n.status === 2) {
+											return {backgroundColor: '#ffc642', borderRadius: "25px", paddingRight: "5px"}
+										}
+										if (n.status === 3) {
+											return {backgroundColor: '#ffc642', borderRadius: "25px", paddingRight: "5px"}
+										}
+										if (n.status === 4) {
+											return {backgroundColor: "#a7c2a6", borderRadius: "25px", paddingRight: "5px"}
+										}
+										if (n.status === 5) {
+											return {backgroundColor: "#ffa9a8", borderRadius: "25px", paddingRight: "5px"}
+										}
+									}
 									return (
 										<TableRow
 											hover
-											onClick={event => this.handleClick(event, n.uuid)}
 											role="checkbox"
 											aria-checked={isSelected}
 											tabIndex={-1}
 											key={n.uuid}
 											selected={isSelected}>
 											<TableCell padding="checkbox">
-												<Checkbox checked={isSelected} />
+												<Checkbox onClick={event => this.handleClick(event, n.uuid)} checked={isSelected} />
 											</TableCell>
 											<TableCell align="left">{n.dateShipped}</TableCell>
-											<TableCell align="left">{n.lastUpdated}</TableCell>
+											<TableCell align="left" style={statusStyling()}>{parsedStatus()}</TableCell>
 											<TableCell align="left">{n.shippedTo}</TableCell>
 											<TableCell align="left">{n.dimensions}</TableCell>
-											<TableCell align="left">{n.totalWeight}</TableCell>
+											<TableCell align="left">{n.productNames.join(", ")}</TableCell>
+											<TableCell>											
+												
+												<div style={{cursor: "pointer"}}>
+													<ViewShipmentModal shipment={n} />
+												</div>
+
+
+								
+											</TableCell>
 										</TableRow>
 									);
 								})}
