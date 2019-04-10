@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import ProductListView from '../components/product/ProductList';
+import ProductListView from '../containers/productView/ProductListView';
 import PackagingView from '../containers/packagingView/PackagingView';
 import ProductAddView from '../containers/productView/productAddView';
 import LoginView from '../containers/adminViews/loginView/LoginView';
