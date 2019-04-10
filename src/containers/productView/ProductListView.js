@@ -53,19 +53,19 @@ class ProductListView extends Component {
 		});
 	};
 
-	updateSearch = (e) => {
-		this.setState({ searchTerm: e.target.value })
-	}
+	updateSearch = e => {
+		this.setState({ searchTerm: e.target.value });
+	};
 
 	filteredProducts = () => {
 		return this.props.products.filter(product => {
 			return (
 				product.name
-				.toLowerCase()
-				.indexOf(this.state.searchTerm.toLowerCase()) !== -1
-			)
-		})
-	}
+					.toLowerCase()
+					.indexOf(this.state.searchTerm.toLowerCase()) !== -1
+			);
+		});
+	};
 
 	productAdd = prod => {
 		this.props.addProduct(prod);
@@ -130,7 +130,11 @@ class ProductListView extends Component {
 						editProduct={this.editProduct}
 						deleteProduct={this.deleteProduct}
 						addShipment={this.addShipment}
-						products={this.state.searchTerm ? this.filteredProducts() : this.props.products}
+						products={
+							this.state.searchTerm
+								? this.filteredProducts()
+								: this.props.products
+						}
 						handleChange={this.handleInputChange}
 						trackingNumber={this.state.trackingNumber}
 						name={this.state.product.name}
