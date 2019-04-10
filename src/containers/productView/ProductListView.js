@@ -40,6 +40,10 @@ class ProductListView extends Component {
 		};
 	}
 
+	componentDidMount = () => {
+		this.props.getProducts()
+	}
+
 	updateModalState = item => {
 		this.setState({
 			product: {
@@ -169,11 +173,17 @@ class ProductListView extends Component {
 	}
 }
 
+const mapStateToProps = state => {
+	return {
+		products: state.productsReducer.products,
+	};
+};
+
 export default compose(
 	withRouter(
 		connect(
-			null,
-			{
+			mapStateToProps,
+			{	getProducts,
 				addProduct,
 				editProduct,
 				deleteProduct,

@@ -181,15 +181,11 @@ class ProductList extends Component {
 		);
 	}
 }
-const mapStateToProps = state => {
-	return {
-		products: state.productsReducer.products,
-	};
-};
+
 
 export default compose(
 	connect(
-		mapStateToProps,
+		null,
 		{ getProducts, addProduct },
 	)(withStyles(styles)(ProductList)),
 );
