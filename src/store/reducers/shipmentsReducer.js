@@ -82,6 +82,7 @@ const shipmentsReducer = (state = initialState, action) => {
 		case DELETING_SHIPMENT:
 			return {
 				...state,
+				shipments: [],
 				fetching: false,
 				adding: false,
 				editing: false,
