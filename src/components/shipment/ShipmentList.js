@@ -285,43 +285,6 @@ class EnhancedTable extends React.Component {
 			rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
 		return (
-<<<<<<< HEAD
-			<div className={classes.container}>
-				<Typography gutterBottom variant="h5" component="h2">
-					Shipments
-				</Typography>
-				<div>
-					{this.props.searching ? (<div>
-						<Button ariant="contained" className={classes.submit} size="med" onClick={this.props.clearSearch}>{this.props.filteredShipments.length} Result(s) found - Click to Reset List`</Button></div>
-						) : (<div>
-					<form onSubmit={this.props.filterShipments}>
-					<input placeholder="Search by city..." label="search" type="text" name="searchTerm" value={this.props.searchTerm} onChange={this.props.handleChanges}/>
-					<Button type="submit" variant="contained" className={classes.submit} size="med">Search</Button>
-					</form>
-					</div>
-						)
-					}
-					<Button variant="contained" className={classes.submit} size="small">
-						<Link to="/shipment/add">Add Shipments</Link>
-					</Button>
-					<div className={classes.root}>
-						{!this.props.shipments ? (
-							<h5>...loading</h5>
-						) : (
-							this.props.shipments.map(shipment => {
-								return (
-									<Shipment
-										key={shipment.uuid}
-										deleteShipment={() =>
-											this.props.deleteShipment(shipment.uuid)
-										}
-										shipment={shipment}
-									/>
-								);
-							})
-						)}
-					</div>
-=======
 			<Paper className={classes.root}>
 				<EnhancedTableToolbar
 					{...this.props}
@@ -372,7 +335,6 @@ class EnhancedTable extends React.Component {
 							)}
 						</TableBody>
 					</Table>
->>>>>>> adb7165acf0c1d8319852d087d9ce2f10a9a9991
 				</div>
 				<TablePagination
 					rowsPerPageOptions={[5, 10, 25]}
