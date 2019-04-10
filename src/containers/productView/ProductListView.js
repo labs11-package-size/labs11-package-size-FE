@@ -111,9 +111,23 @@ class ProductListView extends Component {
 				width: '',
 				height: '',
 				value: '',
+				thumbnail: '',
 			},
 		});
 		this.props.history.push('/');
+	};
+	addThumbnail = file => {
+		console.log(file);
+		const thumbnailUrl = file.secure_url;
+		this.setState(
+			{
+				product: {
+					...this.state.product,
+					thumbnail: thumbnailUrl,
+				},
+			},
+			() => console.log('p list view state', this.state),
+		);
 	};
 
 	handleInputChange = event => {
@@ -130,6 +144,7 @@ class ProductListView extends Component {
 			<div className={this.props.classes.mainContainer}>
 				<div>
 					<ProductList
+						addThumbnail={this.addThumbnail}
 						updateModalState={this.updateModalState}
 						editProduct={this.editProduct}
 						deleteProduct={this.deleteProduct}
@@ -145,6 +160,7 @@ class ProductListView extends Component {
 						productDescription={this.state.product.productDescription}
 						weight={this.state.product.weight}
 						length={this.state.product.length}
+						thumbnail={this.state.thumbnail}
 						width={this.state.product.width}
 						height={this.state.product.height}
 						value={this.state.product.value}
