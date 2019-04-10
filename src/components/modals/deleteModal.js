@@ -46,9 +46,9 @@ class DeleteModal extends React.Component {
 
 		return (
 			<div>
-				<Button onClick={this.handleOpen}>
+				<span onClick={this.handleOpen}>
 					<DeleteIcon />
-				</Button>
+				</span>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
