@@ -120,13 +120,21 @@ const Login = props => {
 						</div>
 					</form>
 					<div>
-						<div>OR</div>
+						<div
+							style={{ margin: 20, display: 'flex', justifyContent: 'center' }}>
+							<Typography>OR</Typography>
+						</div>
 						<GoogleButton
 							onClick={() => {
 								props.handleGoogleLogin();
 							}}
 						/>
-						<Button onClick={props.handleRegister}>Register</Button>
+						<div
+							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
+							<Button color="primary" onClick={props.handleRegister}>
+								Register
+							</Button>
+						</div>
 					</div>
 				</Paper>
 			</main>
