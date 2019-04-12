@@ -62,12 +62,12 @@ class Navigation extends React.Component {
 
 		return (
 			<div className={classes.root}>
-				<AppBar position="sticky">
+				<AppBar position="sticky" style={{ backgroundColor: "#F2F3F4" }}>
 					<Toolbar>
 						<Typography variant="h6" className={classes.grow}>
 							{/* <img src="src/assets/scannar-logo1.png" alt="" /> */}
 							<NavLink
-								style={{ textDecorationLine: 'none', color: 'white' }}
+								style={{ textDecorationLine: 'none', color: "#0D2C54" }}
 								to="/">
 								ScannAR
 							</NavLink>
@@ -79,6 +79,7 @@ class Navigation extends React.Component {
 									aria-owns={open ? 'menu-appbar' : undefined}
 									aria-haspopup="true"
 									onClick={this.handleMenu}
+									backgroundColor="#72BDA2"
 									color="inherit">
 									<Avatar
 										alt={this.props.userInfo.displayName}
