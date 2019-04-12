@@ -69,34 +69,66 @@ export const googleLogin = () => dispatch => {
 };
 
 export const emailLogin = credentials => dispatch => {
-	console.log('email login creds', credentials);
 	const email = credentials.email.toString();
 	const password = credentials.password.toString();
 	dispatch({ type: USER_LOGGING_IN });
 	firebase
 		.auth()
-		.signInWithEmailAndPassword(email, password)
+		.fetchSignInMethodsForEmail(email)
 		.then(res => {
-			const user = {
-				uid: res.user.uid,
-				email: res.user.email,
-			};
-			axios
-				.post(`/users/login`, user)
-				.then(res => {
-					dispatch({
-						type: USER_LOGIN_SUCCESSFUL,
-						payload: res.data.token,
-						user,
+			if (res[0] === 'google.com') {
+				firebase
+					.auth()
+					.signInWithPopup(googleAuth)
+					.then(res => {
+						const user = {
+							uid: res.user.uid,
+							displayName: res.user.displayName,
+							email: res.user.email,
+						};
+						axios
+							.post(`/users/login`, user)
+							.then(res => {
+								dispatch({
+									type: USER_LOGIN_SUCCESSFUL,
+									payload: res.data.token,
+									user,
+								});
+								localStorage.setItem('token', res.data.token);
+							})
+							.catch(err => console.log('error', err));
+					})
+					.catch(err => {
+						dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
 					});
-					localStorage.setItem('token', res.data.token);
-				})
-				.catch(err => console.log('error', err));
+			} else {
+				return firebase
+					.auth()
+					.signInWithEmailAndPassword(email, password)
+					.then(res => {
+						const user = {
+							uid: res.user.uid,
+							email: res.user.email,
+						};
+						axios
+							.post(`/users/login`, user)
+							.then(res => {
+								dispatch({
+									type: USER_LOGIN_SUCCESSFUL,
+									payload: res.data.token,
+									user,
+								});
+								localStorage.setItem('token', res.data.token);
+							})
+							.catch(err => console.log('error', err));
+					})
+					.catch(err => {
+						console.log(err);
+						dispatch({ type: USER_LOGIN_FAILURE, payload: err.code });
+					});
+			}
 		})
-		.catch(err => {
-			console.log(err);
-			dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
-		});
+		.catch(err => console.log('firebase error', err));
 };
 
 export const register = credentials => dispatch => {
