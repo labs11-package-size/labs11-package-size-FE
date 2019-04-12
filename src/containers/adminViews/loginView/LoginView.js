@@ -15,7 +15,7 @@ class LoginView extends Component {
 			email: '',
 			password: '',
 		},
-		error: 'invalid credentials',
+		error: null,
 	};
 
 	handleChanges = event => {
@@ -34,6 +34,7 @@ class LoginView extends Component {
 	handleEmailLogin = event => {
 		event.preventDefault();
 		this.props.emailLogin(this.state.user);
+
 		this.setState({
 			user: {
 				emailAddress: '',
@@ -49,7 +50,7 @@ class LoginView extends Component {
 					password={this.state.user.password}
 					email={this.state.user.email}
 					user={this.state.user}
-					error={this.state.error}
+					error={this.props.errMessage}
 					handleInputChange={this.handleChanges}
 					handleRegister={this.props.handleRegister}
 					isRegistering={this.props.isRegistering}
@@ -62,7 +63,7 @@ class LoginView extends Component {
 }
 const mapStateToProps = state => {
 	return {
-		isLoggedIn: state.userReducer.isLoggedIn,
+		errMessage: state.userReducer.error,
 	};
 };
 

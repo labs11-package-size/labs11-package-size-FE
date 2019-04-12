@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import GoogleButton from 'react-google-button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
@@ -25,6 +25,13 @@ const styles = theme => ({
 			width: 400,
 			marginLeft: 'auto',
 			marginRight: 'auto',
+		},
+		error: {
+			padding: theme.spacing.unit * 2,
+		},
+		errorPaper: {
+			padding: theme.spacing.unit * 2,
+			padding: theme.spacing.unit * 2,
 		},
 	},
 	paper: {
@@ -57,6 +64,7 @@ const styles = theme => ({
 
 const Login = props => {
 	const { classes } = props;
+
 	return (
 		<div>
 			<main className={classes.main}>
@@ -101,15 +109,32 @@ const Login = props => {
 							className={classes.submit}>
 							Sign in
 						</Button>
+						<div>
+							{props.error && (
+								<Paper className={classes.errorPaper} elevation={1}>
+									<Typography className={classes.error}>
+										{props.error}
+									</Typography>
+								</Paper>
+							)}
+						</div>
 					</form>
 					<div>
-						<div>OR</div>
+						<div
+							style={{ margin: 20, display: 'flex', justifyContent: 'center' }}>
+							<Typography>OR</Typography>
+						</div>
 						<GoogleButton
 							onClick={() => {
 								props.handleGoogleLogin();
 							}}
 						/>
-						<Button onClick={props.handleRegister}>Register</Button>
+						<div
+							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
+							<Button color="primary" onClick={props.handleRegister}>
+								Register
+							</Button>
+						</div>
 					</div>
 				</Paper>
 			</main>
