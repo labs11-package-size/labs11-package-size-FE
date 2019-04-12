@@ -40,7 +40,7 @@ axios.interceptors.request.use(
 	},
 );
 
-export const loginUser = () => dispatch => {
+export const googleLogin = () => dispatch => {
 	dispatch({ type: USER_LOGGING_IN });
 	firebase
 		.auth()
@@ -50,8 +50,6 @@ export const loginUser = () => dispatch => {
 				uid: res.user.uid,
 				displayName: res.user.displayName,
 				email: res.user.email,
-				accessToken: res.credential.accessToken,
-				idToken: res.credential.idToken,
 			};
 			axios
 				.post(`/users/login`, user)
@@ -71,6 +69,37 @@ export const loginUser = () => dispatch => {
 };
 
 export const emailLogin = credentials => dispatch => {
+	console.log('email login creds', credentials);
+	const email = credentials.email.toString();
+	const password = credentials.password.toString();
+	dispatch({ type: USER_LOGGING_IN });
+	firebase
+		.auth()
+		.signInWithEmailAndPassword(email, password)
+		.then(res => {
+			const user = {
+				uid: res.user.uid,
+				email: res.user.email,
+			};
+			axios
+				.post(`/users/login`, user)
+				.then(res => {
+					dispatch({
+						type: USER_LOGIN_SUCCESSFUL,
+						payload: res.data.token,
+						user,
+					});
+					localStorage.setItem('token', res.data.token);
+				})
+				.catch(err => console.log('error', err));
+		})
+		.catch(err => {
+			console.log(err);
+			dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
+		});
+};
+
+export const register = credentials => dispatch => {
 	const email = credentials.emailAddress.toString();
 	const password = credentials.password.toString();
 	const displayName = `${credentials.firstName} ${credentials.lastName}`;

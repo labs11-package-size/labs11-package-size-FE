@@ -76,7 +76,6 @@ const Login = props => {
 								value={props.email}
 								onChange={props.handleInputChange}
 								name="email"
-								autoComplete="email"
 								autoFocus
 							/>
 						</FormControl>
@@ -88,31 +87,30 @@ const Login = props => {
 								name="password"
 								type="password"
 								id="password"
-								autoComplete="current-password"
 							/>
 						</FormControl>
 						<FormControlLabel
 							control={<Checkbox value="remember" color="primary" />}
 							label="Remember me"
 						/>
-						<div>
-							<Button
-								onClick={props.handleEmailLogin}
-								type="submit"
-								fullWidth
-								variant="contained"
-								className={classes.submit}>
-								Sign in
-							</Button>
-							<div>OR</div>
-							<GoogleButton
-								onClick={() => {
-									props.handleLogin();
-								}}
-							/>
-							<Button onClick={props.handleRegister}>Register</Button>
-						</div>
+						<Button
+							onClick={props.handleEmailLogin}
+							type="submit"
+							fullWidth
+							variant="contained"
+							className={classes.submit}>
+							Sign in
+						</Button>
 					</form>
+					<div>
+						<div>OR</div>
+						<GoogleButton
+							onClick={() => {
+								props.handleGoogleLogin();
+							}}
+						/>
+						<Button onClick={props.handleRegister}>Register</Button>
+					</div>
 				</Paper>
 			</main>
 		</div>
