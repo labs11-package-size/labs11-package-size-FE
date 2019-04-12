@@ -11,7 +11,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { emailLogin } from '../../../store/actions/userActions';
+import { register } from '../../../store/actions/userActions';
 
 const styles = theme => ({
 	main: {
@@ -74,9 +74,9 @@ class SignupView extends Component {
 		});
 	};
 
-	handleSubmit = e => {
+	handleRegister = e => {
 		e.preventDefault();
-		this.props.emailLogin(this.state.user);
+		this.props.register(this.state.user);
 		this.setState({
 			user: {
 				firstName: '',
@@ -146,7 +146,7 @@ class SignupView extends Component {
 								<Typography>{this.state.error.message}</Typography>
 							)}
 							<Button
-								onClick={this.handleSubmit}
+								onClick={this.handleRegister}
 								type="submit"
 								fullWidth
 								variant="contained"
@@ -163,5 +163,5 @@ class SignupView extends Component {
 
 export default connect(
 	null,
-	{ emailLogin },
+	{ register },
 )(withStyles(styles)(SignupView));
