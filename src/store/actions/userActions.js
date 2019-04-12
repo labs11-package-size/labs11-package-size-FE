@@ -71,12 +71,14 @@ export const loginUser = () => dispatch => {
 };
 
 export const emailLogin = credentials => dispatch => {
-	const { emailAddress, password, displayName } = credentials;
+	const email = credentials.emailAddress.toString();
+	const password = credentials.password.toString();
+	const displayName = `${credentials.firstName} ${credentials.lastName}`;
 
 	dispatch({ type: USER_LOGGING_IN });
 	firebase
 		.auth()
-		.signInWithEmailAndPassword(emailAddress, password)
+		.createUserWithEmailAndPassword(email, password)
 		.then(res => {
 			const user = {
 				uid: res.user.uid,
@@ -92,6 +94,7 @@ export const emailLogin = credentials => dispatch => {
 				.catch(err => console.log('error', err));
 		})
 		.catch(err => {
+			console.log(err);
 			dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
 		});
 };

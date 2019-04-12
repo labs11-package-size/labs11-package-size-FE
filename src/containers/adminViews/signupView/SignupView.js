@@ -76,15 +76,16 @@ class SignupView extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const email = this.state.user.emailAddress.toString();
-		const password = this.state.user.password.toString();
-
-		const newUser = {
-			displayName: `${this.state.firstName} ${this.state.lastName}`,
-			emailAddress: email,
-			password: password,
-		};
-		this.props.emailLogin(newUser);
+		this.props.emailLogin(this.state.user);
+		this.setState({
+			user: {
+				firstName: '',
+				lastName: '',
+				emailAddress: '',
+				displayName: '',
+				password: '',
+			},
+		});
 	};
 
 	render() {
