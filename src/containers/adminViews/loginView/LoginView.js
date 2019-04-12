@@ -22,25 +22,24 @@ class LoginView extends Component {
 		});
 	};
 
-	handleEmailLogin = () => {
-		this.props.emailLogin();
-	};
-
 	handleLogin = () => {
 		this.props.loginUser();
 	};
 
 	render() {
 		return (
-			<Login
-				password={this.state.user.password}
-				email={this.state.user.email}
-				user={this.state.user}
-				error={this.state.error}
-				handleInputChange={this.handleChanges}
-				handleEmailLogin={() => this.handleEmailLogin(this.state.user)}
-				handleLogin={this.handleLogin}
-			/>
+			<div>
+				<Login
+					password={this.state.user.password}
+					email={this.state.user.email}
+					user={this.state.user}
+					error={this.state.error}
+					handleInputChange={this.handleChanges}
+					handleRegister={this.props.handleRegister}
+					isRegistering={this.props.isRegistering}
+					handleLogin={this.handleLogin}
+				/>
+			</div>
 		);
 	}
 }

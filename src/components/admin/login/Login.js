@@ -110,6 +110,7 @@ const Login = props => {
 									props.handleLogin();
 								}}
 							/>
+							<Button onClick={props.handleRegister}>Register</Button>
 						</div>
 					</form>
 				</Paper>

@@ -4,17 +4,18 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import ProductListView from '../containers/productView/ProductListView';
 import PackagingView from '../containers/packagingView/PackagingView';
 import ProductAddView from '../containers/productView/productAddView';
-import LoginView from '../containers/adminViews/loginView/LoginView';
+
 import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
-import PackageTableView from '../containers/packageTableView/PackageTableView'
+import PackageTableView from '../containers/packageTableView/PackageTableView';
 import AccountView from '../containers/accountView/AccountView';
-import LogoutView from '../containers/adminViews/logoutView/LogoutView';
+import LogoutView from '../containers/logoutView/LogoutView';
 import Layout from '../hoc/layout/Layout';
 import { connect } from 'react-redux';
 import DashboardView from '../containers/dashboardView/DashboardView';
 import { getAuth } from '../store/actions/userActions';
-import SignupView from '../containers/adminViews/signupView/SignupView';
+
+import AdminView from '../containers/adminViews/AdminView';
 
 class Routes extends Component {
 	componentWillMount() {
@@ -26,8 +27,7 @@ class Routes extends Component {
 		if (this.props.isLoggedIn) {
 			routes = (
 				<Switch>
-					<Redirect from="/login" to="/" />
-					<Redirect from="/signup" to="/" />
+					<Redirect from="/auth" to="/" />
 					<Route exact path="/logout" component={LogoutView} />
 					<Route exact path="/shipment/add" component={ShipmentAddView} />
 					<Route exact path="/product/add" component={ProductAddView} />
@@ -42,10 +42,9 @@ class Routes extends Component {
 		} else {
 			routes = (
 				<Switch>
-					<Redirect exact from="/" to="/login" />
-					<Route exact path="/signup" component={SignupView} />
-					<Route exact path="/login" component={LoginView} />
-					<Redirect to="/login" />
+					<Redirect exact from="/" to="/auth" />
+					<Route path="/auth" component={AdminView} />
+					<Redirect to="/auth" />
 				</Switch>
 			);
 		}
