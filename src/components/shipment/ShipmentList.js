@@ -21,10 +21,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import {
-	deleteShipment,
-	getShipments,
-} from '../../store/actions/shipmentActions';
 import DeleteModal from '../modals/deleteModal';
 import ViewShipmentModal from '../modals/ViewShipmentModal';
 import { Button } from '@material-ui/core';
@@ -58,7 +54,7 @@ function getSorting(order, orderBy) {
 
 const shipmentTitles = [
 	{
-		id: 'shipDate',
+		id: 'shipDateUnix',
 		numeric: false,
 		disablePadding: true,
 		label: 'Date Shipped',
@@ -85,7 +81,7 @@ const shipmentTitles = [
 ];
 
 class EnhancedTableHead extends React.Component {
-	createSortHandler = property => event => {
+	createSortHandler = (event, property) => {
 		this.props.onRequestSort(event, property);
 	};
 
@@ -104,7 +100,7 @@ class EnhancedTableHead extends React.Component {
 					</TableCell>
 					{shipmentTitles.map(
 						shipment => (
-							<TableCell align="left" padding="default">
+							<TableCell align="left" padding="default" onClick={(event) => this.createSortHandler(event, shipment.id)}>
 								<TableSortLabel>{shipment.label}</TableSortLabel>
 							</TableCell>
 						),
@@ -177,7 +173,7 @@ let EnhancedTableToolbar = props => {
 							<DeleteModal>
 								<Button
 									onClick={() => {
-										props.deleteShipment(props.selected);
+										props.deleteShipment(props.selected, props.currentPage, props.currentRowsPerPage);
 									}}>
 									Delete
 								</Button>
@@ -218,15 +214,21 @@ const styles = theme => ({
 
 class ShipmentList extends React.Component {
 	state = {
-		order: 'asc',
-		orderBy: 'calories',
+		order: 'desc',
+		orderBy: 'shipDateUnix',
 		selected: [],
 		data: [],
 		page: 0,
 		rowsPerPage: 10,
 	};
 	componentDidMount() {
-		this.setState({ data: this.props.shipments });
+		if (this.props.previousRowsPerPage) {
+			this.setState({ data: this.props.shipments, page: this.props.previousPage, rowsPerPage: this.props.previousRowsPerPage });
+		}
+		else {
+			this.setState({ data: this.props.shipments });
+		}
+		
 	}
 
 	handleRequestSort = (event, property) => {
@@ -289,6 +291,8 @@ class ShipmentList extends React.Component {
 			<Paper className={classes.root}>
 				<EnhancedTableToolbar
 					{...this.props}
+					currentPage={this.state.page}
+					currentRowsPerPage={this.state.rowsPerPage}
 					deleteShipment={this.props.deleteShipment}
 					selected={selected}
 					numSelected={selected.length}
@@ -415,8 +419,6 @@ export default compose(
 		connect(
 			null,
 			{
-				deleteShipment,
-				getShipments,
 			},
 		)(withStyles(styles)(ShipmentList)),
 	),

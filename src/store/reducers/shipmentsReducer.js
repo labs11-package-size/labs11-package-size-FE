@@ -10,6 +10,8 @@ import {
 	DELETING_SHIPMENT_FAILURE,
 } from '../actions/shipmentActions';
 
+import moment from "moment"
+
 const initialState = {
 	shipments: [],
 	fetching: false,
@@ -34,7 +36,7 @@ const shipmentsReducer = (state = initialState, action) => {
 		case GETTING_SHIPMENTS_SUCCESSFUL:
 			return {
 				...state,
-				shipments: action.payload,
+				shipments: action.payload.map(shipment => {shipment.shipDateUnix = moment(shipment.dateShipped).format('x'); return shipment}),
 				fetching: false,
 				success: true,
 				failure: false,
@@ -94,7 +96,7 @@ const shipmentsReducer = (state = initialState, action) => {
 		case DELETING_SHIPMENT_SUCCESSFUL:
 			return {
 				...state,
-				shipments: action.payload,
+				shipments: action.payload.map(shipment => {shipment.shipDateUnix = moment(shipment.dateShipped).format('x'); return shipment}),
 				fetching: false,
 				adding: false,
 				editing: false,
