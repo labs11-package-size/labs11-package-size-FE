@@ -71,18 +71,19 @@ export const loginUser = () => dispatch => {
 };
 
 export const emailLogin = credentials => dispatch => {
-	console.log('SDFGHJK', credentials);
+	const email = credentials.emailAddress.toString();
+	const password = credentials.password.toString();
+	const displayName = `${credentials.firstName} ${credentials.lastName}`;
+
 	dispatch({ type: USER_LOGGING_IN });
 	firebase
 		.auth()
-		.signInWithEmailAndPassword(credentials)
+		.createUserWithEmailAndPassword(email, password)
 		.then(res => {
 			const user = {
 				uid: res.user.uid,
-				displayName: res.user.displayName,
+				displayName: displayName,
 				email: res.user.email,
-				accessToken: res.credential.accessToken,
-				idToken: res.credential.idToken,
 			};
 			axios
 				.post(`/users/login`, user)
@@ -93,6 +94,7 @@ export const emailLogin = credentials => dispatch => {
 				.catch(err => console.log('error', err));
 		})
 		.catch(err => {
+			console.log(err);
 			dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
 		});
 };
