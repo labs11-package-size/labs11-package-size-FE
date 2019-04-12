@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { logoutUser, getAuth } from '../../../store/actions/userActions';
-import Logout from '../../../components/admin/logout/Logout';
+import { logoutUser, getAuth } from '../../store/actions/userActions';
+import Logout from '../../components/admin/logout/Logout';
 import { connect } from 'react-redux';
 
 class LogoutView extends Component {

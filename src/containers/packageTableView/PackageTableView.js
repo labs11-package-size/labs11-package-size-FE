@@ -5,12 +5,16 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Redirect, Link } from 'react-router-dom';
 
-import ShipmentList from '../../components/shipment/ShipmentList';
+import PackageList from '../../components/packageTable/PackageList';
+
 import {
-	getShipments,
 	addShipment,
-	deleteShipment,
 } from '../../store/actions/shipmentActions';
+
+import {
+	getPackages,
+	deletePackage,
+} from '../../store/actions/packageActions';
 
 const styles = {
 	card: {
@@ -29,14 +33,14 @@ const styles = {
 	},
 };
 
-class ShipmentListView extends Component {
+class PackageTableView extends Component {
 	state = {
 		previousPage: null,
 		previousRowsPerPage: null
 	}
 
 	componentDidMount() {
-		this.props.getShipments();
+		this.props.getPackages();
 	}
 
 	addShipment = (tracId, prodId) => {
@@ -44,8 +48,8 @@ class ShipmentListView extends Component {
 		return <Redirect to="/" />;
 	};
 
-	deleteShipment = (uuid, currentPage, currentRowsPerPage) => {
-		this.setState({previousPage: currentPage, previousRowsPerPage: currentRowsPerPage}, () => this.props.deleteShipment(uuid.join()))
+	deletePackage = (uuid, currentPage, currentRowsPerPage) => {
+		this.setState({previousPage: currentPage, previousRowsPerPage: currentRowsPerPage}, () => this.props.deletePackage(uuid.join()))
 		return <Redirect to="/" />;
 	};
 
@@ -54,22 +58,22 @@ class ShipmentListView extends Component {
 		return (
 			<div className={classes.mainContainer}>
 				<Typography gutterBottom variant="h5" component="h2">
-					Shipments
+					Packages
 				</Typography>
-				{(this.props.shipments.length > 0) ? (
+				{(this.props.packages.length > 0) ? (
 				<div>
-					<ShipmentList
+					<PackageList
 						previousPage={this.state.previousPage}
 						previousRowsPerPage={this.state.previousRowsPerPage}
-						addShipment={this.addShipment}
-						deleteShipment={this.deleteShipment}
-						shipments={this.props.shipments}
+						deletePackage={this.deletePackage}
+						packages={this.props.packages}
 					/>
 				</div>)
-				: (<ShipmentList
-						addShipment={this.addShipment}
-						deleteShipment={this.deleteShipment}
-						shipments={this.props.shipments}
+				: (<PackageList
+					previousPage={this.state.previousPage}
+						previousRowsPerPage={this.state.previousRowsPerPage}
+						deletePackage={this.deletePackage}
+						packages={this.props.packages}
 					/>)
 				}
 			</div>
@@ -79,11 +83,11 @@ class ShipmentListView extends Component {
 
 const mapStateToProps = state => {
 	return {
-		shipments: state.shipmentsReducer.shipments
+		packages: state.packageReducer.packages
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	{ getShipments, addShipment, deleteShipment },
-)(withStyles(styles)(ShipmentListView));
+	{ getPackages, deletePackage, addShipment },
+)(withStyles(styles)(PackageTableView));

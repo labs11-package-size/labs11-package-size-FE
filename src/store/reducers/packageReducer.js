@@ -1,22 +1,19 @@
 import {
-	GETTING_SHIPMENTS,
-	GETTING_SHIPMENTS_SUCCESSFUL,
-	GETTING_SHIPMENTS_FAILURE,
-	ADDING_SHIPMENT,
-	ADDING_SHIPMENT_SUCCESSFUL,
-	ADDING_SHIPMENT_FAILURE,
-	DELETING_SHIPMENT,
-	DELETING_SHIPMENT_SUCCESSFUL,
-	DELETING_SHIPMENT_FAILURE,
-} from '../actions/shipmentActions';
-
-import moment from "moment"
+	GETTING_PACKAGES,
+	GETTING_PACKAGES_SUCCESSFUL,
+	GETTING_PACKAGES_FAILURE,
+	ADDING_PACKAGE,
+	ADDING_PACKAGE_SUCCESSFUL,
+	ADDING_PACKAGE_FAILURE,
+	DELETING_PACKAGE,
+	DELETING_PACKAGE_SUCCESSFUL,
+	DELETING_PACKAGE_FAILURE,
+} from '../actions/packageActions';
 
 const initialState = {
-	shipments: [],
+	packages: [],
 	fetching: false,
 	adding: false,
-	added: false,
 	editing: false,
 	deleting: false,
 	success: false,
@@ -24,26 +21,24 @@ const initialState = {
 	error: null,
 };
 
-const shipmentsReducer = (state = initialState, action) => {
+const packageReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case GETTING_SHIPMENTS:
+		case GETTING_PACKAGES:
 			return {
 				...state,
 				fetching: true,
 				error: null,
 			};
-
-		case GETTING_SHIPMENTS_SUCCESSFUL:
+		case GETTING_PACKAGES_SUCCESSFUL:
 			return {
 				...state,
-				shipments: action.payload.map(shipment => {shipment.shipDateUnix = moment(shipment.dateShipped).format('x'); return shipment}),
+				packages: action.payload,
 				fetching: false,
 				success: true,
-				failure: false,
 				error: null,
 			};
 
-		case GETTING_SHIPMENTS_FAILURE:
+		case GETTING_PACKAGES_FAILURE:
 			return {
 				...state,
 				fetching: false,
@@ -52,27 +47,24 @@ const shipmentsReducer = (state = initialState, action) => {
 				error: action.payload,
 			};
 
-		case ADDING_SHIPMENT:
+		case ADDING_PACKAGE:
 			return {
 				...state,
 				adding: true,
-				success: false,
 				failure: false,
 				error: null,
 			};
-
-		case ADDING_SHIPMENT_SUCCESSFUL:
+		case ADDING_PACKAGE_SUCCESSFUL:
 			return {
 				...state,
-				shipments: action.payload,
+				packages: action.payload,
 				fetching: false,
 				adding: false,
 				success: true,
 				failure: false,
 				error: null,
 			};
-
-		case ADDING_SHIPMENT_FAILURE:
+		case ADDING_PACKAGE_FAILURE:
 			return {
 				...state,
 				fetching: false,
@@ -80,11 +72,9 @@ const shipmentsReducer = (state = initialState, action) => {
 				failure: true,
 				error: action.payload,
 			};
-
-		case DELETING_SHIPMENT:
+		case DELETING_PACKAGE:
 			return {
 				...state,
-				shipments: [],
 				fetching: false,
 				adding: false,
 				editing: false,
@@ -93,10 +83,10 @@ const shipmentsReducer = (state = initialState, action) => {
 				failure: false,
 				error: null,
 			};
-		case DELETING_SHIPMENT_SUCCESSFUL:
+		case DELETING_PACKAGE_SUCCESSFUL:
 			return {
 				...state,
-				shipments: action.payload.map(shipment => {shipment.shipDateUnix = moment(shipment.dateShipped).format('x'); return shipment}),
+				packages: action.payload,
 				fetching: false,
 				adding: false,
 				editing: false,
@@ -105,7 +95,7 @@ const shipmentsReducer = (state = initialState, action) => {
 				failure: false,
 				error: null,
 			};
-		case DELETING_SHIPMENT_FAILURE:
+		case DELETING_PACKAGE_FAILURE:
 			return {
 				...state,
 				fetching: false,
@@ -122,4 +112,4 @@ const shipmentsReducer = (state = initialState, action) => {
 	}
 };
 
-export default shipmentsReducer;
+export default packageReducer;

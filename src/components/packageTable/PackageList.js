@@ -22,7 +22,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import DeleteModal from '../modals/deleteModal';
-import ViewShipmentModal from '../modals/ViewShipmentModal';
+import ViewPackageModal from '../modals/ViewPackageModal';
 import { Button } from '@material-ui/core';
 import { helpers } from 'handlebars';
 
@@ -52,32 +52,31 @@ function getSorting(order, orderBy) {
 		: (a, b) => -desc(a, b, orderBy);
 }
 
-const shipmentTitles = [
+const packageTitles = [
 	{
-		id: 'shipDateUnix',
+		id: 'productNames',
 		numeric: false,
 		disablePadding: true,
-		label: 'Date Shipped',
+		label: 'Product Names',
 	},
 	{
-		id: 'status',
+		id: 'totalWeight',
 		numeric: false,
 		disablePadding: true,
-		label: 'Shipping Status',
-	},
-	{
-		id: 'shippedTo',
-		numeric: true,
-		disablePadding: false,
-		label: 'Shipped To',
+		label: 'Total Weight',
 	},
 	{
 		id: 'dimensions',
-		numeric: true,
+		numeric: false,
 		disablePadding: false,
-		label: 'Dimensions',
+		label: 'dimensions',
 	},
-	{ id: 'productNames', numeric: false, disablePadding: true, label: 'Included Products' },
+	{
+		id: 'Last Updated',
+		numeric: false,
+		disablePadding: false,
+		label: 'Last Updated',
+	}
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -98,10 +97,10 @@ class EnhancedTableHead extends React.Component {
 							onChange={onSelectAllClick}
 						/>
 					</TableCell>
-					{shipmentTitles.map(
-						shipment => (
-							<TableCell align="left" padding="default" onClick={(event) => this.createSortHandler(event, shipment.id)}>
-								<TableSortLabel>{shipment.label}</TableSortLabel>
+					{packageTitles.map(
+						packageItem => (
+							<TableCell align="left" padding="default" onClick={(event) => this.createSortHandler(event, packageItem.id)}>
+								<TableSortLabel>{packageItem.label}</TableSortLabel>
 							</TableCell>
 						),
 						this,
@@ -161,7 +160,7 @@ let EnhancedTableToolbar = props => {
 					</Typography>
 				) : (
 					<Typography variant="h6" id="tableTitle">
-						Recent Shipments
+						Packages To Send
 					</Typography>
 				)}
 			</div>
@@ -173,7 +172,7 @@ let EnhancedTableToolbar = props => {
 							<DeleteModal>
 								<Button
 									onClick={() => {
-										props.deleteShipment(props.selected, props.currentPage, props.currentRowsPerPage);
+										props.deletePackage(props.selected, props.currentPage, props.currentRowsPerPage);
 									}}>
 									Delete
 								</Button>
@@ -212,7 +211,7 @@ const styles = theme => ({
 	},
 });
 
-class ShipmentList extends React.Component {
+class PackageList extends React.Component {
 	state = {
 		order: 'desc',
 		orderBy: 'shipDateUnix',
@@ -223,10 +222,10 @@ class ShipmentList extends React.Component {
 	};
 	componentDidMount() {
 		if (this.props.previousRowsPerPage) {
-			this.setState({ data: this.props.shipments, page: this.props.previousPage, rowsPerPage: this.props.previousRowsPerPage });
+			this.setState({ data: this.props.packages, page: this.props.previousPage, rowsPerPage: this.props.previousRowsPerPage });
 		}
 		else {
-			this.setState({ data: this.props.shipments });
+			this.setState({ data: this.props.packages });
 		}
 		
 	}
@@ -293,14 +292,14 @@ class ShipmentList extends React.Component {
 					{...this.props}
 					currentPage={this.state.page}
 					currentRowsPerPage={this.state.rowsPerPage}
-					deleteShipment={this.props.deleteShipment}
+					deletePackage={this.props.deletePackage}
 					selected={selected}
 					numSelected={selected.length}
 				/>
 				<div className={classes.tableWrapper}>
 					<Table className={classes.table} aria-labelledby="tableTitle">
 						<EnhancedTableHead
-							shipments={this.props.shipments}
+							packages={this.props.packages}
 							numSelected={selected.length}
 							order={order}
 							orderBy={orderBy}
@@ -364,15 +363,14 @@ class ShipmentList extends React.Component {
 											<TableCell padding="checkbox">
 												<Checkbox onClick={event => this.handleClick(event, n.uuid)} checked={isSelected} />
 											</TableCell>
-											<TableCell align="left">{n.dateShipped}</TableCell>
-											<TableCell align="left" style={statusStyling()}>{parsedStatus()}</TableCell>
-											<TableCell align="left">{n.shippedTo}</TableCell>
-											<TableCell align="left">{n.dimensions}</TableCell>
 											<TableCell align="left">{n.productNames.join(", ")}</TableCell>
+											<TableCell align="left">{n.totalWeight}</TableCell>
+											<TableCell align="left">{n.modelURL}</TableCell>
+											<TableCell align="left">{n.lastUpdated}</TableCell>
 											<TableCell>											
 												
 												<div style={{cursor: "pointer"}}>
-													<ViewShipmentModal shipment={n} />
+													<ViewPackageModal package={n} />
 												</div>
 
 
@@ -409,7 +407,7 @@ class ShipmentList extends React.Component {
 	}
 }
 
-ShipmentList.propTypes = {
+PackageList.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
@@ -420,6 +418,6 @@ export default compose(
 			null,
 			{
 			},
-		)(withStyles(styles)(ShipmentList)),
+		)(withStyles(styles)(PackageList)),
 	),
 );

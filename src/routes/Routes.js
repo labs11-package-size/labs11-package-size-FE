@@ -7,9 +7,9 @@ import ProductAddView from '../containers/productView/productAddView';
 
 import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
-
+import PackageTableView from '../containers/packageTableView/PackageTableView';
 import AccountView from '../containers/accountView/AccountView';
-import LogoutView from '../containers/accountView/logoutView/LogoutView';
+import LogoutView from '../containers/logoutView/LogoutView';
 import Layout from '../hoc/layout/Layout';
 import { connect } from 'react-redux';
 import DashboardView from '../containers/dashboardView/DashboardView';
@@ -33,6 +33,7 @@ class Routes extends Component {
 					<Route exact path="/product/add" component={ProductAddView} />
 					<Route exact path="/shipments" component={ShipmentListView} />
 					<Route exact path="/packaging" component={PackagingView} />
+					<Route exact path="/packages" component={PackageTableView} />
 					<Route exact path="/products" component={ProductListView} />
 					<Route exact path="/account" component={AccountView} />
 					<Route exact path="/" component={DashboardView} />
@@ -43,7 +44,6 @@ class Routes extends Component {
 				<Switch>
 					<Redirect exact from="/" to="/auth" />
 					<Route path="/auth" component={AdminView} />
-
 					<Redirect to="/auth" />
 				</Switch>
 			);
