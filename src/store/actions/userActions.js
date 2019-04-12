@@ -71,18 +71,17 @@ export const loginUser = () => dispatch => {
 };
 
 export const emailLogin = credentials => dispatch => {
-	console.log('SDFGHJK', credentials);
+	const { emailAddress, password, displayName } = credentials;
+
 	dispatch({ type: USER_LOGGING_IN });
 	firebase
 		.auth()
-		.signInWithEmailAndPassword(credentials)
+		.signInWithEmailAndPassword(emailAddress, password)
 		.then(res => {
 			const user = {
 				uid: res.user.uid,
-				displayName: res.user.displayName,
+				displayName: displayName,
 				email: res.user.email,
-				accessToken: res.credential.accessToken,
-				idToken: res.credential.idToken,
 			};
 			axios
 				.post(`/users/login`, user)
