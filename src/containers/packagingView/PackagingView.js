@@ -5,6 +5,7 @@ import axios from "axios";
 import PackageFactory from "../../components/packaging/PackageFactory";
 import Packages from "../../components/packaging/Packages";
 
+// const apiurl = "http://localhost:5000/api";
 const apiurl = "https://scannarserver.herokuapp.com/api";
 
 class PackagingView extends Component {
