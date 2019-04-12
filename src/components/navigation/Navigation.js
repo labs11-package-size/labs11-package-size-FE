@@ -124,7 +124,14 @@ class Navigation extends React.Component {
 										<NavLink
 											style={{ textDecorationLine: 'none' }}
 											to="/packaging">
-											Packages
+											Box Products
+										</NavLink>
+									</MenuItem>
+									<MenuItem onClick={this.handleClose}>
+										<NavLink
+											style={{ textDecorationLine: 'none' }}
+											to="/packages">
+											Packages List
 										</NavLink>
 									</MenuItem>
 									<MenuItem onClick={this.handleClose}>

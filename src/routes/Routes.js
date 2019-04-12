@@ -7,7 +7,7 @@ import ProductAddView from '../containers/productView/productAddView';
 import LoginView from '../containers/adminViews/loginView/LoginView';
 import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
-
+import PackageTableView from '../containers/packageTableView/PackageTableView'
 import AccountView from '../containers/accountView/AccountView';
 import LogoutView from '../containers/adminViews/logoutView/LogoutView';
 import Layout from '../hoc/layout/Layout';
@@ -33,6 +33,7 @@ class Routes extends Component {
 					<Route exact path="/product/add" component={ProductAddView} />
 					<Route exact path="/shipments" component={ShipmentListView} />
 					<Route exact path="/packaging" component={PackagingView} />
+					<Route exact path="/packages" component={PackageTableView} />
 					<Route exact path="/products" component={ProductListView} />
 					<Route exact path="/account" component={AccountView} />
 					<Route exact path="/" component={DashboardView} />
@@ -42,7 +43,6 @@ class Routes extends Component {
 			routes = (
 				<Switch>
 					<Redirect exact from="/" to="/login" />
-
 					<Route exact path="/signup" component={SignupView} />
 					<Route exact path="/login" component={LoginView} />
 					<Redirect to="/login" />
