@@ -1,11 +1,19 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import React, { Component } from 'react';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
+import Icon from '@material-ui/core/Icon';
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
+import List from '@material-ui/core/List';
+import classNames from 'classnames';
+import { withRouter } from 'react-router-dom';
 
 const styles = {
 	root: {
 		flexGrow: 1,
+		display: 'flex',
+		flexDirection: 'column',
 	},
 	grow: {
 		flexGrow: 1,
@@ -16,47 +24,48 @@ const styles = {
 	},
 };
 
-const LoggedInLinks = props => {
-	const { classes } = props;
-	return (
-		<div className={classes.root}>
-			<Button>
-				<NavLink
-					style={{ textDecorationLine: 'none', color: 'white' }}
-					to="/account">
-					Account
-				</NavLink>
-			</Button>
-			<Button color="inherit">
-				<NavLink
-					style={{ textDecorationLine: 'none', color: 'white' }}
-					to="/products">
-					Products
-				</NavLink>
-			</Button>
-			<Button color="inherit">
-				<NavLink
-					style={{ textDecorationLine: 'none', color: 'white' }}
-					to="/shipments">
-					Shipments
-				</NavLink>
-			</Button>
-			<Button color="inherit">
-				<NavLink
-					style={{ textDecorationLine: 'none', color: 'white' }}
-					to="/packages">
-					Packages
-				</NavLink>
-			</Button>
-			<Button color="inherit">
-				<NavLink
-					style={{ textDecorationLine: 'none', color: 'white' }}
-					to="/logout">
-					Logout
-				</NavLink>
-			</Button>
-		</div>
-	);
-};
+class LoggedInLinks extends Component {
+	render() {
+		const { classes } = this.props;
+		return (
+			<div>
+				<List component="nav">
+					<ListItem onClick={() => this.props.history.push('/products')} button>
+						<ListItemIcon>
+							<Icon className={classNames(classes.icon, 'fas fa-boxes')} />
+						</ListItemIcon>
+						<ListItemText primary="Products" />
+					</ListItem>
+					<ListItem
+						onClick={() => this.props.history.push('/shipments')}
+						button>
+						<ListItemIcon>
+							<Icon
+								className={classNames(classes.icon, 'fas fa-shipping-fast')}
+							/>
+						</ListItemIcon>
 
-export default withStyles(styles)(LoggedInLinks);
+						<ListItemText primary="Shipments" />
+					</ListItem>
+
+					<ListItem onClick={() => this.props.history.push('/packages')} button>
+						<ListItemIcon>
+							<Icon className={classNames(classes.icon, 'fas fa-box')} />
+						</ListItemIcon>
+						<ListItemText primary="Packages" />
+					</ListItem>
+					<ListItem onClick={() => this.props.history.push('/logout')} button>
+						<ListItemIcon>
+							<Icon
+								className={classNames(classes.icon, 'fas fa-sign-out-alt')}
+							/>
+						</ListItemIcon>
+						<ListItemText primary="Logout" />
+					</ListItem>
+				</List>
+			</div>
+		);
+	}
+}
+
+export default withRouter(withStyles(styles)(LoggedInLinks));

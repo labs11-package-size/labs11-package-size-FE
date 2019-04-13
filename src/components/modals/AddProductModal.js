@@ -45,7 +45,16 @@ class AddProductModal extends React.Component {
 
 		return (
 			<div>
-				<Button onClick={this.handleOpen}>Add Product</Button>
+				<Button
+					style={{
+						marginTop: 20,
+						backgroundColor: '#72BDA2',
+						color: 'white',
+						padding: 15,
+					}}
+					onClick={this.handleOpen}>
+					<Typography style={{ color: 'white' }}>Add Product</Typography>
+				</Button>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"

@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import ProductListView from '../containers/productView/ProductListView';
 import PackagingView from '../containers/packagingView/PackagingView';
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import ProductAddView from '../containers/productView/productAddView';
 
 import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
@@ -16,10 +17,16 @@ import DashboardView from '../containers/dashboardView/DashboardView';
 import { getAuth } from '../store/actions/userActions';
 
 import AdminView from '../containers/adminViews/AdminView';
+import LoginView from '../containers/adminViews/loginView/LoginView';
+import SignupView from '../containers/adminViews/signupView/SignupView';
 
 class Routes extends Component {
-	componentWillMount() {
+	componentDidMount() {
 		this.props.getAuth();
+		loadCSS(
+			'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+			document.querySelector('#insertion-point-jss'),
+		);
 	}
 	render() {
 		let routes;
@@ -43,7 +50,9 @@ class Routes extends Component {
 			routes = (
 				<Switch>
 					<Redirect exact from="/" to="/auth" />
-					<Route path="/auth" component={AdminView} />
+					<Route exact path="/auth" component={AdminView} />
+					<Route path="/auth/login" component={LoginView} />
+					<Route path="/auth/register" component={SignupView} />
 					<Redirect to="/auth" />
 				</Switch>
 			);

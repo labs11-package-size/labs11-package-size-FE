@@ -13,27 +13,17 @@ import {
 } from '../../store/actions/shipmentActions';
 
 const styles = {
-	card: {
-		maxWidth: 250,
-		margin: 20,
-	},
-	media: {
-		height: 140,
-	},
-	cardContainer: {
-		display: 'flex',
-		justifyContent: 'center',
-	},
 	mainContainer: {
-		maxWidth: 1100,
+		margin: '40 auto',
+		maxWidth: 1200,
 	},
 };
 
 class ShipmentListView extends Component {
 	state = {
 		previousPage: null,
-		previousRowsPerPage: null
-	}
+		previousRowsPerPage: null,
+	};
 
 	componentDidMount() {
 		this.props.getShipments();
@@ -45,7 +35,10 @@ class ShipmentListView extends Component {
 	};
 
 	deleteShipment = (uuid, currentPage, currentRowsPerPage) => {
-		this.setState({previousPage: currentPage, previousRowsPerPage: currentRowsPerPage}, () => this.props.deleteShipment(uuid.join()))
+		this.setState(
+			{ previousPage: currentPage, previousRowsPerPage: currentRowsPerPage },
+			() => this.props.deleteShipment(uuid.join()),
+		);
 		return <Redirect to="/" />;
 	};
 
@@ -56,22 +49,23 @@ class ShipmentListView extends Component {
 				<Typography gutterBottom variant="h5" component="h2">
 					Shipments
 				</Typography>
-				{(this.props.shipments.length > 0) ? (
-				<div>
+				{this.props.shipments.length > 0 ? (
+					<div>
+						<ShipmentList
+							previousPage={this.state.previousPage}
+							previousRowsPerPage={this.state.previousRowsPerPage}
+							addShipment={this.addShipment}
+							deleteShipment={this.deleteShipment}
+							shipments={this.props.shipments}
+						/>
+					</div>
+				) : (
 					<ShipmentList
-						previousPage={this.state.previousPage}
-						previousRowsPerPage={this.state.previousRowsPerPage}
 						addShipment={this.addShipment}
 						deleteShipment={this.deleteShipment}
 						shipments={this.props.shipments}
 					/>
-				</div>)
-				: (<ShipmentList
-						addShipment={this.addShipment}
-						deleteShipment={this.deleteShipment}
-						shipments={this.props.shipments}
-					/>)
-				}
+				)}
 			</div>
 		);
 	}
@@ -79,7 +73,7 @@ class ShipmentListView extends Component {
 
 const mapStateToProps = state => {
 	return {
-		shipments: state.shipmentsReducer.shipments
+		shipments: state.shipmentsReducer.shipments,
 	};
 };
 

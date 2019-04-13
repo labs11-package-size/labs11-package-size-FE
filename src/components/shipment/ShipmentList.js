@@ -13,7 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import PopoutIcon from '@material-ui/icons/LibraryBooks'
+import PopoutIcon from '@material-ui/icons/LibraryBooks';
 import IconButton from '@material-ui/core/IconButton';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
@@ -77,7 +77,12 @@ const shipmentTitles = [
 		disablePadding: false,
 		label: 'Dimensions',
 	},
-	{ id: 'productNames', numeric: false, disablePadding: true, label: 'Included Products' },
+	{
+		id: 'productNames',
+		numeric: false,
+		disablePadding: true,
+		label: 'Included Products',
+	},
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -100,7 +105,10 @@ class EnhancedTableHead extends React.Component {
 					</TableCell>
 					{shipmentTitles.map(
 						shipment => (
-							<TableCell align="left" padding="default" onClick={(event) => this.createSortHandler(event, shipment.id)}>
+							<TableCell
+								align="left"
+								padding="default"
+								onClick={event => this.createSortHandler(event, shipment.id)}>
 								<TableSortLabel>{shipment.label}</TableSortLabel>
 							</TableCell>
 						),
@@ -168,18 +176,20 @@ let EnhancedTableToolbar = props => {
 			<div className={classes.spacer} />
 			<div className={classes.actions}>
 				{numSelected > 0 ? (
-					
-						<IconButton aria-label="Delete">
-							<DeleteModal>
-								<Button
-									onClick={() => {
-										props.deleteShipment(props.selected, props.currentPage, props.currentRowsPerPage);
-									}}>
-									Delete
-								</Button>
-							</DeleteModal>
-						</IconButton>
-
+					<IconButton aria-label="Delete">
+						<DeleteModal>
+							<Button
+								onClick={() => {
+									props.deleteShipment(
+										props.selected,
+										props.currentPage,
+										props.currentRowsPerPage,
+									);
+								}}>
+								Delete
+							</Button>
+						</DeleteModal>
+					</IconButton>
 				) : (
 					<Tooltip title="Filter list">
 						<IconButton aria-label="Filter list">
@@ -201,6 +211,7 @@ EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
 	root: {
+		margin: '0 auto',
 		width: '100%',
 		marginTop: theme.spacing.unit * 3,
 	},
@@ -223,12 +234,14 @@ class ShipmentList extends React.Component {
 	};
 	componentDidMount() {
 		if (this.props.previousRowsPerPage) {
-			this.setState({ data: this.props.shipments, page: this.props.previousPage, rowsPerPage: this.props.previousRowsPerPage });
-		}
-		else {
+			this.setState({
+				data: this.props.shipments,
+				page: this.props.previousPage,
+				rowsPerPage: this.props.previousRowsPerPage,
+			});
+		} else {
 			this.setState({ data: this.props.shipments });
 		}
-		
 	}
 
 	handleRequestSort = (event, property) => {
@@ -315,44 +328,68 @@ class ShipmentList extends React.Component {
 									const isSelected = this.isSelected(n.uuid);
 									const parsedStatus = () => {
 										if (n.status === 0) {
-											return "Unknown"
+											return 'Unknown';
 										}
 										if (n.status === 1) {
-											return "Shipping"
+											return 'Shipping';
 										}
 										if (n.status === 2) {
-											return "En-Route"
+											return 'En-Route';
 										}
 										if (n.status === 3) {
-											return "Out-For-Delivery"
+											return 'Out-For-Delivery';
 										}
 										if (n.status === 4) {
-											return "Delivered"
+											return 'Delivered';
 										}
 										if (n.status === 5) {
-											return "Delayed"
+											return 'Delayed';
 										}
-									}
+									};
 									const statusStyling = () => {
 										if (n.status === 0) {
-											return {backgroundColor: '#ffa9a8', borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffa9a8',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 1) {
-											return {backgroundColor: '#ffc642', borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffc642',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 2) {
-											return {backgroundColor: '#ffc642', borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffc642',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 3) {
-											return {backgroundColor: '#ffc642', borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffc642',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 4) {
-											return {backgroundColor: "#a7c2a6", borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#a7c2a6',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 5) {
-											return {backgroundColor: "#ffa9a8", borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffa9a8',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
-									}
+									};
 									return (
 										<TableRow
 											hover
@@ -362,21 +399,24 @@ class ShipmentList extends React.Component {
 											key={n.uuid}
 											selected={isSelected}>
 											<TableCell padding="checkbox">
-												<Checkbox onClick={event => this.handleClick(event, n.uuid)} checked={isSelected} />
+												<Checkbox
+													onClick={event => this.handleClick(event, n.uuid)}
+													checked={isSelected}
+												/>
 											</TableCell>
 											<TableCell align="left">{n.dateShipped}</TableCell>
-											<TableCell align="left" style={statusStyling()}>{parsedStatus()}</TableCell>
+											<TableCell align="left" style={statusStyling()}>
+												{parsedStatus()}
+											</TableCell>
 											<TableCell align="left">{n.shippedTo}</TableCell>
 											<TableCell align="left">{n.dimensions}</TableCell>
-											<TableCell align="left">{n.productNames.join(", ")}</TableCell>
-											<TableCell>											
-												
-												<div style={{cursor: "pointer"}}>
+											<TableCell align="left">
+												{n.productNames.join(', ')}
+											</TableCell>
+											<TableCell>
+												<div style={{ cursor: 'pointer' }}>
 													<ViewShipmentModal shipment={n} />
 												</div>
-
-
-								
 											</TableCell>
 										</TableRow>
 									);
@@ -413,13 +453,11 @@ ShipmentList.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-
 export default compose(
 	withRouter(
 		connect(
 			null,
-			{
-			},
+			{},
 		)(withStyles(styles)(ShipmentList)),
 	),
 );
