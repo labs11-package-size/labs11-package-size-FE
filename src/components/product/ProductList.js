@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import { Redirect, Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProducts, addProduct } from '../../store/actions/productActions';
@@ -19,10 +20,24 @@ const styles = theme => ({
 		display: 'flex',
 		flexWrap: 'wrap',
 	},
+	textField: {
+		marginLeft: theme.spacing.unit,
+		marginRight: theme.spacing.unit,
+	},
 	container: {
-		margin: 40,
+		marginBottom: 60,
 		flexDirection: 'column',
 		display: 'flex',
+	},
+	headingContainer: {
+		justifyContent: 'space-between',
+		alignItems: 'baseline',
+		display: 'flex',
+	},
+	searchContainer: {
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		maxWidth: 500,
 	},
 });
 
@@ -30,18 +45,10 @@ class ProductList extends Component {
 	render() {
 		return (
 			<div className={this.props.classes.container}>
-				<Typography gutterBottom variant="h5" component="h2">
-					Products
-				</Typography>
-				<div>
-					<input
-						placeholder="Search by name..."
-						label="search"
-						type="text"
-						name="search"
-						value={this.props.searchTerm}
-						onChange={this.props.updateSearch}
-					/>
+				<div className={this.props.classes.headingContainer}>
+					<Typography gutterBottom variant="h5" component="h2">
+						Products
+					</Typography>
 					<AddProductModal>
 						<form className={this.props.classes.container}>
 							<Input
@@ -140,6 +147,24 @@ class ProductList extends Component {
 							</div>
 						</form>
 					</AddProductModal>
+				</div>
+				<div>
+					<div className={this.props.classes.searchContainer}>
+						<TextField
+							name="search"
+							value={this.props.searchTerm}
+							onChange={this.props.updateSearch}
+							id="filled-full-width"
+							placeholder="Search by name..."
+							margin="normal"
+							fullWidth
+							variant="filled"
+							InputLabelProps={{
+								shrink: true,
+							}}
+						/>
+					</div>
+
 					<div className={this.props.classes.root}>
 						{this.props.products ? (
 							this.props.products.map(product => {
@@ -181,7 +206,6 @@ class ProductList extends Component {
 		);
 	}
 }
-
 
 export default compose(
 	connect(

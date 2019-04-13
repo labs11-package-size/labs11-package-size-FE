@@ -28,9 +28,9 @@ const styles = theme => ({
 		},
 		error: {
 			padding: theme.spacing.unit * 2,
+			color: 'red',
 		},
 		errorPaper: {
-			padding: theme.spacing.unit * 2,
 			padding: theme.spacing.unit * 2,
 		},
 	},
@@ -57,7 +57,6 @@ const styles = theme => ({
 		'&:hover': {
 			color: '#72BDA2',
 			backgroundColor: 'white',
-			border: 'solid 5px #72BDA2',
 		},
 	},
 });
@@ -131,7 +130,7 @@ const Login = props => {
 						/>
 						<div
 							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
-							<Button color="primary" onClick={props.handleRegister}>
+							<Button className={classes.submit} onClick={props.handleRegister}>
 								Register
 							</Button>
 						</div>

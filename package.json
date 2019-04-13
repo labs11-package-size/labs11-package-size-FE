@@ -30,6 +30,7 @@
 		"react-scripts": "2.1.8",
 		"react-search": "^2.1.0",
 		"react-search-input": "^0.11.3",
+		"react-swipeable-views": "^0.13.1",
 		"recharts": "^1.5.0",
 		"redux": "^4.0.1",
 		"redux-devtools": "^3.5.0",

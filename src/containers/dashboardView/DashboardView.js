@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ProductListView from '../productView/ProductListView';
+import { withStyles } from '@material-ui/core/styles';
 import ShipmentListView from '../shipmentView/ShipmentListView';
 import PackageTableView from '../packageTableView/PackageTableView';
 import { getProducts } from '../../store/actions/productActions';
 import { getShipments } from '../../store/actions/shipmentActions';
 import { getPackages } from '../../store/actions/packageActions';
+
+const styles = theme => ({
+	root: {
+		marginTop: 30,
+	},
+});
 
 class DashboardView extends Component {
 	async componentDidMount() {
@@ -14,10 +21,11 @@ class DashboardView extends Component {
 		this.props.getShipments();
 		this.props.getPackages();
 	}
-	
+
 	render() {
+		const { classes } = this.props;
 		return (
-			<div className="">
+			<div className={classes.root}>
 				<div className="">
 					<div className="">
 						<ProductListView products={this.props.products} />
@@ -38,7 +46,7 @@ const mapStateToProps = state => {
 	return {
 		products: state.productsReducer.products,
 		shipments: state.shipmentsReducer.shipments,
-		packages: state.packageReducer.packages
+		packages: state.packageReducer.packages,
 	};
 };
 
@@ -47,4 +55,4 @@ export default compose(
 		mapStateToProps,
 		{ getProducts, getShipments, getPackages },
 	),
-)(DashboardView);
+)(withStyles(styles)(DashboardView));
