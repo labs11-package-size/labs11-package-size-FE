@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import { Redirect, Link } from 'react-router-dom';
+
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
@@ -58,9 +58,6 @@ class ProductList extends Component {
 								label={this.props.name}
 								placeholder="Product Name"
 								className={this.props.classes.input}
-								inputProps={{
-									'aria-label': 'Description',
-								}}
 							/>
 
 							<Input
@@ -133,7 +130,8 @@ class ProductList extends Component {
 							/>
 							<div className="uploader">
 								<ImgUploader
-									addThumbnail={this.props.addThumbnail}
+									addImgs={this.props.addImgs}
+									deleteImgFromProdList={this.props.deleteImg}
 									thumbnail={this.props.thumbnail}
 								/>
 							</div>

@@ -43,7 +43,6 @@ export const getProducts = () => dispatch => {
 
 export const addProduct = newProd => dispatch => {
 	dispatch({ type: ADDING_PRODUCT });
-	console.log(newProd);
 	axios
 		.post('/products/add', newProd)
 		.then(res =>
