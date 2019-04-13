@@ -6,6 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import './styles/css/index.css';
 
 import { firebase } from './firebase';
 

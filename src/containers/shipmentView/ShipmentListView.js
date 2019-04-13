@@ -14,8 +14,11 @@ import {
 
 const styles = {
 	mainContainer: {
-		margin: '40 auto',
-		maxWidth: 1200,
+		marginTop: 45,
+		marginBottom: 60,
+	},
+	heading: {
+		marginBottom: 40,
 	},
 };
 
@@ -46,7 +49,11 @@ class ShipmentListView extends Component {
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
-				<Typography gutterBottom variant="h5" component="h2">
+				<Typography
+					className={classes.heading}
+					gutterBottom
+					variant="h5"
+					component="h2">
 					Shipments
 				</Typography>
 				{this.props.shipments.length > 0 ? (

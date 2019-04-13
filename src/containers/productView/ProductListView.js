@@ -16,7 +16,7 @@ import { compose } from 'redux';
 
 const styles = theme => ({
 	mainContainer: {
-		margin: '0 auto',
+		marginTop: 30,
 		maxWidth: 'auto',
 	},
 });
@@ -41,8 +41,8 @@ class ProductListView extends Component {
 	}
 
 	componentDidMount = () => {
-		this.props.getProducts()
-	}
+		this.props.getProducts();
+	};
 
 	updateModalState = item => {
 		this.setState({
@@ -183,12 +183,7 @@ export default compose(
 	withRouter(
 		connect(
 			mapStateToProps,
-			{	getProducts,
-				addProduct,
-				editProduct,
-				deleteProduct,
-				addShipment,
-			},
+			{ getProducts, addProduct, editProduct, deleteProduct, addShipment },
 		)(withStyles(styles)(ProductListView)),
 	),
 );

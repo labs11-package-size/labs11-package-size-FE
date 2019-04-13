@@ -11,9 +11,7 @@ import { getPackages } from '../../store/actions/packageActions';
 
 const styles = theme => ({
 	root: {
-		margin: '0 auto',
-		maxWidth: 1200,
-		marginTop: theme.spacing.unit * 3,
+		marginTop: 30,
 	},
 });
 

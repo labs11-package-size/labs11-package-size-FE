@@ -31,7 +31,7 @@ const LoggedOutLinks = props => {
 			<List component="nav">
 				<ListItem onClick={() => props.history.push('/auth/login')} button>
 					<ListItemIcon>
-						<Icon className={classNames(classes.icon, 'fas fa-box')} />
+						<Icon className={classNames(classes.icon, 'fas fa-play')} />
 					</ListItemIcon>
 					<ListItemText primary="Login" />
 				</ListItem>

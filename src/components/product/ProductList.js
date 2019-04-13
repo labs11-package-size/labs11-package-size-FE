@@ -25,19 +25,19 @@ const styles = theme => ({
 		marginRight: theme.spacing.unit,
 	},
 	container: {
-		margin: 40,
+		marginBottom: 60,
 		flexDirection: 'column',
 		display: 'flex',
 	},
 	headingContainer: {
-		margin: 40,
 		justifyContent: 'space-between',
 		alignItems: 'baseline',
 		display: 'flex',
 	},
 	searchContainer: {
-		margin: '0 auto',
-		maxWidth: 800,
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		maxWidth: 500,
 	},
 });
 
@@ -46,7 +46,7 @@ class ProductList extends Component {
 		return (
 			<div className={this.props.classes.container}>
 				<div className={this.props.classes.headingContainer}>
-					<Typography gutterBottom variant="h5">
+					<Typography gutterBottom variant="h5" component="h2">
 						Products
 					</Typography>
 					<AddProductModal>

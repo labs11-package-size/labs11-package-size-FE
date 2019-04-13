@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -20,7 +21,7 @@ import { compose } from 'redux';
 import LoggedInLinks from '../../components/navigation/LoggedInLinks';
 import LoggedOutLinks from '../../components/navigation/LoggedOutLinks';
 
-const drawerWidth = 175;
+const drawerWidth = 185;
 
 const styles = theme => ({
 	root: {
@@ -38,6 +39,9 @@ const styles = theme => ({
 		...theme.mixins.toolbar,
 	},
 	appBar: {
+		right: 'auto',
+		maxWidth: 1200,
+		backgroundColor: '#72BDA2',
 		zIndex: theme.zIndex.drawer + 1,
 		transition: theme.transitions.create(['width', 'margin'], {
 			easing: theme.transitions.easing.sharp,
@@ -130,7 +134,7 @@ class Layout extends React.Component {
 			<div className={classes.root}>
 				<CssBaseline />
 				<AppBar
-					position="fixed"
+					position="absolute"
 					className={classNames(
 						classes.appBar,
 						this.state.open && classes.appBarShift,
@@ -156,12 +160,15 @@ class Layout extends React.Component {
 							className={classes.title}>
 							ScannAR
 						</Typography>
-
-						<Avatar
-							alt={this.props.userInfo.displayName}
-							src={this.props.userInfo.photoURL}
-							className={classes.avatar}
-						/>
+						{this.props.isLoggedIn ? (
+							<Avatar
+								alt={this.props.userInfo.displayName}
+								src={this.props.userInfo.photoURL}
+								className={classes.avatar}
+							/>
+						) : (
+							<AccountCircle />
+						)}
 					</Toolbar>
 				</AppBar>
 				<Drawer
