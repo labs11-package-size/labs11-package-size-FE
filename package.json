@@ -11,6 +11,7 @@
 		"firebase": "^5.9.1",
 		"history": "^4.9.0",
 		"js-base64": "^2.5.1",
+		"material-ui-image": "^3.1.0",
 		"moment": "^2.24.0",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",

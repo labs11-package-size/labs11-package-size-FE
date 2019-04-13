@@ -34,6 +34,7 @@ class ProductListView extends Component {
 				width: '',
 				height: '',
 				value: '',
+				images: [],
 			},
 			trackingNumber: '',
 			searchTerm: '',
@@ -80,9 +81,9 @@ class ProductListView extends Component {
 				width: '',
 				height: '',
 				value: '',
+				images: [],
 			},
 		});
-		return <Redirect to="/product/add" />;
 	};
 
 	addShipment = (tracId, prod) => {
@@ -110,18 +111,33 @@ class ProductListView extends Component {
 				height: '',
 				value: '',
 				thumbnail: '',
+				images: [],
 			},
 		});
 		this.props.history.push('/');
 	};
-	addThumbnail = file => {
-		console.log(file);
-		const thumbnailUrl = file.secure_url;
+
+	deleteImg = imgId => {
+		let updatedImages = Object.assign([], this.state.images);
+		updatedImages.splice(imgId, 1);
+
+		this.setState({
+			product: {
+				images: updatedImages,
+			},
+		});
+	};
+
+	addImgs = files => {
 		this.setState(
 			{
 				product: {
 					...this.state.product,
-					thumbnail: thumbnailUrl,
+					images: [...this.state.product.images, files.secure_url],
+					thumbnail:
+						this.state.product.images.length > 0
+							? this.state.product.images[0]
+							: null,
 				},
 			},
 			() => console.log('p list view state', this.state),
@@ -142,7 +158,8 @@ class ProductListView extends Component {
 			<div className={this.props.classes.mainContainer}>
 				<div>
 					<ProductList
-						addThumbnail={this.addThumbnail}
+						addImgs={this.addImgs}
+						deleteImg={this.deleteImg}
 						updateModalState={this.updateModalState}
 						editProduct={this.editProduct}
 						deleteProduct={this.deleteProduct}

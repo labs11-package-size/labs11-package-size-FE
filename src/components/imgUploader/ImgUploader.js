@@ -27,17 +27,6 @@ const styles = theme => ({
 });
 
 class ImgUploader extends Component {
-	// handleDrop = acceptedFiles => {
-	// 	console.log(acceptedFiles);
-	// 	const reader = new FileReader();
-	// 	reader.onload = () => {
-	// 		const binaryStr = reader.result;
-	// 		const img = Base64.encode(binaryStr);
-	// 		// this.props.addThumbnail(img);
-	// 	};
-	// 	acceptedFiles.forEach(file => reader.readAsBinaryString(file));
-	// };
-
 	state = {
 		images: [],
 	};
@@ -75,7 +64,7 @@ class ImgUploader extends Component {
 			}
 			console.log(`UPLOAD COMPLETE:${JSON.stringify(res.body)}`);
 			const uploaded = res.body;
-			this.props.addThumbnail(uploaded);
+			this.props.addImgs(uploaded);
 
 			let updatedImages = Object.assign([], this.state.images);
 			updatedImages.push(uploaded);
@@ -87,7 +76,7 @@ class ImgUploader extends Component {
 	};
 
 	deleteImg = event => {
-		event.preventDefault();
+		this.props.deleteImgFromProdList(event.target.id);
 
 		let updatedImages = Object.assign([], this.state.images);
 		updatedImages.splice(event.target.id, 1);
@@ -98,13 +87,12 @@ class ImgUploader extends Component {
 	};
 	render() {
 		const list = this.state.images.map((image, i) => {
-			let count = 1;
 			return (
 				<li key={i}>
 					<img
 						onClick={this.deleteImg}
 						className={this.props.classes.media}
-						id={++count}
+						id={image.signature}
 						style={{ width: 100 }}
 						src={image.secure_url}
 						alt="product"
