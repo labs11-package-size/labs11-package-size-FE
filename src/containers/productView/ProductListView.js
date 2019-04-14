@@ -34,6 +34,7 @@ class ProductListView extends Component {
 				width: '',
 				height: '',
 				value: '',
+				thumbnail: '',
 				images: [],
 			},
 			trackingNumber: '',
@@ -179,7 +180,7 @@ class ProductListView extends Component {
 						productDescription={this.state.product.productDescription}
 						weight={this.state.product.weight}
 						length={this.state.product.length}
-						thumbnail={this.state.thumbnail}
+						thumbnail={this.props.thumbnail}
 						width={this.state.product.width}
 						height={this.state.product.height}
 						value={this.state.product.value}
@@ -197,6 +198,7 @@ class ProductListView extends Component {
 const mapStateToProps = state => {
 	return {
 		products: state.productsReducer.products,
+		thumbnail: state.productsReducer.thumbnail,
 	};
 };
 

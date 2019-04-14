@@ -11,10 +11,16 @@ import {
 	EDITING_PRODUCT,
 	EDITING_PRODUCT_SUCCESSFUL,
 	EDITING_PRODUCT_FAILURE,
+	UPLOADING_IMAGE,
+	UPLOADING_IMAGE_SUCCESS,
+	UPLOADING_IMAGE_FAILURE,
+	DELETING_IMAGE,
 } from '../actions/productActions';
 
 const initialState = {
 	products: [],
+	images: [],
+	thumbnail: '',
 	fetching: false,
 	adding: false,
 	editing: false,
@@ -32,9 +38,20 @@ const productsReducer = (state = initialState, action) => {
 				fetching: true,
 				error: null,
 			};
+		case DELETING_IMAGE:
+			return {
+				...state,
+				images: state.images.filter(image => {
+					console.log(image);
+					return image.public_id !== action.payload;
+				}),
+				fetching: true,
+				error: null,
+			};
 		case GETTING_PRODUCTS_SUCCESSFUL:
 			return {
 				...state,
+				images: [],
 				products: action.payload,
 				fetching: false,
 				success: true,
@@ -50,9 +67,35 @@ const productsReducer = (state = initialState, action) => {
 				error: action.payload,
 			};
 
+		case UPLOADING_IMAGE:
+			return {
+				...state,
+				adding: true,
+				failure: false,
+				error: null,
+			};
+		case UPLOADING_IMAGE_SUCCESS:
+			return {
+				...state,
+				images: [...state.images, action.payload],
+				fetching: false,
+				adding: false,
+				success: true,
+				failure: false,
+				error: null,
+			};
+		case UPLOADING_IMAGE_FAILURE:
+			return {
+				...state,
+				fetching: false,
+				success: false,
+				failure: true,
+				error: action.payload,
+			};
 		case ADDING_PRODUCT:
 			return {
 				...state,
+				thumbnail: state.images[0].secure_url,
 				adding: true,
 				failure: false,
 				error: null,
@@ -61,6 +104,7 @@ const productsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				products: action.payload,
+				images: [],
 				fetching: false,
 				adding: false,
 				success: true,
@@ -90,6 +134,7 @@ const productsReducer = (state = initialState, action) => {
 		case EDITING_PRODUCT_SUCCESSFUL:
 			return {
 				...state,
+				images: [],
 				products: action.payload,
 				fetching: false,
 				adding: false,
@@ -125,6 +170,7 @@ const productsReducer = (state = initialState, action) => {
 		case DELETING_PRODUCT_SUCCESSFUL:
 			return {
 				...state,
+				images: [],
 				products: action.payload,
 				fetching: false,
 				adding: false,

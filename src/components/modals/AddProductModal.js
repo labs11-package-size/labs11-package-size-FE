@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
+import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 
 function getModalStyle() {
@@ -58,12 +59,14 @@ class AddProductModal extends React.Component {
 
 		return (
 			<div>
-				<Button
-					variant="contained"
-					className={classes.submit}
-					onClick={this.handleOpen}>
-					Add Product
-				</Button>
+				<Tooltip title="Add new product...">
+					<Button
+						variant="contained"
+						className={classes.submit}
+						onClick={this.handleOpen}>
+						Add Product
+					</Button>
+				</Tooltip>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
