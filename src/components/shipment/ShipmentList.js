@@ -21,7 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import DeleteModal from '../modals/deleteModal';
+import DeleteShipmentModal from '../modals/deleteModal';
 import ViewShipmentModal from '../modals/ViewShipmentModal';
 import { Button } from '@material-ui/core';
 import { helpers } from 'handlebars';
@@ -98,6 +98,7 @@ class EnhancedTableHead extends React.Component {
 				<TableRow>
 					<TableCell padding="checkbox">
 						<Checkbox
+							style={{ color: '#72BDA2' }}
 							indeterminate={numSelected > 0 && numSelected < rowCount}
 							checked={numSelected === rowCount}
 							onChange={onSelectAllClick}
@@ -177,7 +178,7 @@ let EnhancedTableToolbar = props => {
 			<div className={classes.actions}>
 				{numSelected > 0 ? (
 					<IconButton aria-label="Delete">
-						<DeleteModal>
+						<DeleteShipmentModal>
 							<Button
 								onClick={() => {
 									props.deleteShipment(
@@ -188,7 +189,7 @@ let EnhancedTableToolbar = props => {
 								}}>
 								Delete
 							</Button>
-						</DeleteModal>
+						</DeleteShipmentModal>
 					</IconButton>
 				) : (
 					<Tooltip title="Filter list">

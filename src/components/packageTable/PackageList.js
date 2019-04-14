@@ -92,6 +92,7 @@ class EnhancedTableHead extends React.Component {
 				<TableRow>
 					<TableCell padding="checkbox">
 						<Checkbox
+							style={{ color: '#72BDA2' }}
 							indeterminate={numSelected > 0 && numSelected < rowCount}
 							checked={numSelected === rowCount}
 							onChange={onSelectAllClick}
