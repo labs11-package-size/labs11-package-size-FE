@@ -128,20 +128,22 @@ class ProductListView extends Component {
 		});
 	};
 
-	addImgs = files => {
-		this.setState(
-			{
-				product: {
-					...this.state.product,
-					images: [...this.state.product.images, files.secure_url],
-					thumbnail:
-						this.state.product.images.length > 0
-							? this.state.product.images[0]
-							: null,
-				},
+	getThumbnail = url => {
+		this.setState({
+			product: {
+				...this.state.product,
+				thumbnail: url,
 			},
-			() => console.log('p list view state', this.state),
-		);
+		});
+	};
+
+	addImgs = files => {
+		this.setState({
+			product: {
+				...this.state.product,
+				images: [...this.state.product.images, files.secure_url],
+			},
+		});
 	};
 
 	handleInputChange = event => {
@@ -158,6 +160,7 @@ class ProductListView extends Component {
 			<div className={this.props.classes.mainContainer}>
 				<div>
 					<ProductList
+						getThumbnail={this.getThumbnail}
 						loadMore={this.props.getProducts}
 						addImgs={this.addImgs}
 						deleteImg={this.deleteImg}
