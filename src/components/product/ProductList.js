@@ -131,6 +131,7 @@ class ProductList extends Component {
 							/>
 							<div className="uploader">
 								<ImgUploader
+									getThumbnail={this.props.getThumbnail}
 									addImgs={this.props.addImgs}
 									deleteImgFromProdList={this.props.deleteImg}
 									thumbnail={this.props.thumbnail}
@@ -191,6 +192,7 @@ class ProductList extends Component {
 						) : (
 							<div>no list yet</div>
 						)}
+						<Button onClick={this.props.loadMore}>Load More</Button>
 					</div>
 				</div>
 			</div>

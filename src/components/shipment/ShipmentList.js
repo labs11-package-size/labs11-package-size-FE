@@ -21,7 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import DeleteShipmentModal from '../modals/deleteModal';
+import DeleteModal from '../modals/deleteModal';
 import ViewShipmentModal from '../modals/ViewShipmentModal';
 import { Button } from '@material-ui/core';
 import { helpers } from 'handlebars';
@@ -178,7 +178,7 @@ let EnhancedTableToolbar = props => {
 			<div className={classes.actions}>
 				{numSelected > 0 ? (
 					<IconButton aria-label="Delete">
-						<DeleteShipmentModal
+						<DeleteModal
 							delete={() => {
 								props.deleteShipment(
 									props.selected,

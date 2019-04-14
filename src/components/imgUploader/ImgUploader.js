@@ -70,6 +70,7 @@ class ImgUploader extends Component {
 			console.log(`UPLOAD COMPLETE:${JSON.stringify(res.body)}`);
 			const uploaded = res.body;
 			this.props.addImgs(uploaded);
+			this.props.getThumbnail(uploaded.secure_url);
 
 			let updatedImages = Object.assign([], this.state.images);
 			updatedImages.push(uploaded);

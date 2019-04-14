@@ -17,6 +17,7 @@ import { getAuth } from '../store/actions/userActions';
 import AdminView from '../containers/adminViews/AdminView';
 import LoginView from '../containers/adminViews/loginView/LoginView';
 import SignupView from '../containers/adminViews/signupView/SignupView';
+import { firebase } from '../firebase';
 
 class Routes extends Component {
 	componentDidMount() {
@@ -54,7 +55,11 @@ class Routes extends Component {
 				</Switch>
 			);
 		}
-
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				console.log(user);
+			}
+		});
 		return <Layout>{routes}</Layout>;
 	}
 }
