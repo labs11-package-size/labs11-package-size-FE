@@ -159,22 +159,27 @@ class ProductListView extends Component {
 		});
 	};
 
-	getThumbnail = url => {
+	getThumbnail = imgs => {
 		this.setState({
 			product: {
 				...this.state.product,
-				thumbnail: url,
+				thumbnail: imgs[0].secure_url,
 			},
 		});
 	};
 
 	addImgs = files => {
-		this.setState({
-			product: {
-				...this.state.product,
-				images: [...this.state.product.images, files.secure_url],
+		let imgs = this.state.product.images;
+		imgs.push(files);
+		this.setState(
+			{
+				product: {
+					...this.state.product,
+					images: imgs,
+				},
 			},
-		});
+			() => console.log(this.state.product.images),
+		);
 	};
 
 	handleInputChange = event => {
@@ -205,7 +210,7 @@ class ProductListView extends Component {
 									? this.filteredProducts()
 									: this.props.products
 							}
-							handleChange={this.handleInputChange}
+							handleInputChange={this.handleInputChange}
 							trackingNumber={this.state.trackingNumber}
 							name={this.state.product.name}
 							productDescription={this.state.product.productDescription}
@@ -222,103 +227,101 @@ class ProductListView extends Component {
 						/>
 					</div>
 				) : (
-					<div className={this.props.classes.modalStyle}>
-						<Paper className={this.props.classes.paper}>
-							<Typography variant="h6">
-								No Products yet.. Add a product to get started
-							</Typography>
-						</Paper>
+					<div>
+						<Typography gutterBottom variant="h5" component="h2">
+							Products
+						</Typography>
 						<div className={this.props.classes.modalStyle}>
-							<AddProductModal
-								addProduct={() => this.props.addProduct(this.props.product)}>
-								<form className={this.props.classes.container}>
-									<Input
-										onChange={this.props.handleChange}
-										name="name"
-										value={this.props.name}
-										label={this.props.name}
-										placeholder="Product Name"
-										className={this.props.classes.input}
-									/>
-
-									<Input
-										onChange={this.props.handleChange}
-										name="productDescription"
-										value={this.props.productDescription}
-										label={this.props.productDescription}
-										placeholder="Description"
-										className={this.props.classes.input}
-										inputProps={{
-											'aria-label': 'Description',
-										}}
-									/>
-
-									<Input
-										onChange={this.props.handleChange}
-										name="height"
-										value={this.props.height}
-										label={this.props.height}
-										placeholder="Height"
-										className={this.props.classes.input}
-										inputProps={{
-											'aria-label': 'Description',
-										}}
-									/>
-
-									<Input
-										onChange={this.props.handleChange}
-										name="length"
-										value={this.props.length}
-										label={this.props.length}
-										placeholder="Length"
-										className={this.props.classes.input}
-										inputProps={{
-											'aria-label': 'Description',
-										}}
-									/>
-									<Input
-										onChange={this.props.handleChange}
-										name="value"
-										value={this.props.value}
-										label={this.props.value}
-										placeholder="Value"
-										className={this.props.classes.input}
-										inputProps={{
-											'aria-label': 'Description',
-										}}
-									/>
-									<Input
-										onChange={this.props.handleChange}
-										name="weight"
-										value={this.props.weight}
-										label={this.props.weight}
-										placeholder="Weight"
-										className={this.props.classes.input}
-										inputProps={{
-											'aria-label': 'Description',
-										}}
-									/>
-									<Input
-										onChange={this.props.handleChange}
-										name="width"
-										value={this.props.width}
-										label={this.props.width}
-										placeholder="Width"
-										className={this.props.classes.input}
-										inputProps={{
-											'aria-label': 'Description',
-										}}
-									/>
-									<div className="uploader">
-										<ImgUploader
-											getThumbnail={this.props.getThumbnail}
-											addImgs={this.props.addImgs}
-											deleteImgFromProdList={this.props.deleteImg}
-											thumbnail={this.props.thumbnail}
+							<Paper className={this.props.classes.paper}>
+								<Typography variant="h6">
+									No Products yet.. Add a product to get started
+								</Typography>
+							</Paper>
+							<div className={this.props.classes.modalStyle}>
+								<AddProductModal
+									addProduct={() => this.props.addProduct(this.state.product)}>
+									<form className={this.props.classes.container}>
+										<Input
+											onChange={this.handleInputChange}
+											name="name"
+											value={this.state.product.name}
+											placeholder="Product Name"
+											className={this.props.classes.input}
 										/>
-									</div>
-								</form>
-							</AddProductModal>
+
+										<Input
+											onChange={this.handleInputChange}
+											name="productDescription"
+											value={this.state.product.productDescription}
+											placeholder="Description"
+											className={this.props.classes.input}
+											inputProps={{
+												'aria-label': 'Description',
+											}}
+										/>
+
+										<Input
+											onChange={this.handleInputChange}
+											name="height"
+											value={this.state.product.height}
+											placeholder="Height"
+											className={this.props.classes.input}
+											inputProps={{
+												'aria-label': 'Description',
+											}}
+										/>
+
+										<Input
+											onChange={this.handleInputChange}
+											name="length"
+											value={this.state.product.length}
+											placeholder="Length"
+											className={this.props.classes.input}
+											inputProps={{
+												'aria-label': 'Description',
+											}}
+										/>
+										<Input
+											onChange={this.handleInputChange}
+											name="value"
+											value={this.state.product.value}
+											placeholder="Value"
+											className={this.props.classes.input}
+											inputProps={{
+												'aria-label': 'Description',
+											}}
+										/>
+										<Input
+											onChange={this.handleInputChange}
+											name="weight"
+											value={this.state.product.weight}
+											placeholder="Weight"
+											className={this.props.classes.input}
+											inputProps={{
+												'aria-label': 'Description',
+											}}
+										/>
+										<Input
+											onChange={this.handleInputChange}
+											name="width"
+											value={this.state.product.width}
+											placeholder="Width"
+											className={this.props.classes.input}
+											inputProps={{
+												'aria-label': 'Description',
+											}}
+										/>
+										<div className="uploader">
+											<ImgUploader
+												getThumbnail={this.getThumbnail}
+												addImgs={this.addImgs}
+												deleteImgFromProdList={this.deleteImg}
+												thumbnail={this.state.thumbnail}
+											/>
+										</div>
+									</form>
+								</AddProductModal>
+							</div>
 						</div>
 					</div>
 				)}
@@ -331,6 +334,7 @@ const mapStateToProps = state => {
 	return {
 		products: state.productsReducer.products,
 		thumbnail: state.productsReducer.thumbnail,
+		images: state.productsReducer.images,
 	};
 };
 
