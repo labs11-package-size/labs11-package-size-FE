@@ -19,8 +19,7 @@ const styles = {
 		flexGrow: 1,
 	},
 	menuButton: {
-		marginLeft: -12,
-		marginRight: 20,
+		color: '#72BDA2',
 	},
 };
 
@@ -31,7 +30,7 @@ class LoggedInLinks extends Component {
 			<div>
 				<List component="nav">
 					<ListItem onClick={() => this.props.history.push('/products')} button>
-						<ListItemIcon>
+						<ListItemIcon className={classes.menuButton}>
 							<Icon className={classNames(classes.icon, 'fas fa-boxes')} />
 						</ListItemIcon>
 						<ListItemText primary="Products" />
@@ -39,7 +38,7 @@ class LoggedInLinks extends Component {
 					<ListItem
 						onClick={() => this.props.history.push('/shipments')}
 						button>
-						<ListItemIcon>
+						<ListItemIcon className={classes.menuButton}>
 							<Icon
 								className={classNames(classes.icon, 'fas fa-shipping-fast')}
 							/>
@@ -49,13 +48,13 @@ class LoggedInLinks extends Component {
 					</ListItem>
 
 					<ListItem onClick={() => this.props.history.push('/packages')} button>
-						<ListItemIcon>
+						<ListItemIcon className={classes.menuButton}>
 							<Icon className={classNames(classes.icon, 'fas fa-box')} />
 						</ListItemIcon>
 						<ListItemText primary="Packages" />
 					</ListItem>
 					<ListItem onClick={() => this.props.history.push('/logout')} button>
-						<ListItemIcon>
+						<ListItemIcon className={classes.menuButton}>
 							<Icon
 								className={classNames(classes.icon, 'fas fa-sign-out-alt')}
 							/>

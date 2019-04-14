@@ -4,9 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import ProductListView from '../containers/productView/ProductListView';
 import PackagingView from '../containers/packagingView/PackagingView';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
-import ProductAddView from '../containers/productView/productAddView';
 
-import ShipmentAddView from '../containers/shipmentView/ShipmentAddView';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
 import PackageTableView from '../containers/packageTableView/PackageTableView';
 import AccountView from '../containers/accountView/AccountView';
@@ -36,8 +34,7 @@ class Routes extends Component {
 				<Switch>
 					<Redirect from="/auth" to="/" />
 					<Route exact path="/logout" component={LogoutView} />
-					<Route exact path="/shipment/add" component={ShipmentAddView} />
-					<Route exact path="/product/add" component={ProductAddView} />
+
 					<Route exact path="/shipments" component={ShipmentListView} />
 					<Route exact path="/packaging" component={PackagingView} />
 					<Route exact path="/packages" component={PackageTableView} />
