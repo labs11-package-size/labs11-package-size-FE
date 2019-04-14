@@ -158,6 +158,7 @@ class ProductListView extends Component {
 			<div className={this.props.classes.mainContainer}>
 				<div>
 					<ProductList
+						loadMore={this.props.getProducts}
 						addImgs={this.addImgs}
 						deleteImg={this.deleteImg}
 						updateModalState={this.updateModalState}

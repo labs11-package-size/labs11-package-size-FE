@@ -191,6 +191,7 @@ class ProductList extends Component {
 						) : (
 							<div>no list yet</div>
 						)}
+						<Button onClick={this.props.loadMore}>Load More</Button>
 					</div>
 				</div>
 			</div>
