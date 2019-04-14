@@ -59,7 +59,7 @@ class AddProductModal extends React.Component {
 
 		return (
 			<div>
-				<Tooltip title="Add new product...">
+				<Tooltip title="Add Something...">
 					<Button
 						variant="contained"
 						className={classes.submit}
