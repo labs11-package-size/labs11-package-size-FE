@@ -94,20 +94,21 @@ class Product extends Component {
 
 						<CardActions className={classes.actions} disableActionSpacing>
 							<div aria-label="delete">
-								<DeleteModal>
-									<Button
-										onClick={() =>
-											this.props.deleteProduct(this.props.product.uuid)
-										}
-										size="small"
-										color="primary">
-										Delete
-									</Button>
-								</DeleteModal>
+								<DeleteModal
+									delete={() =>
+										this.props.deleteProduct(this.props.product.uuid)
+									}
+								/>
 							</div>
 
 							<div aria-label="delete">
 								<EditProductModal
+									edit={() => {
+										this.props.editProduct(
+											this.props.product.uuid,
+											this.props.updatedProduct,
+										);
+									}}
 									product={this.props.product}
 									updateState={this.props.updateState}>
 									<form className={classes.formContainer}>
@@ -161,16 +162,6 @@ class Product extends Component {
 												'aria-label': 'Description',
 											}}
 										/>
-										<Button
-											onClick={() => {
-												this.props.editProduct(
-													this.props.product.uuid,
-													this.props.updatedProduct,
-												);
-											}}
-											size="small">
-											Save Changes
-										</Button>
 									</form>
 								</EditProductModal>
 							</div>

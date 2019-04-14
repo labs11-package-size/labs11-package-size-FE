@@ -49,7 +49,8 @@ class ProductList extends Component {
 					<Typography gutterBottom variant="h5" component="h2">
 						Products
 					</Typography>
-					<AddProductModal>
+					<AddProductModal
+						addProduct={() => this.props.addProduct(this.props.product)}>
 						<form className={this.props.classes.container}>
 							<Input
 								onChange={this.props.handleChange}
@@ -134,14 +135,6 @@ class ProductList extends Component {
 									deleteImgFromProdList={this.props.deleteImg}
 									thumbnail={this.props.thumbnail}
 								/>
-							</div>
-							<div onClick={() => this.props.addProduct(this.props.product)}>
-								<Button
-									variant="contained"
-									className={this.props.classes.submit}
-									size="small">
-									Add Product
-								</Button>
 							</div>
 						</form>
 					</AddProductModal>

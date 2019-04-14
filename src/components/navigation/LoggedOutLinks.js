@@ -19,8 +19,7 @@ const styles = {
 		flexGrow: 1,
 	},
 	menuButton: {
-		marginLeft: -12,
-		marginRight: 20,
+		color: '#72BDA2',
 	},
 };
 
@@ -30,13 +29,13 @@ const LoggedOutLinks = props => {
 		<div className={classes.root}>
 			<List component="nav">
 				<ListItem onClick={() => props.history.push('/auth/login')} button>
-					<ListItemIcon>
+					<ListItemIcon className={classes.menuButton}>
 						<Icon className={classNames(classes.icon, 'fas fa-play')} />
 					</ListItemIcon>
 					<ListItemText primary="Login" />
 				</ListItem>
 				<ListItem onClick={() => props.history.push('/auth/register')} button>
-					<ListItemIcon>
+					<ListItemIcon className={classes.menuButton}>
 						<Icon className={classNames(classes.icon, 'fas fa-sign-out-alt')} />
 					</ListItemIcon>
 					<ListItemText primary="Sign Up" />

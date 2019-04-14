@@ -25,6 +25,19 @@ const styles = theme => ({
 		padding: theme.spacing.unit * 4,
 		outline: 'none',
 	},
+	submit: {
+		color: 'white',
+		backgroundColor: '#72BDA2',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+		},
+	},
+	root: {
+		margin: 10,
+		display: 'flex',
+		justifyContent: 'space-between',
+	},
 });
 
 class AddProductModal extends React.Component {
@@ -46,14 +59,10 @@ class AddProductModal extends React.Component {
 		return (
 			<div>
 				<Button
-					style={{
-						marginTop: 20,
-						backgroundColor: '#72BDA2',
-						color: 'white',
-						padding: 15,
-					}}
+					variant="contained"
+					className={classes.submit}
 					onClick={this.handleOpen}>
-					<Typography style={{ color: 'white' }}>Add Product</Typography>
+					Add Product
 				</Button>
 				<Modal
 					aria-labelledby="simple-modal-title"
@@ -66,7 +75,17 @@ class AddProductModal extends React.Component {
 						</Typography>
 						<div>
 							{this.props.children}
-							<Button onClick={this.handleClose}> Cancel</Button>
+							<div className={classes.root}>
+								<Button
+									onClick={this.props.addProduct}
+									variant="contained"
+									className={classes.submit}>
+									Add Product
+								</Button>
+								<Button variant="contained" onClick={this.handleClose}>
+									Cancel
+								</Button>
+							</div>
 						</div>
 					</div>
 				</Modal>

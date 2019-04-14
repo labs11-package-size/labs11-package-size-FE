@@ -25,6 +25,19 @@ const styles = theme => ({
 		padding: theme.spacing.unit * 4,
 		outline: 'none',
 	},
+	submit: {
+		color: 'white',
+		backgroundColor: '#72BDA2',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+		},
+	},
+	root: {
+		margin: 10,
+		display: 'flex',
+		justifyContent: 'space-between',
+	},
 });
 
 class EditProductModal extends React.Component {
@@ -47,7 +60,12 @@ class EditProductModal extends React.Component {
 
 		return (
 			<div>
-				<Button onClick={this.handleOpen}>Edit</Button>
+				<Button
+					variant="contained"
+					className={classes.submit}
+					onClick={this.handleOpen}>
+					Edit
+				</Button>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
@@ -59,7 +77,17 @@ class EditProductModal extends React.Component {
 						</Typography>
 						<div>
 							{this.props.children}
-							<Button onClick={this.handleClose}> Cancel</Button>
+							<div className={classes.root}>
+								<Button
+									onClick={this.props.edit}
+									variant="contained"
+									className={classes.submit}>
+									Delete product
+								</Button>
+								<Button variant="contained" onClick={this.handleClose}>
+									Cancel
+								</Button>
+							</div>
 						</div>
 					</div>
 				</Modal>

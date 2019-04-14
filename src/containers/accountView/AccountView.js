@@ -7,7 +7,6 @@ import {
 	getAccountInfo,
 	editUser,
 } from '../../store/actions/userActions';
-import EditAccount from '../../components/account/EditAccount';
 
 class AccountView extends Component {
 	state = {

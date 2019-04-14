@@ -1,6 +1,9 @@
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import Card from '@material-ui/core/Card';
+import Paper from '@material-ui/core/Paper';
 
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
@@ -9,7 +12,8 @@ import sha1 from 'sha1';
 
 const styles = theme => ({
 	container: {
-		margin: 10,
+		marginTop: 30,
+		padding: 8,
 		width: 'auto',
 		display: 'flex',
 		flexDirection: 'column',
@@ -19,7 +23,8 @@ const styles = theme => ({
 		flexWrap: 'wrap',
 	},
 	media: {
-		padding: 5, // 16:9
+		margin: 8,
+		maxWidth: 100,
 	},
 	actions: {
 		display: 'flex',
@@ -88,37 +93,37 @@ class ImgUploader extends Component {
 	render() {
 		const list = this.state.images.map((image, i) => {
 			return (
-				<li key={i}>
+				<Card key={image.signature} className={this.props.classes.media}>
 					<img
 						onClick={this.deleteImg}
-						className={this.props.classes.media}
 						id={image.signature}
 						style={{ width: 100 }}
 						src={image.secure_url}
 						alt="product"
 					/>
-				</li>
+				</Card>
 			);
 		});
 		return (
-			<div className={this.props.classes.container}>
-				<Typography variant="h6" gutterBottom>
-					Upload Images
-				</Typography>
-				<ol>{list}</ol>
-				<Dropzone onDrop={this.handleUpload}>
-					{({ getRootProps, getInputProps }) => (
-						<section>
+			<Paper className={this.props.classes.container}>
+				<div>
+					<Typography variant="h6" gutterBottom>
+						Upload Images
+					</Typography>
+					{this.state.images.length !== 0 ? <>{list}</> : null}
+
+					<Dropzone onDrop={this.handleUpload}>
+						{({ getRootProps, getInputProps }) => (
 							<div {...getRootProps()}>
 								<input {...getInputProps()} />
 								<Typography variant="subheading" gutterBottom>
-									<Button>Click or drop images to upload.</Button>
+									Click or drop images to upload.
 								</Typography>
 							</div>
-						</section>
-					)}
-				</Dropzone>
-			</div>
+						)}
+					</Dropzone>
+				</div>
+			</Paper>
 		);
 	}
 }

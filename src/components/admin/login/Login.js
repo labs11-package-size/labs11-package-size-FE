@@ -52,8 +52,8 @@ const styles = theme => ({
 	},
 	submit: {
 		marginTop: theme.spacing.unit * 3,
-		backgroundColor: '#72BDA2',
 		color: 'white',
+		backgroundColor: '#72BDA2',
 		'&:hover': {
 			color: '#72BDA2',
 			backgroundColor: 'white',
@@ -124,13 +124,23 @@ const Login = props => {
 							<Typography>OR</Typography>
 						</div>
 						<GoogleButton
+							style={{
+								backgroundColor: '#72BDA2',
+								'&:hover': {
+									color: '#72BDA2',
+									backgroundColor: 'white',
+								},
+							}}
 							onClick={() => {
 								props.handleGoogleLogin();
 							}}
 						/>
 						<div
 							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
-							<Button className={classes.submit} onClick={props.handleRegister}>
+							<Button
+								variant="contained"
+								className={classes.submit}
+								onClick={props.handleRegister}>
 								Register
 							</Button>
 						</div>
