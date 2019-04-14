@@ -178,18 +178,15 @@ let EnhancedTableToolbar = props => {
 			<div className={classes.actions}>
 				{numSelected > 0 ? (
 					<IconButton aria-label="Delete">
-						<DeleteShipmentModal>
-							<Button
-								onClick={() => {
-									props.deleteShipment(
-										props.selected,
-										props.currentPage,
-										props.currentRowsPerPage,
-									);
-								}}>
-								Delete
-							</Button>
-						</DeleteShipmentModal>
+						<DeleteShipmentModal
+							delete={() => {
+								props.deleteShipment(
+									props.selected,
+									props.currentPage,
+									props.currentRowsPerPage,
+								);
+							}}
+						/>
 					</IconButton>
 				) : (
 					<Tooltip title="Filter list">
