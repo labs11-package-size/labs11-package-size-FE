@@ -38,8 +38,8 @@ const styles = theme => ({
 class ImgUploader extends Component {
 	handleUpload = file => {
 		this.props.uploadImgs(file);
-		this.props.addImgs(file);
 		setTimeout(() => {
+			this.props.addImgs(this.props.images);
 			this.props.getThumbnail(this.props.images);
 		}, 500);
 	};

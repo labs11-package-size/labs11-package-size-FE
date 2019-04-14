@@ -169,17 +169,12 @@ class ProductListView extends Component {
 	};
 
 	addImgs = files => {
-		let imgs = this.state.product.images;
-		imgs.push(files);
-		this.setState(
-			{
-				product: {
-					...this.state.product,
-					images: imgs,
-				},
+		this.setState({
+			product: {
+				...this.state.product,
+				images: files.map(img => img.secure_url),
 			},
-			() => console.log(this.state.product.images),
-		);
+		});
 	};
 
 	handleInputChange = event => {
