@@ -84,7 +84,7 @@ class DeleteModal extends React.Component {
 									onClick={this.props.delete}
 									variant="contained"
 									className={classes.submit}>
-									Delete product
+									Delete
 								</Button>
 								<Button variant="contained" onClick={this.handleClose}>
 									Cancel
