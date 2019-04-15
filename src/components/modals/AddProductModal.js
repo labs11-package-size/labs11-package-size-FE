@@ -53,6 +53,12 @@ class AddProductModal extends React.Component {
 	handleClose = () => {
 		this.setState({ open: false });
 	};
+	handleAdd = () => {
+		this.props.addProduct();
+		this.setState({
+			open: false,
+		});
+	};
 
 	render() {
 		const { classes } = this.props;
@@ -80,7 +86,7 @@ class AddProductModal extends React.Component {
 							{this.props.children}
 							<div className={classes.root}>
 								<Button
-									onClick={this.props.addProduct}
+									onClick={this.handleAdd}
 									variant="contained"
 									className={classes.submit}>
 									Add Product

@@ -53,6 +53,12 @@ class EditProductModal extends React.Component {
 			this.props.updateState(this.props.product),
 		);
 	};
+	handleEdit = () => {
+		this.props.edit();
+		this.setState({
+			open: false,
+		});
+	};
 
 	handleClose = () => {
 		this.setState({ open: false });
@@ -84,7 +90,7 @@ class EditProductModal extends React.Component {
 							{this.props.children}
 							<div className={classes.root}>
 								<Button
-									onClick={this.props.edit}
+									onClick={this.handleEdit}
 									variant="contained"
 									className={classes.submit}>
 									Edit

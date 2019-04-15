@@ -205,7 +205,7 @@ class ProductListView extends Component {
 									? this.filteredProducts()
 									: this.props.products
 							}
-							handleInputChange={this.handleInputChange}
+							handleChange={this.handleInputChange}
 							trackingNumber={this.state.trackingNumber}
 							name={this.state.product.name}
 							productDescription={this.state.product.productDescription}
