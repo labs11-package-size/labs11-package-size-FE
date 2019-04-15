@@ -52,13 +52,14 @@ class ProductList extends Component {
 					</Typography>
 
 					<AddProductModal
+						getThumbnail={this.getThumbnail}
+						addImgs={this.addImgs}
 						addProduct={() => this.props.addProduct(this.props.product)}>
 						<form className={this.props.classes.container}>
 							<Input
 								onChange={this.props.handleChange}
 								name="name"
-								value={this.props.name}
-								label={this.props.name}
+								value={this.props.product.name}
 								placeholder="Product Name"
 								className={this.props.classes.input}
 							/>
@@ -66,8 +67,7 @@ class ProductList extends Component {
 							<Input
 								onChange={this.props.handleChange}
 								name="productDescription"
-								value={this.props.productDescription}
-								label={this.props.productDescription}
+								value={this.props.product.productDescription}
 								placeholder="Description"
 								className={this.props.classes.input}
 								inputProps={{
@@ -78,8 +78,7 @@ class ProductList extends Component {
 							<Input
 								onChange={this.props.handleChange}
 								name="height"
-								value={this.props.height}
-								label={this.props.height}
+								value={this.props.product.height}
 								placeholder="Height"
 								className={this.props.classes.input}
 								inputProps={{
@@ -90,8 +89,7 @@ class ProductList extends Component {
 							<Input
 								onChange={this.props.handleChange}
 								name="length"
-								value={this.props.length}
-								label={this.props.length}
+								value={this.props.product.length}
 								placeholder="Length"
 								className={this.props.classes.input}
 								inputProps={{
@@ -101,8 +99,7 @@ class ProductList extends Component {
 							<Input
 								onChange={this.props.handleChange}
 								name="value"
-								value={this.props.value}
-								label={this.props.value}
+								value={this.props.product.value}
 								placeholder="Value"
 								className={this.props.classes.input}
 								inputProps={{
@@ -112,8 +109,7 @@ class ProductList extends Component {
 							<Input
 								onChange={this.props.handleChange}
 								name="weight"
-								value={this.props.weight}
-								label={this.props.weight}
+								value={this.props.product.weight}
 								placeholder="Weight"
 								className={this.props.classes.input}
 								inputProps={{
@@ -123,8 +119,7 @@ class ProductList extends Component {
 							<Input
 								onChange={this.props.handleChange}
 								name="width"
-								value={this.props.width}
-								label={this.props.width}
+								value={this.props.product.width}
 								placeholder="Width"
 								className={this.props.classes.input}
 								inputProps={{
@@ -170,6 +165,7 @@ class ProductList extends Component {
 												justifyContent: 'space-between',
 												flexDirection: 'column',
 											}}
+											selectProduct={this.props.selectProduct}
 											editProduct={this.props.editProduct}
 											handleChange={this.props.handleChange}
 											trackingNumber={this.props.trackingNumber}

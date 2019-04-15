@@ -51,7 +51,9 @@ class LoggedInLinks extends Component {
 						<ListItemText primary="Shipments" />
 					</ListItem>
 
-					<ListItem onClick={() => this.props.history.push('/packages')} button>
+					<ListItem
+						onClick={() => this.props.history.push('/packaging')}
+						button>
 						<Tooltip title="Package List">
 							<ListItemIcon className={classes.menuButton}>
 								<Icon className={classNames(classes.icon, 'fas fa-box')} />

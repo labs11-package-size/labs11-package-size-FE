@@ -36,12 +36,8 @@ const styles = theme => ({
 });
 
 class ImgUploader extends Component {
-	handleUpload = file => {
+	handleUpload = async file => {
 		this.props.uploadImgs(file);
-		setTimeout(() => {
-			this.props.addImgs(this.props.images);
-			this.props.getThumbnail(this.props.images);
-		}, 500);
 	};
 
 	deleteImg = id => {
@@ -70,7 +66,15 @@ class ImgUploader extends Component {
 					</Typography>
 					{this.props.images.length !== 0 ? <>{list}</> : null}
 
-					<Dropzone onDrop={file => this.handleUpload(file)}>
+					<Dropzone
+						onDrop={file =>
+							this.handleUpload(file).then(() =>
+								setTimeout(() => {
+									this.props.addImgs(this.props.images);
+									this.props.getThumbnail(this.props.images);
+								}, 500),
+							)
+						}>
 						{({ getRootProps, getInputProps }) => (
 							<div {...getRootProps()}>
 								<input {...getInputProps()} />

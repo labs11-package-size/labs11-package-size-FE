@@ -15,6 +15,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Icon from '@material-ui/core/Icon';
+import classNames from 'classnames';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import DeleteModal from '../modals/deleteModal';
@@ -94,6 +96,19 @@ class Product extends Component {
 						/>
 
 						<CardActions className={classes.actions} disableActionSpacing>
+							<div aria-label="add">
+								<Button
+									onClick={() =>
+										this.props.selectProduct(this.props.product.uuid)
+									}>
+									<Icon
+										className={classNames(
+											classes.icon,
+											'fas fa-clipboard-check',
+										)}
+									/>
+								</Button>
+							</div>
 							<div aria-label="delete">
 								<DeleteModal
 									delete={() =>
@@ -102,7 +117,7 @@ class Product extends Component {
 								/>
 							</div>
 
-							<div aria-label="delete">
+							<div aria-label="edit">
 								<EditProductModal
 									edit={() => {
 										this.props.editProduct(

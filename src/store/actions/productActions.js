@@ -67,7 +67,7 @@ export const uploadImgs = files => dispatch => {
 
 	uploadRequest
 		.then(res => {
-			console.log(res);
+			// console.log(res);
 			dispatch({ type: UPLOADING_IMAGE_SUCCESS, payload: res.body });
 			console.log(`UPLOAD COMPLETE:${JSON.stringify(res.body)}`);
 		})
