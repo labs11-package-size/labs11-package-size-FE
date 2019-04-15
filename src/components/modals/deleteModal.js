@@ -4,8 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
+
 import Tooltip from '@material-ui/core/Tooltip';
+import Icon from '@material-ui/core/Icon';
+import classNames from 'classnames';
 
 function getModalStyle() {
 	const top = 50;
@@ -65,7 +67,7 @@ class DeleteModal extends React.Component {
 						variant="contained"
 						className={classes.submit}
 						onClick={this.handleOpen}>
-						<DeleteIcon />
+						<Icon className={classNames(classes.icon, 'fas fa-trash-alt')} />
 					</Button>
 				</Tooltip>
 				<Modal

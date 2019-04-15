@@ -7,6 +7,8 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Button from '@material-ui/core/Button';
+import { withRouter } from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -153,12 +155,17 @@ class Layout extends React.Component {
 							<MenuIcon />
 						</IconButton>
 						<Typography
+							onClick={() => this.props.history.push('/')}
 							component="h1"
 							variant="h6"
 							color="inherit"
 							noWrap
 							className={classes.title}>
-							ScannAR
+							<Button style={{ color: 'white' }}>
+								<Typography color="inherit" variant="h6">
+									ScannAR
+								</Typography>
+							</Button>
 						</Typography>
 						{this.props.isLoggedIn ? (
 							<Avatar
@@ -206,8 +213,10 @@ Layout.propTypes = {
 };
 
 export default compose(
-	connect(
-		mapStateToProps,
-		{},
-	)(withStyles(styles)(Layout)),
+	withRouter(
+		connect(
+			mapStateToProps,
+			{},
+		)(withStyles(styles)(Layout)),
+	),
 );

@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import Tooltip from '@material-ui/core/Tooltip';
 import { getProducts, addProduct } from '../../store/actions/productActions';
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
@@ -49,6 +50,7 @@ class ProductList extends Component {
 					<Typography gutterBottom variant="h5" component="h2">
 						Products
 					</Typography>
+
 					<AddProductModal
 						addProduct={() => this.props.addProduct(this.props.product)}>
 						<form className={this.props.classes.container}>

@@ -20,7 +20,7 @@ import SignupView from '../containers/adminViews/signupView/SignupView';
 import { firebase } from '../firebase';
 
 class Routes extends Component {
-	componentDidMount() {
+	componentWillMount() {
 		this.props.getAuth();
 		loadCSS(
 			'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
@@ -57,7 +57,6 @@ class Routes extends Component {
 		}
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
-				console.log(user);
 			}
 		});
 		return <Layout>{routes}</Layout>;
