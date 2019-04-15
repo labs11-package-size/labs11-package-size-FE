@@ -12,6 +12,11 @@ import {
 
 const initialState = {
 	packages: [],
+	data: [],
+	addedPackages: [],
+	duplicatePackages: [],
+	previewBoxes: [],
+	selectedProducts: [],
 	fetching: false,
 	adding: false,
 	editing: false,
