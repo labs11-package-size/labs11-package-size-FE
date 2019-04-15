@@ -88,11 +88,12 @@ class Product extends Component {
 							}
 							title={this.props.product.name}
 						/>
-						<CardMedia
-							className={classes.media}
-							image={this.props.product.thumbnail}
-							title="main img"
-							alt="main"
+
+						<img
+							id={this.props.product.uuid}
+							style={{ width: 100 }}
+							src={this.props.product.thumbnail}
+							alt="product"
 						/>
 
 						<CardActions className={classes.actions} disableActionSpacing>
