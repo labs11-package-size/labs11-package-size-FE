@@ -7,37 +7,25 @@ import { Redirect, Link } from 'react-router-dom';
 
 import PackageList from '../../components/packageTable/PackageList';
 
-import {
-	addShipment,
-} from '../../store/actions/shipmentActions';
+import { addShipment } from '../../store/actions/shipmentActions';
 
-import {
-	getPackages,
-	deletePackage,
-} from '../../store/actions/packageActions';
+import { getPackages, deletePackage } from '../../store/actions/packageActions';
 
 const styles = {
-	card: {
-		maxWidth: 250,
-		margin: 20,
-	},
-	media: {
-		height: 140,
-	},
-	cardContainer: {
-		display: 'flex',
-		justifyContent: 'center',
-	},
 	mainContainer: {
-		maxWidth: 1100,
+		marginBottom: 60,
+		marginTop: 45,
+	},
+	heading: {
+		marginBottom: 40,
 	},
 };
 
 class PackageTableView extends Component {
 	state = {
 		previousPage: null,
-		previousRowsPerPage: null
-	}
+		previousRowsPerPage: null,
+	};
 
 	componentDidMount() {
 		this.props.getPackages();
@@ -49,7 +37,10 @@ class PackageTableView extends Component {
 	};
 
 	deletePackage = (uuid, currentPage, currentRowsPerPage) => {
-		this.setState({previousPage: currentPage, previousRowsPerPage: currentRowsPerPage}, () => this.props.deletePackage(uuid.join()))
+		this.setState(
+			{ previousPage: currentPage, previousRowsPerPage: currentRowsPerPage },
+			() => this.props.deletePackage(uuid.join()),
+		);
 		return <Redirect to="/" />;
 	};
 
@@ -57,25 +48,30 @@ class PackageTableView extends Component {
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
-				<Typography gutterBottom variant="h5" component="h2">
+				<Typography
+					className={classes.heading}
+					gutterBottom
+					variant="h5"
+					component="h2">
 					Packages
 				</Typography>
-				{(this.props.packages.length > 0) ? (
-				<div>
+				{this.props.packages.length > 0 ? (
+					<div>
+						<PackageList
+							previousPage={this.state.previousPage}
+							previousRowsPerPage={this.state.previousRowsPerPage}
+							deletePackage={this.deletePackage}
+							packages={this.props.packages}
+						/>
+					</div>
+				) : (
 					<PackageList
 						previousPage={this.state.previousPage}
 						previousRowsPerPage={this.state.previousRowsPerPage}
 						deletePackage={this.deletePackage}
 						packages={this.props.packages}
 					/>
-				</div>)
-				: (<PackageList
-					previousPage={this.state.previousPage}
-						previousRowsPerPage={this.state.previousRowsPerPage}
-						deletePackage={this.deletePackage}
-						packages={this.props.packages}
-					/>)
-				}
+				)}
 			</div>
 		);
 	}
@@ -83,7 +79,7 @@ class PackageTableView extends Component {
 
 const mapStateToProps = state => {
 	return {
-		packages: state.packageReducer.packages
+		packages: state.packageReducer.packages,
 	};
 };
 

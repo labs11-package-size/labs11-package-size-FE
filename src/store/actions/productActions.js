@@ -1,4 +1,14 @@
 import axios from 'axios';
+import superagent from 'superagent';
+import sha1 from 'sha1';
+
+export const DELETING_IMAGE = 'DELETING_IMAGE';
+export const DELETING_IMAGE_SUCCESS = 'DELETING_IMAGE_SUCCESS';
+export const DELETING_IMAGE_FAILURE = 'DELETING_IMAGE_FAILURE';
+
+export const UPLOADING_IMAGE = 'UPLOADING_IMAGE';
+export const UPLOADING_IMAGE_SUCCESS = 'UPLOADING_IMAGE_SUCCESS';
+export const UPLOADING_IMAGE_FAILURE = 'UPLOADING_IMAGE_FAILURE';
 
 export const GETTING_PRODUCTS = 'GETTING_PRODUCTS';
 export const GETTING_PRODUCTS_SUCCESSFUL = 'GETTING_PRODUCTS_SUCCESSFUL';
@@ -28,6 +38,56 @@ axios.interceptors.request.use(
 	},
 );
 
+const cloudName = 'dlrdfp08e';
+const url = `https://api.cloudinary.com/v1_1/${cloudName}/image`;
+
+const timestamp = Date.now() / 1000;
+const uploadPreset = 'hptnjfow';
+
+const paramsStr = `timestamp=${timestamp}&upload_preset=${uploadPreset}asrCpeXIyrttdOCMBw3lvJxwL0A`;
+
+const signature = sha1(paramsStr);
+const params = {
+	api_key: '768737499725874',
+	timestamp: timestamp,
+	upload_preset: uploadPreset,
+	signature: signature,
+};
+
+export const uploadImgs = files => dispatch => {
+	dispatch({ type: UPLOADING_IMAGE });
+	const image = files[0];
+
+	let uploadRequest = superagent.post(`${url}/upload`);
+	uploadRequest.attach('file', image);
+
+	Object.keys(params).forEach(key => {
+		uploadRequest.field(key, params[key]);
+	});
+
+	uploadRequest
+		.then(res => {
+			console.log(res);
+			dispatch({ type: UPLOADING_IMAGE_SUCCESS, payload: res.body });
+			console.log(`UPLOAD COMPLETE:${JSON.stringify(res.body)}`);
+		})
+		.catch(err => dispatch({ type: UPLOADING_IMAGE_FAILURE, payload: err }));
+};
+
+export const deleteImgFromProdList = id => dispatch => {
+	console.log(id);
+	dispatch({ type: DELETING_IMAGE, payload: id });
+
+	// let deleteRequest = superagent.post(`${url}/destroy/publix_id=${id}`);
+
+	// deleteRequest
+	// 	.then(res => {
+	// 		dispatch({ type: DELETING_IMAGE_SUCCESS, payload: res.body });
+	// 		console.log(`DELETE COMPLETE:${JSON.stringify(res.body)}`);
+	// 	})
+	// 	.catch(err => dispatch({ type: DELETING_IMAGE_FAILURE, payload: err }));
+};
+
 export const getProducts = () => dispatch => {
 	dispatch({ type: GETTING_PRODUCTS });
 
@@ -43,7 +103,6 @@ export const getProducts = () => dispatch => {
 
 export const addProduct = newProd => dispatch => {
 	dispatch({ type: ADDING_PRODUCT });
-	console.log(newProd);
 	axios
 		.post('/products/add', newProd)
 		.then(res =>

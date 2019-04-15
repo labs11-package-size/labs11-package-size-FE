@@ -15,7 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import DeleteModal from '../modals/deleteModal';
 import EditProductModal from '../modals/EditProductModal';
@@ -44,14 +44,15 @@ const styles = theme => ({
 		margin: theme.spacing.unit,
 	},
 	media: {
-		paddingTop: '56.25%', // 16:9
+		paddingTop: '56.25%',
 	},
 	actions: {
 		display: 'flex',
+		justifyContent: 'space-between',
 	},
 	expand: {
 		transform: 'rotate(0deg)',
-		marginLeft: 'auto',
+		// marginLeft: 'auto',
 		transition: theme.transitions.create('transform', {
 			duration: theme.transitions.duration.shortest,
 		}),
@@ -60,7 +61,7 @@ const styles = theme => ({
 		transform: 'rotate(180deg)',
 	},
 	avatar: {
-		backgroundColor: red[500],
+		backgroundColor: '#72BDA2',
 	},
 });
 
@@ -94,20 +95,21 @@ class Product extends Component {
 
 						<CardActions className={classes.actions} disableActionSpacing>
 							<div aria-label="delete">
-								<DeleteModal>
-									<Button
-										onClick={() =>
-											this.props.deleteProduct(this.props.product.uuid)
-										}
-										size="small"
-										color="primary">
-										Delete
-									</Button>
-								</DeleteModal>
+								<DeleteModal
+									delete={() =>
+										this.props.deleteProduct(this.props.product.uuid)
+									}
+								/>
 							</div>
 
 							<div aria-label="delete">
 								<EditProductModal
+									edit={() => {
+										this.props.editProduct(
+											this.props.product.uuid,
+											this.props.updatedProduct,
+										);
+									}}
 									product={this.props.product}
 									updateState={this.props.updateState}>
 									<form className={classes.formContainer}>
@@ -161,28 +163,20 @@ class Product extends Component {
 												'aria-label': 'Description',
 											}}
 										/>
-										<Button
-											onClick={() => {
-												this.props.editProduct(
-													this.props.product.uuid,
-													this.props.updatedProduct,
-												);
-											}}
-											size="small">
-											Save Changes
-										</Button>
 									</form>
 								</EditProductModal>
 							</div>
-							<IconButton
-								className={classnames(classes.expand, {
-									[classes.expandOpen]: this.state.expanded,
-								})}
-								onClick={this.handleExpandClick}
-								aria-expanded={this.state.expanded}
-								aria-label="Show more">
-								<ExpandMoreIcon />
-							</IconButton>
+							<Tooltip title="More Details...">
+								<IconButton
+									className={classnames(classes.expand, {
+										[classes.expandOpen]: this.state.expanded,
+									})}
+									onClick={this.handleExpandClick}
+									aria-expanded={this.state.expanded}
+									aria-label="Show more">
+									<ExpandMoreIcon />
+								</IconButton>
+							</Tooltip>
 						</CardActions>
 						<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 							<CardContent>

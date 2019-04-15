@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { loginUser, emailLogin } from '../../../store/actions/userActions';
+import {
+	googleLogin,
+	emailLogin,
+	register,
+} from '../../../store/actions/userActions';
 import Login from '../../../components/admin/login/Login';
 
 class LoginView extends Component {
@@ -11,19 +15,32 @@ class LoginView extends Component {
 			email: '',
 			password: '',
 		},
-		error: 'invalid credentials',
+		error: null,
 	};
 
 	handleChanges = event => {
 		this.setState({
 			user: {
+				...this.state.user,
 				[event.target.name]: event.target.value,
 			},
 		});
 	};
 
-	handleLogin = () => {
-		this.props.loginUser();
+	handleGoogleLogin = () => {
+		this.props.googleLogin();
+	};
+
+	handleEmailLogin = event => {
+		event.preventDefault();
+		this.props.emailLogin(this.state.user);
+
+		this.setState({
+			user: {
+				emailAddress: '',
+				password: '',
+			},
+		});
 	};
 
 	render() {
@@ -33,11 +50,12 @@ class LoginView extends Component {
 					password={this.state.user.password}
 					email={this.state.user.email}
 					user={this.state.user}
-					error={this.state.error}
+					error={this.props.errMessage}
 					handleInputChange={this.handleChanges}
 					handleRegister={this.props.handleRegister}
 					isRegistering={this.props.isRegistering}
-					handleLogin={this.handleLogin}
+					handleGoogleLogin={this.handleGoogleLogin}
+					handleEmailLogin={this.handleEmailLogin}
 				/>
 			</div>
 		);
@@ -45,11 +63,11 @@ class LoginView extends Component {
 }
 const mapStateToProps = state => {
 	return {
-		isLoggedIn: state.userReducer.isLoggedIn,
+		errMessage: state.userReducer.error,
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	{ loginUser, emailLogin },
+	{ googleLogin, emailLogin, register },
 )(withRouter(LoginView));

@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import GoogleButton from 'react-google-button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
@@ -25,6 +25,13 @@ const styles = theme => ({
 			width: 400,
 			marginLeft: 'auto',
 			marginRight: 'auto',
+		},
+		error: {
+			padding: theme.spacing.unit * 2,
+			color: 'red',
+		},
+		errorPaper: {
+			padding: theme.spacing.unit * 2,
 		},
 	},
 	paper: {
@@ -45,18 +52,18 @@ const styles = theme => ({
 	},
 	submit: {
 		marginTop: theme.spacing.unit * 3,
-		backgroundColor: '#72BDA2',
 		color: 'white',
+		backgroundColor: '#72BDA2',
 		'&:hover': {
 			color: '#72BDA2',
 			backgroundColor: 'white',
-			border: 'solid 5px #72BDA2',
 		},
 	},
 });
 
 const Login = props => {
 	const { classes } = props;
+
 	return (
 		<div>
 			<main className={classes.main}>
@@ -76,7 +83,6 @@ const Login = props => {
 								value={props.email}
 								onChange={props.handleInputChange}
 								name="email"
-								autoComplete="email"
 								autoFocus
 							/>
 						</FormControl>
@@ -88,31 +94,57 @@ const Login = props => {
 								name="password"
 								type="password"
 								id="password"
-								autoComplete="current-password"
 							/>
 						</FormControl>
 						<FormControlLabel
 							control={<Checkbox value="remember" color="primary" />}
 							label="Remember me"
 						/>
+						<Button
+							onClick={props.handleEmailLogin}
+							type="submit"
+							fullWidth
+							variant="contained"
+							className={classes.submit}>
+							Sign in
+						</Button>
 						<div>
-							<Button
-								onClick={props.handleEmailLogin}
-								type="submit"
-								fullWidth
-								variant="contained"
-								className={classes.submit}>
-								Sign in
-							</Button>
-							<div>OR</div>
-							<GoogleButton
-								onClick={() => {
-									props.handleLogin();
-								}}
-							/>
-							<Button onClick={props.handleRegister}>Register</Button>
+							{props.error && (
+								<Paper className={classes.errorPaper} elevation={1}>
+									<Typography className={classes.error}>
+										{props.error}
+									</Typography>
+								</Paper>
+							)}
 						</div>
 					</form>
+					<div>
+						<div
+							style={{ margin: 20, display: 'flex', justifyContent: 'center' }}>
+							<Typography>OR</Typography>
+						</div>
+						<GoogleButton
+							style={{
+								backgroundColor: '#72BDA2',
+								'&:hover': {
+									color: '#72BDA2',
+									backgroundColor: 'white',
+								},
+							}}
+							onClick={() => {
+								props.handleGoogleLogin();
+							}}
+						/>
+						<div
+							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
+							<Button
+								variant="contained"
+								className={classes.submit}
+								onClick={props.handleRegister}>
+								Register
+							</Button>
+						</div>
+					</div>
 				</Paper>
 			</main>
 		</div>

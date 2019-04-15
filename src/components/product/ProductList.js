@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import { Redirect, Link } from 'react-router-dom';
+
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import Tooltip from '@material-ui/core/Tooltip';
 import { getProducts, addProduct } from '../../store/actions/productActions';
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
@@ -19,10 +21,24 @@ const styles = theme => ({
 		display: 'flex',
 		flexWrap: 'wrap',
 	},
+	textField: {
+		marginLeft: theme.spacing.unit,
+		marginRight: theme.spacing.unit,
+	},
 	container: {
-		margin: 40,
+		marginBottom: 60,
 		flexDirection: 'column',
 		display: 'flex',
+	},
+	headingContainer: {
+		justifyContent: 'space-between',
+		alignItems: 'baseline',
+		display: 'flex',
+	},
+	searchContainer: {
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		maxWidth: 500,
 	},
 });
 
@@ -30,19 +46,13 @@ class ProductList extends Component {
 	render() {
 		return (
 			<div className={this.props.classes.container}>
-				<Typography gutterBottom variant="h5" component="h2">
-					Products
-				</Typography>
-				<div>
-					<input
-						placeholder="Search by name..."
-						label="search"
-						type="text"
-						name="search"
-						value={this.props.searchTerm}
-						onChange={this.props.updateSearch}
-					/>
-					<AddProductModal>
+				<div className={this.props.classes.headingContainer}>
+					<Typography gutterBottom variant="h5" component="h2">
+						Products
+					</Typography>
+
+					<AddProductModal
+						addProduct={() => this.props.addProduct(this.props.product)}>
 						<form className={this.props.classes.container}>
 							<Input
 								onChange={this.props.handleChange}
@@ -51,9 +61,6 @@ class ProductList extends Component {
 								label={this.props.name}
 								placeholder="Product Name"
 								className={this.props.classes.input}
-								inputProps={{
-									'aria-label': 'Description',
-								}}
 							/>
 
 							<Input
@@ -126,20 +133,32 @@ class ProductList extends Component {
 							/>
 							<div className="uploader">
 								<ImgUploader
-									addThumbnail={this.props.addThumbnail}
+									getThumbnail={this.props.getThumbnail}
+									addImgs={this.props.addImgs}
+									deleteImgFromProdList={this.props.deleteImg}
 									thumbnail={this.props.thumbnail}
 								/>
 							</div>
-							<div onClick={() => this.props.addProduct(this.props.product)}>
-								<Button
-									variant="contained"
-									className={this.props.classes.submit}
-									size="small">
-									Add Product
-								</Button>
-							</div>
 						</form>
 					</AddProductModal>
+				</div>
+				<div>
+					<div className={this.props.classes.searchContainer}>
+						<TextField
+							name="search"
+							value={this.props.searchTerm}
+							onChange={this.props.updateSearch}
+							id="filled-full-width"
+							placeholder="Search by name..."
+							margin="normal"
+							fullWidth
+							variant="filled"
+							InputLabelProps={{
+								shrink: true,
+							}}
+						/>
+					</div>
+
 					<div className={this.props.classes.root}>
 						{this.props.products ? (
 							this.props.products.map(product => {
@@ -175,13 +194,13 @@ class ProductList extends Component {
 						) : (
 							<div>no list yet</div>
 						)}
+						<Button onClick={this.props.loadMore}>Load More</Button>
 					</div>
 				</div>
 			</div>
 		);
 	}
 }
-
 
 export default compose(
 	connect(

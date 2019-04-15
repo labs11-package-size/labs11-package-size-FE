@@ -13,7 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import PopoutIcon from '@material-ui/icons/LibraryBooks'
+import PopoutIcon from '@material-ui/icons/LibraryBooks';
 import IconButton from '@material-ui/core/IconButton';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
@@ -76,7 +76,7 @@ const packageTitles = [
 		numeric: false,
 		disablePadding: false,
 		label: 'Last Updated',
-	}
+	},
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -92,6 +92,7 @@ class EnhancedTableHead extends React.Component {
 				<TableRow>
 					<TableCell padding="checkbox">
 						<Checkbox
+							style={{ color: '#72BDA2' }}
 							indeterminate={numSelected > 0 && numSelected < rowCount}
 							checked={numSelected === rowCount}
 							onChange={onSelectAllClick}
@@ -99,7 +100,12 @@ class EnhancedTableHead extends React.Component {
 					</TableCell>
 					{packageTitles.map(
 						packageItem => (
-							<TableCell align="left" padding="default" onClick={(event) => this.createSortHandler(event, packageItem.id)}>
+							<TableCell
+								align="left"
+								padding="default"
+								onClick={event =>
+									this.createSortHandler(event, packageItem.id)
+								}>
 								<TableSortLabel>{packageItem.label}</TableSortLabel>
 							</TableCell>
 						),
@@ -167,18 +173,20 @@ let EnhancedTableToolbar = props => {
 			<div className={classes.spacer} />
 			<div className={classes.actions}>
 				{numSelected > 0 ? (
-					
-						<IconButton aria-label="Delete">
-							<DeleteModal>
-								<Button
-									onClick={() => {
-										props.deletePackage(props.selected, props.currentPage, props.currentRowsPerPage);
-									}}>
-									Delete
-								</Button>
-							</DeleteModal>
-						</IconButton>
-
+					<IconButton aria-label="Delete">
+						<DeleteModal>
+							<Button
+								onClick={() => {
+									props.deletePackage(
+										props.selected,
+										props.currentPage,
+										props.currentRowsPerPage,
+									);
+								}}>
+								Delete
+							</Button>
+						</DeleteModal>
+					</IconButton>
 				) : (
 					<Tooltip title="Filter list">
 						<IconButton aria-label="Filter list">
@@ -200,8 +208,7 @@ EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
 	root: {
-		width: '100%',
-		marginTop: theme.spacing.unit * 3,
+		width: 'auto',
 	},
 	table: {
 		minWidth: 1020,
@@ -222,12 +229,14 @@ class PackageList extends React.Component {
 	};
 	componentDidMount() {
 		if (this.props.previousRowsPerPage) {
-			this.setState({ data: this.props.packages, page: this.props.previousPage, rowsPerPage: this.props.previousRowsPerPage });
-		}
-		else {
+			this.setState({
+				data: this.props.packages,
+				page: this.props.previousPage,
+				rowsPerPage: this.props.previousRowsPerPage,
+			});
+		} else {
 			this.setState({ data: this.props.packages });
 		}
-		
 	}
 
 	handleRequestSort = (event, property) => {
@@ -314,44 +323,68 @@ class PackageList extends React.Component {
 									const isSelected = this.isSelected(n.uuid);
 									const parsedStatus = () => {
 										if (n.status === 0) {
-											return "Unknown"
+											return 'Unknown';
 										}
 										if (n.status === 1) {
-											return "Shipping"
+											return 'Shipping';
 										}
 										if (n.status === 2) {
-											return "En-Route"
+											return 'En-Route';
 										}
 										if (n.status === 3) {
-											return "Out-For-Delivery"
+											return 'Out-For-Delivery';
 										}
 										if (n.status === 4) {
-											return "Delivered"
+											return 'Delivered';
 										}
 										if (n.status === 5) {
-											return "Delayed"
+											return 'Delayed';
 										}
-									}
+									};
 									const statusStyling = () => {
 										if (n.status === 0) {
-											return {backgroundColor: '#ffa9a8', borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffa9a8',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 1) {
-											return {backgroundColor: '#ffc642', borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffc642',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 2) {
-											return {backgroundColor: '#ffc642', borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffc642',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 3) {
-											return {backgroundColor: '#ffc642', borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffc642',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 4) {
-											return {backgroundColor: "#a7c2a6", borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#a7c2a6',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
 										if (n.status === 5) {
-											return {backgroundColor: "#ffa9a8", borderRadius: "25px", paddingRight: "5px"}
+											return {
+												backgroundColor: '#ffa9a8',
+												borderRadius: '25px',
+												paddingRight: '5px',
+											};
 										}
-									}
+									};
 									return (
 										<TableRow
 											hover
@@ -361,20 +394,21 @@ class PackageList extends React.Component {
 											key={n.uuid}
 											selected={isSelected}>
 											<TableCell padding="checkbox">
-												<Checkbox onClick={event => this.handleClick(event, n.uuid)} checked={isSelected} />
+												<Checkbox
+													onClick={event => this.handleClick(event, n.uuid)}
+													checked={isSelected}
+												/>
 											</TableCell>
-											<TableCell align="left">{n.productNames.join(", ")}</TableCell>
+											<TableCell align="left">
+												{n.productNames.join(', ')}
+											</TableCell>
 											<TableCell align="left">{n.totalWeight}</TableCell>
 											<TableCell align="left">{n.modelURL}</TableCell>
 											<TableCell align="left">{n.lastUpdated}</TableCell>
-											<TableCell>											
-												
-												<div style={{cursor: "pointer"}}>
+											<TableCell>
+												<div style={{ cursor: 'pointer' }}>
 													<ViewPackageModal package={n} />
 												</div>
-
-
-								
 											</TableCell>
 										</TableRow>
 									);
@@ -411,13 +445,11 @@ PackageList.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-
 export default compose(
 	withRouter(
 		connect(
 			null,
-			{
-			},
+			{},
 		)(withStyles(styles)(PackageList)),
 	),
 );
