@@ -69,6 +69,7 @@ class ProductListView extends Component {
 			},
 			trackingNumber: '',
 			searchTerm: '',
+			SelectedProduct: [],
 		};
 	}
 
@@ -76,16 +77,17 @@ class ProductListView extends Component {
 		this.props.getProducts();
 	};
 
-	updateModalState = item => {
+	selectProduct = uuid => {
+		console.log(uuid);
 		this.setState({
-			product: {
-				name: item.name,
-				productDescription: item.productDescription,
-				weight: item.weight,
-				value: item.value,
-			},
+			...this.state,
+			selectedProduct: uuid,
 		});
+		alert('added to list');
 	};
+	// packItem = () => {
+
+	// }
 
 	updateSearch = e => {
 		this.setState({ searchTerm: e.target.value });
@@ -192,6 +194,7 @@ class ProductListView extends Component {
 				{this.props.products.length > 0 ? (
 					<div>
 						<ProductList
+							selectProduct={this.selectProduct}
 							getThumbnail={this.getThumbnail}
 							loadMore={this.props.getProducts}
 							addImgs={this.addImgs}

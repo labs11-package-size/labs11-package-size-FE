@@ -8,7 +8,6 @@ export const ADDING_PACKAGE = 'ADDING_PACKAGE';
 export const ADDING_PACKAGE_SUCCESSFUL = 'ADDING_PACKAGE_SUCCESSFUL';
 export const ADDING_PACKAGE_FAILURE = 'ADDING_PACKAGE_FAILURE';
 
-
 export const DELETING_PACKAGE = 'DELETING_PACKAGE';
 export const DELETING_PACKAGE_SUCCESSFUL = 'DELETING_PACKAGE_SUCCESSFUL';
 export const DELETING_PACKAGE_FAILURE = 'DELETING_PACKAGE_FAILURE';
@@ -60,3 +59,15 @@ export const deletePackage = uuid => dispatch => {
 			dispatch({ type: DELETING_PACKAGE_FAILURE, payload: err.data }),
 		);
 };
+
+// export const selectPackage = uuid => dispatch => {
+// 	dispatch({ type: SELECTING_PACKAGE });
+// 	axios
+// 		.delete(`/packaging/delete/${uuid}`)
+// 		.then(res =>
+// 			dispatch({ type: SELECTING_PACKAGE_SUCCESSFUL, payload: res.data }),
+// 		)
+// 		.catch(err =>
+// 			dispatch({ type: SELECTING_PACKAGE_FAILURE, payload: err.data }),
+// 		);
+// };

@@ -49,9 +49,7 @@ class EditProductModal extends React.Component {
 	};
 
 	handleOpen = () => {
-		this.setState({ open: true }, () =>
-			this.props.updateState(this.props.product),
-		);
+		this.setState({ open: true });
 	};
 	handleEdit = () => {
 		this.props.edit();
