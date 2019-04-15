@@ -80,7 +80,8 @@ class Navigation extends React.Component {
 									aria-haspopup="true"
 									onClick={this.handleMenu}
 									backgroundColor="#72BDA2"
-									color="inherit">
+									color="inherit"
+									>
 									<Avatar
 										alt={this.props.userInfo.displayName}
 										src={this.props.userInfo.photoURL}
@@ -151,6 +152,7 @@ class Navigation extends React.Component {
 									aria-owns={open ? 'menu-appbar' : undefined}
 									aria-haspopup="true"
 									onClick={this.handleMenu}
+									backgroundColor="#72BDA2"
 									color="inherit">
 									<AccountCircle />
 								</IconButton>
