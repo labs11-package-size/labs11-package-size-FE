@@ -23,6 +23,7 @@ import {
 const initialState = {
 	products: [],
 	images: [],
+	productDetail: null,
 	thumbnail: '',
 	fetching: false,
 	adding: false,
@@ -203,7 +204,7 @@ const productsReducer = (state = initialState, action) => {
 		case GETTING_DETAIL_SUCCESSFUL:
 			return {
 				...state,
-				products: action.payload,
+				productDetail: action.payload,
 				fetching: false,
 				success: true,
 				error: null,

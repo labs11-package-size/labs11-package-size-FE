@@ -191,7 +191,7 @@ class Product extends Component {
 								</EditProductModal>
 							</div>
 							<div aria-label="product details">
-								<ProductDetailModal product={this.props.product} />
+								<ProductDetailModal product={this.props.product} deleteProduct={this.props.deleteProduct}/>
 							</div>
 							{/* <Tooltip title="More Details...">
 								<IconButton
