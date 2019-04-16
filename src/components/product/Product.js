@@ -21,6 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import DeleteModal from '../modals/deleteModal';
 import EditProductModal from '../modals/EditProductModal';
+import ProductDetailModal from '../modals/ProductDetailModal';
 
 const styles = theme => ({
 	card: {
@@ -182,7 +183,10 @@ class Product extends Component {
 									</form>
 								</EditProductModal>
 							</div>
-							<Tooltip title="More Details...">
+							<div aria-label="product details">
+								<ProductDetailModal product={this.props.product} />
+							</div>
+							{/* <Tooltip title="More Details...">
 								<IconButton
 									className={classnames(classes.expand, {
 										[classes.expandOpen]: this.state.expanded,
@@ -192,9 +196,9 @@ class Product extends Component {
 									aria-label="Show more">
 									<ExpandMoreIcon />
 								</IconButton>
-							</Tooltip>
+							</Tooltip> */}
 						</CardActions>
-						<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+						{/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 							<CardContent>
 								<Typography>
 									Description: {this.props.product.productDescription}
@@ -216,7 +220,7 @@ class Product extends Component {
 									Fragile: {this.props.product.fragile}
 								</Typography>
 							</CardContent>
-						</Collapse>
+						</Collapse> */}
 					</Card>
 				</div>
 			</div>

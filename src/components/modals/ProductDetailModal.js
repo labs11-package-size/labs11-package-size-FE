@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import PopoutIcon from '@material-ui/icons/LibraryBooks'
 import Tooltip from '@material-ui/core/Tooltip';
 
+import DeleteModal from '../modals/deleteModal';
+
 
 function getModalStyle() {
 	const top = 50;
@@ -64,18 +66,17 @@ class ProductDetailModal extends React.Component {
                               {this.props.product.name}  
                             </Typography>
                         </div>
-                        <div>
-                            {/* route to shipments */}
+                        {/* <div>
+                            {/* route to shipments
 							<Button onClick={this.handleClose}>Pack It</Button>
-							{this.props.children}
-						</div>
-                        <div aria-label="delete">
+						</div> */}
+                        {/* <div aria-label="delete">
                             <DeleteModal
                                 delete={() =>
                                     this.props.deleteProduct(this.props.product.uuid)
                                 }
                             />
-                        </div>
+                        </div> */}
                         <div>
                             <Typography variant="h6" id="modal-title">
                                 Product Information
@@ -106,7 +107,7 @@ class ProductDetailModal extends React.Component {
                                 </Typography>
                             </div>
                         </div>
-                        <div>
+                        {/* <div>
                             <Typography variant="h6" id="modal-title">
                                 Shipment Information
                             </Typography>
@@ -125,7 +126,7 @@ class ProductDetailModal extends React.Component {
                             <Typography variant="h6" id="modal-title">
                                 Total Item Weight:{this.props.shipment.totalWeight}
                             </Typography>
-                        </div>
+                        </div> */}
                         <div>
 							<Button onClick={this.handleClose}>Close</Button>
 							{this.props.children}
