@@ -21,6 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import DeleteModal from '../modals/deleteModal';
 import EditProductModal from '../modals/EditProductModal';
+import ProductDetailModal from '../modals/ProductDetailModal';
 
 const styles = theme => ({
 	card: {
@@ -117,13 +118,13 @@ class Product extends Component {
 									/>
 								</Button>
 							</div>
-							<div aria-label="delete">
+							{/* <div aria-label="delete">
 								<DeleteModal
 									delete={() =>
 										this.props.deleteProduct(this.props.product.uuid)
 									}
 								/>
-							</div>
+							</div> */}
 
 							<div aria-label="edit">
 								<EditProductModal
@@ -189,7 +190,10 @@ class Product extends Component {
 									</form>
 								</EditProductModal>
 							</div>
-							<Tooltip title="More Details...">
+							<div aria-label="product details">
+								<ProductDetailModal product={this.props.product} />
+							</div>
+							{/* <Tooltip title="More Details...">
 								<IconButton
 									className={classnames(classes.expand, {
 										[classes.expandOpen]: this.state.expanded,
@@ -199,16 +203,16 @@ class Product extends Component {
 									aria-label="Show more">
 									<ExpandMoreIcon />
 								</IconButton>
-							</Tooltip>
+							</Tooltip> */}
 						</CardActions>
-						<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+						{/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 							<CardContent>
 								<Typography>
 									Description: {this.props.product.productDescription}
 								</Typography>
 
 								<Typography className={classes.heading}>
-									Value: {this.props.product.value}
+									Price: {this.props.product.value}
 								</Typography>
 								<Typography className={classes.heading}>
 									Length: {this.props.product.length}
@@ -223,7 +227,7 @@ class Product extends Component {
 									Fragile: {this.props.product.fragile}
 								</Typography>
 							</CardContent>
-						</Collapse>
+						</Collapse> */}
 					</Card>
 				</div>
 			</div>
