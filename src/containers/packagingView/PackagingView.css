@@ -1,0 +1,362 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: auto;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p {
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.SearchBar {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.SearchContainer {
+  width: 40%;
+}
+
+.PackageSaveButton {
+  margin-top: 5px;
+}
+
+.ProductsCounter {
+  text-align: center;
+  font-size: 20px;
+}
+
+@media (max-width: 900px) {
+  .SearchContainer {
+    width: 100%
+  }
+}
+
+.PackageFactoryContainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+
+}
+
+@media (max-width: 900px) {
+  .PackageFactoryContainer {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+
+.SearchPanelContainer {
+  display: flex;
+  flex-direction: column;
+  border: 0.5px dotted #72bda3;
+  text-overflow: ellipsis;
+  max-height: 450px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .SearchPanelContainer {
+    max-height: 450px;
+    display: flex;
+    flex-flow: column wrap;
+  }
+}
+
+@media (max-width: 450px) {
+  .SearchPanelContainer {
+    max-height: 550px;
+    flex-wrap: nowrap;
+  }
+}
+
+.SearchProductContainer {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 5%;
+  margin: 3px 1%;
+  align-items: center;
+  border: 3px solid #72bda3;
+  border-radius: 20px;
+}
+
+@media (max-width: 900px) {
+  .SearchProductContainer {
+    padding: 10px 1%;
+    font-size: 12px;
+  }
+}
+
+.ProductButton {
+  background-color: #72bda3;
+  color: white;
+  border-radius: 15px;
+  height: 80%;
+  padding: 0 15px;
+}
+
+.SelectedProductsPanelContainer {
+  height: 100%;
+  width: 45%;
+}
+
+@media (max-width: 900px) {
+  .SelectedProductsPanelContainer {
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.InnerSelectedProductsPanel {
+  height: 550px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: space-between;
+  border-top: 7px solid #72bda3;
+}
+
+@media (max-width: 600px) {
+  .InnerSelectedProductsPanel {
+  height: auto;
+  max-height: 1100px; 
+  }
+}
+
+.ProductName {
+  margin: 0;
+}
+
+.ProductDimensions {
+  margin: 0;
+}
+
+.ProductInfo {
+  margin-top: 10px;
+}
+
+.SelectedProductsTitle p {
+  display: inline-block;
+  font-weight: bolder;
+}
+
+.SelectedProductsTitle {
+  display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.SelectedProductsTitleButton {
+  width: 20%;
+  border-radius: 15px;
+  background-color: #72bda3;
+  color: white;
+  height: 45px;
+  font-size: 15px;
+}
+
+.SelectedProductContainer p {
+  text-align: center;
+  margin: 5px 0 0 0;
+  
+}
+
+.SelectedProductContainerName {
+font-size: 12px;
+text-decoration: underline;
+}
+
+.SelectedProductContainerSize {
+font-size: 10px;
+}
+
+.PackageListLink {
+  display: block;
+  margin-top: 10px;
+}
+.PackagesContainer {
+  display: flex;
+  padding: 0 3%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.OuterPackagesContainer {
+text-align: center;
+margin-top: 40px;
+}
+
+@media (max-width: 900px) {
+  .PackagesContainer {
+    padding: 0;
+    flex-flow: column wrap;
+    align-items: center;
+  }
+}
+
+
+.PackageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  padding: 15px;
+  border: 1px solid #72bda3;
+  width: 30%;
+}
+
+@media (max-width: 900px) {
+  .PackageContainer {
+    margin: 0;
+    width: 80%;
+    align-items: center;
+  }
+}
+
+.SuggestedPackagesTitle {
+  text-align: center;
+}
+
+.SaveAllPackagesButton {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #72bda3;
+  color: white;
+  border-radius: 15px;
+  padding: 10px 15px;
+
+}
+
+@media (max-width: 900px) {
+  .SuggestedPackagesTitle {
+    margin: 15px 0 25px;
+  }
+}
+
+.BoxImage {
+  width: 60px;
+  height: 48px;
+}
+
+.PackagedBoxSize {
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+@media (max-width: 900px) {
+  .PackagedBoxSize {
+    margin: 0 0 0 .3%;
+  }
+}
+
+.PackagedItemList {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.PackagedItem {
+  margin-top: 5px;
+  text-align: center;
+  border: 1px dotted black;
+}
+
+.PackagedItem p {
+  padding: 5px;
+}
+
+.PackageBoxDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .PackageBoxDetailsContainer {
+  flex-direction: row;
+  }
+  }
+
+.PackageButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+.PackageContainerTopSection {
+display: flex;
+align-items: center;
+justify-content: space-around;
+}
+}
+
+.BoxTypeSelectorContainer {
+
+}
+
+.BoxTypeSelector {
+
+}
+
+@media (max-width: 900px) {
+  .BoxTypeSelector {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+    margin-bottom: 5px;
+  }
+}
+
+
+.ItemLimitsContainer {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 10px
+}
+
+.ItemLimit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5%;
+}
+
+@media (max-width: 400px) {
+  .ItemLimit {
+    margin: 0
+  }
+}
+
+
+
+.ItemLimit h5 {
+  font-weight: bolder;
+  text-decoration: underline;
+  text-align: center;
+}
+
+label {
+  font-size: 12px;
+}
+
+.PackagedItemId {
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.PackagedItemSize {
+  font-size: 12px;
+}

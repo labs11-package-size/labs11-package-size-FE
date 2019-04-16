@@ -13,32 +13,23 @@ import {
 } from '../../store/actions/shipmentActions';
 
 const styles = {
-	card: {
-		maxWidth: 250,
-		margin: 20,
-	},
-	media: {
-		height: 140,
-	},
-	cardContainer: {
-		display: 'flex',
-		justifyContent: 'center',
-	},
 	mainContainer: {
-		maxWidth: 1100,
+		marginTop: 45,
+		marginBottom: 60,
+	},
+	heading: {
+		marginBottom: 40,
 	},
 };
 
 class ShipmentListView extends Component {
+	state = {
+		previousPage: null,
+		previousRowsPerPage: null,
+	};
+
 	componentDidMount() {
 		this.props.getShipments();
-	}
-
-	componentDidUpdate(prevProps) {
-		// Typical usage (don't forget to compare props):
-		if (this.props.shipments.length !== prevProps.shipments.length) {
-			this.props.getShipments();
-		}
 	}
 
 	addShipment = (tracId, prodId) => {
@@ -46,26 +37,42 @@ class ShipmentListView extends Component {
 		return <Redirect to="/" />;
 	};
 
-	deleteShipment = uuid => {
-		this.props.deleteShipment(uuid);
-		this.props.getShipments();
+	deleteShipment = (uuid, currentPage, currentRowsPerPage) => {
+		this.setState(
+			{ previousPage: currentPage, previousRowsPerPage: currentRowsPerPage },
+			() => this.props.deleteShipment(uuid.join()),
+		);
+		return <Redirect to="/" />;
 	};
 
 	render() {
 		const { classes } = this.props;
 		return (
 			<div className={classes.mainContainer}>
-				<Typography gutterBottom variant="h5" component="h2">
+				<Typography
+					className={classes.heading}
+					gutterBottom
+					variant="h5"
+					component="h2">
 					Shipments
 				</Typography>
-				<ShipmentList
-					addShipment={this.addShipment}
-					deleteShipment={this.deleteShipment}
-					shipments={this.props.shipments}
-				/>
-				<Button variant="contained" className={classes.submit} size="small">
-					<Link to="/shipment/add">Add Shipment</Link>
-				</Button>
+				{this.props.shipments.length > 0 ? (
+					<div>
+						<ShipmentList
+							previousPage={this.state.previousPage}
+							previousRowsPerPage={this.state.previousRowsPerPage}
+							addShipment={this.addShipment}
+							deleteShipment={this.deleteShipment}
+							shipments={this.props.shipments}
+						/>
+					</div>
+				) : (
+					<ShipmentList
+						addShipment={this.addShipment}
+						deleteShipment={this.deleteShipment}
+						shipments={this.props.shipments}
+					/>
+				)}
 			</div>
 		);
 	}
@@ -73,7 +80,7 @@ class ShipmentListView extends Component {
 
 const mapStateToProps = state => {
 	return {
-		shipments: state.shipmentReducer.shipments,
+		shipments: state.shipmentsReducer.shipments,
 	};
 };
 

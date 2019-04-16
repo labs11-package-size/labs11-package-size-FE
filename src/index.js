@@ -2,19 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import './styles/css/index.css';
+
+import { firebase } from './firebase';
 
 import rootReducer from './store/reducers/index';
-import Layout from './containers/layout/Layout';
+import Routes from './routes/Routes';
 
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+const store = createStore(
+	rootReducer,
+	compose(
+		applyMiddleware(thunk.withExtraArgument({ getFirebase }), logger),
+		reactReduxFirebase(firebase),
+	),
+);
 
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
-			<Layout />
+			<Routes />
 		</Router>
 	</Provider>,
 	document.getElementById('root'),

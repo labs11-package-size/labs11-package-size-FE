@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
+// import Input from '@material-ui/core/Input';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+
+// import EditAccountModal from '../modals/EditAccountModal';
 
 const styles = theme => ({
 	root: {
@@ -44,38 +49,68 @@ const styles = theme => ({
 	},
 });
 
-function Account(props) {
-	const { classes } = props;
+const Account = props => {
 	return (
 		<div>
-			{!props.user ? (
-				<div>...Loading</div>
-			) : (
-				<div className={classes.root}>
-					<div className={classes.column}>
-						<Typography gutterBottom variant="h5" component="h2">
-							User Account
-						</Typography>
-						<Typography className={classes.heading}>
-							Display Name: {props.user.displayName}
-						</Typography>
-
-						<Typography className={classes.heading}>
-							Email Address: {props.user.email}
-						</Typography>
-						{/* photoURL */}
-					</div>
-					<Button size="small" color="primary">
-						<span onClick={() => props.editUser(this.userInfo)}>Edit</span>
-					</Button>
+			<div className={props.classes.root}>
+				<div className={props.classes.column}>
+					<Typography gutterBottom variant="h5" component="h2">
+						User Account
+					</Typography>
+					<Typography className={props.classes.heading}>
+						Display Name: {props.userInfo.displayName}
+					</Typography>
+					<Typography className={props.classes.heading}>
+						Email Address: {props.userInfo.email}
+					</Typography>
+					{/* photoURL */}
 				</div>
-			)}
+				{/* <EditAccountModal>
+					<form className={props.classes.container}>
+						<Input
+							name="displayName"
+							placeholder="Display Name"
+							onChange={props.handleInputChange}
+							value={props.userInfo.displayName}
+							className={props.classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+						<Input
+							name="email"
+							placeholder="Email Address"
+							onChange={props.handleInputChange}
+							value={props.userInfo.email}
+							className={props.classes.input}
+							inputProps={{
+								'aria-label': 'Description',
+							}}
+						/>
+						<Button size="small" color="primary">
+							<span onClick={props.editUser}>Save Changes</span>
+						</Button>
+					</form>
+				</EditAccountModal> */}
+			</div>
 		</div>
 	);
-}
-//email test!
+};
+
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: state.userReducer.isLoggedIn,
+		userInfo: state.firebaseReducer.auth,
+	};
+};
+
 Account.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Account);
+export default compose(
+	connect(
+		mapStateToProps,
+		{},
+	),
+)(withStyles(styles)(Account));

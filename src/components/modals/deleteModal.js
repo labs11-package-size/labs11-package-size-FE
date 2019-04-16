@@ -5,6 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 
+import Tooltip from '@material-ui/core/Tooltip';
+import Icon from '@material-ui/core/Icon';
+import classNames from 'classnames';
+
 function getModalStyle() {
 	const top = 50;
 	const left = 50;
@@ -24,6 +28,19 @@ const styles = theme => ({
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing.unit * 4,
 		outline: 'none',
+	},
+	submit: {
+		color: 'white',
+		backgroundColor: '#72BDA2',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+		},
+	},
+	root: {
+		margin: 10,
+		display: 'flex',
+		justifyContent: 'space-between',
 	},
 });
 
@@ -45,7 +62,14 @@ class DeleteModal extends React.Component {
 
 		return (
 			<div>
-				<Button onClick={this.handleOpen}>Delete Product</Button>
+				<Tooltip title="Delete" disableFocusListener={this.state.open}>
+					<Button
+						variant="contained"
+						className={classes.submit}
+						onClick={this.handleOpen}>
+						<Icon className={classNames(classes.icon, 'fas fa-trash-alt')} />
+					</Button>
+				</Tooltip>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
@@ -56,8 +80,18 @@ class DeleteModal extends React.Component {
 							Are you sure you want to delete?
 						</Typography>
 						<div>
-							<Button onClick={this.handleClose}> Cancel</Button>
 							{this.props.children}
+							<div className={classes.root}>
+								<Button
+									onClick={this.props.delete}
+									variant="contained"
+									className={classes.submit}>
+									Delete
+								</Button>
+								<Button variant="contained" onClick={this.handleClose}>
+									Cancel
+								</Button>
+							</div>
 						</div>
 					</div>
 				</Modal>

@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux';
-
 import userReducer from './userReducer';
-import shipmentReducer from './shipmentReducer';
-import productReducer from './productReducer';
+import shipmentsReducer from './shipmentsReducer';
+import productsReducer from './productsReducer';
+import packageReducer from './packageReducer';
+import { firebaseReducer } from 'react-redux-firebase';
 
 export default combineReducers({
 	userReducer,
-	shipmentReducer,
-	productReducer,
+	shipmentsReducer,
+	productsReducer,
+	packageReducer,
+	firebaseReducer,
 });
