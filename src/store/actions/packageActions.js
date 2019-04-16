@@ -4,6 +4,8 @@ export const GETTING_PACKAGES = 'GETTING_PACKAGES';
 export const GETTING_PACKAGES_SUCCESSFUL = 'GETTING_PACKAGES_SUCCESSFUL';
 export const GETTING_PACKAGES_FAILURE = 'GETTING_PACKAGES_FAILURE';
 
+export const SELECTED_PRODUCT = 'SELECTED_PRODUCT';
+
 export const ADDING_PACKAGE = 'ADDING_PACKAGE';
 export const ADDING_PACKAGE_SUCCESSFUL = 'ADDING_PACKAGE_SUCCESSFUL';
 export const ADDING_PACKAGE_FAILURE = 'ADDING_PACKAGE_FAILURE';
@@ -36,12 +38,18 @@ export const getPackages = () => dispatch => {
 		);
 };
 
-export const addPackage = packageAdd => dispatch => {
+export const addPackage = packageArr => dispatch => {
+	const products = { products: packageArr };
+	console.log(products);
 	dispatch({ type: ADDING_PACKAGE });
 	axios
-		.post('/packaging/add', packageAdd)
+		.post('/packaging/preview', products)
 		.then(res =>
-			dispatch({ type: ADDING_PACKAGE_SUCCESSFUL, payload: res.data }),
+			axios
+				.post('/packaging/add', res.data)
+				.then(res =>
+					dispatch({ type: ADDING_PACKAGE_SUCCESSFUL, payload: res.data }),
+				),
 		)
 		.catch(err =>
 			dispatch({ type: ADDING_PACKAGE_FAILURE, payload: err.data }),
@@ -71,3 +79,6 @@ export const deletePackage = uuid => dispatch => {
 // 			dispatch({ type: SELECTING_PACKAGE_FAILURE, payload: err.data }),
 // 		);
 // };
+export const selectProduct = product => dispatch => {
+	dispatch({ type: SELECTED_PRODUCT, payload: product });
+};

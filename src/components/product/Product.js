@@ -74,6 +74,15 @@ class Product extends Component {
 		this.setState(state => ({ expanded: !state.expanded }));
 	};
 
+	handleSelectProd = product => {
+		let selected = {
+			name: product.name,
+			uuid: product.uuid,
+		};
+
+		this.props.selectProduct(selected);
+	};
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -99,9 +108,7 @@ class Product extends Component {
 						<CardActions className={classes.actions} disableActionSpacing>
 							<div aria-label="add">
 								<Button
-									onClick={() =>
-										this.props.selectProduct(this.props.product.uuid)
-									}>
+									onClick={() => this.handleSelectProd(this.props.product)}>
 									<Icon
 										className={classNames(
 											classes.icon,
