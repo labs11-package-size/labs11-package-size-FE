@@ -15,6 +15,9 @@ import {
 	UPLOADING_IMAGE_SUCCESS,
 	UPLOADING_IMAGE_FAILURE,
 	DELETING_IMAGE,
+	GETTING_DETAIL,
+	GETTING_DETAIL_SUCCESSFUL,
+	GETTING_DETAIL_FAILURE,
 } from '../actions/productActions';
 
 const initialState = {
@@ -187,6 +190,28 @@ const productsReducer = (state = initialState, action) => {
 				adding: false,
 				editing: false,
 				deleting: false,
+				success: false,
+				failure: true,
+				error: action.payload,
+			};
+		case GETTING_DETAIL:
+			return {
+				...state,
+				fetching: true,
+				error: null,
+			};
+		case GETTING_DETAIL_SUCCESSFUL:
+			return {
+				...state,
+				products: action.payload,
+				fetching: false,
+				success: true,
+				error: null,
+			};
+		case GETTING_DETAIL_FAILURE:
+			return {
+				...state,
+				fetching: false,
 				success: false,
 				failure: true,
 				error: action.payload,
