@@ -26,6 +26,10 @@ export const DELETING_PRODUCT = 'DELETING_PRODUCT';
 export const DELETING_PRODUCT_SUCCESSFUL = 'DELETING_PRODUCT_SUCCESSFUL';
 export const DELETING_PRODUCT_FAILURE = 'DELETING_PRODUCT_FAILURE';
 
+export const GETTING_DETAIL = 'GETTING_DETAIL';
+export const GETTING_DETAIL_SUCCESSFUL = 'GETTING_DETAIL_SUCCESSFUL';
+export const GETTING_DETAIL_FAILURE = 'GETTING_DETAIL_FAILURE'; 
+
 axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
 axios.interceptors.request.use(
 	function(options) {
@@ -135,4 +139,17 @@ export const deleteProduct = uuid => dispatch => {
 		.catch(err =>
 			dispatch({ type: DELETING_PRODUCT_FAILURE, payload: err.data }),
 		);
+};
+
+export const getDetail = uuid => dispatch => {
+	dispatch({ type: GETTING_DETAIL });
+
+	axios
+		.get(`/products/detail/${uuid}`)
+		.then(res =>
+			dispatch({ type: GETTING_DETAIL_SUCCESSFUL, payload: res.data }),
+		)
+		.catch(err => 
+			dispatch({ type: GETTING_DETAIL_FAILURE, payload: err.data}),
+		)
 };
