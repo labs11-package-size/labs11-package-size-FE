@@ -8,6 +8,7 @@ import {
 	DELETING_PACKAGE,
 	DELETING_PACKAGE_SUCCESSFUL,
 	DELETING_PACKAGE_FAILURE,
+	SELECTED_PRODUCT,
 } from '../actions/packageActions';
 
 const initialState = {
@@ -52,6 +53,14 @@ const packageReducer = (state = initialState, action) => {
 				error: action.payload,
 			};
 
+		case SELECTED_PRODUCT:
+			return {
+				...state,
+				selectedProducts: [...state.selectedProducts, action.payload],
+				failure: false,
+				error: null,
+			};
+
 		case ADDING_PACKAGE:
 			return {
 				...state,
@@ -63,6 +72,7 @@ const packageReducer = (state = initialState, action) => {
 			return {
 				...state,
 				packages: action.payload,
+				selectedProducts: [],
 				fetching: false,
 				adding: false,
 				success: true,

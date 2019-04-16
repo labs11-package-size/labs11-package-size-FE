@@ -20,6 +20,7 @@ import Avatar from '@material-ui/core/Avatar';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { addPackage } from '../../store/actions/packageActions';
 import LoggedInLinks from '../../components/navigation/LoggedInLinks';
 import LoggedOutLinks from '../../components/navigation/LoggedOutLinks';
 
@@ -193,7 +194,15 @@ class Layout extends React.Component {
 						</IconButton>
 					</div>
 					<Divider />
-					{this.props.isLoggedIn ? <LoggedInLinks /> : <LoggedOutLinks />}
+					{this.props.isLoggedIn ? (
+						<LoggedInLinks
+							addPackage={this.props.addPackage}
+							handleDrawerOpen={this.handleDrawerOpen}
+							selectedProducts={this.props.selectedProducts}
+						/>
+					) : (
+						<LoggedOutLinks />
+					)}
 				</Drawer>
 				<main className={classes.content}>{this.props.children}</main>
 			</div>
@@ -205,6 +214,7 @@ const mapStateToProps = state => {
 	return {
 		isLoggedIn: state.userReducer.isLoggedIn,
 		userInfo: state.firebaseReducer.auth,
+		selectedProducts: state.packageReducer.selectedProducts,
 	};
 };
 
@@ -216,7 +226,7 @@ export default compose(
 	withRouter(
 		connect(
 			mapStateToProps,
-			{},
+			{ addPackage },
 		)(withStyles(styles)(Layout)),
 	),
 );

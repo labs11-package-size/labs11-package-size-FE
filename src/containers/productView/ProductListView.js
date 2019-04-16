@@ -17,6 +17,7 @@ import {
 	editProduct,
 	deleteProduct,
 } from '../../store/actions/productActions';
+import { selectProduct } from '../../store/actions/packageActions';
 import { addShipment } from '../../store/actions/shipmentActions';
 import { compose } from 'redux';
 
@@ -77,17 +78,13 @@ class ProductListView extends Component {
 		this.props.getProducts();
 	};
 
-	selectProduct = uuid => {
-		console.log(uuid);
-		this.setState({
-			...this.state,
-			selectedProduct: uuid,
-		});
-		alert('added to list');
+	handleSelectProduct = product => {
+		// this.setState({
+		// 	...this.state,
+		// 	selectedProduct: uuid,
+		// });
+		this.props.selectProduct(product);
 	};
-	// packItem = () => {
-
-	// }
 
 	updateSearch = e => {
 		this.setState({ searchTerm: e.target.value });
@@ -194,7 +191,7 @@ class ProductListView extends Component {
 				{this.props.products.length > 0 ? (
 					<div>
 						<ProductList
-							selectProduct={this.selectProduct}
+							selectProduct={this.handleSelectProduct}
 							getThumbnail={this.getThumbnail}
 							loadMore={this.props.getProducts}
 							addImgs={this.addImgs}
@@ -340,7 +337,14 @@ export default compose(
 	withRouter(
 		connect(
 			mapStateToProps,
-			{ getProducts, addProduct, editProduct, deleteProduct, addShipment },
+			{
+				getProducts,
+				addProduct,
+				editProduct,
+				deleteProduct,
+				addShipment,
+				selectProduct,
+			},
 		)(withStyles(styles)(ProductListView)),
 	),
 );
