@@ -48,6 +48,7 @@ const styles = theme => ({
 	},
 	media: {
 		paddingTop: '56.25%',
+		// width: 100,
 	},
 	actions: {
 		display: 'flex',
@@ -99,10 +100,11 @@ class Product extends Component {
 							title={this.props.product.name}
 						/>
 
-						<img
+						<CardMedia
+							className={classes.media}
 							id={this.props.product.uuid}
-							style={{ width: 100 }}
-							src={this.props.product.thumbnail}
+							// style={{ width: 100 }}
+							image={this.props.product.thumbnail}
 							alt="product"
 						/>
 
