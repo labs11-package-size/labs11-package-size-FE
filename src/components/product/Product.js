@@ -110,13 +110,13 @@ class Product extends Component {
 									/>
 								</Button>
 							</div>
-							<div aria-label="delete">
+							{/* <div aria-label="delete">
 								<DeleteModal
 									delete={() =>
 										this.props.deleteProduct(this.props.product.uuid)
 									}
 								/>
-							</div>
+							</div> */}
 
 							<div aria-label="edit">
 								<EditProductModal
@@ -201,7 +201,7 @@ class Product extends Component {
 								</Typography>
 
 								<Typography className={classes.heading}>
-									Value: {this.props.product.value}
+									Price: {this.props.product.value}
 								</Typography>
 								<Typography className={classes.heading}>
 									Length: {this.props.product.length}

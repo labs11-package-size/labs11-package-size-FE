@@ -43,7 +43,7 @@ const styles = theme => ({
 	appBar: {
 		right: 'auto',
 		maxWidth: 1200,
-		backgroundColor: '#72BDA2',
+		backgroundColor: '#F2F3F4',
 		zIndex: theme.zIndex.drawer + 1,
 		transition: theme.transitions.create(['width', 'margin'], {
 			easing: theme.transitions.easing.sharp,
@@ -61,6 +61,7 @@ const styles = theme => ({
 	menuButton: {
 		marginLeft: 12,
 		marginRight: 36,
+		color: '#72BDA2'
 	},
 	menuButtonHidden: {
 		display: 'none',
@@ -161,7 +162,7 @@ class Layout extends React.Component {
 							color="inherit"
 							noWrap
 							className={classes.title}>
-							<Button style={{ color: 'white' }}>
+							<Button style={{ color: '#0D2C54' }}>
 								<Typography color="inherit" variant="h6">
 									ScannAR
 								</Typography>
