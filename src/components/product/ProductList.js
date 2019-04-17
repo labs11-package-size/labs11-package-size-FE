@@ -8,13 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-<<<<<<< HEAD
 import { getProducts, addProduct } from '../../store/actions/productActions';
 import classNames from 'classnames';
-=======
-import Tooltip from '@material-ui/core/Tooltip';
-import { getProducts, addProduct, getDetail } from '../../store/actions/productActions';
->>>>>>> 6ad863b149b0dbe7f97299a023af37f901f97ede
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
 
@@ -233,9 +228,7 @@ class ProductList extends Component {
 						)}
 						<Button onClick={this.props.loadMore}>Load More</Button>
 					</div>
-					<div className={this.props.classes.root}>
-					
-					</div>
+					<div className={this.props.classes.root} />
 				</div>
 			</div>
 		);
