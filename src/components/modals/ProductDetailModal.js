@@ -115,7 +115,9 @@ class ProductDetailModal extends React.Component {
 						<CardActions className={classes.actions} disableActionSpacing>
 							<div aria-label="add">
 								<Button
-									onClick={() => this.props.selectProduct(this.props.product)}>
+									onClick={event =>
+										this.props.selectProduct(this.props.product, event)
+									}>
 									<Icon
 										className={classNames(
 											classes.icon,

@@ -77,7 +77,8 @@ class ProductListView extends Component {
 		this.props.getProducts();
 	};
 
-	handleSelectProduct = product => {
+	handleSelectProduct = (product, event) => {
+		event.stopPropagation();
 		this.props.selectProduct(product);
 	};
 
