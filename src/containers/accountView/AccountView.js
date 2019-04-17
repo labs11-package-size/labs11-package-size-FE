@@ -44,7 +44,7 @@ class AccountView extends Component {
 				<Account
 					editAccount={() => this.editAccount(this.state.userInfo)}
 					handleInputChange={this.handleInputChange}
-					editingUserInfo={this.editingUserInfo}
+					// editingUserInfo={this.editingUserInfo}
 					userInfo={this.state.userInfo}
 				/>
 			</div>
