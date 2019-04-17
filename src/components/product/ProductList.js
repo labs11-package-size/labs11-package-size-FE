@@ -8,8 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+<<<<<<< HEAD
 import { getProducts, addProduct } from '../../store/actions/productActions';
 import classNames from 'classnames';
+=======
+import Tooltip from '@material-ui/core/Tooltip';
+import { getProducts, addProduct, getDetail } from '../../store/actions/productActions';
+>>>>>>> 6ad863b149b0dbe7f97299a023af37f901f97ede
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
 
@@ -62,6 +67,7 @@ class ProductList extends Component {
 						addImgs={this.addImgs}
 						addProduct={() => this.props.addProduct(this.props.product)}>
 						<form className={this.props.classes.container}>
+<<<<<<< HEAD
 							<div className={this.props.classes.container}>
 								<Typography gutterBottom variant="h5" component="h2">
 									Product Detail
@@ -165,6 +171,79 @@ class ProductList extends Component {
 										),
 									}}
 								/>
+=======
+							<Input
+								onChange={this.props.handleChange}
+								name="name"
+								value={this.props.product.name}
+								placeholder="Product Name"
+								className={this.props.classes.input}
+							/>
+
+							<Input
+								onChange={this.props.handleChange}
+								name="productDescription"
+								value={this.props.product.productDescription}
+								placeholder="Description"
+								className={this.props.classes.input}
+								inputProps={{
+									'aria-label': 'Description',
+								}}
+							/>
+
+							<Input
+								onChange={this.props.handleChange}
+								name="height"
+								value={this.props.product.height}
+								placeholder="Height"
+								className={this.props.classes.input}
+								inputProps={{
+									'aria-label': 'Description',
+								}}
+							/>
+
+							<Input
+								onChange={this.props.handleChange}
+								name="length"
+								value={this.props.product.length}
+								placeholder="Length"
+								className={this.props.classes.input}
+								inputProps={{
+									'aria-label': 'Description',
+								}}
+							/>
+							<Input
+								onChange={this.props.handleChange}
+								name="value"
+								value={this.props.product.value}
+								placeholder="Value"
+								className={this.props.classes.input}
+								inputProps={{
+									'aria-label': 'Description',
+								}}
+							/>
+							<Input
+								onChange={this.props.handleChange}
+								name="weight"
+								value={this.props.product.weight}
+								placeholder="Weight"
+								className={this.props.classes.input}
+								inputProps={{
+									'aria-label': 'Description',
+								}}
+							/>
+							<Input
+								onChange={this.props.handleChange}
+								name="width"
+								value={this.props.product.width}
+								placeholder="Width"
+								className={this.props.classes.input}
+								inputProps={{
+									'aria-label': 'Description',
+								}}
+							/>
+							<div className="uploader">
+>>>>>>> 6ad863b149b0dbe7f97299a023af37f901f97ede
 								<ImgUploader
 									getThumbnail={this.props.getThumbnail}
 									addImgs={this.props.addImgs}
@@ -227,6 +306,9 @@ class ProductList extends Component {
 							<div>no list yet</div>
 						)}
 						<Button onClick={this.props.loadMore}>Load More</Button>
+					</div>
+					<div className={this.props.classes.root}>
+					
 					</div>
 				</div>
 			</div>

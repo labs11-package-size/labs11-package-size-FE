@@ -596,7 +596,7 @@ class ShipmentList extends React.Component {
               rowCount={data.length}
             />
             <TableBody>
-              {/* {stableSort(data, getSorting(order, orderBy))
+              {this.state.data && stableSort(data, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(shipment => {
                   const isSelected = this.isSelected(shipment.uuid);
@@ -613,8 +613,8 @@ class ShipmentList extends React.Component {
                 <TableRow style={{ height: 49 * emptyRows }}>
                   <TableCell colSpan={5} />
                 </TableRow>
-              )} */}
-              {this.state.data &&
+              )}
+              {/* {this.state.data &&
                 this.state.data.map(shipment => {
                   const isSelected = this.isSelected(shipment.uuid);
                   return (
@@ -625,7 +625,7 @@ class ShipmentList extends React.Component {
                       isSelected={isSelected}
                     />
                   );
-                })}
+                })} */}
             </TableBody>
           </Table>
         </div>
