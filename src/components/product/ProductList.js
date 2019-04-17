@@ -183,6 +183,7 @@ class ProductList extends Component {
 											width={this.props.width}
 											height={this.props.height}
 											value={this.props.value}
+											getDetail={this.props.getDetail}
 										/>
 									</div>
 								);
@@ -191,9 +192,6 @@ class ProductList extends Component {
 							<div>no list yet</div>
 						)}
 						<Button onClick={this.props.loadMore}>Load More</Button>
-					</div>
-					<div className={this.props.classes.root}>
-					
 					</div>
 				</div>
 			</div>
@@ -204,6 +202,6 @@ class ProductList extends Component {
 export default compose(
 	connect(
 		null,
-		{ getProducts, addProduct },
+		{ getProducts, addProduct, getDetail },
 	)(withStyles(styles)(ProductList)),
 );

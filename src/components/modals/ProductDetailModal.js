@@ -11,9 +11,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 import EditProductModal from '../modals/EditProductModal';
-
 import DeleteModal from './deleteModal';
 
 function getModalStyle() {
@@ -87,9 +88,10 @@ class ProductDetailModal extends React.Component {
 		open: false,
 	};
 
-	handleOpen = event => {
+	handleOpen = (event, uuid) => {
 		event.stopPropagation();
 		this.setState({ open: true });
+		this.props.getDetail(uuid);
 	};
 
 	handleClose = event => {
@@ -106,9 +108,9 @@ class ProductDetailModal extends React.Component {
 					onClick={event => event.stopPropagation()}
 					className={classes.root}>
 					<Card
-						onClick={event => {
-							this.handleOpen(event);
-						}}
+						onClick={(event) => 
+							this.handleOpen(event, this.props.product.uuid)
+						}
 						className={classes.card}>
 						<CardHeader subheader={this.props.product.name} />
 
@@ -229,36 +231,79 @@ class ProductDetailModal extends React.Component {
 									}
 								/>
 							</div>
-							<div>
-								<Typography variant="h6" id="modal-title">
-									Product Information
-								</Typography>
+							{this.props.detail ? 
 								<div>
-									<Typography>
-										Description: {this.props.product.productDescription}
-									</Typography>
-									<Typography className={classes.heading}>
-										Price: {this.props.product.value}
-									</Typography>
-									<Typography className={classes.heading}>
-										Fragile: {this.props.product.fragile}
-									</Typography>
+									<div>
+										<Typography variant="h6" id="modal-title">
+											Product Summary:
+										</Typography>
+										<Typography>
+											Description: {this.props.detail.productDescription}
+										</Typography>
+										<Typography className={classes.heading}>
+											Price: {this.props.detail.value}
+										</Typography>
+										<Typography className={classes.heading}>
+											Fragile: {this.props.detail.fragile}
+										</Typography>
+									</div>
+									<div>
+										<Typography className={classes.heading}>
+											Product Dimensions:
+										</Typography>
+										<Typography className={classes.heading}>
+											Length: {this.props.detail.length}"
+										</Typography>
+										<Typography className={classes.heading}>
+											Width: {this.props.detail.width}"
+										</Typography>
+										<Typography className={classes.heading}>
+											Height: {this.props.detail.height}"
+										</Typography>
+									</div>
+									<div className={this.props.classes.root}>
+										<Typography className={classes.heading}>
+											Shipment Summary:
+										</Typography>
+										{this.props.detail.shipments ? (
+											this.props.detail.shipments.map((shipment, i) => {
+												return (
+													<div key={i}>
+														<Typography className={classes.heading}>
+															Date Shipped: {shipment.dateShipped}
+														</Typography>
+														<Typography className={classes.heading}>
+															Shipped To: {shipment.shippedTo}
+														</Typography>
+														<Typography className={classes.heading}>
+															Date Arrived: {shipment.dateArrived}
+														</Typography>
+														<Typography className={classes.heading}>
+															Date Arrived: {shipment.dateArrived}
+														</Typography>
+														<Typography className={classes.heading}>
+															Tracking Number: {shipment.trackingNumber}
+														</Typography>
+														<Typography className={classes.heading}>
+															Status: {shipment.status}
+														</Typography>
+														<Typography className={classes.heading}>
+															Carrier Name: {shipment.carrierName}
+														</Typography>
+													</div>
+												)
+											})
+											) : (
+											<div>There are no shipments associated with this product.</div>
+											)
+										}
+										
+										
+									
+									</div>
 								</div>
-								<div>
-									<Typography className={classes.heading}>
-										Product Dimensions:
-									</Typography>
-									<Typography className={classes.heading}>
-										Length: {this.props.product.length}"
-									</Typography>
-									<Typography className={classes.heading}>
-										Width: {this.props.product.width}"
-									</Typography>
-									<Typography className={classes.heading}>
-										Height: {this.props.product.height}"
-									</Typography>
-								</div>
-							</div>
+								: null 
+							}
 							<div>
 								<Button onClick={event => this.handleClose(event)}>
 									Close
@@ -277,4 +322,14 @@ ProductDetailModal.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductDetailModal);
+const mapStateToProps = state => {
+	return {
+		detail: state.productsReducer.productDetail
+	}
+}
+export default compose(
+		connect(
+			mapStateToProps,
+			{},
+		)(withStyles(styles)(ProductDetailModal))
+);
