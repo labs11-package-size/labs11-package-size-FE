@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import PopoutIcon from '@material-ui/icons/LibraryBooks'
 import Tooltip from '@material-ui/core/Tooltip';
 
-import DeleteModal from '../modals/deleteModal';
+import DeleteModal from './deleteModal';
+import DeletePopover from '../modals/DeletePopover';
 
 
 function getModalStyle() {
@@ -66,17 +67,17 @@ class ProductDetailModal extends React.Component {
                               {this.props.product.name}  
                             </Typography>
                         </div>
-                        {/* <div>
-                            {/* route to shipments
-							<Button onClick={this.handleClose}>Pack It</Button>
-						</div> */}
-                        {/* <div aria-label="delete">
+                        <div>
+                            {/* route to shipments */}
+							<Button >Pack It</Button>
+						</div>
+                        <div aria-label="delete">
                             <DeleteModal
                                 delete={() =>
                                     this.props.deleteProduct(this.props.product.uuid)
                                 }
                             />
-                        </div> */}
+                        </div>
                         <div>
                             <Typography variant="h6" id="modal-title">
                                 Product Information
