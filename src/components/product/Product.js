@@ -91,6 +91,7 @@ class Product extends Component {
 				handleChange={this.props.handleChange}
 				trackingNumber={this.props.trackingNumber}
 				updatedProduct={this.props.updatedProduct}
+				updateState={this.props.updateState}
 				addShipment={this.props.addShipment}
 				name={this.props.name}
 				productDescription={this.props.productDescription}

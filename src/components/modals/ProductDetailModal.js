@@ -96,6 +96,9 @@ class ProductDetailModal extends React.Component {
 	handleClose = () => {
 		this.setState({ open: false });
 	};
+	handleLoad = event => {
+		this.props.updateState(this.props.product);
+	};
 
 	render() {
 		const { classes } = this.props;
@@ -130,7 +133,7 @@ class ProductDetailModal extends React.Component {
 							</div>
 							<div aria-label="edit">
 								<EditProductModal
-									onClick={event => event.stopPropagation()}
+									onClick={event => this.handleLoad(event)}
 									edit={() =>
 										this.props.editProduct(
 											this.props.product.uuid,
@@ -145,7 +148,7 @@ class ProductDetailModal extends React.Component {
 											name="name"
 											label="Product Name"
 											className={this.props.classes.textField}
-											value={this.props.product.name}
+											value={this.props.updatedProduct.name}
 											onChange={this.props.handleChange}
 											margin="normal"
 										/>
@@ -153,7 +156,7 @@ class ProductDetailModal extends React.Component {
 										<TextField
 											onChange={this.props.handleChange}
 											name="productDescription"
-											value={this.props.product.productDescription}
+											value={this.props.updatedProduct.productDescription}
 											label="Description"
 											className={this.props.classes.textField}
 											inputProps={{
@@ -164,7 +167,7 @@ class ProductDetailModal extends React.Component {
 										<TextField
 											onChange={this.props.handleChange}
 											name="value"
-											value={this.props.product.value}
+											value={this.props.updatedProduct.value}
 											label="Value"
 											className={this.props.classes.textField}
 											InputProps={{
@@ -180,7 +183,7 @@ class ProductDetailModal extends React.Component {
 											)}
 											onChange={this.props.handleChange}
 											name="weight"
-											value={this.props.product.weight}
+											value={this.props.updatedProduct.weight}
 											label="Weight"
 											InputProps={{
 												endAdornment: (
