@@ -118,14 +118,6 @@ class Product extends Component {
 									/>
 								</Button>
 							</div>
-							{/* <div aria-label="delete">
-								<DeleteModal
-									delete={() =>
-										this.props.deleteProduct(this.props.product.uuid)
-									}
-								/>
-							</div> */}
-
 							<div aria-label="edit">
 								<EditProductModal
 									edit={() => {
