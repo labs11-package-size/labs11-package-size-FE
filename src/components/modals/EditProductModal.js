@@ -48,17 +48,20 @@ class EditProductModal extends React.Component {
 		open: false,
 	};
 
-	handleOpen = () => {
+	handleOpen = event => {
+		event.stopPropagation();
 		this.setState({ open: true });
 	};
-	handleEdit = () => {
-		this.props.edit();
+	handleEdit = event => {
+		event.stopPropagation();
+		this.props.edit(event);
 		this.setState({
 			open: false,
 		});
 	};
 
-	handleClose = () => {
+	handleClose = event => {
+		event.stopPropagation();
 		this.setState({ open: false });
 	};
 
@@ -71,7 +74,7 @@ class EditProductModal extends React.Component {
 					<Button
 						variant="contained"
 						className={classes.submit}
-						onClick={this.handleOpen}>
+						onClick={event => this.handleOpen(event)}>
 						<Icon className={classNames(classes.icon, 'fas fa-pencil-alt')} />
 					</Button>
 				</Tooltip>
@@ -79,7 +82,7 @@ class EditProductModal extends React.Component {
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
 					open={this.state.open}
-					onClose={this.handleClose}>
+					onClose={event => this.handleClose(event)}>
 					<div style={getModalStyle()} className={classes.paper}>
 						<Typography variant="h6" id="modal-title">
 							Are you sure you want to edit this product?
@@ -88,12 +91,14 @@ class EditProductModal extends React.Component {
 							{this.props.children}
 							<div className={classes.root}>
 								<Button
-									onClick={this.handleEdit}
+									onClick={event => this.handleEdit(event)}
 									variant="contained"
 									className={classes.submit}>
 									Edit
 								</Button>
-								<Button variant="contained" onClick={this.handleClose}>
+								<Button
+									variant="contained"
+									onClick={event => this.handleClose(event)}>
 									Cancel
 								</Button>
 							</div>

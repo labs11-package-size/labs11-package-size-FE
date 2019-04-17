@@ -63,7 +63,6 @@ const Account = props => {
 					<Typography className={props.classes.heading}>
 						Email Address: {props.userInfo.email}
 					</Typography>
-					{/* photoURL */}
 				</div>
 				{/* <EditAccountModal>
 					<form className={props.classes.container}>

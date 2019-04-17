@@ -6,6 +6,8 @@ export const GETTING_PACKAGES_FAILURE = 'GETTING_PACKAGES_FAILURE';
 
 export const SELECTED_PRODUCT = 'SELECTED_PRODUCT';
 
+export const DELETE_SELECTED = 'DELETE_SELECTED';
+
 export const ADDING_PACKAGE = 'ADDING_PACKAGE';
 export const ADDING_PACKAGE_SUCCESSFUL = 'ADDING_PACKAGE_SUCCESSFUL';
 export const ADDING_PACKAGE_FAILURE = 'ADDING_PACKAGE_FAILURE';
@@ -65,4 +67,8 @@ export const addPackage = packageArr => dispatch => {
 // };
 export const selectProduct = product => dispatch => {
 	dispatch({ type: SELECTED_PRODUCT, payload: product });
+};
+
+export const deleteSelectedProduct = uuid => dispatch => {
+	dispatch({ type: DELETE_SELECTED, payload: uuid });
 };

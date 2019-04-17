@@ -49,11 +49,13 @@ class DeleteModal extends React.Component {
 		open: false,
 	};
 
-	handleOpen = () => {
+	handleOpen = event => {
+		event.stopPropagation();
 		this.setState({ open: true });
 	};
 
-	handleClose = () => {
+	handleClose = event => {
+		event.stopPropagation();
 		this.setState({ open: false });
 	};
 
@@ -66,7 +68,7 @@ class DeleteModal extends React.Component {
 					<Button
 						variant="contained"
 						className={classes.submit}
-						onClick={this.handleOpen}>
+						onClick={event => this.handleOpen(event)}>
 						<Icon className={classNames(classes.icon, 'fas fa-trash-alt')} />
 					</Button>
 				</Tooltip>
@@ -74,7 +76,7 @@ class DeleteModal extends React.Component {
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
 					open={this.state.open}
-					onClose={this.handleClose}>
+					onClose={event => this.handleClose(event)}>
 					<div style={getModalStyle()} className={classes.paper}>
 						<Typography variant="h6" id="modal-title">
 							Are you sure you want to delete?
@@ -83,12 +85,14 @@ class DeleteModal extends React.Component {
 							{this.props.children}
 							<div className={classes.root}>
 								<Button
-									onClick={this.props.delete}
+									onClick={event => this.props.delete(event)}
 									variant="contained"
 									className={classes.submit}>
 									Delete
 								</Button>
-								<Button variant="contained" onClick={this.handleClose}>
+								<Button
+									variant="contained"
+									onClick={event => this.handleClose(event)}>
 									Cancel
 								</Button>
 							</div>
