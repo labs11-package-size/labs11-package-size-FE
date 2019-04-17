@@ -4,20 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import PopoutIcon from '@material-ui/icons/LibraryBooks';
-import Tooltip from '@material-ui/core/Tooltip';
-import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Input from '@material-ui/core/Input';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import red from '@material-ui/core/colors/red';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 
@@ -44,6 +35,7 @@ const styles = theme => ({
 		margin: 40,
 		width: 'auto',
 		display: 'flex',
+		cursor: 'pointer',
 	},
 	formContainer: {
 		margin: 40,
@@ -110,7 +102,9 @@ class ProductDetailModal extends React.Component {
 
 		return (
 			<div className={classes.container}>
-				<div className={classes.root}>
+				<div
+					onClick={event => event.stopPropagation()}
+					className={classes.root}>
 					<Card
 						onClick={event => {
 							this.handleOpen(event);
