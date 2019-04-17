@@ -32,7 +32,7 @@ export const addShipment = (trackingNumber, productId) => dispatch => {
 export const getShipments = () => dispatch => {
 	dispatch({ type: GETTING_SHIPMENTS });
 	axios
-		.get('/shipments')
+		.get('/shipments/all')
 		.then(res =>
 			dispatch({ type: GETTING_SHIPMENTS_SUCCESSFUL, payload: res.data }),
 		)

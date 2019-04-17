@@ -26,10 +26,44 @@ class ShipmentListView extends Component {
 	state = {
 		previousPage: null,
 		previousRowsPerPage: null,
+		filter: true,
+		filteredList: [],
+	};
+
+	handleFilter = () => {
+		this.setState(
+			{
+				filter: this.state.filter === false ? true : false,
+			},
+			() => this.handleRenderList(),
+		);
+	};
+
+	handleRenderList = () => {
+		if (this.state.filter === false) {
+			this.setState(
+				{
+					filteredList: this.props.shipments.filter(shipment => {
+						return shipment.tracked !== 0;
+					}),
+				},
+				() => console.log(this.state.filteredList),
+			);
+		} else {
+			this.setState(
+				{
+					filteredList: this.props.shipments.filter(shipment => {
+						return shipment.tracked !== 1;
+					}),
+				},
+				() => console.log(this.state.filteredList),
+			);
+		}
 	};
 
 	componentDidMount() {
 		this.props.getShipments();
+		this.setState({ filteredList: this.props.shipments });
 	}
 
 	addShipment = (tracId, prodId) => {
@@ -59,18 +93,22 @@ class ShipmentListView extends Component {
 				{this.props.shipments.length > 0 ? (
 					<div>
 						<ShipmentList
+							filter={this.handleFilter}
 							previousPage={this.state.previousPage}
 							previousRowsPerPage={this.state.previousRowsPerPage}
 							addShipment={this.addShipment}
 							deleteShipment={this.deleteShipment}
-							shipments={this.props.shipments}
+							shipments={this.state.filteredList}
 						/>
 					</div>
 				) : (
 					<ShipmentList
+						filter={this.handleFilter}
+						previousPage={this.state.previousPage}
+						previousRowsPerPage={this.state.previousRowsPerPage}
 						addShipment={this.addShipment}
 						deleteShipment={this.deleteShipment}
-						shipments={this.props.shipments}
+						shipments={this.state.filteredList}
 					/>
 				)}
 			</div>
