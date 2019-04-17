@@ -120,14 +120,6 @@ class Product extends Component {
 									/>
 								</Button>
 							</div>
-							{/* <div aria-label="delete">
-								<DeleteModal
-									delete={() =>
-										this.props.deleteProduct(this.props.product.uuid)
-									}
-								/>
-							</div> */}
-
 							<div aria-label="edit">
 								<EditProductModal
 									edit={() => {
@@ -193,7 +185,7 @@ class Product extends Component {
 								</EditProductModal>
 							</div>
 							<div aria-label="product details">
-								<ProductDetailModal product={this.props.product} />
+								<ProductDetailModal product={this.props.product} deleteProduct={this.props.deleteProduct}/>
 							</div>
 							{/* <Tooltip title="More Details...">
 								<IconButton
