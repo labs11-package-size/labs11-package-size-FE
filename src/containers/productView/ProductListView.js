@@ -180,6 +180,9 @@ class ProductListView extends Component {
 			},
 		});
 	};
+	updateState = product => {
+		this.setState({ product: { ...this.state.product, product } });
+	};
 
 	render() {
 		return (
@@ -187,6 +190,7 @@ class ProductListView extends Component {
 				{this.props.products.length > 0 ? (
 					<div>
 						<ProductList
+							updateState={this.updateState}
 							selectProduct={this.handleSelectProduct}
 							getThumbnail={this.getThumbnail}
 							loadMore={this.props.getProducts}
