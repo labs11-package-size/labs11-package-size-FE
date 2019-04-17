@@ -62,7 +62,7 @@ const styles = theme => ({
 	menuButton: {
 		marginLeft: 12,
 		marginRight: 36,
-		color: '#72BDA2'
+		color: '#72BDA2',
 	},
 	menuButtonHidden: {
 		display: 'none',

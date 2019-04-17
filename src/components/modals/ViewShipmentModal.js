@@ -4,9 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import PopoutIcon from '@material-ui/icons/LibraryBooks'
 import Tooltip from '@material-ui/core/Tooltip';
-
+import Icon from '@material-ui/core/Icon';
+import classNames from 'classnames';
 
 function getModalStyle() {
 	const top = 50;
@@ -26,7 +26,7 @@ const styles = theme => ({
 		backgroundColor: theme.palette.background.paper,
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing.unit * 4,
-		outline: 'none'
+		outline: 'none',
 	},
 });
 
@@ -49,9 +49,13 @@ class ViewShipmentModal extends React.Component {
 		return (
 			<div>
 				<span onClick={this.handleOpen}>
-				<Tooltip title="Expand Shipment" disableFocusListener={this.state.open}>
-					<PopoutIcon />
-				</Tooltip>
+					<Tooltip
+						title="Expand Shipment"
+						disableFocusListener={this.state.open}>
+						<Icon
+							className={classNames(classes.icon, 'fas fa-external-link-alt')}
+						/>
+					</Tooltip>
 				</span>
 				<Modal
 					aria-labelledby="simple-modal-title"
@@ -63,7 +67,7 @@ class ViewShipmentModal extends React.Component {
 							Shipment Info for package to {this.props.shipment.shippedTo}
 						</Typography>
 						<Typography variant="h6" id="modal-title">
-							Contains: {this.props.shipment.productNames.join(", ")}
+							Contains: {this.props.shipment.productNames.join(', ')}
 						</Typography>
 						<Typography variant="h6" id="modal-title">
 							Tracking Number: {this.props.shipment.trackingNumber}

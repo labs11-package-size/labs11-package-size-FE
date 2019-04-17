@@ -35,7 +35,7 @@ class LoggedInLinks extends Component {
 	};
 
 	handleRenderList = () => {
-		if (this.props.selectedProducts.length > 0) {
+		if (this.props.selectedProducts.length) {
 			return (
 				<Paper>
 					<List>
