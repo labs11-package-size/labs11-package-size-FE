@@ -54,10 +54,10 @@ class ProductList extends Component {
 					<AddProductModal
 						getThumbnail={this.getThumbnail}
 						addImgs={this.addImgs}
-						addProduct={() => this.props.addProduct(this.props.product)}>
+						addProduct={event => this.props.addProduct(this.props.product)}>
 						<form className={this.props.classes.container}>
 							<Input
-								onChange={this.props.handleChange}
+								onChange={event => this.props.handleChange(event)}
 								name="name"
 								value={this.props.product.name}
 								placeholder="Product Name"
@@ -65,7 +65,7 @@ class ProductList extends Component {
 							/>
 
 							<Input
-								onChange={this.props.handleChange}
+								onChange={event => this.props.handleChange(event)}
 								name="productDescription"
 								value={this.props.product.productDescription}
 								placeholder="Description"
@@ -76,7 +76,7 @@ class ProductList extends Component {
 							/>
 
 							<Input
-								onChange={this.props.handleChange}
+								onChange={event => this.props.handleChange(event)}
 								name="height"
 								value={this.props.product.height}
 								placeholder="Height"
@@ -87,7 +87,7 @@ class ProductList extends Component {
 							/>
 
 							<Input
-								onChange={this.props.handleChange}
+								onChange={event => this.props.handleChange(event)}
 								name="length"
 								value={this.props.product.length}
 								placeholder="Length"
@@ -97,7 +97,7 @@ class ProductList extends Component {
 								}}
 							/>
 							<Input
-								onChange={this.props.handleChange}
+								onChange={event => this.props.handleChange(event)}
 								name="value"
 								value={this.props.product.value}
 								placeholder="Value"
@@ -107,7 +107,7 @@ class ProductList extends Component {
 								}}
 							/>
 							<Input
-								onChange={this.props.handleChange}
+								onChange={event => this.props.handleChange(event)}
 								name="weight"
 								value={this.props.product.weight}
 								placeholder="Weight"
@@ -117,7 +117,7 @@ class ProductList extends Component {
 								}}
 							/>
 							<Input
-								onChange={this.props.handleChange}
+								onChange={event => this.props.handleChange(event)}
 								name="width"
 								value={this.props.product.width}
 								placeholder="Width"
