@@ -24,7 +24,7 @@ import { addPackage } from '../../store/actions/packageActions';
 import LoggedInLinks from '../../components/navigation/LoggedInLinks';
 import LoggedOutLinks from '../../components/navigation/LoggedOutLinks';
 
-const drawerWidth = 185;
+const drawerWidth = 200;
 
 const styles = theme => ({
 	root: {
@@ -43,7 +43,6 @@ const styles = theme => ({
 	},
 	appBar: {
 		right: 'auto',
-		maxWidth: 1200,
 		backgroundColor: '#F2F3F4',
 		zIndex: theme.zIndex.drawer + 1,
 		transition: theme.transitions.create(['width', 'margin'], {

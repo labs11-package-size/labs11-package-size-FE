@@ -25,7 +25,7 @@ import ProductDetailModal from '../modals/ProductDetailModal';
 
 const styles = theme => ({
 	card: {
-		width: 275,
+		width: 200,
 	},
 	container: {
 		margin: 40,

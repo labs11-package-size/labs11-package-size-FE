@@ -16,7 +16,7 @@ const styles = theme => ({
 });
 
 class DashboardView extends Component {
-	async componentDidMount() {
+	async componentWillMount() {
 		this.props.getProducts();
 		this.props.getShipments();
 		this.props.getPackages();

@@ -81,7 +81,7 @@ class LoggedInLinks extends Component {
 						<ListItemText primary="Shipments" />
 					</ListItem>
 
-					<ListItem
+					{/* <ListItem
 						onClick={() => this.props.history.push('/packaging')}
 						button>
 						<Tooltip title="Package List">
@@ -90,7 +90,7 @@ class LoggedInLinks extends Component {
 							</ListItemIcon>
 						</Tooltip>
 						<ListItemText primary="Packages" />
-					</ListItem>
+					</ListItem> */}
 					<ListItem onClick={() => this.props.history.push('/logout')} button>
 						<Tooltip title="Logout">
 							<ListItemIcon className={classes.menuButton}>
