@@ -35,10 +35,8 @@ class Routes extends Component {
 				<Switch>
 					<Redirect from="/auth" to="/" />
 					<Route exact path="/logout" component={LogoutView} />
-
 					<Route exact path="/shipments" component={ShipmentListView} />
 					<Route exact path="/packaging" component={PackagingView} />
-					<Route exact path="/packages" component={PackageTableView} />
 					<Route exact path="/products" component={ProductListView} />
 					<Route exact path="/account" component={AccountView} />
 					<Route exact path="/" component={DashboardView} />

@@ -42,6 +42,7 @@ let EnhancedTableToolbar = props => {
 									props.selected,
 									props.currentPage,
 									props.currentRowsPerPage,
+									props.filter
 								);
 							}}
 						/>

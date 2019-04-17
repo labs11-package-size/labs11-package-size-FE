@@ -18,8 +18,6 @@ const styles = theme => ({
 class DashboardView extends Component {
 	async componentDidMount() {
 		this.props.getProducts();
-		this.props.getShipments();
-		this.props.getPackages();
 	}
 
 	render() {
@@ -33,9 +31,6 @@ class DashboardView extends Component {
 					<div className="">
 						<ShipmentListView shipments={this.props.shipments} />
 					</div>
-					<div className="">
-						<PackageTableView shipments={this.props.packages} />
-					</div>
 				</div>
 			</div>
 		);
@@ -46,13 +41,12 @@ const mapStateToProps = state => {
 	return {
 		products: state.productsReducer.products,
 		shipments: state.shipmentsReducer.shipments,
-		packages: state.packageReducer.packages,
 	};
 };
 
 export default compose(
 	connect(
 		mapStateToProps,
-		{ getProducts, getShipments, getPackages },
+		{ getProducts, getShipments },
 	),
 )(withStyles(styles)(DashboardView));
