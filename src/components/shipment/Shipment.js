@@ -176,6 +176,7 @@ import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import Checkbox from '@material-ui/core/Checkbox';
 import ViewShipmentModal from '../modals/ViewShipmentModal';
+import moment from "moment"
 
 const styles = theme => ({
 	root: {
@@ -211,10 +212,10 @@ function Shipment(props) {
 	// }
 	return (
 		<TableRow>
-			{/* <TableCell padding="checkbox">
+			<TableCell padding="checkbox">
 				<Checkbox />
-			</TableCell> */}
-			<TableCell align="right">{props.shipment.lastUpdated}</TableCell>
+			</TableCell>
+			<TableCell align="right">{moment(props.shipment.lastUpdated).format("L h:mm a")}</TableCell>
 			<TableCell align="right">{props.shipment.status}</TableCell>
 			<TableCell align="right">{props.shipment.totalWeight}</TableCell>
 			<TableCell align="right">{props.shipment.dimensions}</TableCell>
