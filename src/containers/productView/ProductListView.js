@@ -74,7 +74,7 @@ class ProductListView extends Component {
 		};
 	}
 
-	componentDidMount = () => {
+	componentWillMount = () => {
 		this.props.getProducts();
 	};
 
