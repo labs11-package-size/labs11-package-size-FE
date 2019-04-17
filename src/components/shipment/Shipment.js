@@ -177,6 +177,17 @@ import classNames from "classnames";
 import Checkbox from "@material-ui/core/Checkbox";
 import ViewShipmentModal from "../modals/ViewShipmentModal";
 import moment from "moment";
+import { Button } from "@material-ui/core";
+import { white } from "ansi-colors";
+
+const styles = theme => ({
+
+  root: {
+    backgroundColor: "#72bda2",
+    color: "white",
+    fontSize: "10px"
+  }
+});
 
 function Shipment(props) {
   const { classes } = props;
@@ -202,7 +213,7 @@ function Shipment(props) {
           </TableCell>
         ) : (
           <TableCell align="right">
-            <button>Add Tracking Number</button>
+            <Button className={classes.root}>Track</Button>
           </TableCell>
         )}
         <TableCell align="right">{props.shipment.totalWeight}</TableCell>
@@ -219,6 +230,8 @@ Shipment.propTypes = {
 };
 
 export default withStyles(styles)(Shipment);
+
+
 
 const parsedStatus = n => {
   if (n.status === 0) {
@@ -286,16 +299,7 @@ const statusStyling = n => {
   }
 };
 
-const styles = theme => ({
-  root: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
-  },
-  table: {
-    minWidth: 700
-  }
-});
+
 
 let id = 0;
 function createData(name, calories, fat, carbs, protein) {

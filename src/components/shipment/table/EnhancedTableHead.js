@@ -31,7 +31,7 @@ class EnhancedTableHead extends React.Component {
             (shipment, index) =>
               index === 1 ? (
                 <TableCell
-                  align="center"
+                  align="right"
                   padding="default"
                   onClick={event => this.createSortHandler(event, shipment.id)}
                 >
