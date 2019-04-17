@@ -11,6 +11,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
 
 import EditProductModal from '../modals/EditProductModal';
 
@@ -87,13 +89,11 @@ class ProductDetailModal extends React.Component {
 		open: false,
 	};
 
-	handleOpen = event => {
-		event.stopPropagation();
+	handleOpen = () => {
 		this.setState({ open: true });
 	};
 
-	handleClose = event => {
-		event.stopPropagation();
+	handleClose = () => {
 		this.setState({ open: false });
 	};
 
@@ -102,14 +102,8 @@ class ProductDetailModal extends React.Component {
 
 		return (
 			<div className={classes.container}>
-				<div
-					onClick={event => event.stopPropagation()}
-					className={classes.root}>
-					<Card
-						onClick={event => {
-							this.handleOpen(event);
-						}}
-						className={classes.card}>
+				<div className={classes.root}>
+					<Card onClick={this.handleOpen} className={classes.card}>
 						<CardHeader subheader={this.props.product.name} />
 
 						<CardMedia
@@ -137,67 +131,61 @@ class ProductDetailModal extends React.Component {
 							<div aria-label="edit">
 								<EditProductModal
 									onClick={event => event.stopPropagation()}
-									edit={event =>
+									edit={() =>
 										this.props.editProduct(
 											this.props.product.uuid,
 											this.props.updatedProduct,
-											event,
 										)
 									}
 									product={this.props.product}>
 									<form className={classes.formContainer}>
-										<Input
-											onClick={event => event.stopPropagation()}
+										<TextField
 											required
-											onChange={event => this.props.handleChange(event)}
+											id="standard-name"
 											name="name"
-											defaultValue={this.props.product.name}
-											label={this.props.product.name}
-											placeholder="Product Name"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
-											}}
+											label="Product Name"
+											className={this.props.classes.textField}
+											value={this.props.product.name}
+											onChange={this.props.handleChange}
+											margin="normal"
 										/>
 
-										<Input
-											onClick={event => event.stopPropagation()}
-											required
-											onChange={event => this.props.handleChange(event)}
+										<TextField
+											onChange={this.props.handleChange}
 											name="productDescription"
-											defaultValue={this.props.product.productDescription}
-											label={this.props.product.productDescription}
-											placeholder="Description"
-											className={classes.input}
+											value={this.props.product.productDescription}
+											label="Description"
+											className={this.props.classes.textField}
 											inputProps={{
 												'aria-label': 'Description',
 											}}
 										/>
 
-										<Input
-											onClick={event => event.stopPropagation()}
-											required
-											onChange={event => this.props.handleChange(event)}
+										<TextField
+											onChange={this.props.handleChange}
 											name="value"
-											defaultValue={this.props.product.value}
-											label={this.props.product.value}
-											placeholder="Value"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
+											value={this.props.product.value}
+											label="Value"
+											className={this.props.classes.textField}
+											InputProps={{
+												startAdornment: (
+													<InputAdornment position="start">$</InputAdornment>
+												),
 											}}
 										/>
-										<Input
-											onClick={event => event.stopPropagation()}
-											required
-											onChange={event => this.props.handleChange(event)}
+										<TextField
+											className={classNames(
+												this.props.classes.margin,
+												this.props.classes.textField,
+											)}
+											onChange={this.props.handleChange}
 											name="weight"
-											defaultValue={this.props.product.weight}
-											label={this.props.product.weight}
-											placeholder="Weight"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
+											value={this.props.product.weight}
+											label="Weight"
+											InputProps={{
+												endAdornment: (
+													<InputAdornment position="end">lb</InputAdornment>
+												),
 											}}
 										/>
 									</form>
@@ -211,7 +199,7 @@ class ProductDetailModal extends React.Component {
 						aria-labelledby="simple-modal-title"
 						aria-describedby="simple-modal-description"
 						open={this.state.open}
-						onClose={event => this.handleClose(event)}>
+						onClose={this.handleClose}>
 						<div style={getModalStyle()} className={classes.paper}>
 							<div>
 								<Typography variant="h6" id="modal-title">
@@ -224,8 +212,8 @@ class ProductDetailModal extends React.Component {
 							</div>
 							<div aria-label="delete">
 								<DeleteModal
-									delete={event =>
-										this.props.deleteProduct(this.props.product.uuid, event)
+									delete={() =>
+										this.props.deleteProduct(this.props.product.uuid)
 									}
 								/>
 							</div>
@@ -260,9 +248,7 @@ class ProductDetailModal extends React.Component {
 								</div>
 							</div>
 							<div>
-								<Button onClick={event => this.handleClose(event)}>
-									Close
-								</Button>
+								<Button onClick={this.handleClose}>Close</Button>
 								{this.props.children}
 							</div>
 						</div>
