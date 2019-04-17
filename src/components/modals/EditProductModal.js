@@ -69,7 +69,7 @@ class EditProductModal extends React.Component {
 		const { classes } = this.props;
 
 		return (
-			<div>
+			<div onClick={event => event.stopPropagation()}>
 				<Tooltip title="Edit">
 					<Button
 						variant="contained"
