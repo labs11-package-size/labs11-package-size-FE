@@ -16,8 +16,7 @@ import {
 	editProduct,
 	deleteProduct,
 } from '../../store/actions/productActions';
-import { selectProduct } from '../../store/actions/packageActions';
-import { addShipment } from '../../store/actions/shipmentActions';
+import { addShipment, selectProduct } from '../../store/actions/shipmentActions';
 import { compose } from 'redux';
 
 const styles = theme => ({
