@@ -145,7 +145,7 @@ export const getDetail = uuid => dispatch => {
 	dispatch({ type: GETTING_DETAIL });
 
 	axios
-		.get(`/products/detail/${uuid}`)
+		.get(`/products/getdetail/${uuid}`)
 		.then(res =>
 			dispatch({ type: GETTING_DETAIL_SUCCESSFUL, payload: res.data }),
 		)

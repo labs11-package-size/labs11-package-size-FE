@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Tooltip from '@material-ui/core/Tooltip';
-import { getProducts, addProduct } from '../../store/actions/productActions';
+import { getProducts, addProduct, getDetail } from '../../store/actions/productActions';
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
 
@@ -54,10 +54,10 @@ class ProductList extends Component {
 					<AddProductModal
 						getThumbnail={this.getThumbnail}
 						addImgs={this.addImgs}
-						addProduct={event => this.props.addProduct(this.props.product)}>
+						addProduct={() => this.props.addProduct(this.props.product)}>
 						<form className={this.props.classes.container}>
 							<Input
-								onChange={event => this.props.handleChange(event)}
+								onChange={this.props.handleChange}
 								name="name"
 								value={this.props.product.name}
 								placeholder="Product Name"
@@ -65,7 +65,7 @@ class ProductList extends Component {
 							/>
 
 							<Input
-								onChange={event => this.props.handleChange(event)}
+								onChange={this.props.handleChange}
 								name="productDescription"
 								value={this.props.product.productDescription}
 								placeholder="Description"
@@ -76,7 +76,7 @@ class ProductList extends Component {
 							/>
 
 							<Input
-								onChange={event => this.props.handleChange(event)}
+								onChange={this.props.handleChange}
 								name="height"
 								value={this.props.product.height}
 								placeholder="Height"
@@ -87,7 +87,7 @@ class ProductList extends Component {
 							/>
 
 							<Input
-								onChange={event => this.props.handleChange(event)}
+								onChange={this.props.handleChange}
 								name="length"
 								value={this.props.product.length}
 								placeholder="Length"
@@ -97,7 +97,7 @@ class ProductList extends Component {
 								}}
 							/>
 							<Input
-								onChange={event => this.props.handleChange(event)}
+								onChange={this.props.handleChange}
 								name="value"
 								value={this.props.product.value}
 								placeholder="Value"
@@ -107,7 +107,7 @@ class ProductList extends Component {
 								}}
 							/>
 							<Input
-								onChange={event => this.props.handleChange(event)}
+								onChange={this.props.handleChange}
 								name="weight"
 								value={this.props.product.weight}
 								placeholder="Weight"
@@ -117,7 +117,7 @@ class ProductList extends Component {
 								}}
 							/>
 							<Input
-								onChange={event => this.props.handleChange(event)}
+								onChange={this.props.handleChange}
 								name="width"
 								value={this.props.product.width}
 								placeholder="Width"
@@ -191,6 +191,9 @@ class ProductList extends Component {
 							<div>no list yet</div>
 						)}
 						<Button onClick={this.props.loadMore}>Load More</Button>
+					</div>
+					<div className={this.props.classes.root}>
+					
 					</div>
 				</div>
 			</div>
