@@ -78,11 +78,8 @@ class ProductListView extends Component {
 		this.props.getProducts();
 	};
 
-	handleSelectProduct = product => {
-		// this.setState({
-		// 	...this.state,
-		// 	selectedProduct: uuid,
-		// });
+	handleSelectProduct = (product, event) => {
+		event.stopPropagation();
 		this.props.selectProduct(product);
 	};
 
@@ -124,12 +121,14 @@ class ProductListView extends Component {
 		this.props.history.push('/');
 	};
 
-	deleteProduct = id => {
+	deleteProduct = (id, event) => {
+		event.stopPropagation();
 		this.props.deleteProduct(id);
 		return <Redirect to="/products" />;
 	};
 
-	editProduct = (id, prod) => {
+	editProduct = (id, prod, event) => {
+		event.stopPropagation();
 		this.props.editProduct(id, prod);
 		this.setState({
 			product: {
@@ -147,7 +146,8 @@ class ProductListView extends Component {
 		this.props.history.push('/');
 	};
 
-	deleteImg = imgId => {
+	deleteImg = (imgId, event) => {
+		event.stopPropagation();
 		let updatedImages = Object.assign([], this.state.images);
 		updatedImages.splice(imgId, 1);
 
@@ -158,7 +158,8 @@ class ProductListView extends Component {
 		});
 	};
 
-	getThumbnail = imgs => {
+	getThumbnail = (imgs, event) => {
+		event.stopPropagation();
 		this.setState({
 			product: {
 				...this.state.product,
@@ -167,7 +168,8 @@ class ProductListView extends Component {
 		});
 	};
 
-	addImgs = files => {
+	addImgs = (files, event) => {
+		event.stopPropagation();
 		this.setState({
 			product: {
 				...this.state.product,
@@ -177,6 +179,7 @@ class ProductListView extends Component {
 	};
 
 	handleInputChange = event => {
+		event.stopPropagation();
 		this.setState({
 			product: {
 				...this.state.product,
@@ -196,7 +199,6 @@ class ProductListView extends Component {
 							loadMore={this.props.getProducts}
 							addImgs={this.addImgs}
 							deleteImg={this.deleteImg}
-							updateModalState={this.updateModalState}
 							editProduct={this.editProduct}
 							deleteProduct={this.deleteProduct}
 							addShipment={this.addShipment}
@@ -234,7 +236,9 @@ class ProductListView extends Component {
 							</Paper>
 							<div className={this.props.classes.modalStyle}>
 								<AddProductModal
-									addProduct={() => this.props.addProduct(this.state.product)}>
+									addProduct={event =>
+										this.props.addProduct(this.state.product, event)
+									}>
 									<form className={this.props.classes.container}>
 										<Input
 											onChange={this.handleInputChange}
