@@ -31,7 +31,17 @@ class LoggedInLinks extends Component {
 	handlePackit = () => {
 		const list = this.props.selectedProducts.map(prod => prod.uuid);
 		this.props.addPackage(list);
-		this.props.history.push('/');
+		setTimeout(() => {
+			this.props.history.push('/shipments');
+		}, 800);
+	};
+
+	handleDeleteSelected = uuid => {
+		// this.setState({
+		// 	...this.state,
+		// 	selectedProduct: uuid,
+		// });
+		this.props.deleteSelected(uuid);
 	};
 
 	handleRenderList = () => {
@@ -42,7 +52,10 @@ class LoggedInLinks extends Component {
 						<Typography>List</Typography>
 						{this.props.selectedProducts.map((prod, i) => (
 							<ListItem key={i}>
-								<ListItemText primary={prod.name} />
+								<ListItemText
+									onClick={() => this.handleDeleteSelected(prod.uuid)}
+									primary={prod.name}
+								/>
 							</ListItem>
 						))}
 					</List>

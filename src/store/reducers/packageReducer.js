@@ -6,6 +6,7 @@ import {
 	ADDING_PACKAGE_SUCCESSFUL,
 	ADDING_PACKAGE_FAILURE,
 	SELECTED_PRODUCT,
+	DELETE_SELECTED,
 } from '../actions/packageActions';
 
 const initialState = {
@@ -55,6 +56,16 @@ const packageReducer = (state = initialState, action) => {
 			return {
 				...state,
 				selectedProducts: [...state.selectedProducts, action.payload],
+				failure: false,
+				error: null,
+			};
+
+		case DELETE_SELECTED:
+			return {
+				...state,
+				selectedProducts: state.selectedProducts.filter(
+					prod => prod.uuid !== action.payload,
+				),
 				failure: false,
 				error: null,
 			};

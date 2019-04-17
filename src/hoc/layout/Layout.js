@@ -20,7 +20,10 @@ import Avatar from '@material-ui/core/Avatar';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { addPackage } from '../../store/actions/packageActions';
+import {
+	addPackage,
+	deleteSelectedProduct,
+} from '../../store/actions/packageActions';
 import LoggedInLinks from '../../components/navigation/LoggedInLinks';
 import LoggedOutLinks from '../../components/navigation/LoggedOutLinks';
 
@@ -196,6 +199,7 @@ class Layout extends React.Component {
 					<Divider />
 					{this.props.isLoggedIn ? (
 						<LoggedInLinks
+							deleteSelected={this.props.deleteSelectedProduct}
 							addPackage={this.props.addPackage}
 							handleDrawerOpen={this.handleDrawerOpen}
 							selectedProducts={this.props.selectedProducts}
@@ -226,7 +230,7 @@ export default compose(
 	withRouter(
 		connect(
 			mapStateToProps,
-			{ addPackage },
+			{ addPackage, deleteSelectedProduct },
 		)(withStyles(styles)(Layout)),
 	),
 );
