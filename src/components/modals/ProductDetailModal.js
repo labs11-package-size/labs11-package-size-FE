@@ -8,7 +8,6 @@ import PopoutIcon from '@material-ui/icons/LibraryBooks'
 import Tooltip from '@material-ui/core/Tooltip';
 
 import DeleteModal from './deleteModal';
-import DeletePopover from '../modals/DeletePopover';
 
 
 function getModalStyle() {
@@ -36,8 +35,8 @@ const styles = theme => ({
 class ProductDetailModal extends React.Component {
 	state = {
 		open: false,
-	};
-
+    };
+    
 	handleOpen = () => {
 		this.setState({ open: true });
 	};
@@ -69,7 +68,11 @@ class ProductDetailModal extends React.Component {
                         </div>
                         <div>
                             {/* route to shipments */}
-							<Button >Pack It</Button>
+							<Button 
+							    onClick={() => this.props.history.push('/shipments')}
+                            >
+                                Pack It
+                            </Button>
 						</div>
                         <div aria-label="delete">
                             <DeleteModal
