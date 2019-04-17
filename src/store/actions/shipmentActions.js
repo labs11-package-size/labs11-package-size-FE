@@ -12,6 +12,10 @@ export const DELETING_SHIPMENT = 'DELETING_SHIPMENT';
 export const DELETING_SHIPMENT_SUCCESSFUL = 'DELETING_SHIPMENT_SUCCESSFUL';
 export const DELETING_SHIPMENT_FAILURE = 'DELETING_SHIPMENT_FAILURE';
 
+export const DELETING_PACKAGE = 'DELETING_PACKAGE';
+export const DELETING_PACKAGE_SUCCESSFUL = 'DELETING_PACKAGE_SUCCESSFUL';
+export const DELETING_PACKAGE_FAILURE = 'DELETING_PACKAGE_FAILURE';
+
 export const addShipment = (trackingNumber, productId) => dispatch => {
 	const trackingRequest = {
 		trackingNumber,
@@ -44,11 +48,23 @@ export const getShipments = () => dispatch => {
 export const deleteShipment = uuid => dispatch => {
 	dispatch({ type: DELETING_SHIPMENT });
 	axios
-		.delete(`/shipments/delete/${uuid}`, uuid)
+		.delete(`/shipments/deleteweb/${uuid}`)
 		.then(res =>
 			dispatch({ type: DELETING_SHIPMENT_SUCCESSFUL, payload: res.data }),
 		)
 		.catch(err =>
 			dispatch({ type: DELETING_SHIPMENT_FAILURE, payload: err.data }),
+		);
+};
+
+export const deletePackage = uuid => dispatch => {
+	dispatch({ type: DELETING_PACKAGE });
+	axios
+		.delete(`/packaging/deleteweb/${uuid}`)
+		.then(res =>
+			dispatch({ type: DELETING_PACKAGE_SUCCESSFUL, payload: res.data }),
+		)
+		.catch(err =>
+			dispatch({ type: DELETING_PACKAGE_FAILURE, payload: err.data }),
 		);
 };
