@@ -81,10 +81,14 @@ class EditProductModal extends React.Component {
 					open={this.state.open}
 					onClose={this.handleClose}>
 					<div style={getModalStyle()} className={classes.paper}>
-						<Typography variant="h6" id="modal-title">
-							Are you sure you want to edit this product?
-						</Typography>
 						<div>
+							<Typography
+								variant="h5"
+								component="h2"
+								gutterBottom
+								id="modal-title">
+								Edit this product?
+							</Typography>
 							{this.props.children}
 							<div className={classes.root}>
 								<Button

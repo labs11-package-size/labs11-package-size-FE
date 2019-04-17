@@ -11,6 +11,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
 
 import EditProductModal from '../modals/EditProductModal';
 
@@ -137,54 +139,53 @@ class ProductDetailModal extends React.Component {
 									}
 									product={this.props.product}>
 									<form className={classes.formContainer}>
-										<Input
+										<TextField
 											required
-											onChange={this.props.handleChange}
+											id="standard-name"
 											name="name"
-											defaultValue={this.props.product.name}
-											label={this.props.product.name}
-											placeholder="Product Name"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
-											}}
+											label="Product Name"
+											className={this.props.classes.textField}
+											value={this.props.product.name}
+											onChange={this.props.handleChange}
+											margin="normal"
 										/>
 
-										<Input
-											required
+										<TextField
 											onChange={this.props.handleChange}
 											name="productDescription"
-											defaultValue={this.props.product.productDescription}
-											label={this.props.product.productDescription}
-											placeholder="Description"
-											className={classes.input}
+											value={this.props.product.productDescription}
+											label="Description"
+											className={this.props.classes.textField}
 											inputProps={{
 												'aria-label': 'Description',
 											}}
 										/>
 
-										<Input
-											required
+										<TextField
 											onChange={this.props.handleChange}
 											name="value"
-											defaultValue={this.props.product.value}
-											label={this.props.product.value}
-											placeholder="Value"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
+											value={this.props.product.value}
+											label="Value"
+											className={this.props.classes.textField}
+											InputProps={{
+												startAdornment: (
+													<InputAdornment position="start">$</InputAdornment>
+												),
 											}}
 										/>
-										<Input
-											required
+										<TextField
+											className={classNames(
+												this.props.classes.margin,
+												this.props.classes.textField,
+											)}
 											onChange={this.props.handleChange}
 											name="weight"
-											defaultValue={this.props.product.weight}
-											label={this.props.product.weight}
-											placeholder="Weight"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
+											value={this.props.product.weight}
+											label="Weight"
+											InputProps={{
+												endAdornment: (
+													<InputAdornment position="end">lb</InputAdornment>
+												),
 											}}
 										/>
 									</form>

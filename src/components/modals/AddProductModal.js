@@ -35,7 +35,6 @@ const styles = theme => ({
 		},
 	},
 	root: {
-		margin: 10,
 		display: 'flex',
 		justifyContent: 'space-between',
 	},
@@ -79,9 +78,6 @@ class AddProductModal extends React.Component {
 					open={this.state.open}
 					onClose={this.handleClose}>
 					<div style={getModalStyle()} className={classes.paper}>
-						<Typography variant="h6" id="modal-title">
-							Add a new product
-						</Typography>
 						<div>
 							{this.props.children}
 							<div className={classes.root}>

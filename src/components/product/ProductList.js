@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProducts, addProduct } from '../../store/actions/productActions';
+import classNames from 'classnames';
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
 
@@ -24,8 +25,14 @@ const styles = theme => ({
 		marginLeft: theme.spacing.unit,
 		marginRight: theme.spacing.unit,
 	},
+	dimensions: {
+		flexBasis: 200,
+	},
+	margin: {
+		margin: theme.spacing.unit,
+	},
 	container: {
-		marginBottom: 60,
+		marginBottom: 25,
 		flexDirection: 'column',
 		display: 'flex',
 	},
@@ -55,77 +62,109 @@ class ProductList extends Component {
 						addImgs={this.addImgs}
 						addProduct={() => this.props.addProduct(this.props.product)}>
 						<form className={this.props.classes.container}>
-							<Input
-								onChange={this.props.handleChange}
-								name="name"
-								value={this.props.product.name}
-								placeholder="Product Name"
-								className={this.props.classes.input}
-							/>
+							<div className={this.props.classes.container}>
+								<Typography gutterBottom variant="h5" component="h2">
+									Product Detail
+								</Typography>
+								<TextField
+									required
+									id="standard-name"
+									name="name"
+									label="Product Name"
+									className={this.props.classes.textField}
+									value={this.props.product.name}
+									onChange={this.props.handleChange}
+									margin="normal"
+								/>
+								<TextField
+									onChange={this.props.handleChange}
+									name="productDescription"
+									value={this.props.product.productDescription}
+									label="Description"
+									className={this.props.classes.textField}
+									inputProps={{
+										'aria-label': 'Description',
+									}}
+								/>
+								<TextField
+									onChange={this.props.handleChange}
+									name="value"
+									value={this.props.product.value}
+									label="Value"
+									className={this.props.classes.textField}
+									InputProps={{
+										startAdornment: (
+											<InputAdornment position="start">$</InputAdornment>
+										),
+									}}
+								/>
+							</div>
+							<div className={this.props.classes.container}>
+								<Typography gutterBottom variant="h5" component="h2">
+									Dimensions
+								</Typography>
+								<TextField
+									onChange={this.props.handleChange}
+									name="height"
+									value={this.props.product.height}
+									label="Height"
+									className={classNames(
+										this.props.classes.margin,
+										this.props.classes.textField,
+									)}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">in</InputAdornment>
+										),
+									}}
+								/>
 
-							<Input
-								onChange={this.props.handleChange}
-								name="productDescription"
-								value={this.props.product.productDescription}
-								placeholder="Description"
-								className={this.props.classes.input}
-								inputProps={{
-									'aria-label': 'Description',
-								}}
-							/>
+								<TextField
+									onChange={this.props.handleChange}
+									name="length"
+									value={this.props.product.length}
+									label="Length"
+									className={classNames(
+										this.props.classes.margin,
+										this.props.classes.textField,
+									)}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">in</InputAdornment>
+										),
+									}}
+								/>
 
-							<Input
-								onChange={this.props.handleChange}
-								name="height"
-								value={this.props.product.height}
-								placeholder="Height"
-								className={this.props.classes.input}
-								inputProps={{
-									'aria-label': 'Description',
-								}}
-							/>
-
-							<Input
-								onChange={this.props.handleChange}
-								name="length"
-								value={this.props.product.length}
-								placeholder="Length"
-								className={this.props.classes.input}
-								inputProps={{
-									'aria-label': 'Description',
-								}}
-							/>
-							<Input
-								onChange={this.props.handleChange}
-								name="value"
-								value={this.props.product.value}
-								placeholder="Value"
-								className={this.props.classes.input}
-								inputProps={{
-									'aria-label': 'Description',
-								}}
-							/>
-							<Input
-								onChange={this.props.handleChange}
-								name="weight"
-								value={this.props.product.weight}
-								placeholder="Weight"
-								className={this.props.classes.input}
-								inputProps={{
-									'aria-label': 'Description',
-								}}
-							/>
-							<Input
-								onChange={this.props.handleChange}
-								name="width"
-								value={this.props.product.width}
-								placeholder="Width"
-								className={this.props.classes.input}
-								inputProps={{
-									'aria-label': 'Description',
-								}}
-							/>
-							<div className="uploader">
+								<TextField
+									onChange={this.props.handleChange}
+									name="width"
+									value={this.props.product.width}
+									label="Width"
+									className={classNames(
+										this.props.classes.margin,
+										this.props.classes.textField,
+									)}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">in</InputAdornment>
+										),
+									}}
+								/>
+								<TextField
+									className={classNames(
+										this.props.classes.margin,
+										this.props.classes.textField,
+									)}
+									onChange={this.props.handleChange}
+									name="weight"
+									value={this.props.product.weight}
+									label="Weight"
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">lb</InputAdornment>
+										),
+									}}
+								/>
 								<ImgUploader
 									getThumbnail={this.props.getThumbnail}
 									addImgs={this.props.addImgs}
@@ -143,7 +182,7 @@ class ProductList extends Component {
 							value={this.props.searchTerm}
 							onChange={this.props.updateSearch}
 							id="filled-full-width"
-							placeholder="Search by name..."
+							label="Search by name..."
 							margin="normal"
 							fullWidth
 							variant="filled"
