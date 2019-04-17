@@ -28,7 +28,7 @@ export const DELETING_PRODUCT_FAILURE = 'DELETING_PRODUCT_FAILURE';
 
 export const GETTING_DETAIL = 'GETTING_DETAIL';
 export const GETTING_DETAIL_SUCCESSFUL = 'GETTING_DETAIL_SUCCESSFUL';
-export const GETTING_DETAIL_FAILURE = 'GETTING_DETAIL_FAILURE'; 
+export const GETTING_DETAIL_FAILURE = 'GETTING_DETAIL_FAILURE';
 
 axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
 axios.interceptors.request.use(
@@ -79,17 +79,7 @@ export const uploadImgs = files => dispatch => {
 };
 
 export const deleteImgFromProdList = id => dispatch => {
-	console.log(id);
 	dispatch({ type: DELETING_IMAGE, payload: id });
-
-	// let deleteRequest = superagent.post(`${url}/destroy/publix_id=${id}`);
-
-	// deleteRequest
-	// 	.then(res => {
-	// 		dispatch({ type: DELETING_IMAGE_SUCCESS, payload: res.body });
-	// 		console.log(`DELETE COMPLETE:${JSON.stringify(res.body)}`);
-	// 	})
-	// 	.catch(err => dispatch({ type: DELETING_IMAGE_FAILURE, payload: err }));
 };
 
 export const getProducts = () => dispatch => {
@@ -118,6 +108,7 @@ export const addProduct = newProd => dispatch => {
 };
 
 export const editProduct = (uuid, product) => dispatch => {
+	console.log(product);
 	dispatch({ type: EDITING_PRODUCT });
 	axios
 		.put(`/products/edit/${uuid}`, product)
@@ -149,7 +140,7 @@ export const getDetail = uuid => dispatch => {
 		.then(res =>
 			dispatch({ type: GETTING_DETAIL_SUCCESSFUL, payload: res.data }),
 		)
-		.catch(err => 
-			dispatch({ type: GETTING_DETAIL_FAILURE, payload: err.data}),
-		)
+		.catch(err =>
+			dispatch({ type: GETTING_DETAIL_FAILURE, payload: err.data }),
+		);
 };
