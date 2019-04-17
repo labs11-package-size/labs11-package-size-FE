@@ -7,7 +7,6 @@ import ShipmentListView from '../shipmentView/ShipmentListView';
 import PackageTableView from '../packageTableView/PackageTableView';
 import { getProducts } from '../../store/actions/productActions';
 import { getShipments } from '../../store/actions/shipmentActions';
-import { getPackages } from '../../store/actions/packageActions';
 
 const styles = theme => ({
 	root: {

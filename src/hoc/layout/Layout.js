@@ -23,7 +23,7 @@ import { compose } from 'redux';
 import {
 	addPackage,
 	deleteSelectedProduct,
-} from '../../store/actions/packageActions';
+} from '../../store/actions/shipmentActions';
 import LoggedInLinks from '../../components/navigation/LoggedInLinks';
 import LoggedOutLinks from '../../components/navigation/LoggedOutLinks';
 
@@ -218,7 +218,7 @@ const mapStateToProps = state => {
 	return {
 		isLoggedIn: state.userReducer.isLoggedIn,
 		userInfo: state.firebaseReducer.auth,
-		selectedProducts: state.packageReducer.selectedProducts,
+		selectedProducts: state.shipmentsReducer.selectedProducts,
 	};
 };
 
