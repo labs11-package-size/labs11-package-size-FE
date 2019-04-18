@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
 
+
 import Product from './Product';
 
 const styles = theme => ({
@@ -220,6 +221,8 @@ class ProductList extends Component {
 											width={this.props.width}
 											height={this.props.height}
 											value={this.props.value}
+											getDetail={this.props.getDetail}
+											addPackage={this.props.addPackage}
 										/>
 									</div>
 								);

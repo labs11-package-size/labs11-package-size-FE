@@ -10,7 +10,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 function getModalStyle() {
 	const top = 50;
-	const left = 50;
+	const left = 30;
 
 	return {
 		top: `${top}%`,

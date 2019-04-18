@@ -13,6 +13,9 @@ import Icon from "@material-ui/core/Icon";
 import classNames from "classnames";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import EditProductModal from "../modals/EditProductModal";
 
@@ -89,9 +92,11 @@ class ProductDetailModal extends React.Component {
     open: false
   };
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
+	handleOpen = (event, uuid) => {
+		event.stopPropagation();
+		this.setState({ open: true });
+		this.props.getDetail(uuid);
+	};
 
   handleClose = () => {
     this.setState({ open: false });
@@ -100,14 +105,27 @@ class ProductDetailModal extends React.Component {
     this.props.updateState(this.props.product);
   };
 
-  render() {
-    const { classes } = this.props;
+  
+	handlePackit = (event, uuid) => {
+		event.preventDefault();
+		this.props.addPackage([uuid]);
+		this.props.history.push('/loadingshipments');
+	};
 
-    return (
-      <div className={classes.container}>
-        <div className={classes.root}>
-          <Card onClick={this.handleOpen} className={classes.card}>
-            <CardHeader style={{whiteSpace: "nowrap"}}subheader={(this.props.product.name.length > 24) ? (`${this.props.product.name.slice(0, 24)}...`) : (this.props.product.name)}
+	render() {
+		const { classes } = this.props;
+
+		return (
+			<div className={classes.container}>
+				<div
+					onClick={event => event.stopPropagation()}
+					className={classes.root}>
+					<Card
+						onClick={(event) => 
+							this.handleOpen(event, this.props.product.uuid)
+						}
+						className={classes.card}>
+						<CardHeader style={{whiteSpace: "nowrap"}}subheader={(this.props.product.name.length > 24) ? (`${this.props.product.name.slice(0, 24)}...`) : (this.props.product.name)}
             />
 
             <CardMedia
@@ -201,73 +219,130 @@ class ProductDetailModal extends React.Component {
             </CardActions>
           </Card>
 
-          <Modal
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            open={this.state.open}
-            onClose={this.handleClose}
-          >
-            <div style={getModalStyle()} className={classes.paper}>
-              <div>
-                <Typography variant="h6" id="modal-title">
-                  {this.props.product.name}
-                </Typography>
-              </div>
-              <div>
-                {/* route to shipments */}
-                <Button>Pack It</Button>
-              </div>
-              <div aria-label="delete">
-                <DeleteModal
-                  delete={() =>
-                    this.props.deleteProduct(this.props.product.uuid)
-                  }
-                />
-              </div>
-              <div>
-                <Typography variant="h6" id="modal-title">
-                  Product Information
-                </Typography>
-                <div>
-                  <Typography>
-                    Description: {this.props.product.productDescription}
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Price: {this.props.product.value}
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Fragile: {this.props.product.fragile}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography className={classes.heading}>
-                    Product Dimensions:
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Length: {this.props.product.length}"
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Width: {this.props.product.width}"
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Height: {this.props.product.height}"
-                  </Typography>
-                </div>
-              </div>
-              <div>
-                <Button onClick={this.handleClose}>Close</Button>
-                {this.props.children}
-              </div>
-            </div>
-          </Modal>
-        </div>
-      </div>
-    );
-  }
+					<Modal
+						aria-labelledby="simple-modal-title"
+						aria-describedby="simple-modal-description"
+						open={this.state.open}
+						onClose={event => this.handleClose(event)}>
+						<div style={getModalStyle()} className={classes.paper}>
+							<div>
+								<Typography variant="h6" id="modal-title">
+									{this.props.product.name}
+								</Typography>
+							</div>
+							<div>
+								<Button
+									onClick={event => this.handlePackit(event, this.props.product.uuid)}
+									>
+									Pack It
+								</Button>
+							</div>	
+							<div aria-label="delete">
+								<DeleteModal
+									delete={event =>
+										this.props.deleteProduct(this.props.product.uuid, event)
+									}
+								/>
+							</div>
+							{this.props.detail ? 
+								<div>
+									<div>
+										<Typography variant="h6" id="modal-title">
+											Product Summary:
+										</Typography>
+										<Typography>
+											Description: {this.props.detail.productDescription}
+										</Typography>
+										<Typography className={classes.heading}>
+											Price: ${this.props.detail.value}
+										</Typography>
+										<Typography className={classes.heading}>
+											Fragile: {this.props.detail.fragile}
+										</Typography>
+									</div>
+									<div>
+										<Typography className={classes.heading}>
+											Product Dimensions:
+										</Typography>
+										<Typography className={classes.heading}>
+											Length: {this.props.detail.length}"
+										</Typography>
+										<Typography className={classes.heading}>
+											Width: {this.props.detail.width}"
+										</Typography>
+										<Typography className={classes.heading}>
+											Height: {this.props.detail.height}"
+										</Typography>
+									</div>
+									<div className={this.props.classes.root}>
+										<Typography className={classes.heading}>
+											Shipment Summary:
+										</Typography>
+										{this.props.detail.shipments ? (
+											this.props.detail.shipments.map((shipment, i) => {
+												return (
+													<div key={i}>
+														<Typography className={classes.heading}>
+															Date Shipped: {shipment.dateShipped}
+														</Typography>
+														<Typography className={classes.heading}>
+															Shipped To: {shipment.shippedTo}
+														</Typography>
+														<Typography className={classes.heading}>
+															Date Arrived: {shipment.dateArrived}
+														</Typography>
+														<Typography className={classes.heading}>
+															Tracking Number: {shipment.trackingNumber}
+														</Typography>
+														<Typography className={classes.heading}>
+															Status: {shipment.status}
+														</Typography>
+														<Typography className={classes.heading}>
+															Carrier Name: {shipment.carrierName}
+														</Typography>
+													</div>
+												)
+											})
+											) : (
+											<div>There are no shipments associated with this product.</div>
+											)
+										}
+										
+										
+									
+									</div>
+								</div>
+								: null 
+							}
+							<div>
+								<Button onClick={event => this.handleClose(event)}>
+									Close
+								</Button>
+								{this.props.children}
+							</div>
+						</div>
+					</Modal>
+				</div>
+			</div>
+		);
+	}
 }
 
 ProductDetailModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ProductDetailModal);
+const mapStateToProps = state => {
+	return {
+		detail: state.productsReducer.productDetail,
+		// package: state.packageReducer.addedPackage
+	}
+}
+export default compose(
+	withRouter(
+		connect(
+			mapStateToProps,
+			//  { addPackage },
+		)(withStyles(styles)(ProductDetailModal))
+	)
+);
