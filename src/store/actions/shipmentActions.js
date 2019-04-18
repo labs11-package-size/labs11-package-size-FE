@@ -32,7 +32,7 @@ export const addShipment = (trackingNumber, productId) => dispatch => {
 	dispatch({ type: ADDING_SHIPMENT });
 
 	axios
-		.post('/shipments/add', trackingRequest)
+		.post('/shipments/addweb', trackingRequest)
 		.then(res =>
 			dispatch({ type: ADDING_SHIPMENT_SUCCESSFUL, payload: res.data }),
 		)
