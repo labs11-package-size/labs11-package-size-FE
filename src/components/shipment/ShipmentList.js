@@ -42,7 +42,6 @@ const styles = theme => ({
   },
   switch: {
     margin: "0px 20px 0",
-    // fontSize: "30px"
   }
 });
 
@@ -66,10 +65,8 @@ class ShipmentList extends React.Component {
         data: this.props.shipments
           .filter(shipment => {
             return shipment.tracked !== 1;
-          })
-          .sort((a, b) => {
-            return b - a;
           }),
+          
         page: this.props.previousPage,
         rowsPerPage: this.props.previousRowsPerPage
       });
@@ -79,9 +76,7 @@ class ShipmentList extends React.Component {
           .filter(shipment => {
             return shipment.tracked !== 1;
           })
-          .sort((a, b) => {
-            return b - a;
-          })
+          
       });
     }
   }

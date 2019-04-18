@@ -142,7 +142,10 @@ const shipmentsReducer = (state = initialState, action) => {
     case ADDING_PACKAGE_SUCCESSFUL:
       return {
         ...state,
-        shipments: action.payload,
+        shipments: action.payload.map(shipment => {
+          shipment.shipDateUnix = moment(shipment.lastUpdated).format("x");
+          return shipment;
+        }),
         selectedProducts: [],
         fetching: false,
         adding: false,
