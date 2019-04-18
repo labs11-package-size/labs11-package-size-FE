@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import ProductListView from '../containers/productView/ProductListView';
 import PackagingView from '../containers/packagingView/PackagingView';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
-
+import loadingSpinner from '../components/loadingSpinner/LoadingSpinnerAddPackage.js'
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
 import PackageTableView from '../containers/packageTableView/PackageTableView';
 import AccountView from '../containers/accountView/AccountView';
@@ -38,6 +38,7 @@ class Routes extends Component {
 					<Route exact path="/shipments" component={ShipmentListView} />
 					{/* <Route exact path="/packaging" component={PackagingView} />
 					<Route exact path="/packages" component={PackageTableView} /> */}
+					<Route exact path="/loadingshipments" component={loadingSpinner} />
 					<Route exact path="/products" component={ProductListView} />
 					<Route exact path="/account" component={AccountView} />
 					<Route exact path="/" component={DashboardView} />

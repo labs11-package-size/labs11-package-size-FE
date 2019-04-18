@@ -134,6 +134,7 @@ const shipmentsReducer = (state = initialState, action) => {
     case ADDING_PACKAGE:
       return {
         ...state,
+        success: false,
         adding: true,
         failure: false,
         error: null
@@ -145,7 +146,7 @@ const shipmentsReducer = (state = initialState, action) => {
         selectedProducts: [],
         fetching: false,
         adding: false,
-		success: true,
+		    success: true,
         failure: false,
         error: null
       };
