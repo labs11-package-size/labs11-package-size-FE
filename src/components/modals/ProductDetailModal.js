@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import Input from '@material-ui/core/Input';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
-import Icon from '@material-ui/core/Icon';
-import classNames from 'classnames';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { Redirect, Link } from 'react-router-dom';
-
-import EditProductModal from '../modals/EditProductModal';
-import DeleteModal from './deleteModal';
-// import { addPackage } from '../../store/actions/packageActions';
-=======
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -35,11 +13,13 @@ import Icon from "@material-ui/core/Icon";
 import classNames from "classnames";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import EditProductModal from "../modals/EditProductModal";
 
 import DeleteModal from "./deleteModal";
->>>>>>> 182814bf5719cac38f1ec5b22f78ce5a85e19475
 
 function getModalStyle() {
   const top = 50;
@@ -239,7 +219,6 @@ class ProductDetailModal extends React.Component {
             </CardActions>
           </Card>
 
-<<<<<<< HEAD
 					<Modal
 						aria-labelledby="simple-modal-title"
 						aria-describedby="simple-modal-description"
@@ -253,7 +232,7 @@ class ProductDetailModal extends React.Component {
 							</div>
 							<div>
 								<Button
-									onClick={event => this.props.handlePackit(event, this.props.product.uuid)}
+									onClick={event => this.handlePackit(event, this.props.product.uuid)}
 									>
 									Pack It
 								</Button>
@@ -347,71 +326,6 @@ class ProductDetailModal extends React.Component {
 			</div>
 		);
 	}
-=======
-          <Modal
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            open={this.state.open}
-            onClose={this.handleClose}
-          >
-            <div style={getModalStyle()} className={classes.paper}>
-              <div>
-                <Typography variant="h6" id="modal-title">
-                  {this.props.product.name}
-                </Typography>
-              </div>
-              <div>
-                {/* route to shipments */}
-                <Button>Pack It</Button>
-              </div>
-              <div aria-label="delete">
-                <DeleteModal
-                  delete={() =>
-                    this.props.deleteProduct(this.props.product.uuid)
-                  }
-                />
-              </div>
-              <div>
-                <Typography variant="h6" id="modal-title">
-                  Product Information
-                </Typography>
-                <div>
-                  <Typography>
-                    Description: {this.props.product.productDescription}
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Price: {this.props.product.value}
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Fragile: {this.props.product.fragile}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography className={classes.heading}>
-                    Product Dimensions:
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Length: {this.props.product.length}"
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Width: {this.props.product.width}"
-                  </Typography>
-                  <Typography className={classes.heading}>
-                    Height: {this.props.product.height}"
-                  </Typography>
-                </div>
-              </div>
-              <div>
-                <Button onClick={this.handleClose}>Close</Button>
-                {this.props.children}
-              </div>
-            </div>
-          </Modal>
-        </div>
-      </div>
-    );
-  }
->>>>>>> 182814bf5719cac38f1ec5b22f78ce5a85e19475
 }
 
 ProductDetailModal.propTypes = {
@@ -425,8 +339,10 @@ const mapStateToProps = state => {
 	}
 }
 export default compose(
+	withRouter(
 		connect(
 			mapStateToProps,
 			//  { addPackage },
 		)(withStyles(styles)(ProductDetailModal))
+	)
 );

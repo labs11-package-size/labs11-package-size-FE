@@ -222,7 +222,7 @@ class ProductList extends Component {
 											height={this.props.height}
 											value={this.props.value}
 											getDetail={this.props.getDetail}
-											addPackage={this.addPackage}
+											addPackage={this.props.addPackage}
 										/>
 									</div>
 								);
@@ -242,6 +242,6 @@ class ProductList extends Component {
 export default compose(
 	connect(
 		null,
-		{ getProducts, addProduct, getDetail, addPackage },
+		{ getProducts, addProduct },
 	)(withStyles(styles)(ProductList)),
 );

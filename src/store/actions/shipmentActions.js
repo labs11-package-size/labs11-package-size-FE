@@ -43,7 +43,7 @@ export const addShipment = (trackingNumber, productId) => dispatch => {
 
 export const addPackage = packageArr => dispatch => {
 	const products = { products: packageArr };
-	console.log(products);
+	console.log(packageArr);
 	dispatch({ type: ADDING_PACKAGE });
 	axios
 		.post('/packaging/preview', products)
