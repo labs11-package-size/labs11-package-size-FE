@@ -102,6 +102,7 @@ class Product extends Component {
 				height={this.props.height}
 				value={this.props.value}
 				getDetail={this.props.getDetail}
+				addPackage={this.props.addPackage}
 			/>
 		);
 	}

@@ -17,7 +17,7 @@ import {
 	editProduct,
 	deleteProduct,
 } from '../../store/actions/productActions';
-import { selectProduct } from '../../store/actions/packageActions';
+import { selectProduct, addPackage } from '../../store/actions/packageActions';
 import { addShipment } from '../../store/actions/shipmentActions';
 import { compose } from 'redux';
 
@@ -221,6 +221,7 @@ class ProductListView extends Component {
 							addProduct={this.productAdd}
 							searchTerm={this.state.searchTerm}
 							updateSearch={this.updateSearch}
+							addPackage={this.addPackage}
 						/>
 					</div>
 				) : (
@@ -348,6 +349,7 @@ export default compose(
 				deleteProduct,
 				addShipment,
 				selectProduct,
+				addPackage
 			},
 		)(withStyles(styles)(ProductListView)),
 	),

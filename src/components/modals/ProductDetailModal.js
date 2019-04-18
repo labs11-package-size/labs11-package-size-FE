@@ -13,9 +13,11 @@ import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { Redirect, Link } from 'react-router-dom';
 
 import EditProductModal from '../modals/EditProductModal';
 import DeleteModal from './deleteModal';
+// import { addPackage } from '../../store/actions/packageActions';
 
 function getModalStyle() {
 	const top = 50;
@@ -97,6 +99,12 @@ class ProductDetailModal extends React.Component {
 	handleClose = event => {
 		event.stopPropagation();
 		this.setState({ open: false });
+	};
+
+	handlePackit = (event, uuid) => {
+		event.preventDefault();
+		this.props.addPackage([uuid]);
+		this.props.history.push('/loadingshipments');
 	};
 
 	render() {
@@ -221,9 +229,12 @@ class ProductDetailModal extends React.Component {
 								</Typography>
 							</div>
 							<div>
-								{/* route to shipments */}
-								<Button>Pack It</Button>
-							</div>
+								<Button
+									onClick={event => this.props.handlePackit(event, this.props.product.uuid)}
+									>
+									Pack It
+								</Button>
+							</div>	
 							<div aria-label="delete">
 								<DeleteModal
 									delete={event =>
@@ -241,7 +252,7 @@ class ProductDetailModal extends React.Component {
 											Description: {this.props.detail.productDescription}
 										</Typography>
 										<Typography className={classes.heading}>
-											Price: {this.props.detail.value}
+											Price: ${this.props.detail.value}
 										</Typography>
 										<Typography className={classes.heading}>
 											Fragile: {this.props.detail.fragile}
@@ -274,9 +285,6 @@ class ProductDetailModal extends React.Component {
 														</Typography>
 														<Typography className={classes.heading}>
 															Shipped To: {shipment.shippedTo}
-														</Typography>
-														<Typography className={classes.heading}>
-															Date Arrived: {shipment.dateArrived}
 														</Typography>
 														<Typography className={classes.heading}>
 															Date Arrived: {shipment.dateArrived}
@@ -324,12 +332,13 @@ ProductDetailModal.propTypes = {
 
 const mapStateToProps = state => {
 	return {
-		detail: state.productsReducer.productDetail
+		detail: state.productsReducer.productDetail,
+		// package: state.packageReducer.addedPackage
 	}
 }
 export default compose(
 		connect(
 			mapStateToProps,
-			{},
+			//  { addPackage },
 		)(withStyles(styles)(ProductDetailModal))
 );

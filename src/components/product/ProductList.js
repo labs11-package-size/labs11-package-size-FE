@@ -13,6 +13,7 @@ import { getProducts, addProduct, getDetail } from '../../store/actions/productA
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
 
+
 import Product from './Product';
 
 const styles = theme => ({
@@ -184,6 +185,7 @@ class ProductList extends Component {
 											height={this.props.height}
 											value={this.props.value}
 											getDetail={this.props.getDetail}
+											addPackage={this.addPackage}
 										/>
 									</div>
 								);
@@ -202,6 +204,6 @@ class ProductList extends Component {
 export default compose(
 	connect(
 		null,
-		{ getProducts, addProduct, getDetail },
+		{ getProducts, addProduct, getDetail, addPackage },
 	)(withStyles(styles)(ProductList)),
 );
