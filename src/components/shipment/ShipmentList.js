@@ -40,8 +40,9 @@ const styles = theme => ({
   table: {
     minWidth: 700
   },
-  colorSecondary: {
-    color: "#72bda2"
+  switch: {
+    margin: "0px 20px 0",
+    // fontSize: "30px"
   }
 });
 
@@ -62,19 +63,29 @@ class ShipmentList extends React.Component {
   componentDidMount() {
     if (this.props.previousRowsPerPage) {
       this.setState({
-        data: this.props.shipments.filter(shipment => {
-          return shipment.tracked !== 1;
-        }).sort((a, b) => {return b-a}),
+        data: this.props.shipments
+          .filter(shipment => {
+            return shipment.tracked !== 1;
+          })
+          .sort((a, b) => {
+            return b - a;
+          }),
         page: this.props.previousPage,
         rowsPerPage: this.props.previousRowsPerPage
       });
     } else {
-      this.setState({ data: this.props.shipments.filter(shipment => {
-        return shipment.tracked !== 1;
-      }).sort((a, b) => {return b-a}) });
+      this.setState({
+        data: this.props.shipments
+          .filter(shipment => {
+            return shipment.tracked !== 1;
+          })
+          .sort((a, b) => {
+            return b - a;
+          })
+      });
     }
   }
-  
+
   handleFilter = () => {
     this.setState(
       {
@@ -86,21 +97,17 @@ class ShipmentList extends React.Component {
 
   handleRenderList = () => {
     if (this.state.filter === false) {
-      this.setState(
-        {
-          data: this.props.shipments.filter(shipment => {
-            return shipment.tracked !== 0;
-          })
-        }
-      );
+      this.setState({
+        data: this.props.shipments.filter(shipment => {
+          return shipment.tracked !== 0;
+        })
+      });
     } else {
-      this.setState(
-        {
-          data: this.props.shipments.filter(shipment => {
-            return shipment.tracked !== 1;
-          })
-        }
-      );
+      this.setState({
+        data: this.props.shipments.filter(shipment => {
+          return shipment.tracked !== 1;
+        })
+      });
     }
   };
 
@@ -161,13 +168,32 @@ class ShipmentList extends React.Component {
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
-        <FormGroup>
-          <FormControlLabel
-            control={<Switch className={classes.colorSecondary} onClick={() => this.handleFilter()} />}
-            label="See Tracked Packages"
-          />
-        </FormGroup>
-        <EnhancedTableToolbar
+        {this.state.filter ? (
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  className={classes.switch}
+                  onClick={() => this.handleFilter()}
+                />
+              }
+              label="Viewing Untracked Packages"
+            />
+          </FormGroup>
+        ) : (
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  className={classes.switch}
+                  onClick={() => this.handleFilter()}
+                />
+              }
+              label="Viewing Tracked Packages"
+            />
+          </FormGroup>
+        )}
+        {/* <EnhancedTableToolbar
           {...this.props}
           filter={this.state.filter}
           currentPage={this.state.page}
@@ -175,7 +201,7 @@ class ShipmentList extends React.Component {
           deleteShipment={this.props.deleteShipment}
           selected={selected}
           numSelected={selected.length}
-        />
+        /> */}
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead
@@ -188,19 +214,20 @@ class ShipmentList extends React.Component {
               rowCount={data.length}
             />
             <TableBody>
-              {this.state.data && stableSort(data, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(shipment => {
-                  const isSelected = this.isSelected(shipment.uuid);
-                  return (
-                    <Shipment
-                      key={shipment.uuid}
-                      shipment={shipment}
-                      isSelected={isSelected}
-                      handleClick={this.handleClick}
-                    />
-                  );
-                })}
+              {this.state.data &&
+                stableSort(data, getSorting(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map(shipment => {
+                    const isSelected = this.isSelected(shipment.uuid);
+                    return (
+                      <Shipment
+                        key={shipment.uuid}
+                        shipment={shipment}
+                        isSelected={isSelected}
+                        handleClick={this.handleClick}
+                      />
+                    );
+                  })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
                   <TableCell colSpan={5} />
