@@ -24,7 +24,7 @@ const styles = {
 	},
 	menuButton: {
 		color: '#72BDA2',
-	},
+	}
 };
 
 class LoggedInLinks extends Component {
@@ -34,32 +34,52 @@ class LoggedInLinks extends Component {
 		this.props.history.push('/loadingshipments')
 	};
 
-	handleDeleteSelected = uuid => {
-		// this.setState({
-		// 	...this.state,
-		// 	selectedProduct: uuid,
-		// });
-		this.props.deleteSelected(uuid);
+	clearAll = () => {
+		this.props.deleteAllSelected()
+	}
+
+	handleDeleteSelected = index => {
+		this.props.deleteSelected(index);
 	};
 
 	handleRenderList = () => {
 		if (this.props.selectedProducts.length) {
-			return (
+			return (<div>
+				<Typography style={{textAlign: "center", margin: "15px 0"}}> Products To Package</Typography>
 				<Paper>
 					<List>
-						<Typography>List</Typography>
+						
 						{this.props.selectedProducts.map((prod, i) => (
-							<ListItem key={i}>
+								prod.name.length > 24
+								? (								
+							<ListItem key={i} >
+							<ListItemText
+								disableTypography={true}
+								className={this.props.classes.root}
+									onClick={() => this.handleDeleteSelected(i)}
+									primary={prod.name.slice(0, 23)}
+									style= {{fontSize: "12px", textAlign: "center"}}
+								/></ListItem>)
+								 : 
+								 (
+									<ListItem key={i}>
 								<ListItemText
-									onClick={() => this.handleDeleteSelected(prod.uuid)}
+								disableTypography={true}
+								className={this.props.classes.root}
+									onClick={() => this.handleDeleteSelected(i)}
 									primary={prod.name}
-								/>
+									style= {{fontSize: "12px", textAlign: "center"}} />
 							</ListItem>
-						))}
+						)))}
 					</List>
 					<Divider />
+					<div style={{display: "flex", justifyContent: "space-evenly"}}>
 					<Button onClick={this.handlePackit}>Pack It</Button>
+					<Button onClick={() => this.clearAll()}>Clear All</Button>
+					</div>
+					<Typography style={{fontSize: "10px", margin: "10px 0", textAlign: "center"}}>Click a product name to delete..</Typography>
 				</Paper>
+				</div>
 			);
 		} else {
 			return null;

@@ -23,6 +23,7 @@ import { compose } from 'redux';
 import {
 	addPackage,
 	deleteSelectedProduct,
+	deleteAllSelected
 } from '../../store/actions/shipmentActions';
 import LoggedInLinks from '../../components/navigation/LoggedInLinks';
 import LoggedOutLinks from '../../components/navigation/LoggedOutLinks';
@@ -117,12 +118,19 @@ class Layout extends React.Component {
 		open: true,
 	};
 
+	componentDidUpdate = (prevProps, prevState) => {
+		if ((this.props.selectedProducts.length > 0) && (prevProps.selectedProducts !== this.props.selectedProducts)) {
+	this.handleDrawerOpen() }
+	}
+
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
 	};
 
 	handleDrawerClose = () => {
+		if (this.props.selectedProducts.length === 0) {
 		this.setState({ open: false });
+		}
 	};
 
 	componentDidMount() {
@@ -148,7 +156,7 @@ class Layout extends React.Component {
 					<Toolbar
 						disableGutters={!this.state.open}
 						className={classes.toolbar}>
-						<IconButton
+						{/* <IconButton
 							color="inherit"
 							aria-label="Open drawer"
 							onClick={this.handleDrawerOpen}
@@ -157,7 +165,7 @@ class Layout extends React.Component {
 								this.state.open && classes.menuButtonHidden,
 							)}>
 							<MenuIcon />
-						</IconButton>
+						</IconButton> */}
 						<Typography
 							onClick={() => this.props.history.push('/')}
 							component="h1"
@@ -165,7 +173,7 @@ class Layout extends React.Component {
 							color="inherit"
 							noWrap
 							className={classes.title}>
-							<Button style={{ color: '#0D2C54' }}>
+							<Button style={{ marginLeft: "20px", color: '#0D2C54' }}>
 								<Typography color="inherit" variant="h6">
 									ScannAR
 								</Typography>
@@ -183,6 +191,8 @@ class Layout extends React.Component {
 					</Toolbar>
 				</AppBar>
 				<Drawer
+					onMouseEnter={() => this.handleDrawerOpen()}
+					onMouseLeave={() => this.handleDrawerClose()}
 					variant="permanent"
 					classes={{
 						paper: classNames(
@@ -192,13 +202,14 @@ class Layout extends React.Component {
 					}}
 					open={this.state.open}>
 					<div className={classes.toolbarIcon}>
-						<IconButton onClick={this.handleDrawerClose}>
+						<IconButton onClick={() => this.setState({ open: false })}>
 							<ChevronLeftIcon />
 						</IconButton>
 					</div>
 					<Divider />
 					{this.props.isLoggedIn ? (
 						<LoggedInLinks
+							deleteAllSelected={this.props.deleteAllSelected}
 							deleteSelected={this.props.deleteSelectedProduct}
 							addPackage={this.props.addPackage}
 							handleDrawerOpen={this.handleDrawerOpen}
@@ -230,7 +241,7 @@ export default compose(
 	withRouter(
 		connect(
 			mapStateToProps,
-			{ addPackage, deleteSelectedProduct },
+			{ addPackage, deleteSelectedProduct, deleteAllSelected },
 		)(withStyles(styles)(Layout)),
 	),
 );
