@@ -132,11 +132,11 @@ export const deleteProduct = uuid => dispatch => {
 		);
 };
 
-export const getDetail = uuid => dispatch => {
+export const getDetail = (uuid, page) => dispatch => {
 	dispatch({ type: GETTING_DETAIL });
 
 	axios
-		.get(`/products/getdetail/${uuid}`)
+		.get(`/products/getdetail/${uuid}?page=${page}`)
 		.then(res =>
 			dispatch({ type: GETTING_DETAIL_SUCCESSFUL, payload: res.data }),
 		)
