@@ -64,14 +64,14 @@ class ShipmentList extends React.Component {
       this.setState({
         data: this.props.shipments.filter(shipment => {
           return shipment.tracked !== 1;
-        }),
+        }).sort((a, b) => {return b-a}),
         page: this.props.previousPage,
         rowsPerPage: this.props.previousRowsPerPage
       });
     } else {
       this.setState({ data: this.props.shipments.filter(shipment => {
         return shipment.tracked !== 1;
-      }) });
+      }).sort((a, b) => {return b-a}) });
     }
   }
   
