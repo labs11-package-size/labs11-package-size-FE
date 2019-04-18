@@ -67,6 +67,7 @@ const shipmentsReducer = (state = initialState, action) => {
     case ADDING_SHIPMENT:
       return {
         ...state,
+        shipments: [],
         adding: true,
         success: false,
         failure: false,
@@ -76,7 +77,9 @@ const shipmentsReducer = (state = initialState, action) => {
     case ADDING_SHIPMENT_SUCCESSFUL:
       return {
         ...state,
-        shipments: action.payload,
+        shipments: action.payload.map(shipment => {
+          shipment.shipDateUnix = moment(shipment.lastUpdated).format("x");
+          return shipment}),
         fetching: false,
         adding: false,
         success: true,
@@ -142,7 +145,10 @@ const shipmentsReducer = (state = initialState, action) => {
     case ADDING_PACKAGE_SUCCESSFUL:
       return {
         ...state,
-        shipments: action.payload,
+        shipments: action.payload.map(shipment => {
+          shipment.shipDateUnix = moment(shipment.lastUpdated).format("x");
+          return shipment;
+        }),
         selectedProducts: [],
         fetching: false,
         adding: false,
