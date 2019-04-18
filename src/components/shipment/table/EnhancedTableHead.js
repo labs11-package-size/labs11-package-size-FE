@@ -7,15 +7,24 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+
+
+const styles = theme => ({
+  root: {
+    width: "800px"
+  }
+});
 
 class EnhancedTableHead extends React.Component {
+  
   createSortHandler = (event, property) => {
     this.props.onRequestSort(event, property);
   };
 
   render() {
     const { onSelectAllClick, numSelected, rowCount } = this.props;
-
+    const { classes } = this.props;
     return (
       <TableHead>
         <TableRow>
@@ -29,11 +38,12 @@ class EnhancedTableHead extends React.Component {
           </TableCell>
           {shipmentTitles.map(
             (shipment, index) =>
-              index === 1 ? (
+              (index === 4) ? (
                 <TableCell
                   align="right"
                   padding="default"
                   onClick={event => this.createSortHandler(event, shipment.id)}
+                  style={{width: "700px"}}
                 >
                   <TableSortLabel>{shipment.label}</TableSortLabel>
                 </TableCell>
@@ -53,15 +63,6 @@ class EnhancedTableHead extends React.Component {
     );
   }
 }
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired
-};
 
 const toolbarStyles = theme => ({
   root: {
@@ -87,6 +88,17 @@ const toolbarStyles = theme => ({
     flex: "0 0 auto"
   }
 });
+
+EnhancedTableHead.propTypes = {
+  numSelected: PropTypes.number.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
+  order: PropTypes.string.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired
+};
+
+
 
 const shipmentTitles = [
   {
@@ -121,4 +133,5 @@ const shipmentTitles = [
   }
 ];
 
+EnhancedTableHead = withStyles(toolbarStyles)(EnhancedTableHead);
 export default EnhancedTableHead;
