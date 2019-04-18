@@ -16,9 +16,9 @@ import TextField from "@material-ui/core/TextField";
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Redirect, withRouter } from 'react-router-dom';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import EditProductModal from "../modals/EditProductModal";
-
 import DeleteModal from "./deleteModal";
 
 function getModalStyle() {
@@ -80,23 +80,36 @@ const styles = theme => ({
   paper: {
     position: "absolute",
     width: theme.spacing.unit * 60,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#F2F3F4",
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: "none"
-  }
+  },
+	submit: {
+		color: 'white',
+		backgroundColor: '#72BDA2',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+		},
+	},
 });
 
 class ProductDetailModal extends React.Component {
   state = {
-    open: false
+    open: false,
+    page: 1,
   };
 
-	handleOpen = (event, uuid) => {
+	handleOpen = (event, uuid, page) => {
 		event.stopPropagation();
 		this.setState({ open: true });
-		this.props.getDetail(uuid);
-	};
+		this.props.getDetail(uuid, page);
+  };
+
+  nextPage = () => {
+    this.setState(prevState => ({ page: ++prevState.page }), () => this.props.getDetail(this.props.product.uuid, this.state.page));
+  }
 
   handleClose = () => {
     this.setState({ open: false });
@@ -122,7 +135,7 @@ class ProductDetailModal extends React.Component {
 					className={classes.root}>
 					<Card
 						onClick={(event) => 
-							this.handleOpen(event, this.props.product.uuid)
+							this.handleOpen(event, this.props.product.uuid, this.state.page)
 						}
 						className={classes.card}>
 						<CardHeader style={{whiteSpace: "nowrap"}}subheader={(this.props.product.name.length > 24) ? (`${this.props.product.name.slice(0, 24)}...`) : (this.props.product.name)}
@@ -230,12 +243,16 @@ class ProductDetailModal extends React.Component {
 									{this.props.product.name}
 								</Typography>
 							</div>
-							<div>
-								<Button
-									onClick={event => this.handlePackit(event, this.props.product.uuid)}
-									>
-									Pack It
-								</Button>
+							<div aria-label="Pack It">
+                <Tooltip title="Pack It">
+                  <Button
+                    variant="contained"
+                    className={classes.submit}
+                    onClick={event => this.handlePackit(event, this.props.product.uuid)}
+                    >
+                    Pack It
+                  </Button>
+                </Tooltip>
 							</div>	
 							<div aria-label="delete">
 								<DeleteModal
@@ -246,79 +263,96 @@ class ProductDetailModal extends React.Component {
 							</div>
 							{this.props.detail ? 
 								<div>
-									<div>
-										<Typography variant="h6" id="modal-title">
-											Product Summary:
-										</Typography>
-										<Typography>
-											Description: {this.props.detail.productDescription}
-										</Typography>
-										<Typography className={classes.heading}>
-											Price: ${this.props.detail.value}
-										</Typography>
-										<Typography className={classes.heading}>
-											Fragile: {this.props.detail.fragile}
-										</Typography>
-									</div>
-									<div>
-										<Typography className={classes.heading}>
-											Product Dimensions:
-										</Typography>
-										<Typography className={classes.heading}>
-											Length: {this.props.detail.length}"
-										</Typography>
-										<Typography className={classes.heading}>
-											Width: {this.props.detail.width}"
-										</Typography>
-										<Typography className={classes.heading}>
-											Height: {this.props.detail.height}"
-										</Typography>
-									</div>
-									<div className={this.props.classes.root}>
-										<Typography className={classes.heading}>
-											Shipment Summary:
-										</Typography>
-										{this.props.detail.shipments ? (
-											this.props.detail.shipments.map((shipment, i) => {
-												return (
-													<div key={i}>
-														<Typography className={classes.heading}>
-															Date Shipped: {shipment.dateShipped}
-														</Typography>
-														<Typography className={classes.heading}>
-															Shipped To: {shipment.shippedTo}
-														</Typography>
-														<Typography className={classes.heading}>
-															Date Arrived: {shipment.dateArrived}
-														</Typography>
-														<Typography className={classes.heading}>
-															Tracking Number: {shipment.trackingNumber}
-														</Typography>
-														<Typography className={classes.heading}>
-															Status: {shipment.status}
-														</Typography>
-														<Typography className={classes.heading}>
-															Carrier Name: {shipment.carrierName}
-														</Typography>
-													</div>
-												)
-											})
-											) : (
-											<div>There are no shipments associated with this product.</div>
-											)
-										}
-										
-										
-									
-									</div>
+                  <Card>
+                    <div className={this.props.classes.root}>
+                      <Typography variant="h6" id="modal-title">
+                        Product Summary:
+                      </Typography>
+                      <Typography>
+                        Description: {this.props.detail.productDescription}
+                      </Typography>
+                      <Typography className={classes.heading}>
+                        Price: ${this.props.detail.value}
+                      </Typography>
+                      <Typography className={classes.heading}>
+                        Fragile: {this.props.detail.fragile}
+                      </Typography>
+                    </div>
+                  </Card>
+                  <Card>
+                    <div className={this.props.classes.root}>
+                      <Typography className={classes.heading}>
+                        Product Dimensions:
+                      </Typography>
+                      <Typography className={classes.heading}>
+                        Length: {this.props.detail.length}"
+                      </Typography>
+                      <Typography className={classes.heading}>
+                        Width: {this.props.detail.width}"
+                      </Typography>
+                      <Typography className={classes.heading}>
+                        Height: {this.props.detail.height}"
+                      </Typography>
+                    </div>
+                  </Card>
+                  <Card>
+                    <div className={this.props.classes.root}>
+                      <Typography className={classes.heading}>
+                        Shipment Summary:
+                      </Typography>
+                        <div>
+                        {this.props.detail.shipments ? (
+                          this.props.detail.shipments.map((shipment, i) => {
+                            return (
+                              <div key={i}>
+                                <Typography className={classes.heading}>
+                                  Date Shipped: {shipment.dateShipped}
+                                </Typography>
+                                <Typography className={classes.heading}>
+                                  Last Updated: {shipment.lastUpdated}
+                                </Typography>
+                                <Typography className={classes.heading}>
+                                  Shipped To: {shipment.shippedTo}
+                                </Typography>
+                                <Typography className={classes.heading}>
+                                  Date Arrived: {shipment.dateArrived}
+                                </Typography>
+                                <Typography className={classes.heading}>
+                                  Tracking Number: {shipment.trackingNumber}
+                                </Typography>
+                                <Typography className={classes.heading}>
+                                  Status: {shipment.status}
+                                </Typography>
+                                <Typography className={classes.heading}>
+                                  Carrier Name: {shipment.carrierName}
+                                </Typography>
+                              </div>
+                            )
+                          })
+                          ) : (
+                          <div>There are no shipments associated with this product.</div>
+                          )
+                        }
+                        </div>
+                    </div>
+                  </Card>
 								</div>
 								: null 
 							}
 							<div>
-								<Button onClick={event => this.handleClose(event)}>
+                <Button 
+                     variant="contained"
+                     className={classes.submit}
+                     onClick={event => this.handleClose(event)}>
 									Close
 								</Button>
-								{this.props.children}
+                {this.props.children}
+                <Button 
+                   variant="contained"
+                   className={classes.submit}
+                   onClick={() => this.nextPage()}>
+                  Next Page
+                </Button>
 							</div>
 						</div>
 					</Modal>
@@ -334,15 +368,14 @@ ProductDetailModal.propTypes = {
 
 const mapStateToProps = state => {
 	return {
-		detail: state.productsReducer.productDetail,
-		// package: state.packageReducer.addedPackage
+		detail: state.productsReducer.productDetail
 	}
 }
 export default compose(
 	withRouter(
 		connect(
 			mapStateToProps,
-			//  { addPackage },
+			  {},
 		)(withStyles(styles)(ProductDetailModal))
 	)
 );
