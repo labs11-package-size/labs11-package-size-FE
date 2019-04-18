@@ -1,168 +1,3 @@
-// import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
-// import classnames from 'classnames';
-// import Card from '@material-ui/core/Card';
-// import CardHeader from '@material-ui/core/CardHeader';
-// import CardMedia from '@material-ui/core/CardMedia';
-// import CardContent from '@material-ui/core/CardContent';
-// import CardActions from '@material-ui/core/CardActions';
-// import Collapse from '@material-ui/core/Collapse';
-// import Avatar from '@material-ui/core/Avatar';
-// import IconButton from '@material-ui/core/IconButton';
-// import Typography from '@material-ui/core/Typography';
-// import red from '@material-ui/core/colors/red';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import Icon from '@material-ui/core/Icon';
-// import classNames from 'classnames';
-// import { loadCSS } from 'fg-loadcss/src/loadCSS';
-
-// import DeleteModal from '../modals/deleteModal';
-
-// const styles = theme => ({
-// 	card: {
-// 		width: 275,
-// 	},
-// 	container: {
-// 		margin: 40,
-// 		width: 'auto',
-// 		display: 'flex',
-// 	},
-// 	formContainer: {
-// 		margin: 40,
-// 		width: 'auto',
-// 		display: 'flex',
-// 		flexDirection: 'column',
-// 	},
-// 	root: {
-// 		display: 'flex',
-// 		flexWrap: 'wrap',
-// 	},
-// 	icon: {
-// 		margin: theme.spacing.unit * 2,
-// 	},
-// 	iconHover: {
-// 		margin: theme.spacing.unit * 2,
-// 		'&:hover': {
-// 			color: red[800],
-// 		},
-// 	},
-
-// 	input: {
-// 		margin: theme.spacing.unit,
-// 	},
-// 	media: {
-// 		height: 0,
-// 		paddingTop: '56.25%', // 16:9
-// 	},
-// 	actions: {
-// 		display: 'flex',
-// 	},
-// 	expand: {
-// 		transform: 'rotate(0deg)',
-// 		marginLeft: 'auto',
-// 		transition: theme.transitions.create('transform', {
-// 			duration: theme.transitions.duration.shortest,
-// 		}),
-// 	},
-// 	expandOpen: {
-// 		transform: 'rotate(180deg)',
-// 	},
-// 	avatar: {
-// 		backgroundColor: red[500],
-// 	},
-// });
-
-// class Shipment extends Component {
-// 	state = { expanded: false };
-// 	componentDidMount() {
-// 		loadCSS(
-// 			'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
-// 			document.querySelector('#insertion-point-jss'),
-// 		);
-// 	}
-
-// 	handleExpandClick = () => {
-// 		this.setState(state => ({ expanded: !state.expanded }));
-// 	};
-
-// 	render() {
-// 		const { classes } = this.props;
-
-// 		return (
-// 			<div className={classes.container}>
-// 				<div className={classes.root}>
-// 					<Card className={classes.card}>
-// 						<CardHeader
-// 							avatar={
-// 								<Avatar aria-label="Recipe" className={classes.avatar}>
-// 									S
-// 								</Avatar>
-// 							}
-// 							title={this.props.shipment.productName}
-// 							subheader={` Date Shipped: ${this.props.shipment.dateShipped}`}
-// 						/>
-// 						<CardMedia
-// 							className={classes.media}
-// 							image="/static/images/cards/paella.jpg"
-// 							title="Paella dish"
-// 						/>
-// 						<CardContent>
-// 							<Typography className={classes.heading}>
-// 								Shipped To: {this.props.shipment.shippedTo}
-// 							</Typography>
-// 						</CardContent>
-// 						<CardActions className={classes.actions} disableActionSpacing>
-// 							<DeleteModal>
-// 								<IconButton
-// 									onClick={this.props.deleteShipment}
-// 									aria-label="Share">
-// 									Delete
-// 								</IconButton>
-// 							</DeleteModal>
-// 							<IconButton
-// 								className={classnames(classes.expand, {
-// 									[classes.expandOpen]: this.state.expanded,
-// 								})}
-// 								onClick={this.handleExpandClick}
-// 								aria-expanded={this.state.expanded}
-// 								aria-label="Show more">
-// 								<ExpandMoreIcon />
-// 							</IconButton>
-// 						</CardActions>
-// 						<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-// 							<CardContent>
-// 								<Typography className={classes.heading}>
-// 									Last Updated: {this.props.shipment.lastUpdated}
-// 								</Typography>
-// 								<Typography className={classes.heading}>
-// 									Tracking Number: {this.props.shipment.trackingNumber}
-// 								</Typography>
-// 								<Typography className={classes.heading}>
-// 									Carrier: {this.props.shipment.carrierName}
-// 								</Typography>
-// 								<Typography className={classes.heading}>
-// 									Shipping Type: {this.props.shipment.shippingType}
-// 								</Typography>
-// 								<Typography className={classes.heading}>
-// 									Status: {this.props.shipment.status}
-// 								</Typography>
-// 							</CardContent>
-// 						</Collapse>
-// 					</Card>
-// 				</div>
-// 			</div>
-// 		);
-// 	}
-// }
-
-// Shipment.propTypes = {
-// 	classes: PropTypes.object.isRequired,
-// };
-
-// export default withStyles(styles)(Shipment);
-
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -177,14 +12,23 @@ import classNames from "classnames";
 import Checkbox from "@material-ui/core/Checkbox";
 import ViewShipmentModal from "../modals/ViewShipmentModal";
 import moment from "moment";
+import { Button } from "@material-ui/core";
+import { white } from "ansi-colors";
+
+const styles = theme => ({
+  statuscell: {
+    width: "100px"
+  },
+  button: {
+    marginLeft: "30px",
+    backgroundColor: "#72bda2",
+    color: "white",
+    fontSize: "10px"
+  }
+});
 
 function Shipment(props) {
   const { classes } = props;
-  // const handleFilter = () => {
-  // 	if(props.shipment && props.shipment.track === 1) {
-
-  // 	}
-  // }
   return (
     <TableRow hover role="checkbox" tabIndex={-1}>
         <TableCell padding="checkbox">
@@ -197,12 +41,12 @@ function Shipment(props) {
           {moment(props.shipment.lastUpdated).format("L h:mm a")}
         </TableCell>
         {props.shipment.status ? (
-          <TableCell align="center">
-            {props.shipment.status}
+          <TableCell style={statusStyling(props.shipment)} align="right">
+            {parsedStatus(props.shipment)}
           </TableCell>
         ) : (
-          <TableCell align="right">
-            <button>Add Tracking Number</button>
+          <TableCell className={classes.statuscell} align="right">
+            <Button className={classes.button}>Track</Button>
           </TableCell>
         )}
         <TableCell align="right">{props.shipment.totalWeight}</TableCell>
@@ -219,6 +63,8 @@ Shipment.propTypes = {
 };
 
 export default withStyles(styles)(Shipment);
+
+
 
 const parsedStatus = n => {
   if (n.status === 0) {
@@ -244,69 +90,50 @@ const parsedStatus = n => {
 const statusStyling = n => {
   if (n.status === 0) {
     return {
-      backgroundColor: "#ffa9a8",
+      textDecoration: "underline",
+      textDecorationColor: "#ffa9a8",
       borderRadius: "25px",
-      paddingRight: "5px"
+      paddingRight: "55px"
     };
   }
   if (n.status === 1) {
     return {
-      backgroundColor: "#ffc642",
+      textDecoration: "underline",
+      textDecorationColor: "#ffc642",
       borderRadius: "25px",
-      paddingRight: "5px"
+      paddingRight: "55px"
     };
   }
   if (n.status === 2) {
     return {
-      backgroundColor: "#ffc642",
+      textDecoration: "underline",
+      textDecorationColor: "#ffc642",
       borderRadius: "25px",
-      paddingRight: "5px"
+      paddingRight: "55px"
     };
   }
   if (n.status === 3) {
     return {
-      backgroundColor: "#ffc642",
+      textDecoration: "underline",
+      textDecorationColor: "#ffc642",
       borderRadius: "25px",
-      paddingRight: "5px"
+      paddingRight: "55px"
     };
   }
   if (n.status === 4) {
     return {
-      backgroundColor: "#a7c2a6",
+      textDecoration: "underline",
+      textDecorationColor: "#a7c2a6",
       borderRadius: "25px",
-      paddingRight: "5px"
+      paddingRight: "55px"
     };
   }
   if (n.status === 5) {
     return {
-      backgroundColor: "#ffa9a8",
+      textDecoration: "underline",
+      textDecorationColor: "#ffa9a8",
       borderRadius: "25px",
-      paddingRight: "5px"
+      paddingRight: "55px"
     };
   }
 };
-
-const styles = theme => ({
-  root: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
-  },
-  table: {
-    minWidth: 700
-  }
-});
-
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
-];

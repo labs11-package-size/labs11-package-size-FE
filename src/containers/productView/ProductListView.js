@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Tooltip from '@material-ui/core/Tooltip';
 import Input from '@material-ui/core/Input';
 import Paper from '@material-ui/core/Paper';
 import AddProductModal from '../../components/modals/AddProductModal';
@@ -17,8 +16,7 @@ import {
 	editProduct,
 	deleteProduct,
 } from '../../store/actions/productActions';
-import { selectProduct, addPackage } from '../../store/actions/packageActions';
-import { addShipment } from '../../store/actions/shipmentActions';
+import { addShipment, selectProduct, addPackage } from '../../store/actions/shipmentActions';
 import { compose } from 'redux';
 
 const styles = theme => ({
@@ -121,14 +119,12 @@ class ProductListView extends Component {
 		this.props.history.push('/');
 	};
 
-	deleteProduct = (id, event) => {
-		event.stopPropagation();
+	deleteProduct = id => {
 		this.props.deleteProduct(id);
 		return <Redirect to="/products" />;
 	};
 
-	editProduct = (id, prod, event) => {
-		event.stopPropagation();
+	editProduct = (id, prod) => {
 		this.props.editProduct(id, prod);
 		this.setState({
 			product: {
@@ -146,8 +142,7 @@ class ProductListView extends Component {
 		this.props.history.push('/');
 	};
 
-	deleteImg = (imgId, event) => {
-		event.stopPropagation();
+	deleteImg = imgId => {
 		let updatedImages = Object.assign([], this.state.images);
 		updatedImages.splice(imgId, 1);
 
@@ -158,8 +153,7 @@ class ProductListView extends Component {
 		});
 	};
 
-	getThumbnail = (imgs, event) => {
-		event.stopPropagation();
+	getThumbnail = imgs => {
 		this.setState({
 			product: {
 				...this.state.product,
@@ -168,8 +162,7 @@ class ProductListView extends Component {
 		});
 	};
 
-	addImgs = (files, event) => {
-		event.stopPropagation();
+	addImgs = files => {
 		this.setState({
 			product: {
 				...this.state.product,
@@ -179,13 +172,15 @@ class ProductListView extends Component {
 	};
 
 	handleInputChange = event => {
-		event.stopPropagation();
 		this.setState({
 			product: {
 				...this.state.product,
 				[event.target.name]: event.target.value,
 			},
 		});
+	};
+	updateState = product => {
+		this.setState({ product: { ...this.state.product, product } });
 	};
 
 	render() {
@@ -194,6 +189,7 @@ class ProductListView extends Component {
 				{this.props.products.length > 0 ? (
 					<div>
 						<ProductList
+							updateState={this.updateState}
 							selectProduct={this.handleSelectProduct}
 							getThumbnail={this.getThumbnail}
 							loadMore={this.props.getProducts}
@@ -237,9 +233,7 @@ class ProductListView extends Component {
 							</Paper>
 							<div className={this.props.classes.modalStyle}>
 								<AddProductModal
-									addProduct={event =>
-										this.props.addProduct(this.state.product, event)
-									}>
+									addProduct={() => this.props.addProduct(this.state.product)}>
 									<form className={this.props.classes.container}>
 										<Input
 											onChange={this.handleInputChange}

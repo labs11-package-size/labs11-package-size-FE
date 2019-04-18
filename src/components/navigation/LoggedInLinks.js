@@ -31,9 +31,7 @@ class LoggedInLinks extends Component {
 	handlePackit = () => {
 		const list = this.props.selectedProducts.map(prod => prod.uuid);
 		this.props.addPackage(list);
-		setTimeout(() => {
-			this.props.history.push('/shipments');
-		}, 800);
+		this.props.history.push('/loadingshipments')
 	};
 
 	handleDeleteSelected = uuid => {
