@@ -49,10 +49,17 @@ class ShipmentListView extends Component {
   };
 
   deleteShipment = (uuid, currentPage, currentRowsPerPage, currentFilter) => {
+    if (currentFilter === false) {
       this.setState(
         { previousPage: currentPage, previousRowsPerPage: currentRowsPerPage, previousFilter: currentFilter },
         () => this.props.deleteShipment(uuid.join())
       );
+    } else {
+      this.setState(
+        { previousPage: currentPage, previousRowsPerPage: currentRowsPerPage, previousFilter: currentFilter },
+        () => this.props.deletePackage(uuid.join())
+      )
+    }
   };
 
   render() {

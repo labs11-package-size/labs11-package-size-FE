@@ -61,7 +61,7 @@ class ShipmentList extends React.Component {
 
   componentDidMount() {
     if (this.props.previousRowsPerPage) {
-      if (this.props.filter) {
+      if (this.props.previousFilter) {
       this.setState({
         data: this.props.shipments
           .filter(shipment => {
@@ -96,7 +96,8 @@ class ShipmentList extends React.Component {
   handleFilter = () => {
     this.setState(
       {
-        filter: this.state.filter === false ? true : false
+        filter: this.state.filter === false ? true : false,
+        selected: []
       },
       () => this.handleRenderList()
     );
