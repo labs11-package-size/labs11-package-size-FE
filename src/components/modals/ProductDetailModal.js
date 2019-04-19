@@ -175,7 +175,7 @@ class ProductDetailModal extends React.Component {
                   }
                   product={this.props.product}
                 >
-                  <form className={classes.formContainer}>
+                  <form className={classes.formContainer} autocomplete="off">
                     <TextField
                       required
                       id="standard-name"

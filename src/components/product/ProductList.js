@@ -62,7 +62,7 @@ class ProductList extends Component {
 						getThumbnail={this.getThumbnail}
 						addImgs={this.addImgs}
 						addProduct={() => this.props.addProduct(this.props.product)}>
-						<form className={this.props.classes.container}>
+						<form className={this.props.classes.container} autocomplete="off">
 							<div className={this.props.classes.container}>
 								<Typography gutterBottom variant="h5" component="h2">
 									Product Detail
