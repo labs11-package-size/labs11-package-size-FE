@@ -31,7 +31,8 @@ const initialState = {
   deleting: false,
   success: false,
   failure: false,
-  error: null
+  error: null,
+  adderror: null
 };
 
 const shipmentsReducer = (state = initialState, action) => {

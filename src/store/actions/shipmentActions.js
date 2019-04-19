@@ -26,15 +26,14 @@ export const DELETE_SELECTED = 'DELETE_SELECTED';
 
 export const DELETE_ALL_SELECTED = 'DELETE_ALL_SELECTED';
 
-export const addShipment = (trackingNumber, productId) => dispatch => {
+export const addShipment = (trackingNumber, uuid) => dispatch => {
 	const trackingRequest = {
 		trackingNumber,
-		productId,
 	};
 	dispatch({ type: ADDING_SHIPMENT });
-
+    console.log("trackingnumber submitted", trackingNumber, uuid)
 	axios
-		.post('/shipments/addweb', trackingRequest)
+		.post(`/shipments/addweb/${uuid}`, trackingRequest)
 		.then(res =>
 			dispatch({ type: ADDING_SHIPMENT_SUCCESSFUL, payload: res.data }),
 		)

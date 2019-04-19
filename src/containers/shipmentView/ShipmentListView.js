@@ -42,10 +42,8 @@ class ShipmentListView extends Component {
     this.props.getShipments();
   }
 
-  addShipment = (tracId, prodId, event) => {
-    event.stopPropagation();
-    this.props.addShipment(tracId, prodId);
-    return <Redirect to="/" />;
+  addShipment = (trackingNumber, uuid) => {
+    this.props.addShipment(trackingNumber, uuid);
   };
 
   deleteShipment = (uuid, currentPage, currentRowsPerPage, currentFilter) => {
