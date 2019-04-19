@@ -81,7 +81,7 @@ const ViewShipmentModal = props => {
                 Suggested Packaging Orientation
               </Typography>
               <EmbeddedModel source={props.shipment.modelURL} />
-              <form onSubmit={() => props.closeModal()} className={classes.trackForm} autocomplete="off">
+              <form onSubmit={(e) => props.submitTracking(e, props.shipment.uuid)} className={classes.trackForm} autocomplete="off">
               <TextField className={classes.trackInput} placeholder="Enter USPS Tracking Number..." name="trackingNumber" value={props.trackingNumber} onChange={props.handleChanges}/>
               <Button type="submit" className={classes.trackButton}>Track it!</Button>
               </form>
