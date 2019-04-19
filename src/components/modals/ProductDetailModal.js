@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
+// import { flexbox } from "@material-ui/system";
 
 import EditProductModal from "../modals/EditProductModal";
 import DeleteModal from "./deleteModal";
@@ -28,7 +29,8 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    transform: `translate(-${top}%, -${left}%)`,
+    width: '70%'
   };
 }
 
@@ -52,7 +54,9 @@ const styles = theme => ({
     display: "flex",
     flexWrap: "wrap"
   },
-
+  dialogCustomizedWidth: {
+    'max-width': '80%'
+  },
   input: {
     margin: theme.spacing.unit
   },
@@ -92,7 +96,11 @@ const styles = theme => ({
 			color: '#72BDA2',
 			backgroundColor: 'white',
 		},
-	},
+  },
+  summaryCard: {
+    border: '1px black solid',
+    padding: '1%',
+  }
 });
 
 class ProductDetailModal extends React.Component {
@@ -151,6 +159,7 @@ class ProductDetailModal extends React.Component {
 
             <CardActions className={classes.actions} disableActionSpacing>
               <div aria-label="add">
+              <Tooltip title="Pack It">
                 <Button
                   onClick={event =>
                     this.props.selectProduct(this.props.product, event)
@@ -163,6 +172,7 @@ class ProductDetailModal extends React.Component {
                     )}
                   />
                 </Button>
+              </Tooltip>
               </div>
               <div aria-label="edit">
                 <EditProductModal
@@ -260,10 +270,11 @@ class ProductDetailModal extends React.Component {
 										this.props.deleteProduct(this.props.product.uuid, event)
 									}
 								/>
-							</div>
+              </div>  
+              <div>
 							{this.props.detail ? 
 								<div>
-                  <Card>
+                  <Card className={this.props.classes.summaryCard}>
                     <div className={this.props.classes.root}>
                       <Typography variant="h6" id="modal-title">
                         Product Summary:
@@ -279,7 +290,7 @@ class ProductDetailModal extends React.Component {
                       </Typography>
                     </div>
                   </Card>
-                  <Card>
+                  <Card className={this.props.classes.summaryCard} >
                     <div className={this.props.classes.root}>
                       <Typography className={classes.heading}>
                         Product Dimensions:
@@ -296,11 +307,11 @@ class ProductDetailModal extends React.Component {
                     </div>
                   </Card>
                   <Card>
-                    <div className={this.props.classes.root}>
+                    <div className={this.props.classes.root} className={this.props.classes.summaryCard}>
                       <Typography className={classes.heading}>
                         Shipment Summary:
                       </Typography>
-                        <div>
+                        <div className={this.props.classes.summaryCard}>
                         {this.props.detail.shipments ? (
                           this.props.detail.shipments.map((shipment, i) => {
                             return (
@@ -338,21 +349,26 @@ class ProductDetailModal extends React.Component {
                   </Card>
 								</div>
 								: null 
-							}
+              }
+              </div>
 							<div>
+              <Tooltip title="Close">
                 <Button 
-                     variant="contained"
-                     className={classes.submit}
-                     onClick={event => this.handleClose(event)}>
-									Close
-								</Button>
-                {this.props.children}
-                <Button 
-                   variant="contained"
-                   className={classes.submit}
-                   onClick={() => this.nextPage()}>
-                  Next Page
+                    variant="contained"
+                    className={classes.submit}
+                    onClick={event => this.handleClose(event)}>
+                  Close
                 </Button>
+              </Tooltip>
+                {this.props.children}
+                <Tooltip title="Next Shipment">
+                  <Button 
+                    variant="contained"
+                    className={classes.submit}
+                    onClick={() => this.nextPage()}>
+                    Next Page
+                  </Button>
+                </Tooltip>
 							</div>
 						</div>
 					</Modal>
