@@ -27,9 +27,9 @@ class DashboardView extends Component {
 					<div className="">
 						<ProductListView products={this.props.products} />
 					</div>
-					<div className="">
+					{/* <div className="">
 						<ShipmentListView shipments={this.props.shipments} />
-					</div>
+					</div> */}
 				</div>
 			</div>
 		);

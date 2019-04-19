@@ -61,15 +61,27 @@ class ShipmentList extends React.Component {
 
   componentDidMount() {
     if (this.props.previousRowsPerPage) {
+      if (this.props.filter) {
       this.setState({
         data: this.props.shipments
           .filter(shipment => {
             return shipment.tracked !== 1;
           }),
-          
+        filter: this.props.previousFilter,
         page: this.props.previousPage,
         rowsPerPage: this.props.previousRowsPerPage
-      });
+      })}
+      else {
+        this.setState({
+          data: this.props.shipments
+            .filter(shipment => {
+              return shipment.tracked !== 0;
+            }),
+          filter: this.props.previousFilter,
+          page: this.props.previousPage,
+          rowsPerPage: this.props.previousRowsPerPage
+        })
+      }
     } else {
       this.setState({
         data: this.props.shipments
@@ -146,6 +158,21 @@ class ShipmentList extends React.Component {
     this.setState({ selected: newSelected });
   };
 
+  changeCheckbox = (event, uuid) => {
+    event.stopPropagation()
+    let item = document.getElementById('tablerow-1');
+    switch(item.getAttribute('aria-checked')) {
+        case "true":
+            item.setAttribute('aria-checked', "false");
+            this.handleClick(event, uuid)
+            break;
+        case "false":
+            item.setAttribute('aria-checked', "true");
+            this.handleClick(event, uuid)
+            break;
+    }
+  }
+
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -163,7 +190,7 @@ class ShipmentList extends React.Component {
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
-        {this.state.filter ? (
+        {/* {this.state.filter ? (
           <FormGroup>
             <FormControlLabel
               control={
@@ -187,8 +214,8 @@ class ShipmentList extends React.Component {
               label="Viewing Tracked Packages"
             />
           </FormGroup>
-        )}
-        {/* <EnhancedTableToolbar
+        )} */}
+        <EnhancedTableToolbar
           {...this.props}
           filter={this.state.filter}
           currentPage={this.state.page}
@@ -196,7 +223,8 @@ class ShipmentList extends React.Component {
           deleteShipment={this.props.deleteShipment}
           selected={selected}
           numSelected={selected.length}
-        /> */}
+          handleFilter={this.handleFilter}
+        />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead
@@ -207,6 +235,7 @@ class ShipmentList extends React.Component {
               onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
               rowCount={data.length}
+
             />
             <TableBody>
               {this.state.data &&
@@ -219,7 +248,7 @@ class ShipmentList extends React.Component {
                         key={shipment.uuid}
                         shipment={shipment}
                         isSelected={isSelected}
-                        handleClick={this.handleClick}
+                        handleClick={this.changeCheckbox}
                       />
                     );
                   })}

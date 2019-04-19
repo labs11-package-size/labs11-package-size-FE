@@ -34,7 +34,7 @@ class ShipmentListView extends Component {
   state = {
     previousPage: null,
     previousRowsPerPage: null,
-    filter: null,
+    previousFilter: null,
     filteredList: []
   };
 
@@ -48,19 +48,11 @@ class ShipmentListView extends Component {
     return <Redirect to="/" />;
   };
 
-  deleteShipment = (uuid, currentPage, currentRowsPerPage, filter) => {
-    if (filter === false) {
+  deleteShipment = (uuid, currentPage, currentRowsPerPage, currentFilter) => {
       this.setState(
-        { previousPage: currentPage, previousRowsPerPage: currentRowsPerPage },
+        { previousPage: currentPage, previousRowsPerPage: currentRowsPerPage, previousFilter: currentFilter },
         () => this.props.deleteShipment(uuid.join())
       );
-      return <Redirect to="/" />;
-    } else {
-      this.setState(
-        { previousPage: currentPage, previousRowsPerPage: currentRowsPerPage },
-        () => this.props.deletePackage(uuid.join())
-      );
-    }
   };
 
   render() {
@@ -83,18 +75,18 @@ class ShipmentListView extends Component {
               addShipment={this.addShipment}
               deleteShipment={this.deleteShipment}
               shipments={this.props.shipments}
+              previousFilter={this.state.previousFilter}
             />
           </MuiThemeProvider>
         ) : (
-          <MuiThemeProvider theme={theme}>
             <ShipmentList
               previousPage={this.state.previousPage}
               previousRowsPerPage={this.state.previousRowsPerPage}
+              filter={this.state.filter}
               addShipment={this.addShipment}
               deleteShipment={this.deleteShipment}
               shipments={this.props.shipments}
             />
-          </MuiThemeProvider>
         )}
       </div>
     );

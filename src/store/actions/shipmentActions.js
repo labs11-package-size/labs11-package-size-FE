@@ -24,6 +24,8 @@ export const SELECTED_PRODUCT = 'SELECTED_PRODUCT';
 
 export const DELETE_SELECTED = 'DELETE_SELECTED';
 
+export const DELETE_ALL_SELECTED = 'DELETE_ALL_SELECTED';
+
 export const addShipment = (trackingNumber, productId) => dispatch => {
 	const trackingRequest = {
 		trackingNumber,
@@ -100,6 +102,10 @@ export const selectProduct = product => dispatch => {
 	dispatch({ type: SELECTED_PRODUCT, payload: product });
 };
 
-export const deleteSelectedProduct = uuid => dispatch => {
-	dispatch({ type: DELETE_SELECTED, payload: uuid });
+export const deleteSelectedProduct = index => dispatch => {
+	dispatch({ type: DELETE_SELECTED, payload: index });
+};
+
+export const deleteAllSelected = () => dispatch => {
+	dispatch({ type: DELETE_ALL_SELECTED });
 };
