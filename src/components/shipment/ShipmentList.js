@@ -55,7 +55,8 @@ class ShipmentList extends React.Component {
       data: [],
       page: 0,
       filter: true,
-      rowsPerPage: 10
+      rowsPerPage: 10,
+      modal: 0
     };
   }
 
@@ -92,6 +93,15 @@ class ShipmentList extends React.Component {
       });
     }
   }
+
+  openModal = (index) => {
+    this.setState({ modal: index });
+    console.log("settingModalstate to", index)
+	};
+
+	closeModal = () => {
+		this.setState({ modal: 0 });
+	};
 
   handleFilter = () => {
     this.setState(
@@ -242,14 +252,16 @@ class ShipmentList extends React.Component {
               {this.state.data &&
                 stableSort(data, getSorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(shipment => {
+                  .map((shipment, index) => {
                     const isSelected = this.isSelected(shipment.uuid);
                     return (
                       <Shipment
                         key={shipment.uuid}
+                        index={index+1}
                         shipment={shipment}
                         isSelected={isSelected}
                         handleClick={this.changeCheckbox}
+                        openModal={this.openModal}
                       />
                     );
                   })}
@@ -276,6 +288,12 @@ class ShipmentList extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
+        {(!!this.state.modal) && (<ViewShipmentModal
+        shipment={this.state.data[this.state.modal-1]}
+        openModal={this.openModal}
+        closeModal={this.closeModal}
+        modalState={this.state.modal}
+        />)}
       </Paper>
     );
   }

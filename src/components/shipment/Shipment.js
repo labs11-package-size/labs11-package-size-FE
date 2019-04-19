@@ -30,7 +30,7 @@ const styles = theme => ({
 function Shipment(props) {
   const { classes } = props;
   return (
-    <TableRow id={"tablerow-1"} style={{ cursor: "pointer" }} hover aria-checked="false" role="checkbox" tabIndex={-1} onClick={() => console.log("clicked LOLOLOL")}>
+    <TableRow id={"tablerow-1"} style={{ cursor: "pointer" }} hover aria-checked="false" role="checkbox" tabIndex={-1} onClick={() => props.openModal(props.index)}>
       <TableCell align="right">
         {moment(props.shipment.lastUpdated).format("L h:mm a")}
       </TableCell>
