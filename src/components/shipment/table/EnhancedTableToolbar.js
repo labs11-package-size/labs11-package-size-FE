@@ -56,18 +56,19 @@ let EnhancedTableToolbar = props => {
 	const { numSelected, classes } = props;
 
 	return (
+		<div>
 		<Toolbar
 			className={classNames(classes.root, {
 				[classes.highlight]: numSelected > 0,
 			})}>
 			{props.filter ? (
-          <div style={{width: "500px", display: "flex", justifyContent: "space-between", alignItems: "center", marginLeft: "30%"}}>
+          <div style={{width: "500px", display: "flex", justifyContent: "center", alignItems: "center", marginLeft: "30%"}}>
             <Button style={{color: "white", backgroundColor: "#bd7280", border: "1px solid grey"}}>View Untracked Packages</Button>
 			<CompareArrows style={{fontSize: "32px"}} />
             <Button style={{border: "1px solid grey"}} onClick={() => props.handleFilter()}>View Tracked Packages</Button>
           </div>
         ) : (
-          <div style={{width: "500px", display: "flex", justifyContent: "space-between", alignItems: "center", marginLeft: "30%"}}>
+          <div style={{width: "500px", display: "flex", justifyContent: "center", alignItems: "center", marginLeft: "30%"}}>
             <Button style={{border: "1px solid grey"}} onClick={() => props.handleFilter()}>View Untracked Packages</Button>
 			<CompareArrows style={{fontSize: "32px"}} />
             <Button style={{color: "white", backgroundColor: "#bd7280", border: "1px solid grey"}}>View Tracked Packages</Button>
@@ -98,7 +99,11 @@ let EnhancedTableToolbar = props => {
 				)}
 				</div>
 			</div>
-		</Toolbar>
+		</Toolbar> {props.filter && (
+		<div style={{marginLeft: "33%", fontSize: "13px", color: "grey"}}>
+			Click shipment rows to add tracking numbers and begin tracking packages!
+		</div>)}
+		</div>
 	);
 };
 

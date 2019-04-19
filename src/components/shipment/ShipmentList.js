@@ -61,15 +61,27 @@ class ShipmentList extends React.Component {
 
   componentDidMount() {
     if (this.props.previousRowsPerPage) {
+      if (this.props.filter) {
       this.setState({
         data: this.props.shipments
           .filter(shipment => {
             return shipment.tracked !== 1;
           }),
-          
+        filter: this.props.previousFilter,
         page: this.props.previousPage,
         rowsPerPage: this.props.previousRowsPerPage
-      });
+      })}
+      else {
+        this.setState({
+          data: this.props.shipments
+            .filter(shipment => {
+              return shipment.tracked !== 0;
+            }),
+          filter: this.props.previousFilter,
+          page: this.props.previousPage,
+          rowsPerPage: this.props.previousRowsPerPage
+        })
+      }
     } else {
       this.setState({
         data: this.props.shipments

@@ -14,6 +14,8 @@ import ViewShipmentModal from "../modals/ViewShipmentModal";
 import moment from "moment";
 import { Button } from "@material-ui/core";
 import { white } from "ansi-colors";
+import Typography from "@material-ui/core/Typography";
+
 
 const styles = theme => ({
   statuscell: {
@@ -29,7 +31,7 @@ const styles = theme => ({
 function Shipment(props) {
   const { classes } = props;
   return (
-    <TableRow hover role="checkbox" tabIndex={-1}>
+    <TableRow style={{cursor: "pointer"}} >
         <TableCell align="right">
           {moment(props.shipment.lastUpdated).format("L h:mm a")}
         </TableCell>
@@ -39,7 +41,7 @@ function Shipment(props) {
           </TableCell>
         ) : (
           <TableCell className={classes.statuscell} align="right">
-            <Button className={classes.button}>Track</Button>
+            <Typography style={{ fontSize: "11px", color: "grey", whiteSpace: "nowrap"}}>Add Tracking..</Typography>
           </TableCell>
         )}
         <TableCell align="right">{props.shipment.totalWeight}</TableCell>
