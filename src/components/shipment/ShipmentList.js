@@ -163,7 +163,7 @@ class ShipmentList extends React.Component {
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
-        {this.state.filter ? (
+        {/* {this.state.filter ? (
           <FormGroup>
             <FormControlLabel
               control={
@@ -187,8 +187,8 @@ class ShipmentList extends React.Component {
               label="Viewing Tracked Packages"
             />
           </FormGroup>
-        )}
-        {/* <EnhancedTableToolbar
+        )} */}
+        <EnhancedTableToolbar
           {...this.props}
           filter={this.state.filter}
           currentPage={this.state.page}
@@ -196,7 +196,8 @@ class ShipmentList extends React.Component {
           deleteShipment={this.props.deleteShipment}
           selected={selected}
           numSelected={selected.length}
-        /> */}
+          handleFilter={this.handleFilter}
+        />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead
@@ -207,6 +208,7 @@ class ShipmentList extends React.Component {
               onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
               rowCount={data.length}
+
             />
             <TableBody>
               {this.state.data &&

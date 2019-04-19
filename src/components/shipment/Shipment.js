@@ -20,7 +20,6 @@ const styles = theme => ({
     width: "100px"
   },
   button: {
-    marginLeft: "30px",
     backgroundColor: "#72bda2",
     color: "white",
     fontSize: "10px"
@@ -31,17 +30,11 @@ function Shipment(props) {
   const { classes } = props;
   return (
     <TableRow hover role="checkbox" tabIndex={-1}>
-        <TableCell padding="checkbox">
-          <Checkbox
-            checked={props.isSelected}
-            onClick={event => props.handleClick(event, props.shipment.uuid)}
-          />
-        </TableCell>
         <TableCell align="right">
           {moment(props.shipment.lastUpdated).format("L h:mm a")}
         </TableCell>
         {props.shipment.status ? (
-          <TableCell style={statusStyling(props.shipment)} align="right">
+          <TableCell style={statusStyling(props.shipment)} className={classes.statuscell} align="right">
             {parsedStatus(props.shipment)}
           </TableCell>
         ) : (
@@ -53,6 +46,12 @@ function Shipment(props) {
         <TableCell align="right">{props.shipment.dimensions}</TableCell>
         <TableCell align="right">
           {props.shipment.productNames.join(", ")}
+        </TableCell>
+        <TableCell padding="checkbox" align="right">
+          <Checkbox
+            checked={props.isSelected}
+            onClick={event => props.handleClick(event, props.shipment.uuid)}
+          />
         </TableCell>
     </TableRow>
   );
@@ -90,50 +89,32 @@ const parsedStatus = n => {
 const statusStyling = n => {
   if (n.status === 0) {
     return {
-      textDecoration: "underline",
-      textDecorationColor: "#ffa9a8",
-      borderRadius: "25px",
-      paddingRight: "55px"
+      borderBottom: "3px solid #ffa9a8",
     };
   }
   if (n.status === 1) {
     return {
-      textDecoration: "underline",
-      textDecorationColor: "#ffc642",
-      borderRadius: "25px",
-      paddingRight: "55px"
+      borderBottom: "3px solid #ffc642",
     };
   }
   if (n.status === 2) {
     return {
-      textDecoration: "underline",
-      textDecorationColor: "#ffc642",
-      borderRadius: "25px",
-      paddingRight: "55px"
+      borderBottom: "3px solid #ffc642",
     };
   }
   if (n.status === 3) {
     return {
-      textDecoration: "underline",
-      textDecorationColor: "#ffc642",
-      borderRadius: "25px",
-      paddingRight: "55px"
+      borderBottom: "3px solid #ffc642",
     };
   }
   if (n.status === 4) {
     return {
-      textDecoration: "underline",
-      textDecorationColor: "#a7c2a6",
-      borderRadius: "25px",
-      paddingRight: "55px"
+      borderBottom: "3px solid #a7c2a6",
     };
   }
   if (n.status === 5) {
     return {
-      textDecoration: "underline",
-      textDecorationColor: "#ffa9a8",
-      borderRadius: "25px",
-      paddingRight: "55px"
+      borderBottom: "3px solid #ffa9a8",
     };
   }
 };

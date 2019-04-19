@@ -16,6 +16,7 @@ import {
   ADDING_PACKAGE_FAILURE,
   SELECTED_PRODUCT,
   DELETE_SELECTED,
+  DELETE_ALL_SELECTED
 } from "../actions/shipmentActions";
 
 import moment from "moment";
@@ -79,7 +80,8 @@ const shipmentsReducer = (state = initialState, action) => {
         ...state,
         shipments: action.payload.map(shipment => {
           shipment.shipDateUnix = moment(shipment.lastUpdated).format("x");
-          return shipment}),
+          return shipment;
+        }),
         fetching: false,
         adding: false,
         success: true,
@@ -152,7 +154,7 @@ const shipmentsReducer = (state = initialState, action) => {
         selectedProducts: [],
         fetching: false,
         adding: false,
-		    success: true,
+        success: true,
         failure: false,
         error: null
       };
@@ -211,11 +213,19 @@ const shipmentsReducer = (state = initialState, action) => {
       };
 
     case DELETE_SELECTED:
+      const newSelected = state.selectedProducts.slice();
+      newSelected.splice(action.payload, 1);
       return {
         ...state,
-        selectedProducts: state.selectedProducts.filter(
-          prod => prod.uuid !== action.payload
-        ),
+        selectedProducts: newSelected,
+        failure: false,
+        error: null
+      };
+
+    case DELETE_ALL_SELECTED:
+      return {
+        ...state,
+        selectedProducts: [],
         failure: false,
         error: null
       };
