@@ -158,6 +158,21 @@ class ShipmentList extends React.Component {
     this.setState({ selected: newSelected });
   };
 
+  changeCheckbox = (event, uuid) => {
+    event.stopPropagation()
+    let item = document.getElementById('tablerow-1');
+    switch(item.getAttribute('aria-checked')) {
+        case "true":
+            item.setAttribute('aria-checked', "false");
+            this.handleClick(event, uuid)
+            break;
+        case "false":
+            item.setAttribute('aria-checked', "true");
+            this.handleClick(event, uuid)
+            break;
+    }
+  }
+
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -233,7 +248,7 @@ class ShipmentList extends React.Component {
                         key={shipment.uuid}
                         shipment={shipment}
                         isSelected={isSelected}
-                        handleClick={this.handleClick}
+                        handleClick={this.changeCheckbox}
                       />
                     );
                   })}
