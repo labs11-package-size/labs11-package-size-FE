@@ -34,17 +34,26 @@ class ShipmentListView extends Component {
   state = {
     previousPage: null,
     previousRowsPerPage: null,
-    previousFilter: null
+    previousFilter: null,
+    modal: false
   };
 
   componentDidUpdate = (prevProps) => {
 		if ((this.props.addedsuccess) && (prevProps.addedsuccess !== this.props.addedsuccess)) {
-      console.log("BING BING BING")
-	this.setState({previousPage: 1, previousRowsPerPage: 10, previousFilter: false }, () => this.props.getShipments())
+	this.setState({modal: false, previousPage: 0, previousRowsPerPage: 10, previousFilter: false }, () => this.props.getShipments())
 	}}
 
   componentDidMount() {
     this.props.getShipments();
+  }
+
+  openModal = shipmentData => {
+    console.log("attempting open modal")
+    this.setState({ modal: shipmentData });
+  };
+
+  closeModal = () => {
+    this.setState({ modal: false })
   }
 
   addShipment = (trackingNumber, uuid) => {
@@ -80,6 +89,10 @@ class ShipmentListView extends Component {
         {this.props.shipments.length > 0 ? (
           <MuiThemeProvider theme={theme}>
             <ShipmentList
+            modalState={!!this.state.modal}
+            modal={this.state.modal}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
               previousPage={this.state.previousPage}
               previousRowsPerPage={this.state.previousRowsPerPage}
               addShipment={this.addShipment}
@@ -94,6 +107,10 @@ class ShipmentListView extends Component {
           </MuiThemeProvider>
         ) : (
             <ShipmentList
+            modalState={!!this.state.modal}
+            modal={this.state.modal}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
               previousPage={this.state.previousPage}
               previousRowsPerPage={this.state.previousRowsPerPage}
               filter={this.state.filter}

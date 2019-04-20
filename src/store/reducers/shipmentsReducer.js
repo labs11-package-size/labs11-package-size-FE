@@ -41,6 +41,7 @@ const shipmentsReducer = (state = initialState, action) => {
     case GETTING_SHIPMENTS:
       return {
         ...state,
+        shipments: [],
         fetching: true,
         error: ""
       };

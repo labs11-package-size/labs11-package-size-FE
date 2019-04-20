@@ -97,12 +97,8 @@ class ShipmentList extends React.Component {
     this.props.addShipment(trackingSubmission, uuid)
   }
 
-  openModal = shipmentData => {
-    this.setState({ modal: shipmentData });
-  };
-
-  closeModal = () => {
-    this.setState({ modal: false, trackingNumber: "" });
+  handleCloseModal = () => {
+    this.setState({ trackingNumber: "" }, () => this.props.closeModal)
   };
 
   handleFilter = () => {
@@ -236,11 +232,11 @@ class ShipmentList extends React.Component {
                     const isSelected = this.isSelected(shipment.uuid);
                     return (
                       <Shipment
+                        openModal={this.props.openModal}
                         key={shipment.uuid}
                         shipment={shipment}
                         isSelected={isSelected}
                         handleClick={this.changeCheckbox}
-                        openModal={this.openModal}
                       />
                     );
                   })}
@@ -267,13 +263,12 @@ class ShipmentList extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
-        {!!this.state.modal && (
+        {!!this.props.modalState && (
           <ViewShipmentModal
             addingShipment={this.props.addingShipment}
-            shipment={this.state.modal}
-            openModal={this.openModal}
-            closeModal={this.closeModal}
-            modalState={!!this.state.modal}
+            shipment={this.props.modal}
+            closeModal={this.handleCloseModal}
+            modalState={this.props.modalState}
             trackingNumber={this.state.trackingNumber}
             handleChanges={this.handleChanges}
             submitTracking={this.submitTracking}
