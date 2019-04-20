@@ -11,7 +11,7 @@ const Iframe = ({ source }) => {
         // basic bootstrap classes. you can change with yours.
         <div>
             <div>
-                <iframe style={{width: "500px", height: "500px"}}src={src}></iframe>
+                <iframe style={{width: "575px", height: "575px"}}src={src}></iframe>
             </div>
         </div>
     );

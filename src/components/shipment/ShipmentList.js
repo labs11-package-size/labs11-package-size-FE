@@ -94,7 +94,7 @@ class ShipmentList extends React.Component {
   submitTracking = (e, uuid) => {
     e.preventDefault();
     const trackingSubmission = this.state.trackingNumber.slice()
-    this.setState({ modal: false, trackingNumber: "" }, () => this.props.addShipment(trackingSubmission, uuid))
+    this.props.addShipment(trackingSubmission, uuid)
   }
 
   openModal = shipmentData => {
@@ -269,6 +269,7 @@ class ShipmentList extends React.Component {
         />
         {!!this.state.modal && (
           <ViewShipmentModal
+            addingShipment={this.props.addingShipment}
             shipment={this.state.modal}
             openModal={this.openModal}
             closeModal={this.closeModal}
@@ -276,6 +277,8 @@ class ShipmentList extends React.Component {
             trackingNumber={this.state.trackingNumber}
             handleChanges={this.handleChanges}
             submitTracking={this.submitTracking}
+            errorMessage={this.props.errorMessage}
+            failureAdding={this.props.failureAdding}
           />
         )}
       </Paper>

@@ -16,8 +16,12 @@ const styles = theme => ({
 class LoadingSpinner extends React.Component {
 
   renderRedirect = () => {
-    if (this.props.success) {
+    if (!!this.props.success) {
       return <Redirect to='/shipments' />
+    }
+    if (!!this.props.failure) {
+      alert("Error: Package addition failed, please click OK to return to products list.")
+      return <Redirect to='/products' />
     }
   }
 
@@ -33,7 +37,8 @@ class LoadingSpinner extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    success: state.shipmentsReducer.success
+    success: state.shipmentsReducer.success,
+    failure: state.shipmentsReducer.failure
   };
 };
 

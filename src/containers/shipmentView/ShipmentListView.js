@@ -34,9 +34,14 @@ class ShipmentListView extends Component {
   state = {
     previousPage: null,
     previousRowsPerPage: null,
-    previousFilter: null,
-    filteredList: []
+    previousFilter: null
   };
+
+  componentDidUpdate = (prevProps) => {
+		if ((this.props.addedsuccess) && (prevProps.addedsuccess !== this.props.addedsuccess)) {
+      console.log("BING BING BING")
+	this.setState({previousPage: 1, previousRowsPerPage: 10, previousFilter: false }, () => this.props.getShipments())
+	}}
 
   componentDidMount() {
     this.props.getShipments();
@@ -81,6 +86,10 @@ class ShipmentListView extends Component {
               deleteShipment={this.deleteShipment}
               shipments={this.props.shipments}
               previousFilter={this.state.previousFilter}
+              addingShipment={this.props.adding}
+              failureAdding={this.props.failure}
+              errorMessage={this.props.error}
+              
             />
           </MuiThemeProvider>
         ) : (
@@ -91,6 +100,9 @@ class ShipmentListView extends Component {
               addShipment={this.addShipment}
               deleteShipment={this.deleteShipment}
               shipments={this.props.shipments}
+              addingShipment={this.props.adding}
+              failureAdding={this.props.failure}
+              errorMessage={this.props.error}
             />
         )}
       </div>
@@ -100,7 +112,11 @@ class ShipmentListView extends Component {
 
 const mapStateToProps = state => {
   return {
-    shipments: state.shipmentsReducer.shipments
+    shipments: state.shipmentsReducer.shipments,
+    adding: state.shipmentsReducer.adding,
+    failure: state.shipmentsReducer.failure,
+    error: state.shipmentsReducer.error,
+    addedsuccess: state.shipmentsReducer.addedsuccess
   };
 };
 
