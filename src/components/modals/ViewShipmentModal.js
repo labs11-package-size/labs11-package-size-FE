@@ -8,14 +8,23 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Icon from "@material-ui/core/Icon";
 import classNames from "classnames";
 import EmbeddedModel from "./EmbeddedModel";
-import TextField from '@material-ui/core/TextField';
+import TextField from "@material-ui/core/TextField";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinnerAddShipment";
 
-
-function getModalStyle() {
+function getModalStyle(tracked) {
   const top = 50;
   const left = 50;
-
+  if (!!tracked) {
+    return {
+      padding: "30px",
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`
+    };
+  }
   return {
+    width: "700px",
+    height: "800px",
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`
@@ -25,18 +34,15 @@ function getModalStyle() {
 const styles = theme => ({
   paper: {
     position: "absolute",
-    width: "750px",
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    outline: "none"
+    outline: "none",
+    backgroundColor: theme.palette.background.paper
   },
   backButton: {
     width: "500px",
     color: "white",
     backgroundColor: "#bd7280",
     marginTop: "25px",
-    '&:hover': {
+    "&:hover": {
       color: "black"
     }
   },
@@ -48,12 +54,20 @@ const styles = theme => ({
     width: "100px",
     color: "white",
     backgroundColor: "#bd7280",
-    '&:hover': {
+    "&:hover": {
       color: "black"
     }
   },
   trackForm: {
     marginTop: "25px"
+  },
+  failureWarning: { 
+    position: "absolute", 
+    top: "647px", 
+    padding: "0 5px",
+    backgroundColor: "#bd7280",
+    color: "white",
+    borderRadius: "20px"
   }
 });
 
@@ -68,29 +82,54 @@ const ViewShipmentModal = props => {
         open={!!props.modalState}
         onClose={props.closeModal}
       >
-        <div style={getModalStyle()} className={classes.paper}>
+        <div
+          style={getModalStyle(props.shipment.tracked)}
+          className={classes.paper}
+        >
           {!props.shipment.tracked ? (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center"
-              }}
-            >
-              <Typography variant="h5" style={{ marginBottom: "15px" }}>
-                Suggested Packaging Orientation
-              </Typography>
-              <EmbeddedModel source={props.shipment.modelURL} />
-              <form onSubmit={(e) => props.submitTracking(e, props.shipment.uuid)} className={classes.trackForm} autocomplete="off">
-              <TextField className={classes.trackInput} placeholder="Enter USPS Tracking Number..." name="trackingNumber" value={props.trackingNumber} onChange={props.handleChanges}/>
-              <Button type="submit" className={classes.trackButton}>Track it!</Button>
-              </form>
-              <div>
-                <Button className={classes.backButton} onClick={props.closeModal}>
-                  Go Back to List
-                </Button>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center"
+                }}
+              >
+                <Typography variant="h5" style={{ margin: "20px 0" }}>
+                  Suggested Packaging Orientation
+                </Typography>
+                <EmbeddedModel source={props.shipment.modelURL} />              
+                {!!props.addingShipment ? (<div><LoadingSpinner /></div>) : (<form
+                  onSubmit={e => props.submitTracking(e, props.shipment.uuid)}
+                  className={classes.trackForm}
+                  autocomplete="off"
+                >
+                  <TextField
+                    className={classes.trackInput}
+                    placeholder="Enter USPS Tracking Number..."
+                    name="trackingNumber"
+                    value={props.trackingNumber}
+                    onChange={props.handleChanges}
+                  />
+                  <Button type="submit" className={classes.trackButton}>
+                    Track it!
+                  </Button>
+                </form>)}
+                {!!props.failureAdding && (
+                  <Typography
+                    className={classes.failureWarning}
+                  >
+                    {props.errorMessage.response.data.message}
+                  </Typography>
+                )}
+                <div>
+                  <Button
+                    className={classes.backButton}
+                    onClick={props.closeModal}
+                  >
+                    Go Back to List
+                  </Button>
+                </div>
               </div>
-            </div>
           ) : (
             <div
               style={{
@@ -118,7 +157,10 @@ const ViewShipmentModal = props => {
                 Total Item Weight:{props.shipment.totalWeight}
               </Typography>
               <div>
-              <Button className={classes.backButton} onClick={props.closeModal}>
+                <Button
+                  className={classes.backButton}
+                  onClick={props.closeModal}
+                >
                   Go Back to List
                 </Button>
                 {props.children}

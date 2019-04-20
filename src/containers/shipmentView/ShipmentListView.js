@@ -35,11 +35,25 @@ class ShipmentListView extends Component {
     previousPage: null,
     previousRowsPerPage: null,
     previousFilter: null,
-    filteredList: []
+    modal: false
   };
+
+  componentDidUpdate = (prevProps) => {
+		if ((this.props.addedsuccess) && (prevProps.addedsuccess !== this.props.addedsuccess)) {
+	this.setState({modal: false, previousPage: 0, previousRowsPerPage: 10, previousFilter: false }, () => this.props.getShipments())
+	}}
 
   componentDidMount() {
     this.props.getShipments();
+  }
+
+  openModal = shipmentData => {
+    console.log("attempting open modal")
+    this.setState({ modal: shipmentData });
+  };
+
+  closeModal = () => {
+    this.setState({ modal: false })
   }
 
   addShipment = (trackingNumber, uuid) => {
@@ -75,22 +89,37 @@ class ShipmentListView extends Component {
         {this.props.shipments.length > 0 ? (
           <MuiThemeProvider theme={theme}>
             <ShipmentList
+            modalState={!!this.state.modal}
+            modal={this.state.modal}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
               previousPage={this.state.previousPage}
               previousRowsPerPage={this.state.previousRowsPerPage}
               addShipment={this.addShipment}
               deleteShipment={this.deleteShipment}
               shipments={this.props.shipments}
               previousFilter={this.state.previousFilter}
+              addingShipment={this.props.adding}
+              failureAdding={this.props.failure}
+              errorMessage={this.props.error}
+              
             />
           </MuiThemeProvider>
         ) : (
             <ShipmentList
+            modalState={!!this.state.modal}
+            modal={this.state.modal}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
               previousPage={this.state.previousPage}
               previousRowsPerPage={this.state.previousRowsPerPage}
               filter={this.state.filter}
               addShipment={this.addShipment}
               deleteShipment={this.deleteShipment}
               shipments={this.props.shipments}
+              addingShipment={this.props.adding}
+              failureAdding={this.props.failure}
+              errorMessage={this.props.error}
             />
         )}
       </div>
@@ -100,7 +129,11 @@ class ShipmentListView extends Component {
 
 const mapStateToProps = state => {
   return {
-    shipments: state.shipmentsReducer.shipments
+    shipments: state.shipmentsReducer.shipments,
+    adding: state.shipmentsReducer.adding,
+    failure: state.shipmentsReducer.failure,
+    error: state.shipmentsReducer.error,
+    addedsuccess: state.shipmentsReducer.addedsuccess
   };
 };
 
