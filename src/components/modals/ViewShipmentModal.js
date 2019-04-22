@@ -114,11 +114,11 @@ const ViewShipmentModal = props => {
                     Track it!
                   </Button>
                 </form>)}
-                {!!props.failureAdding && (
+                {!!props.errorMessage && (
                   <Typography
                     className={classes.failureWarning}
                   >
-                    {props.errorMessage.response.data.message}
+                    {props.errorMessage}
                   </Typography>
                 )}
                 <div>
@@ -142,7 +142,7 @@ const ViewShipmentModal = props => {
                 Shipment Info for package to {props.shipment.shippedTo}
               </Typography>
               <Typography variant="h6" id="modal-title">
-                Contains: {props.shipment.productNames.join(", ")}
+                Contains: {props.shipment.productNames}
               </Typography>
               <Typography variant="h6" id="modal-title">
                 Tracking Number: {props.shipment.trackingNumber}
