@@ -7,6 +7,7 @@ import { Redirect, Link } from "react-router-dom";
 import ShipmentList from "../../components/shipment/ShipmentList";
 import {
   getShipments,
+  getShipmentDetail,
   addShipment,
   deleteShipment,
   deletePackage
@@ -41,15 +42,24 @@ class ShipmentListView extends Component {
   componentDidUpdate = (prevProps) => {
 		if ((this.props.addedsuccess) && (prevProps.addedsuccess !== this.props.addedsuccess)) {
 	this.setState({modal: false, previousPage: 0, previousRowsPerPage: 10, previousFilter: false }, () => this.props.getShipments())
-	}}
+  }
+  if ((this.props.shipmentDetail) && (prevProps.shipmentDetail !== this.props.shipmentDetail)) {
+    this.setState({modal: this.props.shipmentDetail})
+  }
+
+}
 
   componentDidMount() {
     this.props.getShipments();
   }
 
   openModal = shipmentData => {
-    console.log("attempting open modal")
-    this.setState({ modal: shipmentData });
+    if (shipmentData.tracked) {
+      this.props.getShipmentDetail(shipmentData.uuid)
+    }
+    else {
+      this.setState({ modal: shipmentData });
+    }
   };
 
   closeModal = () => {
@@ -130,6 +140,7 @@ class ShipmentListView extends Component {
 const mapStateToProps = state => {
   return {
     shipments: state.shipmentsReducer.shipments,
+    shipmentDetail: state.shipmentsReducer.shipmentDetail,
     adding: state.shipmentsReducer.adding,
     failure: state.shipmentsReducer.failure,
     error: state.shipmentsReducer.error,
@@ -139,5 +150,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getShipments, addShipment, deleteShipment, deletePackage }
+  { getShipments, getShipmentDetail, addShipment, deleteShipment, deletePackage }
 )(withStyles(styles)(ShipmentListView));

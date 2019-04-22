@@ -2,6 +2,9 @@ import {
   GETTING_SHIPMENTS,
   GETTING_SHIPMENTS_SUCCESSFUL,
   GETTING_SHIPMENTS_FAILURE,
+  GETTING_SHIPMENT_DETAIL,
+  GETTING_SHIPMENT_DETAIL_SUCCESSFUL,
+  GETTING_SHIPMENT_DETAIL_FAILURE,
   ADDING_SHIPMENT,
   ADDING_SHIPMENT_SUCCESSFUL,
   ADDING_SHIPMENT_FAILURE,
@@ -24,6 +27,7 @@ import moment from "moment";
 const initialState = {
   selectedProducts: [],
   shipments: [],
+  shipmentDetail: null,
   fetching: false,
   adding: false,
   added: false,
@@ -68,7 +72,33 @@ const shipmentsReducer = (state = initialState, action) => {
         failure: true,
         error: action.payload
       };
+    case GETTING_SHIPMENT_DETAIL:
+      return {
+        ...state,
+        shipmentDetail: null,
+        fetching: true,
+        error: ""
+      };
 
+    case GETTING_SHIPMENT_DETAIL_SUCCESSFUL:
+      return {
+        ...state,
+        shipmentDetail: action.payload,
+        fetching: false,
+        addedsuccess: false,
+        success: true,
+        failure: false,
+        error: ""
+      };
+
+    case GETTING_SHIPMENT_DETAIL_FAILURE:
+      return {
+        ...state,
+        fetching: false,
+        success: false,
+        failure: true,
+        error: action.payload
+      };
     case ADDING_SHIPMENT:
       return {
         ...state,

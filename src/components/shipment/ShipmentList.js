@@ -33,12 +33,14 @@ import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
 
 const styles = theme => ({
   root: {
+    marginTop: "10px",
     width: "100%",
     marginTop: theme.spacing.unit * 3,
     overflowX: "auto"
   },
   table: {
-    minWidth: 700
+    minWidth: 700,
+    marginTop: "10px"
   },
   switch: {
     margin: "0px 20px 0"
@@ -93,12 +95,12 @@ class ShipmentList extends React.Component {
 
   submitTracking = (e, uuid) => {
     e.preventDefault();
-    const trackingSubmission = this.state.trackingNumber.slice()
-    this.props.addShipment(trackingSubmission, uuid)
-  }
+    const trackingSubmission = this.state.trackingNumber.slice();
+    this.props.addShipment(trackingSubmission, uuid);
+  };
 
   handleCloseModal = () => {
-    this.setState({ trackingNumber: "" }, () => this.props.closeModal)
+    this.setState({ trackingNumber: "" }, () => this.props.closeModal());
   };
 
   handleFilter = () => {
@@ -263,7 +265,7 @@ class ShipmentList extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
-        {!!this.props.modalState && (
+        {this.props.modal && (
           <ViewShipmentModal
             addingShipment={this.props.addingShipment}
             shipment={this.props.modal}
