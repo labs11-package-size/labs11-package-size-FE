@@ -34,7 +34,7 @@ function Shipment(props) {
       <TableCell align="right">
         {moment(props.shipment.lastUpdated).format("L h:mm a")}
       </TableCell>
-      {props.shipment.status ? (
+      {props.shipment.tracked ? (
         <TableCell
           style={statusStyling(props.shipment)}
           className={classes.statuscell}

@@ -100,7 +100,7 @@ let EnhancedTableToolbar = props => {
 				</div>
 			</div>
 		</Toolbar> {props.filter && (
-		<div style={{marginLeft: "33%", fontSize: "13px", color: "grey"}}>
+		<div style={{position: "absolute", left: "36.5%", fontSize: "13px", color: "grey"}}>
 			Click shipment rows to add tracking numbers and begin tracking them!
 		</div>)}
 		</div>

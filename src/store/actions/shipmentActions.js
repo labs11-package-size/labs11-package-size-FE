@@ -1,8 +1,12 @@
 import axios from 'axios';
 
-export const GETTING_SHIPMENTS = 'GETTING_SHIPMENT';
-export const GETTING_SHIPMENTS_SUCCESSFUL = 'GETTING_SHIPMENT_SUCCESSFUL';
-export const GETTING_SHIPMENTS_FAILURE = 'GETTING_SHIPMENT_FAILURE';
+export const GETTING_SHIPMENTS = 'GETTING_SHIPMENTS';
+export const GETTING_SHIPMENTS_SUCCESSFUL = 'GETTING_SHIPMENTS_SUCCESSFUL';
+export const GETTING_SHIPMENTS_FAILURE = 'GETTING_SHIPMENTS_FAILURE';
+
+export const GETTING_SHIPMENT_DETAIL = 'GETTING_SHIPMENT_DETAIL';
+export const GETTING_SHIPMENT_DETAIL_SUCCESSFUL = 'GETTING_SHIPMENT_DETAIL_SUCCESSFUL';
+export const GETTING_SHIPMENT_DETAIL_FAILURE = 'GETTING_SHIPMENT_DETAIL_FAILURE';
 
 export const ADDING_SHIPMENT = 'ADDING_SHIPMENT';
 export const ADDING_SHIPMENT_SUCCESSFUL = 'ADDING_SHIPMENT_SUCCESSFUL';
@@ -69,6 +73,18 @@ export const getShipments = () => dispatch => {
 		)
 		.catch(err =>
 			dispatch({ type: GETTING_SHIPMENTS_FAILURE, payload: err.data }),
+		);
+};
+
+export const getShipmentDetail = (uuid) => dispatch => {
+	dispatch({ type: GETTING_SHIPMENT_DETAIL });
+	axios
+		.get(`/shipments/${uuid}`)
+		.then(res =>
+			dispatch({ type: GETTING_SHIPMENT_DETAIL_SUCCESSFUL, payload: res.data }),
+		)
+		.catch(err =>
+			dispatch({ type: GETTING_SHIPMENT_DETAIL_FAILURE, payload: err.data }),
 		);
 };
 
