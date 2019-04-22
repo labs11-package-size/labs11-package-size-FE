@@ -15,9 +15,13 @@ import {
 	addProduct,
 	editProduct,
 	deleteProduct,
-	getDetail
+	getDetail,
 } from '../../store/actions/productActions';
-import { addShipment, selectProduct, addPackage } from '../../store/actions/shipmentActions';
+import {
+	addShipment,
+	selectProduct,
+	addPackage,
+} from '../../store/actions/shipmentActions';
 import { compose } from 'redux';
 
 const styles = theme => ({
@@ -190,6 +194,7 @@ class ProductListView extends Component {
 				{this.props.products.length > 0 ? (
 					<div>
 						<ProductList
+							selectedProducts={this.props.selectedProducts}
 							updateState={this.updateState}
 							selectProduct={this.handleSelectProduct}
 							getThumbnail={this.getThumbnail}
@@ -328,6 +333,7 @@ class ProductListView extends Component {
 
 const mapStateToProps = state => {
 	return {
+		selectedProducts: state.shipmentsReducer.selectedProducts,
 		products: state.productsReducer.products,
 		thumbnail: state.productsReducer.thumbnail,
 		images: state.productsReducer.images,
@@ -346,7 +352,7 @@ export default compose(
 				addShipment,
 				selectProduct,
 				addPackage,
-				getDetail
+				getDetail,
 			},
 		)(withStyles(styles)(ProductListView)),
 	),
