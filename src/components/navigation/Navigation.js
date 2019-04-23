@@ -101,19 +101,7 @@ class Navigation extends React.Component {
 									}}
 									open={open}
 									onClose={this.handleClose}>
-									<MenuItem onClick={this.handleClose}>
-									<div className={this.props.classes.root}>
-										<Typography gutterBottom variant="h5" component="h2">
-											User Account
-										</Typography>
-										<Typography className={this.props.classes.heading}>
-											Display Name: {this.props.userInfo.displayName}
-										</Typography>
-										<Typography className={this.props.classes.heading}>
-											Email Address: {this.props.userInfo.email}
-										</Typography>
-									</div>
-									</MenuItem>
+								
 									{/* <MenuItem onClick={this.handleClose}>
 										<NavLink
 											style={{ textDecorationLine: 'none' }}

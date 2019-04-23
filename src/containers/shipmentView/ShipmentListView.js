@@ -36,18 +36,35 @@ class ShipmentListView extends Component {
     previousPage: null,
     previousRowsPerPage: null,
     previousFilter: null,
-    modal: false
+    modal: false,
+    errorMessage: ""
   };
 
-  componentDidUpdate = (prevProps) => {
-		if ((this.props.addedsuccess) && (prevProps.addedsuccess !== this.props.addedsuccess)) {
-	this.setState({modal: false, previousPage: 0, previousRowsPerPage: 10, previousFilter: false }, () => this.props.getShipments())
-  }
-  if ((this.props.shipmentDetail) && (prevProps.shipmentDetail !== this.props.shipmentDetail)) {
-    this.setState({modal: this.props.shipmentDetail})
-  }
-
-}
+  componentDidUpdate = prevProps => {
+    if (
+      this.props.addedsuccess &&
+      prevProps.addedsuccess !== this.props.addedsuccess
+    ) {
+      this.setState(
+        {
+          modal: false,
+          previousPage: 0,
+          previousRowsPerPage: 10,
+          previousFilter: false
+        },
+        () => this.props.getShipments()
+      );
+    }
+    if (!!this.props.shipmentDetail && prevProps.shipmentDetail !== this.props.shipmentDetail
+    ) {
+      this.setState({ modal: this.props.shipmentDetail });
+    }
+    if (!!this.props.error && prevProps.error !== this.props.error) {
+      this.setState({
+        errorMessage: this.props.error.response.data.message
+      });
+    }
+  };
 
   componentDidMount() {
     this.props.getShipments();
@@ -55,16 +72,15 @@ class ShipmentListView extends Component {
 
   openModal = shipmentData => {
     if (shipmentData.tracked) {
-      this.props.getShipmentDetail(shipmentData.uuid)
-    }
-    else {
+      this.props.getShipmentDetail(shipmentData.uuid);
+    } else {
       this.setState({ modal: shipmentData });
     }
   };
 
   closeModal = () => {
-    this.setState({ modal: false })
-  }
+    this.setState({ modal: false, errorMessage: "" });
+  };
 
   addShipment = (trackingNumber, uuid) => {
     this.props.addShipment(trackingNumber, uuid);
@@ -73,14 +89,22 @@ class ShipmentListView extends Component {
   deleteShipment = (uuid, currentPage, currentRowsPerPage, currentFilter) => {
     if (currentFilter === false) {
       this.setState(
-        { previousPage: currentPage, previousRowsPerPage: currentRowsPerPage, previousFilter: currentFilter },
+        {
+          previousPage: currentPage,
+          previousRowsPerPage: currentRowsPerPage,
+          previousFilter: currentFilter
+        },
         () => this.props.deleteShipment(uuid.join())
       );
     } else {
       this.setState(
-        { previousPage: currentPage, previousRowsPerPage: currentRowsPerPage, previousFilter: currentFilter },
+        {
+          previousPage: currentPage,
+          previousRowsPerPage: currentRowsPerPage,
+          previousFilter: currentFilter
+        },
         () => this.props.deletePackage(uuid.join())
-      )
+      );
     }
   };
 
@@ -99,10 +123,10 @@ class ShipmentListView extends Component {
         {this.props.shipments.length > 0 ? (
           <MuiThemeProvider theme={theme}>
             <ShipmentList
-            modalState={!!this.state.modal}
-            modal={this.state.modal}
-            openModal={this.openModal}
-            closeModal={this.closeModal}
+              modalState={!!this.state.modal}
+              modal={this.state.modal}
+              openModal={this.openModal}
+              closeModal={this.closeModal}
               previousPage={this.state.previousPage}
               previousRowsPerPage={this.state.previousRowsPerPage}
               addShipment={this.addShipment}
@@ -111,26 +135,25 @@ class ShipmentListView extends Component {
               previousFilter={this.state.previousFilter}
               addingShipment={this.props.adding}
               failureAdding={this.props.failure}
-              errorMessage={this.props.error}
-              
+              errorMessage={this.state.errorMessage}
             />
           </MuiThemeProvider>
         ) : (
-            <ShipmentList
+          <ShipmentList
             modalState={!!this.state.modal}
             modal={this.state.modal}
             openModal={this.openModal}
             closeModal={this.closeModal}
-              previousPage={this.state.previousPage}
-              previousRowsPerPage={this.state.previousRowsPerPage}
-              filter={this.state.filter}
-              addShipment={this.addShipment}
-              deleteShipment={this.deleteShipment}
-              shipments={this.props.shipments}
-              addingShipment={this.props.adding}
-              failureAdding={this.props.failure}
-              errorMessage={this.props.error}
-            />
+            previousPage={this.state.previousPage}
+            previousRowsPerPage={this.state.previousRowsPerPage}
+            filter={this.state.filter}
+            addShipment={this.addShipment}
+            deleteShipment={this.deleteShipment}
+            shipments={this.props.shipments}
+            addingShipment={this.props.adding}
+            failureAdding={this.props.failure}
+            errorMessage={this.state.errorMessage}
+          />
         )}
       </div>
     );
@@ -150,5 +173,11 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getShipments, getShipmentDetail, addShipment, deleteShipment, deletePackage }
+  {
+    getShipments,
+    getShipmentDetail,
+    addShipment,
+    deleteShipment,
+    deletePackage
+  }
 )(withStyles(styles)(ShipmentListView));
