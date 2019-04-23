@@ -117,7 +117,7 @@ class LoggedInLinks extends Component {
 						</Tooltip>
 						<ListItemText primary="Packages" />
 					</ListItem> */}
-					<ListItem onClick={() => this.props.history.push('/logout')} button>
+					{/* <ListItem onClick={() => this.props.history.push('/logout')} button>
 						<Tooltip title="Logout">
 							<ListItemIcon className={classes.menuButton}>
 								<Icon
@@ -126,7 +126,7 @@ class LoggedInLinks extends Component {
 							</ListItemIcon>
 						</Tooltip>
 						<ListItemText primary="Logout" />
-					</ListItem>
+					</ListItem> */}
 				</List>
 				<Divider />
 				{/* {this.handleRenderList()} */}

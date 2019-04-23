@@ -95,6 +95,7 @@ const styles = theme => ({
 	},
 	searchContainer: {
 		marginLeft: 'auto',
+		marginBottom: 40,
 		marginRight: 'auto',
 		display: 'flex',
 		justifyContent: 'center',
