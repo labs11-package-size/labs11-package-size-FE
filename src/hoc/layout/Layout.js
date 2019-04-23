@@ -140,7 +140,7 @@ class Layout extends React.Component {
 			<div className={classes.root}>
 				<CssBaseline />
 				<AppBar
-					position="absolute"
+					// position="static"
 					className={classNames(
 						classes.appBar,
 						this.state.open && classes.appBarShift,

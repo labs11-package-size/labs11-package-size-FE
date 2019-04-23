@@ -21,15 +21,19 @@ import { deleteSelectedProduct } from '../../store/actions/shipmentActions';
 
 import Product from './Product';
 
-const drawerWidth = 360;
-
 const styles = theme => ({
 	root: {
 		width: 'auto',
 		display: 'flex',
 		flexWrap: 'wrap',
+		justifyContent: 'flex-start',
 	},
-
+	shipit_btn: {
+		margin: '0 auto',
+		width: '85%',
+		background: '#72BDA2',
+		color: '#72BDA2',
+	},
 	textField: {
 		marginLeft: theme.spacing.unit,
 		marginRight: theme.spacing.unit,
@@ -42,28 +46,26 @@ const styles = theme => ({
 	},
 	drawer: {
 		paddingTop: theme.spacing.unit * 3,
-		width: drawerWidth,
+		width: '30%',
 		flexShrink: 0,
 	},
 	drawerPaper: {
-		marginTop: 15,
-		width: drawerWidth,
+		marginTop: 20,
+		paddingTop: '45px',
+		width: '30%',
 	},
 	content: {
-		flexGrow: 1,
-		padding: theme.spacing.unit * 3,
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
+		// flexGrow: 1,
+		// padding: theme.spacing.unit * 3,
+		// transition: theme.transitions.create('margin', {
+		// 	easing: theme.transitions.easing.sharp,
+		// 	duration: theme.transitions.duration.leavingScreen,
+		// }),
 		// margin: 'auto',
 	},
 	contentShift: {
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-		// marginLeft: 'auto',
+		// marginRight: 320,
+		width: '82%',
 	},
 	drawerHeader: {
 		display: 'flex',
@@ -85,7 +87,9 @@ const styles = theme => ({
 	searchContainer: {
 		marginLeft: 'auto',
 		marginRight: 'auto',
-		maxWidth: 500,
+		display: 'flex',
+		justifyContent: 'center',
+		maxWidth: '50%',
 	},
 });
 
@@ -95,10 +99,6 @@ class ProductList extends Component {
 	};
 
 	handleDeleteSelected = uuid => {
-		// this.setState({
-		// 	...this.state,
-		// 	selectedProduct: uuid,
-		// });
 		this.props.deleteSelectedProduct(uuid);
 	};
 
@@ -106,38 +106,39 @@ class ProductList extends Component {
 		return;
 	};
 
-	// handleRenderList = () => {
-	// 	if (this.props.selectedProducts.length) {
-	// 		return (
-	// 			<Drawer
-	// 				className={this.props.classes.drawer}
-	// 				variant="persistent"
-	// 				classes={{
-	// 					paper: this.props.classes.drawerPaper,
-	// 				}}
-	// 				anchor="right"
-	// 				open={true}>
-	// 				<Paper>
-	// 					<List>
-	// 						<Typography>List</Typography>
-	// 						{this.props.selectedProducts.map((prod, i) => (
-	// 							<ListItem key={i}>
-	// 								<ListItemText
-	// 									onClick={() => this.handleDeleteSelected(prod.uuid)}
-	// 									primary={prod.name}
-	// 								/>
-	// 							</ListItem>
-	// 						))}
-	// 					</List>
-	// 					<Divider />
-	// 					<Button onClick={this.handlePackit}>Pack It</Button>
-	// 				</Paper>
-	// 			</Drawer>
-	// 		);
-	// 	} else {
-	// 		return null;
-	// 	}
-	// };
+	handleRenderList = () => {
+		if (this.props.selectedProducts.length >= 1) {
+			return (
+				<Drawer
+					className={this.props.classes.drawer}
+					variant="persistent"
+					classes={{
+						paper: this.props.classes.drawerPaper,
+					}}
+					anchor="right"
+					open={true}>
+					<Divider />
+					<Paper>
+						<List>
+							<Typography>List</Typography>
+							{this.props.selectedProducts.map((prod, i) => (
+								<ListItem key={i}>
+									<ListItemText
+										onClick={() => this.handleDeleteSelected(prod.uuid)}
+										primary={prod.name}
+									/>
+								</ListItem>
+							))}
+						</List>
+						<Divider />
+						<Button onClick={this.handlePackit}>Pack It</Button>
+					</Paper>
+				</Drawer>
+			);
+		} else {
+			return null;
+		}
+	};
 
 	render() {
 		return (
@@ -146,7 +147,9 @@ class ProductList extends Component {
 					<Typography gutterBottom variant="h5" component="h2">
 						Products
 					</Typography>
-
+					{this.props.selectedProducts.length >= 1 ? (
+						<Button className={this.props.classes.shipit_btn}>Hi</Button>
+					) : null}
 					<AddProductModal
 						getThumbnail={this.getThumbnail}
 						addImgs={this.addImgs}
@@ -267,9 +270,10 @@ class ProductList extends Component {
 				</div>
 
 				<div
-					className={classNames(this.props.classes.content, {
-						[this.props.classes.contentShift]: this.state.open,
-					})}>
+					className={
+						this.props.selectedProducts.length >= 1 &&
+						this.props.classes.contentShift
+					}>
 					<div className={this.props.classes.drawerHeader} />
 					<div>
 						<div className={this.props.classes.searchContainer}>
@@ -294,11 +298,6 @@ class ProductList extends Component {
 									return (
 										<div key={product.uuid}>
 											<Product
-												style={{
-													display: 'flex',
-													justifyContent: 'space-between',
-													flexDirection: 'column',
-												}}
 												openDrawer={this.handleDrawerOpen}
 												selectProduct={this.props.selectProduct}
 												editProduct={this.props.editProduct}
@@ -330,33 +329,7 @@ class ProductList extends Component {
 					</div>
 				</div>
 
-				{this.props.selectedProducts.length && (
-					<Drawer
-						className={this.props.classes.drawer}
-						variant="persistent"
-						classes={{
-							paper: this.props.classes.drawerPaper,
-						}}
-						anchor="right"
-						open={true}>
-						<Divider />
-						<Paper>
-							<List>
-								<Typography>List</Typography>
-								{this.props.selectedProducts.map((prod, i) => (
-									<ListItem key={i}>
-										<ListItemText
-											onClick={() => this.handleDeleteSelected(prod.uuid)}
-											primary={prod.name}
-										/>
-									</ListItem>
-								))}
-							</List>
-							<Divider />
-							<Button onClick={this.handlePackit}>Pack It</Button>
-						</Paper>
-					</Drawer>
-				)}
+				{this.handleRenderList()}
 			</div>
 		);
 	}
