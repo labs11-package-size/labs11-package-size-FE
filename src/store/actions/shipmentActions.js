@@ -1,8 +1,12 @@
 import axios from 'axios';
 
-export const GETTING_SHIPMENTS = 'GETTING_SHIPMENT';
-export const GETTING_SHIPMENTS_SUCCESSFUL = 'GETTING_SHIPMENT_SUCCESSFUL';
-export const GETTING_SHIPMENTS_FAILURE = 'GETTING_SHIPMENT_FAILURE';
+export const GETTING_SHIPMENTS = 'GETTING_SHIPMENTS';
+export const GETTING_SHIPMENTS_SUCCESSFUL = 'GETTING_SHIPMENTS_SUCCESSFUL';
+export const GETTING_SHIPMENTS_FAILURE = 'GETTING_SHIPMENTS_FAILURE';
+
+export const GETTING_SHIPMENT_DETAIL = 'GETTING_SHIPMENT_DETAIL';
+export const GETTING_SHIPMENT_DETAIL_SUCCESSFUL = 'GETTING_SHIPMENT_DETAIL_SUCCESSFUL';
+export const GETTING_SHIPMENT_DETAIL_FAILURE = 'GETTING_SHIPMENT_DETAIL_FAILURE';
 
 export const ADDING_SHIPMENT = 'ADDING_SHIPMENT';
 export const ADDING_SHIPMENT_SUCCESSFUL = 'ADDING_SHIPMENT_SUCCESSFUL';
@@ -24,20 +28,20 @@ export const SELECTED_PRODUCT = 'SELECTED_PRODUCT';
 
 export const DELETE_SELECTED = 'DELETE_SELECTED';
 
-export const addShipment = (trackingNumber, productId) => dispatch => {
+export const DELETE_ALL_SELECTED = 'DELETE_ALL_SELECTED';
+
+export const addShipment = (trackingNumber, uuid) => dispatch => {
 	const trackingRequest = {
 		trackingNumber,
-		productId,
 	};
 	dispatch({ type: ADDING_SHIPMENT });
-
 	axios
-		.post('/shipments/addweb', trackingRequest)
+		.post(`/shipments/addweb/${uuid}`, trackingRequest)
 		.then(res =>
 			dispatch({ type: ADDING_SHIPMENT_SUCCESSFUL, payload: res.data }),
 		)
 		.catch(err =>
-			dispatch({ type: ADDING_SHIPMENT_FAILURE, payload: err.data }),
+			dispatch({ type: ADDING_SHIPMENT_FAILURE, payload: err }),
 		);
 };
 
@@ -72,6 +76,18 @@ export const getShipments = () => dispatch => {
 		);
 };
 
+export const getShipmentDetail = (uuid) => dispatch => {
+	dispatch({ type: GETTING_SHIPMENT_DETAIL });
+	axios
+		.get(`/shipments/${uuid}`)
+		.then(res =>
+			dispatch({ type: GETTING_SHIPMENT_DETAIL_SUCCESSFUL, payload: res.data }),
+		)
+		.catch(err =>
+			dispatch({ type: GETTING_SHIPMENT_DETAIL_FAILURE, payload: err.data }),
+		);
+};
+
 export const deleteShipment = uuid => dispatch => {
 	dispatch({ type: DELETING_SHIPMENT });
 	axios
@@ -100,6 +116,10 @@ export const selectProduct = product => dispatch => {
 	dispatch({ type: SELECTED_PRODUCT, payload: product });
 };
 
-export const deleteSelectedProduct = uuid => dispatch => {
-	dispatch({ type: DELETE_SELECTED, payload: uuid });
+export const deleteSelectedProduct = index => dispatch => {
+	dispatch({ type: DELETE_SELECTED, payload: index });
+};
+
+export const deleteAllSelected = () => dispatch => {
+	dispatch({ type: DELETE_ALL_SELECTED });
 };

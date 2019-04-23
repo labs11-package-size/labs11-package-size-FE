@@ -9,7 +9,6 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-
 const styles = theme => ({
   root: {
     width: "800px"
@@ -17,7 +16,6 @@ const styles = theme => ({
 });
 
 class EnhancedTableHead extends React.Component {
-  
   createSortHandler = (event, property) => {
     this.props.onRequestSort(event, property);
   };
@@ -28,36 +26,34 @@ class EnhancedTableHead extends React.Component {
     return (
       <TableHead>
         <TableRow>
-          <TableCell padding="checkbox">
-            <Checkbox
-              style={{ color: "#72BDA2" }}
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={numSelected === rowCount}
-              onChange={onSelectAllClick}
-            />
+          {shipmentTitles.map((shipment, index) => {
+            if (index === 4) {
+              return (
+                <TableCell
+                  align="right"
+                  padding="default"
+                  onClick={event => this.createSortHandler(event, shipment.id)}
+                  style={{ width: "700px" }}
+                >
+                  <TableSortLabel>{shipment.label}</TableSortLabel>
+                </TableCell>
+              );
+            } 
+            else {
+              return (
+                <TableCell
+                  align="right"
+                  padding="default"
+                  onClick={event => this.createSortHandler(event, shipment.id)}
+                >
+                  <TableSortLabel>{shipment.label}</TableSortLabel>
+                </TableCell>
+              );
+            }
+          }, this)}
+          <TableCell align="right" padding="default">
+            <TableSortLabel>Delete Shipment</TableSortLabel>
           </TableCell>
-          {shipmentTitles.map(
-            (shipment, index) =>
-              (index === 4) ? (
-                <TableCell
-                  align="right"
-                  padding="default"
-                  onClick={event => this.createSortHandler(event, shipment.id)}
-                  style={{width: "700px"}}
-                >
-                  <TableSortLabel>{shipment.label}</TableSortLabel>
-                </TableCell>
-              ) : (
-                <TableCell
-                  align="right"
-                  padding="default"
-                  onClick={event => this.createSortHandler(event, shipment.id)}
-                >
-                  <TableSortLabel>{shipment.label}</TableSortLabel>
-                </TableCell>
-              ),
-            this
-          )}
         </TableRow>
       </TableHead>
     );
@@ -97,8 +93,6 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired
 };
-
-
 
 const shipmentTitles = [
   {

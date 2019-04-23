@@ -103,6 +103,7 @@ class Product extends Component {
 				value={this.props.value}
 				getDetail={this.props.getDetail}
 				addPackage={this.props.addPackage}
+				openDrawer={this.props.openDrawer}
 			/>
 		);
 	}

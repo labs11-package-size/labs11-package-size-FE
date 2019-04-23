@@ -33,15 +33,17 @@ import EnhancedTableToolbar from "./table/EnhancedTableToolbar";
 
 const styles = theme => ({
   root: {
+    marginTop: "10px",
     width: "100%",
     marginTop: theme.spacing.unit * 3,
     overflowX: "auto"
   },
   table: {
-    minWidth: 700
+    minWidth: 700,
+    marginTop: "10px"
   },
   switch: {
-    margin: "0px 20px 0",
+    margin: "0px 20px 0"
   }
 });
 
@@ -55,36 +57,57 @@ class ShipmentList extends React.Component {
       data: [],
       page: 0,
       filter: true,
-      rowsPerPage: 10
+      rowsPerPage: 10,
+      modal: false,
+      trackingNumber: ""
     };
   }
 
   componentDidMount() {
     if (this.props.previousRowsPerPage) {
-      this.setState({
-        data: this.props.shipments
-          .filter(shipment => {
+      if (this.props.previousFilter) {
+        this.setState({
+          data: this.props.shipments.filter(shipment => {
             return shipment.tracked !== 1;
           }),
-          
-        page: this.props.previousPage,
-        rowsPerPage: this.props.previousRowsPerPage
-      });
+          filter: this.props.previousFilter,
+          page: this.props.previousPage,
+          rowsPerPage: this.props.previousRowsPerPage
+        });
+      } else {
+        this.setState({
+          data: this.props.shipments.filter(shipment => {
+            return shipment.tracked !== 0;
+          }),
+          filter: this.props.previousFilter,
+          page: this.props.previousPage,
+          rowsPerPage: this.props.previousRowsPerPage
+        });
+      }
     } else {
       this.setState({
-        data: this.props.shipments
-          .filter(shipment => {
-            return shipment.tracked !== 1;
-          })
-          
+        data: this.props.shipments.filter(shipment => {
+          return shipment.tracked !== 1;
+        })
       });
     }
   }
 
+  submitTracking = (e, uuid) => {
+    e.preventDefault();
+    const trackingSubmission = this.state.trackingNumber.slice();
+    this.props.addShipment(trackingSubmission, uuid);
+  };
+
+  handleCloseModal = () => {
+    this.setState({ trackingNumber: "" }, () => this.props.closeModal());
+  };
+
   handleFilter = () => {
     this.setState(
       {
-        filter: this.state.filter === false ? true : false
+        filter: this.state.filter === false ? true : false,
+        selected: []
       },
       () => this.handleRenderList()
     );
@@ -146,6 +169,25 @@ class ShipmentList extends React.Component {
     this.setState({ selected: newSelected });
   };
 
+  changeCheckbox = (event, uuid) => {
+    event.stopPropagation();
+    let item = document.getElementById("tablerow-1");
+    switch (item.getAttribute("aria-checked")) {
+      case "true":
+        item.setAttribute("aria-checked", "false");
+        this.handleClick(event, uuid);
+        break;
+      case "false":
+        item.setAttribute("aria-checked", "true");
+        this.handleClick(event, uuid);
+        break;
+    }
+  };
+
+  handleChanges = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -163,32 +205,7 @@ class ShipmentList extends React.Component {
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper className={classes.root}>
-        {this.state.filter ? (
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  className={classes.switch}
-                  onClick={() => this.handleFilter()}
-                />
-              }
-              label="Viewing Untracked Packages"
-            />
-          </FormGroup>
-        ) : (
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  className={classes.switch}
-                  onClick={() => this.handleFilter()}
-                />
-              }
-              label="Viewing Tracked Packages"
-            />
-          </FormGroup>
-        )}
-        {/* <EnhancedTableToolbar
+        <EnhancedTableToolbar
           {...this.props}
           filter={this.state.filter}
           currentPage={this.state.page}
@@ -196,7 +213,8 @@ class ShipmentList extends React.Component {
           deleteShipment={this.props.deleteShipment}
           selected={selected}
           numSelected={selected.length}
-        /> */}
+          handleFilter={this.handleFilter}
+        />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <EnhancedTableHead
@@ -216,10 +234,11 @@ class ShipmentList extends React.Component {
                     const isSelected = this.isSelected(shipment.uuid);
                     return (
                       <Shipment
+                        openModal={this.props.openModal}
                         key={shipment.uuid}
                         shipment={shipment}
                         isSelected={isSelected}
-                        handleClick={this.handleClick}
+                        handleClick={this.changeCheckbox}
                       />
                     );
                   })}
@@ -246,6 +265,19 @@ class ShipmentList extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
+        {this.props.modal && (
+          <ViewShipmentModal
+            addingShipment={this.props.addingShipment}
+            shipment={this.props.modal}
+            closeModal={this.handleCloseModal}
+            modalState={this.props.modalState}
+            trackingNumber={this.state.trackingNumber}
+            handleChanges={this.handleChanges}
+            submitTracking={this.submitTracking}
+            errorMessage={this.props.errorMessage}
+            failureAdding={this.props.failureAdding}
+          />
+        )}
       </Paper>
     );
   }

@@ -31,7 +31,7 @@ class LoggedInLinks extends Component {
 	handlePackit = () => {
 		const list = this.props.selectedProducts.map(prod => prod.uuid);
 		this.props.addPackage(list);
-		this.props.history.push('/loadingshipments')
+		this.props.history.push('/loadingshipments');
 	};
 
 	handleDeleteSelected = uuid => {
@@ -114,7 +114,7 @@ class LoggedInLinks extends Component {
 					</ListItem>
 				</List>
 				<Divider />
-				{this.handleRenderList()}
+				{/* {this.handleRenderList()} */}
 			</div>
 		);
 	}
