@@ -135,7 +135,7 @@ const Login = props => {
 								props.handleGoogleLogin();
 							}}
 						/>
-						<div
+						{/* <div
 							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
 							<Button
 								variant="contained"
@@ -143,7 +143,7 @@ const Login = props => {
 								onClick={props.handleRegister}>
 								Register
 							</Button>
-						</div>
+						</div> */}
 					</div>
 				</Paper>
 			</main>

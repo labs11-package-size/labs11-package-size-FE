@@ -12,12 +12,18 @@ import CardActions from '@material-ui/core/CardActions';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import Paper from '@material-ui/core/Paper';
+import moment from 'moment';
 import { Redirect, withRouter } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
-// import { flexbox } from "@material-ui/system";
 
 import EditProductModal from '../modals/EditProductModal';
 import DeleteModal from './deleteModal';
@@ -32,7 +38,7 @@ function getModalStyle() {
 		left: `${left}%`,
 		transform: `translate(-${top}%, -${left}%)`,
 		width: '1000px',
-		height: '700px',
+		height: 'auto',
 	};
 }
 
@@ -83,9 +89,6 @@ const styles = theme => ({
 	avatar: {
 		backgroundColor: '#72BDA2',
 	},
-	icon: {
-		color: 'white',
-	},
 	paper: {
 		position: 'absolute',
 		width: theme.spacing.unit * 60,
@@ -100,47 +103,73 @@ const styles = theme => ({
 		'&:hover': {
 			color: '#72BDA2',
 			backgroundColor: 'white',
-    },
-    margin: "10px",
-  },
-  summaryCard: {
-    // border: '1px black solid',
-    width: '50%',
-    height: '100%',
-    // padding: '1%',
-  },
-  summaryCard2: {
-    // border: '1px black solid',
-    width: '50%',
-    height: '100%',
-    // padding: '1%',
-  },
-  prodSum: {
-    textAlign: 'center',
-  },
-  descriptionAndDimensions: {
-    height: "250px"
-  },
-  heading: {
-    padding: "15px 0 0 5px",
-		fontSize: "1.2em",
-		
-  },
-  individualShipment: {
-    width: "30%",
-  }
+		},
+		margin: '10px',
+	},
+	packit_submit: {
+		width: '100%',
+		color: 'white',
+		backgroundColor: '#72BDA2',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+		},
+		margin: '10px',
+	},
+	shipmentTitle: {
+		padding: 15,
+		width: '50%',
+		height: '100%',
+	},
+	summaryCard: {
+		// border: '1px black solid',
+		padding: 10,
+		width: '50%',
+		height: '100%',
+		// padding: '1%',
+	},
+	summaryCard2: {
+		// border: '1px black solid',
+		width: '50%',
+		padding: 10,
+		height: '100%',
+		// padding: '1%',
+	},
+	prodSum: {
+		textAlign: 'center',
+	},
+	descriptionAndDimensions: {
+		height: '250px',
+	},
+	heading: {
+		padding: '15px 0 0 5px',
+		fontSize: '1.2em',
+	},
+	individualShipment: {
+		width: '30%',
+	},
 });
+function Transition(props) {
+	return <Slide direction="up" {...props} />;
+}
 
 class ProductDetailModal extends React.Component {
 	state = {
 		open: false,
 		page: 1,
+		dialogOpen: false,
 	};
 
 	handleOpen = (event, uuid, page) => {
 		event.stopPropagation();
 		this.setState({ open: true });
 		this.props.getDetail(uuid, page);
+	};
+	handleDialogOpen = () => {
+		this.setState({ dialogOpen: true });
+	};
+	handleDialogClose = () => {
+		this.setState({ dialogOpen: false });
 	};
 
 	previousPage = () => {
@@ -206,79 +235,40 @@ class ProductDetailModal extends React.Component {
 						/>
 
 						<CardActions className={classes.actions} disableActionSpacing>
-							<div aria-label="add">
-								<Tooltip title="Add To Packing List">
-									<Button
-										style={{ backgroundColor: '#72BDA2' }}
-										onClick={event => this.handleProductSelect(event)}>
-										<Icon className={classNames(classes.icon, 'fas fa-plus')} />
-									</Button>
-								</Tooltip>
-							</div>
-							<div aria-label="edit">
-								<EditProductModal
-									onClick={event => this.handleLoad(event)}
-									edit={() =>
-										this.props.editProduct(
-											this.props.product.uuid,
-											this.props.updatedProduct,
-										)
-									}
-									product={this.props.product}>
-									<form className={classes.formContainer} autoComplete="off">
-										<TextField
-											required
-											id="standard-name"
-											name="name"
-											label="Product Name"
-											className={this.props.classes.textField}
-											value={this.props.updatedProduct.name}
-											onChange={this.props.handleChange}
-											margin="normal"
-										/>
-
-										<TextField
-											onChange={this.props.handleChange}
-											name="productDescription"
-											value={this.props.updatedProduct.productDescription}
-											label="Description"
-											className={this.props.classes.textField}
-											inputProps={{
-												'aria-label': 'Description',
-											}}
-										/>
-
-										<TextField
-											onChange={this.props.handleChange}
-											name="value"
-											value={this.props.updatedProduct.value}
-											label="Value"
-											className={this.props.classes.textField}
-											InputProps={{
-												startAdornment: (
-													<InputAdornment position="start">$</InputAdornment>
-												),
-											}}
-										/>
-										<TextField
-											className={classNames(
-												this.props.classes.margin,
-												this.props.classes.textField,
-											)}
-											onChange={this.props.handleChange}
-											name="weight"
-											value={this.props.updatedProduct.weight}
-											label="Weight"
-											InputProps={{
-												endAdornment: (
-													<InputAdornment position="end">lb</InputAdornment>
-												),
-											}}
-										/>
-									</form>
-								</EditProductModal>
-							</div>
-							<div aria-label="product details" />
+							{this.props.selectedProducts.length >= 10 ? (
+								<Button
+									className={classes.packit_submit}
+									onClick={event => this.handleDialogOpen(event)}>
+									Pack It
+								</Button>
+							) : (
+								// <div>
+								// 	<Button
+								// 		className={classes.packit_submit}
+								// 		onClick={event => this.handleDialogOpen(event)}>
+								// 		Pack It
+								// 	</Button>
+								// 	<Dialog
+								// 		open={true}
+								// 		TransitionComponent={Transition}
+								// 		keepMounted
+								// 		onClose={this.handleDialogClose}
+								// 		aria-labelledby="alert-dialog-slide-title"
+								// 		aria-describedby="alert-dialog-slide-description">
+								// 		<DialogContent>
+								// 			<DialogContentText id="alert-dialog-slide-description">
+								// 				Limit Reached.
+								// 			</DialogContentText>
+								// 		</DialogContent>
+								// 	</Dialog>
+								// </div>
+								// alert('Limit Reached')
+								<Button
+									className={classes.packit_submit}
+									onClick={event => this.handleProductSelect(event)}>
+									Pack It
+								</Button>
+							)}
 						</CardActions>
 					</Card>
 
@@ -288,169 +278,13 @@ class ProductDetailModal extends React.Component {
 						open={this.state.open}
 						onClose={event => this.handleClose(event)}>
 						<div style={getModalStyle()} className={classes.paper}>
-            <div>
-							<Typography variant="h6" id="modal-title" className={this.props.classes.prodSum}>
-								Product Summary
-							</Typography>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
-              <Grid
-                container
-                direction="row"
-                justify="flex-end"
-                alignItems="center"
-              >
-                <div aria-label="Pack It">
-                  <Tooltip title="Pack It">
-                    <Button
-                      variant="contained"
-                      className={classes.submit}
-                      onClick={event => this.handlePackit(event, this.props.product.uuid)}
-                      >
-                      Pack It
-                    </Button>
-                  </Tooltip>
-                </div>	
-                <div aria-label="delete">
-                  <DeleteModal
-                    delete={event =>
-                      this.props.deleteProduct(this.props.product.uuid, event)
-                    }
-                  />
-                </div>  
-              </Grid>
-								<Typography variant="h6" id="modal-title">
-									{this.props.product.name}
-								</Typography>
-              </Grid>
-              </div>
-              <div>
-							{this.props.detail ? 
-								<div>
-									<Grid
-										className={this.props.classes.descriptionAndDimensions}
-										container
-										alignItems="center"
-										direction="row"
-									>
-										<Card className={this.props.classes.summaryCard}>  
-											<Grid direction="column" flexWrap="wrap">
-											<Typography className={classes.heading}>
-												Description:
-											</Typography>
-											<Typography padding="0 0 0 20px">
-												{this.props.detail.productDescription}
-											</Typography>
-											<Typography className={classes.heading}>
-												Price: ${this.props.detail.value}
-											</Typography>
-											<Typography className={classes.heading}>
-												Weight: {this.props.detail.weight}lbs
-											</Typography>
-											<Typography className={classes.heading}>
-												Fragile: {this.props.detail.fragile}
-											</Typography>
-											</Grid>
-                    </Card>
-                    <Card className={this.props.classes.summaryCard2} >
-                      <Grid container direction="column" alignItems="flex-start" padding="0 0 0 20px">
-                        <Typography className={classes.heading}>
-                          Product Dimensions:
-                        </Typography>
-                        <Typography className={classes.heading}>
-                          Length: {this.props.detail.length}"
-                        </Typography>
-                        <Typography className={classes.heading}>
-                          Width: {this.props.detail.width}"
-                        </Typography>
-                        <Typography className={classes.heading}>
-                          Height: {this.props.detail.height}"
-                        </Typography>
-											</Grid>
-                    </Card>
-                  </Grid>
-                  <Card>
-                      <Typography variant="h6" className={classes.shipmentTitle}>
-                        Shipment Summary:
-                      </Typography>
-                        <Grid 
-                          className={this.props.classes.shipmentContainer} 
-                          container 
-                          justify="space-evenly" 
-                          direction="row"
-                        >
-                        {this.props.detail.shipments ? (
-                          this.props.detail.shipments.map((shipment, i) => {
-                            return (
-                                <Grid key={i}
-                                  container
-                                  direction="column"
-                                  className={this.props.classes.individualShipment}
-                                >
-                                <Typography className={classes.shipmentHeading}>
-                                  Date Shipped: {shipment.dateShipped}
-                                </Typography>
-                                <Typography className={classes.shipmentHeading}>
-                                  Last Updated: {shipment.lastUpdated}
-                                </Typography>
-                                <Typography className={classes.shipmentHeading}>
-                                  Shipped To: {shipment.shippedTo}
-                                </Typography>
-                                <Typography className={classes.shipmentHeading}>
-                                  Date Arrived: {shipment.dateArrived}
-                                </Typography>
-                                <Typography className={classes.shipmentHeading}>
-                                  Tracking Number: {shipment.trackingNumber}
-                                </Typography>
-                                <Typography className={classes.shipmentHeading}>
-                                  Status: {shipment.status}
-                                </Typography>
-                                <Typography className={classes.shipmentHeading}>
-                                  Carrier Name: {shipment.carrierName}
-                                </Typography>
-                                </Grid>
-                            )
-                          })
-                          ) : (
-                          <div>There are no shipments associated with this product.</div>
-                          )
-                        }
-                        </Grid>
-                        <Grid
-                          container
-                          direction="row"
-                          justify="space-between"
-                          
-                        >
-                        <Tooltip title="Previous Shipment">
-                          <Button 
-                            variant="contained"
-                            className={classes.submit}
-                            onClick={() => this.previousPage()}>
-														{/* Previous Page */}
-														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M15 8.25H5.87l4.19-4.19L9 3 3 9l6 6 1.06-1.06-4.19-4.19H15v-1.5z"/></svg>								
-                          </Button>
-                        </Tooltip>
-                        <Tooltip title="Next Shipment">
-                          <Button 
-                            variant="contained"
-                            className={classes.submit}
-                            onClick={() => this.nextPage()}>
-														{/* Next Page */}
-														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M9 3L7.94 4.06l4.19 4.19H3v1.5h9.13l-4.19 4.19L9 15l6-6z"/></svg>							
-                          </Button>
-                        </Tooltip>
-                        </Grid>
-                  </Card>
-								</div>
-								: null 
-              }
-              </div>
 							<div>
+								<Typography
+									variant="h6"
+									id="modal-title"
+									className={this.props.classes.prodSum}>
+									Product Summary
+								</Typography>
 								<Grid
 									container
 									direction="row"
@@ -473,6 +307,76 @@ class ProductDetailModal extends React.Component {
 												</Button>
 											</Tooltip>
 										</div>
+										<div aria-label="edit" style={{ marginRight: '10px' }}>
+											<EditProductModal
+												onClick={event => this.handleLoad(event)}
+												edit={() =>
+													this.props.editProduct(
+														this.props.product.uuid,
+														this.props.updatedProduct,
+													)
+												}
+												product={this.props.product}>
+												<form
+													className={classes.formContainer}
+													autoComplete="off">
+													<TextField
+														required
+														id="standard-name"
+														name="name"
+														label="Product Name"
+														className={this.props.classes.textField}
+														value={this.props.updatedProduct.name}
+														onChange={this.props.handleChange}
+														margin="normal"
+													/>
+
+													<TextField
+														onChange={this.props.handleChange}
+														name="productDescription"
+														value={this.props.updatedProduct.productDescription}
+														label="Description"
+														className={this.props.classes.textField}
+														inputProps={{
+															'aria-label': 'Description',
+														}}
+													/>
+
+													<TextField
+														onChange={this.props.handleChange}
+														name="value"
+														value={this.props.updatedProduct.value}
+														label="Value"
+														className={this.props.classes.textField}
+														InputProps={{
+															startAdornment: (
+																<InputAdornment position="start">
+																	$
+																</InputAdornment>
+															),
+														}}
+													/>
+													<TextField
+														className={classNames(
+															this.props.classes.margin,
+															this.props.classes.textField,
+														)}
+														onChange={this.props.handleChange}
+														name="weight"
+														value={this.props.updatedProduct.weight}
+														label="Weight"
+														InputProps={{
+															endAdornment: (
+																<InputAdornment position="end">
+																	lb
+																</InputAdornment>
+															),
+														}}
+													/>
+												</form>
+											</EditProductModal>
+										</div>
+										<div aria-label="product details" />
 										<div aria-label="delete">
 											<DeleteModal
 												delete={event =>
@@ -492,12 +396,6 @@ class ProductDetailModal extends React.Component {
 							<div>
 								{this.props.detail ? (
 									<div>
-										<Typography
-											variant="h6"
-											id="modal-title"
-											className={this.props.classes.prodSum}>
-											Product Summary
-										</Typography>
 										<Grid
 											className={this.props.classes.descriptionAndDimensions}
 											container
@@ -505,8 +403,11 @@ class ProductDetailModal extends React.Component {
 											direction="row">
 											<Card className={this.props.classes.summaryCard}>
 												<Grid direction="column" flexWrap="wrap">
-													<Typography>
-														Description: {this.props.detail.productDescription}
+													<Typography className={classes.heading}>
+														Description:
+													</Typography>
+													<Typography style={{ padding: '0 0 0 20px' }}>
+														{this.props.detail.productDescription}
 													</Typography>
 													<Typography className={classes.heading}>
 														Price: ${this.props.detail.value}
@@ -514,16 +415,14 @@ class ProductDetailModal extends React.Component {
 													<Typography className={classes.heading}>
 														Weight: {this.props.detail.weight}lbs
 													</Typography>
-													<Typography className={classes.heading}>
-														Fragile: {this.props.detail.fragile}
-													</Typography>
 												</Grid>
 											</Card>
 											<Card className={this.props.classes.summaryCard2}>
 												<Grid
 													container
 													direction="column"
-													alignItems="flex-end">
+													alignItems="flex-start"
+													padding="0 0 0 20px">
 													<Typography className={classes.heading}>
 														Product Dimensions:
 													</Typography>
@@ -540,7 +439,9 @@ class ProductDetailModal extends React.Component {
 											</Card>
 										</Grid>
 										<Card>
-											<Typography className={classes.shipmentTitle}>
+											<Typography
+												variant="h6"
+												className={classes.shipmentTitle}>
 												Shipment Summary:
 											</Typography>
 											<Grid
@@ -559,16 +460,23 @@ class ProductDetailModal extends React.Component {
 																	this.props.classes.individualShipment
 																}>
 																<Typography className={classes.shipmentHeading}>
-																	Date Shipped: {shipment.dateShipped}
+																	Date Shipped:{' '}
+																	{moment(shipment.dateShipped).format('LL')}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
-																	Last Updated: {shipment.lastUpdated}
+																	Last Updated:{' '}
+																	{moment(shipment.lastUpdated).format(
+																		'LL h:mm a',
+																	)}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
 																	Shipped To: {shipment.shippedTo}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
-																	Date Arrived: {shipment.dateArrived}
+																	Date Arrived:{' '}
+																	{moment(shipment.dateArrived).format(
+																		'LL h:mm a',
+																	)}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
 																	Tracking Number: {shipment.trackingNumber}
@@ -594,7 +502,12 @@ class ProductDetailModal extends React.Component {
 														variant="contained"
 														className={classes.submit}
 														onClick={() => this.previousPage()}>
-														Previous Page
+														<Icon
+															className={classNames(
+																classes.icon,
+																'fas fa-arrow-left',
+															)}
+														/>
 													</Button>
 												</Tooltip>
 												<Tooltip title="Next Shipment">
@@ -602,7 +515,12 @@ class ProductDetailModal extends React.Component {
 														variant="contained"
 														className={classes.submit}
 														onClick={() => this.nextPage()}>
-														Next Page
+														<Icon
+															className={classNames(
+																classes.icon,
+																'fas fa-arrow-right',
+															)}
+														/>
 													</Button>
 												</Tooltip>
 											</Grid>
@@ -642,6 +560,7 @@ ProductDetailModal.propTypes = {
 const mapStateToProps = state => {
 	return {
 		detail: state.productsReducer.productDetail,
+		selectedProducts: state.shipmentsReducer.selectedProducts,
 	};
 };
 export default compose(
