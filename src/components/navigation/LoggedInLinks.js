@@ -21,6 +21,13 @@ const styles = {
 		display: 'flex',
 		justifyContent: 'space-around',
 	},
+	root_left: {
+		margin: '0 auto',
+		width: '300px',
+		flexGrow: 1,
+		display: 'flex',
+		justifyContent: 'flex-end',
+	},
 	grow: {
 		flexGrow: 1,
 	},
@@ -71,7 +78,13 @@ class LoggedInLinks extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<List component="nav" className={classes.root}>
+				<List
+					component="nav"
+					className={
+						this.props.selectedProducts.length >= 1
+							? classes.root_left
+							: classes.root
+					}>
 					<ListItem onClick={() => this.props.history.push('/products')} button>
 						<Tooltip title="Product List">
 							<ListItemIcon className={classes.menuButton}>
