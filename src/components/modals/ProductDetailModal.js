@@ -19,21 +19,21 @@ import { Redirect, withRouter } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
 // import { flexbox } from "@material-ui/system";
 
-import EditProductModal from "../modals/EditProductModal";
-import DeleteModal from "./deleteModal";
-import { Grid } from "@material-ui/core";
+import EditProductModal from '../modals/EditProductModal';
+import DeleteModal from './deleteModal';
+import { Grid } from '@material-ui/core';
 
 function getModalStyle() {
 	const top = 50;
 	const left = 50;
 
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-    width: '1000px',
-    height: '700px',
-  };
+	return {
+		top: `${top}%`,
+		left: `${left}%`,
+		transform: `translate(-${top}%, -${left}%)`,
+		width: '1000px',
+		height: '700px',
+	};
 }
 
 const styles = theme => ({
@@ -82,6 +82,9 @@ const styles = theme => ({
 	},
 	avatar: {
 		backgroundColor: '#72BDA2',
+	},
+	icon: {
+		color: 'white',
 	},
 	paper: {
 		position: 'absolute',
@@ -140,13 +143,19 @@ class ProductDetailModal extends React.Component {
 		this.props.getDetail(uuid, page);
 	};
 
-  previousPage = () => {
-    this.setState(prevState => ({ page: --prevState.page }), () => this.props.getDetail(this.props.product.uuid, this.state.page));
-  };
+	previousPage = () => {
+		this.setState(
+			prevState => ({ page: --prevState.page }),
+			() => this.props.getDetail(this.props.product.uuid, this.state.page),
+		);
+	};
 
-  nextPage = () => {
-    this.setState(prevState => ({ page: ++prevState.page }), () => this.props.getDetail(this.props.product.uuid, this.state.page));
-  };
+	nextPage = () => {
+		this.setState(
+			prevState => ({ page: ++prevState.page }),
+			() => this.props.getDetail(this.props.product.uuid, this.state.page),
+		);
+	};
 
 	handleClose = () => {
 		this.setState({ open: false });
@@ -198,14 +207,11 @@ class ProductDetailModal extends React.Component {
 
 						<CardActions className={classes.actions} disableActionSpacing>
 							<div aria-label="add">
-								<Tooltip title="Pack It">
-									<Button onClick={event => this.handleProductSelect(event)}>
-										<Icon
-											className={classNames(
-												classes.icon,
-												'fas fa-clipboard-check',
-											)}
-										/>
+								<Tooltip title="Add To Packing List">
+									<Button
+										style={{ backgroundColor: '#72BDA2' }}
+										onClick={event => this.handleProductSelect(event)}>
+										<Icon className={classNames(classes.icon, 'fas fa-plus')} />
 									</Button>
 								</Tooltip>
 							</div>
@@ -445,22 +451,181 @@ class ProductDetailModal extends React.Component {
               }
               </div>
 							<div>
-              <Tooltip title="Close">
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                >
-                  <Button 
-                      variant="contained"
-                      className={classes.submit}
-                      onClick={event => this.handleClose(event)}>
-                    Close
-                  </Button>
-                </Grid>
-              </Tooltip>
-                {this.props.children}
+								<Grid
+									container
+									direction="row"
+									justify="space-between"
+									alignItems="center">
+									<Grid
+										container
+										direction="row"
+										justify="flex-end"
+										alignItems="center">
+										<div aria-label="Pack It">
+											<Tooltip title="Pack It">
+												<Button
+													variant="contained"
+													className={classes.submit}
+													onClick={event =>
+														this.handlePackit(event, this.props.product.uuid)
+													}>
+													Pack It
+												</Button>
+											</Tooltip>
+										</div>
+										<div aria-label="delete">
+											<DeleteModal
+												delete={event =>
+													this.props.deleteProduct(
+														this.props.product.uuid,
+														event,
+													)
+												}
+											/>
+										</div>
+									</Grid>
+									<Typography variant="h6" id="modal-title">
+										{this.props.product.name}
+									</Typography>
+								</Grid>
+							</div>
+							<div>
+								{this.props.detail ? (
+									<div>
+										<Typography
+											variant="h6"
+											id="modal-title"
+											className={this.props.classes.prodSum}>
+											Product Summary
+										</Typography>
+										<Grid
+											className={this.props.classes.descriptionAndDimensions}
+											container
+											alignItems="center"
+											direction="row">
+											<Card className={this.props.classes.summaryCard}>
+												<Grid direction="column" flexWrap="wrap">
+													<Typography>
+														Description: {this.props.detail.productDescription}
+													</Typography>
+													<Typography className={classes.heading}>
+														Price: ${this.props.detail.value}
+													</Typography>
+													<Typography className={classes.heading}>
+														Weight: {this.props.detail.weight}lbs
+													</Typography>
+													<Typography className={classes.heading}>
+														Fragile: {this.props.detail.fragile}
+													</Typography>
+												</Grid>
+											</Card>
+											<Card className={this.props.classes.summaryCard2}>
+												<Grid
+													container
+													direction="column"
+													alignItems="flex-end">
+													<Typography className={classes.heading}>
+														Product Dimensions:
+													</Typography>
+													<Typography className={classes.heading}>
+														Length: {this.props.detail.length}"
+													</Typography>
+													<Typography className={classes.heading}>
+														Width: {this.props.detail.width}"
+													</Typography>
+													<Typography className={classes.heading}>
+														Height: {this.props.detail.height}"
+													</Typography>
+												</Grid>
+											</Card>
+										</Grid>
+										<Card>
+											<Typography className={classes.shipmentTitle}>
+												Shipment Summary:
+											</Typography>
+											<Grid
+												className={this.props.classes.shipmentContainer}
+												container
+												justify="space-evenly"
+												direction="row">
+												{this.props.detail.shipments ? (
+													this.props.detail.shipments.map((shipment, i) => {
+														return (
+															<Grid
+																key={i}
+																container
+																direction="column"
+																className={
+																	this.props.classes.individualShipment
+																}>
+																<Typography className={classes.shipmentHeading}>
+																	Date Shipped: {shipment.dateShipped}
+																</Typography>
+																<Typography className={classes.shipmentHeading}>
+																	Last Updated: {shipment.lastUpdated}
+																</Typography>
+																<Typography className={classes.shipmentHeading}>
+																	Shipped To: {shipment.shippedTo}
+																</Typography>
+																<Typography className={classes.shipmentHeading}>
+																	Date Arrived: {shipment.dateArrived}
+																</Typography>
+																<Typography className={classes.shipmentHeading}>
+																	Tracking Number: {shipment.trackingNumber}
+																</Typography>
+																<Typography className={classes.shipmentHeading}>
+																	Status: {shipment.status}
+																</Typography>
+																<Typography className={classes.shipmentHeading}>
+																	Carrier Name: {shipment.carrierName}
+																</Typography>
+															</Grid>
+														);
+													})
+												) : (
+													<div>
+														There are no shipments associated with this product.
+													</div>
+												)}
+											</Grid>
+											<Grid container direction="row" justify="space-between">
+												<Tooltip title="Previous Shipment">
+													<Button
+														variant="contained"
+														className={classes.submit}
+														onClick={() => this.previousPage()}>
+														Previous Page
+													</Button>
+												</Tooltip>
+												<Tooltip title="Next Shipment">
+													<Button
+														variant="contained"
+														className={classes.submit}
+														onClick={() => this.nextPage()}>
+														Next Page
+													</Button>
+												</Tooltip>
+											</Grid>
+										</Card>
+									</div>
+								) : null}
+							</div>
+							<div>
+								<Tooltip title="Close">
+									<Grid
+										container
+										direction="row"
+										justify="space-evenly"
+										alignItems="center">
+										<Button
+											variant="contained"
+											className={classes.submit}
+											onClick={event => this.handleClose(event)}>
+											Close
+										</Button>
+									</Grid>
+								</Tooltip>
+								{this.props.children}
 							</div>
 						</div>
 					</Modal>
