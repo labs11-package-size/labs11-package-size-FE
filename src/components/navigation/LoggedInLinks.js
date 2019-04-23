@@ -15,9 +15,11 @@ import Button from '@material-ui/core/Button';
 
 const styles = {
 	root: {
+		margin: '0 auto',
+		width: '300px',
 		flexGrow: 1,
 		display: 'flex',
-		flexDirection: 'column',
+		justifyContent: 'space-around',
 	},
 	grow: {
 		flexGrow: 1,
@@ -69,7 +71,7 @@ class LoggedInLinks extends Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<List component="nav">
+				<List component="nav" className={classes.root}>
 					<ListItem onClick={() => this.props.history.push('/products')} button>
 						<Tooltip title="Product List">
 							<ListItemIcon className={classes.menuButton}>

@@ -18,6 +18,8 @@ import classNames from 'classnames';
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
 import { deleteSelectedProduct } from '../../store/actions/shipmentActions';
+import Checkbox from '@material-ui/core/Checkbox';
+import { withRouter } from 'react-router-dom';
 
 import Product from './Product';
 
@@ -30,9 +32,9 @@ const styles = theme => ({
 	},
 	shipit_btn: {
 		margin: '0 auto',
-		width: '85%',
-		background: '#72BDA2',
-		color: '#72BDA2',
+		width: '100%',
+		backgroundColor: '#72BDA2',
+		color: 'white',
 	},
 	textField: {
 		marginLeft: theme.spacing.unit,
@@ -45,14 +47,21 @@ const styles = theme => ({
 		margin: theme.spacing.unit,
 	},
 	drawer: {
+		height: '100vh',
 		paddingTop: theme.spacing.unit * 3,
 		width: '30%',
 		flexShrink: 0,
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 	drawerPaper: {
 		marginTop: 20,
 		paddingTop: '45px',
-		width: '30%',
+		width: '20%',
+		minWidth: 250,
+		transitionDuration: { enter: 1000, exit: 1000 },
 	},
 	content: {
 		// flexGrow: 1,
@@ -65,7 +74,7 @@ const styles = theme => ({
 	},
 	contentShift: {
 		// marginRight: 320,
-		width: '82%',
+		width: '81%',
 	},
 	drawerHeader: {
 		display: 'flex',
@@ -105,6 +114,11 @@ class ProductList extends Component {
 	handleDrawerOpen = () => {
 		return;
 	};
+	handlePackit = () => {
+		const list = this.props.selectedProducts.map(prod => prod.uuid);
+		this.props.addPackage(list);
+		this.props.history.push('/loadingshipments');
+	};
 
 	handleRenderList = () => {
 		if (this.props.selectedProducts.length >= 1) {
@@ -120,18 +134,31 @@ class ProductList extends Component {
 					<Divider />
 					<Paper>
 						<List>
-							<Typography>List</Typography>
+							<Typography
+								className={this.props.classes.searchContainer}
+								gutterBottom
+								variant="h5"
+								component="h2">
+								Package List
+							</Typography>
 							{this.props.selectedProducts.map((prod, i) => (
 								<ListItem key={i}>
-									<ListItemText
+									<Checkbox
+										style={{ color: '#72BDA2' }}
+										checked={true}
 										onClick={() => this.handleDeleteSelected(prod.uuid)}
-										primary={prod.name}
+										indeterminate
 									/>
+									<ListItemText primary={prod.name} />
 								</ListItem>
 							))}
 						</List>
 						<Divider />
-						<Button onClick={this.handlePackit}>Pack It</Button>
+						<Button
+							className={this.props.classes.shipit_btn}
+							onClick={this.handlePackit}>
+							Pack It
+						</Button>
 					</Paper>
 				</Drawer>
 			);
@@ -144,12 +171,22 @@ class ProductList extends Component {
 		return (
 			<div className={this.props.classes.container}>
 				<div className={this.props.classes.headingContainer}>
-					<Typography gutterBottom variant="h5" component="h2">
-						Products
-					</Typography>
 					{this.props.selectedProducts.length >= 1 ? (
-						<Button className={this.props.classes.shipit_btn}>Hi</Button>
-					) : null}
+						<div>
+							<Typography gutterBottom variant="h5" component="h2">
+								PACKING MULTIPLE PRODUCTS
+							</Typography>
+							{/* <Button
+								className={this.props.classes.shipit_btn}
+								onClick={this.handlePackit}>
+								Pack It
+							</Button> */}
+						</div>
+					) : (
+						<Typography gutterBottom variant="h5" component="h2">
+							Products
+						</Typography>
+					)}
 					<AddProductModal
 						getThumbnail={this.getThumbnail}
 						addImgs={this.addImgs}
@@ -336,8 +373,10 @@ class ProductList extends Component {
 }
 
 export default compose(
-	connect(
-		null,
-		{ getProducts, addProduct, deleteSelectedProduct },
-	)(withStyles(styles)(ProductList)),
+	withRouter(
+		connect(
+			null,
+			{ getProducts, addProduct, deleteSelectedProduct },
+		)(withStyles(styles)(ProductList)),
+	),
 );

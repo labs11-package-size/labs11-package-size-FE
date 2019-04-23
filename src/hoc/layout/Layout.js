@@ -114,7 +114,7 @@ const styles = theme => ({
 
 class Layout extends React.Component {
 	state = {
-		open: true,
+		open: false,
 		menuOpen: false,
 	};
 
@@ -134,13 +134,13 @@ class Layout extends React.Component {
 		this.setState({ open: false });
 	};
 
-	componentDidMount() {
-		setTimeout(() => {
-			this.setState({
-				open: false,
-			});
-		}, 1000);
-	}
+	// componentDidMount() {
+	// 	setTimeout(() => {
+	// 		this.setState({
+	// 			open: false,
+	// 		});
+	// 	}, 1000);
+	// }
 
 	render() {
 		const { classes } = this.props;
@@ -157,7 +157,7 @@ class Layout extends React.Component {
 					<Toolbar
 						disableGutters={!this.state.open}
 						className={classes.toolbar}>
-						<IconButton
+						{/* <IconButton
 							color="inherit"
 							aria-label="Open drawer"
 							onClick={this.handleDrawerOpen}
@@ -166,7 +166,7 @@ class Layout extends React.Component {
 								this.state.open && classes.menuButtonHidden,
 							)}>
 							<MenuIcon />
-						</IconButton>
+						</IconButton> */}
 						<Typography
 							onClick={() => this.props.history.push('/')}
 							component="h1"
@@ -181,62 +181,51 @@ class Layout extends React.Component {
 							</Button>
 						</Typography>
 						<div>
-						{this.props.isLoggedIn ? (
-							<>
-							<Avatar
-								alt={this.props.userInfo.displayName}
-								src={this.props.userInfo.photoURL}
-								className={classes.avatar}
-							/>
-							<Menu id="menu-appbar" >
-								<MenuItem onClick={this.handleMenuClose}>
-								<div className={this.props.classes.root}>
-									<Typography gutterBottom variant="h5" component="h2">
-										User Account:
-									</Typography>
-									<Typography className={this.props.classes.heading}>
-										Display Name: {this.props.userInfo.displayName}
-									</Typography>
-									<Typography className={this.props.classes.heading}>
-										Email Address: {this.props.userInfo.email}
-									</Typography>
-								</div>
-								</MenuItem>
-							</Menu>
-							</>
-						) : (
-							<AccountCircle />
-						)}
+							{this.props.isLoggedIn ? (
+								<>
+									<Avatar
+										alt={this.props.userInfo.displayName}
+										src={this.props.userInfo.photoURL}
+										className={classes.avatar}
+									/>
+									<Menu id="menu-appbar">
+										<MenuItem onClick={this.handleMenuClose}>
+											<div className={this.props.classes.root}>
+												<Typography gutterBottom variant="h5" component="h2">
+													User Account:
+												</Typography>
+												<Typography className={this.props.classes.heading}>
+													Display Name: {this.props.userInfo.displayName}
+												</Typography>
+												<Typography className={this.props.classes.heading}>
+													Email Address: {this.props.userInfo.email}
+												</Typography>
+											</div>
+										</MenuItem>
+									</Menu>
+								</>
+							) : (
+								<AccountCircle />
+							)}
 						</div>
 					</Toolbar>
 				</AppBar>
-				<Drawer
-					variant="permanent"
-					classes={{
-						paper: classNames(
-							classes.drawerPaper,
-							!this.state.open && classes.drawerPaperClose,
-						),
-					}}
-					open={this.state.open}>
-					<div className={classes.toolbarIcon}>
-						<IconButton onClick={this.handleDrawerClose}>
-							<ChevronLeftIcon />
-						</IconButton>
+
+				<main className={classes.content}>
+					<div>
+						{this.props.isLoggedIn ? (
+							<LoggedInLinks
+								deleteSelected={this.props.deleteSelectedProduct}
+								addPackage={this.props.addPackage}
+								handleDrawerOpen={this.handleDrawerOpen}
+								selectedProducts={this.props.selectedProducts}
+							/>
+						) : (
+							<LoggedOutLinks />
+						)}
 					</div>
-					<Divider />
-					{this.props.isLoggedIn ? (
-						<LoggedInLinks
-							deleteSelected={this.props.deleteSelectedProduct}
-							addPackage={this.props.addPackage}
-							handleDrawerOpen={this.handleDrawerOpen}
-							selectedProducts={this.props.selectedProducts}
-						/>
-					) : (
-						<LoggedOutLinks />
-					)}
-				</Drawer>
-				<main className={classes.content}>{this.props.children}</main>
+					{this.props.children}
+				</main>
 			</div>
 		);
 	}
