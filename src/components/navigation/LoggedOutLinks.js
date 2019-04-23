@@ -19,6 +19,15 @@ const styles = {
 		display: 'flex',
 		justifyContent: 'space-around',
 	},
+	submit: {
+		color: 'white',
+		backgroundColor: '#72BDA2',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+		},
+		margin: '10px',
+	},
 	grow: {
 		flexGrow: 1,
 	},
@@ -32,18 +41,29 @@ const LoggedOutLinks = props => {
 	return (
 		<div>
 			<List component="nav" className={classes.root}>
-				<ListItem onClick={() => props.history.push('/auth/login')} button>
+				{/* <ListItem onClick={() => props.history.push('/auth/login')} button>
 					<ListItemIcon className={classes.menuButton}>
 						<Icon className={classNames(classes.icon, 'fas fa-play')} />
 					</ListItemIcon>
-					<ListItemText primary="Login" />
-				</ListItem>
-				<ListItem onClick={() => props.history.push('/auth/register')} button>
-					<ListItemIcon className={classes.menuButton}>
+					<ListItemText className={classes.submit} primary="Login" />
+				</ListItem> */}
+				<Button
+					onClick={() => props.history.push('/auth/login')}
+					className={classes.submit}>
+					Sign In
+				</Button>
+				{/* <ListItem onClick={() => props.history.push('/auth/register')} button> */}
+				{/* <ListItemIcon className={classes.menuButton}>
 						<Icon className={classNames(classes.icon, 'fas fa-sign-out-alt')} />
 					</ListItemIcon>
-					<ListItemText primary="Sign Up" />
-				</ListItem>
+					<ListItemText className={classes.submit} primary="Sign Up" />
+				</ListItem> */}
+				<Button
+					onClick={() => props.history.push('/auth/register')}
+					className={classes.submit}>
+					{' '}
+					Sign Up
+				</Button>
 			</List>
 		</div>
 	);

@@ -17,6 +17,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -34,8 +37,22 @@ const styles = theme => ({
 		display: 'flex',
 		margin: '0 auto',
 	},
+	submit: {
+		display: 'flex',
+		justifyContent: 'center',
+		borderRadius: 5,
+		color: 'white',
+		backgroundColor: '#72BDA2',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+		},
+		margin: '10px',
+	},
 	toolbar: {
 		paddingRight: 24,
+		display: 'flex',
+		justifyContent: 'space-between',
 	},
 	toolbarIcon: {
 		display: 'flex',
@@ -70,7 +87,13 @@ const styles = theme => ({
 		display: 'none',
 	},
 	title: {
-		flexGrow: 1,
+		// flexGrow: 1,
+	},
+	avatar: {
+		cursor: 'pointer',
+	},
+	paper_class: {
+		padding: 10,
 	},
 	drawerPaper: {
 		margin: '0 auto',
@@ -98,8 +121,12 @@ const styles = theme => ({
 		marginTop: 50,
 		flexGrow: 1,
 		padding: theme.spacing.unit * 3,
-		height: '100vh',
 		overflow: 'auto',
+	},
+	nav_content: {
+		display: 'flex',
+		marginLeft: 0,
+		justifyContent: 'space-between',
 	},
 	chartContainer: {
 		marginLeft: -22,
@@ -116,40 +143,27 @@ class Layout extends React.Component {
 	state = {
 		open: false,
 		menuOpen: false,
+		anchorEl: null,
 	};
 
-	handleDrawerOpen = () => {
-		this.setState({ open: true });
+	handleClose = () => {
+		this.setState({ anchorEl: null });
 	};
 
-	handleDrawerClose = () => {
-		this.setState({ open: false });
+	handleMenu = event => {
+		this.setState({ anchorEl: event.currentTarget });
 	};
-
-	handleMenuOpen = () => {
-		this.setState({ open: true });
-	};
-
-	handleMenuClose = () => {
-		this.setState({ open: false });
-	};
-
-	// componentDidMount() {
-	// 	setTimeout(() => {
-	// 		this.setState({
-	// 			open: false,
-	// 		});
-	// 	}, 1000);
-	// }
 
 	render() {
 		const { classes } = this.props;
+		const { anchorEl } = this.state;
+		const open = Boolean(anchorEl);
 
 		return (
 			<div className={classes.root}>
 				<CssBaseline />
 				<AppBar
-					// position="static"
+					position="fixed"
 					className={classNames(
 						classes.appBar,
 						this.state.open && classes.appBarShift,
@@ -157,16 +171,6 @@ class Layout extends React.Component {
 					<Toolbar
 						disableGutters={!this.state.open}
 						className={classes.toolbar}>
-						{/* <IconButton
-							color="inherit"
-							aria-label="Open drawer"
-							onClick={this.handleDrawerOpen}
-							className={classNames(
-								classes.menuButton,
-								this.state.open && classes.menuButtonHidden,
-							)}>
-							<MenuIcon />
-						</IconButton> */}
 						<Typography
 							onClick={() => this.props.history.push('/')}
 							component="h1"
@@ -181,51 +185,84 @@ class Layout extends React.Component {
 							</Button>
 						</Typography>
 						<div>
-							{this.props.isLoggedIn ? (
-								<>
+							{this.props.isLoggedIn && (
+								<LoggedInLinks
+									deleteSelected={this.props.deleteSelectedProduct}
+									addPackage={this.props.addPackage}
+									handleDrawerOpen={this.handleDrawerOpen}
+									selectedProducts={this.props.selectedProducts}
+								/>
+							)}
+						</div>
+						<div>
+							{this.props.isLoggedIn && (
+								<div>
 									<Avatar
+										onClick={this.handleMenu}
 										alt={this.props.userInfo.displayName}
 										src={this.props.userInfo.photoURL}
 										className={classes.avatar}
 									/>
-									<Menu id="menu-appbar">
-										<MenuItem onClick={this.handleMenuClose}>
-											<div className={this.props.classes.root}>
-												<Typography gutterBottom variant="h5" component="h2">
-													User Account:
-												</Typography>
-												<Typography className={this.props.classes.heading}>
+
+									<Menu
+										style={{ marginTop: '40px' }}
+										id="menu-appbar"
+										anchorEl={anchorEl}
+										anchorOrigin={{
+											vertical: 'bottom',
+											horizontal: 'center',
+										}}
+										transformOrigin={{
+											vertical: 'bottom',
+											horizontal: 'center',
+										}}
+										open={open}
+										onClose={this.handleClose}>
+										<Paper className={classes.paper_class}>
+											<Typography
+												style={{
+													fontSize: '18px',
+													fontWeight: 600,
+												}}>
+												Account Detail
+											</Typography>
+											<Divider />
+											<div
+												style={{
+													fontSize: '14px',
+													fontWeight: 500,
+												}}>
+												<Typography
+													style={{
+														fontSize: '14px',
+														fontWeight: 500,
+														paddingTop: '12px',
+													}}>
 													Display Name: {this.props.userInfo.displayName}
 												</Typography>
-												<Typography className={this.props.classes.heading}>
+												<Typography
+													style={{
+														fontSize: '14px',
+														fontWeight: 500,
+														paddingTop: '12px',
+													}}>
 													Email Address: {this.props.userInfo.email}
 												</Typography>
 											</div>
+										</Paper>
+										<MenuItem
+											className={classes.submit}
+											onClick={() => this.props.history.push('/logout')}>
+											Logout
 										</MenuItem>
 									</Menu>
-								</>
-							) : (
-								<AccountCircle />
+								</div>
 							)}
 						</div>
 					</Toolbar>
 				</AppBar>
 
-				<main className={classes.content}>
-					<div>
-						{this.props.isLoggedIn ? (
-							<LoggedInLinks
-								deleteSelected={this.props.deleteSelectedProduct}
-								addPackage={this.props.addPackage}
-								handleDrawerOpen={this.handleDrawerOpen}
-								selectedProducts={this.props.selectedProducts}
-							/>
-						) : (
-							<LoggedOutLinks />
-						)}
-					</div>
-					{this.props.children}
-				</main>
+				<main className={classes.content}>{this.props.children}</main>
 			</div>
 		);
 	}
