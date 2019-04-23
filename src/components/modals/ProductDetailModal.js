@@ -101,26 +101,27 @@ const styles = theme => ({
     margin: "10px",
   },
   summaryCard: {
-    border: '1px black solid',
+    // border: '1px black solid',
     width: '50%',
     height: '100%',
     // padding: '1%',
   },
   summaryCard2: {
-    border: '1px black solid',
-    width: '30%',
+    // border: '1px black solid',
+    width: '50%',
     height: '100%',
     // padding: '1%',
   },
-  // prodSum: {
-  //   textAlign: 'center',
-  // },
+  prodSum: {
+    textAlign: 'center',
+  },
   descriptionAndDimensions: {
     height: "250px"
   },
   heading: {
     padding: "15px 0 0 5px",
-    fontSize: "20px",
+		fontSize: "1.2em",
+		
   },
   individualShipment: {
     width: "30%",
@@ -282,6 +283,9 @@ class ProductDetailModal extends React.Component {
 						onClose={event => this.handleClose(event)}>
 						<div style={getModalStyle()} className={classes.paper}>
             <div>
+							<Typography variant="h6" id="modal-title" className={this.props.classes.prodSum}>
+								Product Summary
+							</Typography>
               <Grid
                 container
                 direction="row"
@@ -321,34 +325,33 @@ class ProductDetailModal extends React.Component {
               <div>
 							{this.props.detail ? 
 								<div>
-                  <Typography variant="h6" id="modal-title" className={this.props.classes.prodSum}>
-                        Product Summary
-                  </Typography>
-                    <Grid
-                      className={this.props.classes.descriptionAndDimensions}
-                      container
-                      alignItems="center"
-                      direction="row"
-                      >
-                      <Card className={this.props.classes.summaryCard}>  
-                        <Grid direction="column" flexWrap="wrap">
-                        <Typography>
-                          Description: {this.props.detail.productDescription}
-                        </Typography>
-                        <Typography className={classes.heading}>
-                          Price: ${this.props.detail.value}
-                        </Typography>
-                        <Typography className={classes.heading}>
-                          Weight: {this.props.detail.weight}lbs
-                        </Typography>
-                        <Typography className={classes.heading}>
-                          Fragile: {this.props.detail.fragile}
-                        </Typography>
-                        </Grid>
+									<Grid
+										className={this.props.classes.descriptionAndDimensions}
+										container
+										alignItems="center"
+										direction="row"
+									>
+										<Card className={this.props.classes.summaryCard}>  
+											<Grid direction="column" flexWrap="wrap">
+											<Typography className={classes.heading}>
+												Description:
+											</Typography>
+											<Typography padding="0 0 0 20px">
+												{this.props.detail.productDescription}
+											</Typography>
+											<Typography className={classes.heading}>
+												Price: ${this.props.detail.value}
+											</Typography>
+											<Typography className={classes.heading}>
+												Weight: {this.props.detail.weight}lbs
+											</Typography>
+											<Typography className={classes.heading}>
+												Fragile: {this.props.detail.fragile}
+											</Typography>
+											</Grid>
                     </Card>
                     <Card className={this.props.classes.summaryCard2} >
-                    
-                      <Grid container direction="column" alignItems="flex-end">
+                      <Grid container direction="column" alignItems="flex-start" padding="0 0 0 20px">
                         <Typography className={classes.heading}>
                           Product Dimensions:
                         </Typography>
@@ -361,12 +364,11 @@ class ProductDetailModal extends React.Component {
                         <Typography className={classes.heading}>
                           Height: {this.props.detail.height}"
                         </Typography>
-                        </Grid>
-            
+											</Grid>
                     </Card>
                   </Grid>
                   <Card>
-                      <Typography className={classes.shipmentTitle}>
+                      <Typography variant="h6" className={classes.shipmentTitle}>
                         Shipment Summary:
                       </Typography>
                         <Grid 
@@ -423,7 +425,8 @@ class ProductDetailModal extends React.Component {
                             variant="contained"
                             className={classes.submit}
                             onClick={() => this.previousPage()}>
-                            Previous Page
+														{/* Previous Page */}
+														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M15 8.25H5.87l4.19-4.19L9 3 3 9l6 6 1.06-1.06-4.19-4.19H15v-1.5z"/></svg>								
                           </Button>
                         </Tooltip>
                         <Tooltip title="Next Shipment">
@@ -431,7 +434,8 @@ class ProductDetailModal extends React.Component {
                             variant="contained"
                             className={classes.submit}
                             onClick={() => this.nextPage()}>
-                            Next Page
+														{/* Next Page */}
+														<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M9 3L7.94 4.06l4.19 4.19H3v1.5h9.13l-4.19 4.19L9 15l6-6z"/></svg>							
                           </Button>
                         </Tooltip>
                         </Grid>
