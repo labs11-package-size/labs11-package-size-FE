@@ -13,7 +13,11 @@ import { withRouter } from 'react-router-dom';
 
 const styles = {
 	root: {
+		margin: '0 auto',
+		width: '300px',
 		flexGrow: 1,
+		display: 'flex',
+		justifyContent: 'space-around',
 	},
 	grow: {
 		flexGrow: 1,
@@ -26,8 +30,8 @@ const styles = {
 const LoggedOutLinks = props => {
 	const { classes } = props;
 	return (
-		<div className={classes.root}>
-			<List component="nav">
+		<div>
+			<List component="nav" className={classes.root}>
 				<ListItem onClick={() => props.history.push('/auth/login')} button>
 					<ListItemIcon className={classes.menuButton}>
 						<Icon className={classNames(classes.icon, 'fas fa-play')} />

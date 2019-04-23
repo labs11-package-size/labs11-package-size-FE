@@ -18,18 +18,24 @@ import classNames from 'classnames';
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
 import { deleteSelectedProduct } from '../../store/actions/shipmentActions';
+import Checkbox from '@material-ui/core/Checkbox';
+import { withRouter } from 'react-router-dom';
 
 import Product from './Product';
-
-const drawerWidth = 360;
 
 const styles = theme => ({
 	root: {
 		width: 'auto',
 		display: 'flex',
 		flexWrap: 'wrap',
+		justifyContent: 'flex-start',
 	},
-
+	shipit_btn: {
+		margin: '0 auto',
+		width: '100%',
+		backgroundColor: '#72BDA2',
+		color: 'white',
+	},
 	textField: {
 		marginLeft: theme.spacing.unit,
 		marginRight: theme.spacing.unit,
@@ -41,29 +47,34 @@ const styles = theme => ({
 		margin: theme.spacing.unit,
 	},
 	drawer: {
+		height: '100vh',
 		paddingTop: theme.spacing.unit * 3,
-		width: drawerWidth,
+		width: '30%',
 		flexShrink: 0,
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 	drawerPaper: {
-		marginTop: 15,
-		width: drawerWidth,
+		marginTop: 20,
+		paddingTop: '45px',
+		width: '20%',
+		minWidth: 250,
+		transitionDuration: { enter: 1000, exit: 1000 },
 	},
 	content: {
-		flexGrow: 1,
-		padding: theme.spacing.unit * 3,
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
+		// flexGrow: 1,
+		// padding: theme.spacing.unit * 3,
+		// transition: theme.transitions.create('margin', {
+		// 	easing: theme.transitions.easing.sharp,
+		// 	duration: theme.transitions.duration.leavingScreen,
+		// }),
 		// margin: 'auto',
 	},
 	contentShift: {
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-		// marginLeft: 'auto',
+		// marginRight: 320,
+		width: '81%',
 	},
 	drawerHeader: {
 		display: 'flex',
@@ -85,7 +96,9 @@ const styles = theme => ({
 	searchContainer: {
 		marginLeft: 'auto',
 		marginRight: 'auto',
-		maxWidth: 500,
+		display: 'flex',
+		justifyContent: 'center',
+		maxWidth: '50%',
 	},
 });
 
@@ -95,58 +108,85 @@ class ProductList extends Component {
 	};
 
 	handleDeleteSelected = uuid => {
-		// this.setState({
-		// 	...this.state,
-		// 	selectedProduct: uuid,
-		// });
 		this.props.deleteSelectedProduct(uuid);
 	};
 
 	handleDrawerOpen = () => {
 		return;
 	};
+	handlePackit = () => {
+		const list = this.props.selectedProducts.map(prod => prod.uuid);
+		this.props.addPackage(list);
+		this.props.history.push('/loadingshipments');
+	};
 
-	// handleRenderList = () => {
-	// 	if (this.props.selectedProducts.length) {
-	// 		return (
-	// 			<Drawer
-	// 				className={this.props.classes.drawer}
-	// 				variant="persistent"
-	// 				classes={{
-	// 					paper: this.props.classes.drawerPaper,
-	// 				}}
-	// 				anchor="right"
-	// 				open={true}>
-	// 				<Paper>
-	// 					<List>
-	// 						<Typography>List</Typography>
-	// 						{this.props.selectedProducts.map((prod, i) => (
-	// 							<ListItem key={i}>
-	// 								<ListItemText
-	// 									onClick={() => this.handleDeleteSelected(prod.uuid)}
-	// 									primary={prod.name}
-	// 								/>
-	// 							</ListItem>
-	// 						))}
-	// 					</List>
-	// 					<Divider />
-	// 					<Button onClick={this.handlePackit}>Pack It</Button>
-	// 				</Paper>
-	// 			</Drawer>
-	// 		);
-	// 	} else {
-	// 		return null;
-	// 	}
-	// };
+	handleRenderList = () => {
+		if (this.props.selectedProducts.length >= 1) {
+			return (
+				<Drawer
+					className={this.props.classes.drawer}
+					variant="persistent"
+					classes={{
+						paper: this.props.classes.drawerPaper,
+					}}
+					anchor="right"
+					open={true}>
+					<Divider />
+					<Paper>
+						<List>
+							<Typography
+								className={this.props.classes.searchContainer}
+								gutterBottom
+								variant="h5"
+								component="h2">
+								Package List
+							</Typography>
+							{this.props.selectedProducts.map((prod, i) => (
+								<ListItem key={i}>
+									<Checkbox
+										style={{ color: '#72BDA2' }}
+										checked={true}
+										onClick={() => this.handleDeleteSelected(prod.uuid)}
+										indeterminate
+									/>
+									<ListItemText primary={prod.name} />
+								</ListItem>
+							))}
+						</List>
+						<Divider />
+						<Button
+							className={this.props.classes.shipit_btn}
+							onClick={this.handlePackit}>
+							Pack It
+						</Button>
+					</Paper>
+				</Drawer>
+			);
+		} else {
+			return null;
+		}
+	};
 
 	render() {
 		return (
 			<div className={this.props.classes.container}>
 				<div className={this.props.classes.headingContainer}>
-					<Typography gutterBottom variant="h5" component="h2">
-						Products
-					</Typography>
-
+					{this.props.selectedProducts.length >= 1 ? (
+						<div>
+							<Typography gutterBottom variant="h5" component="h2">
+								PACKING MULTIPLE PRODUCTS
+							</Typography>
+							{/* <Button
+								className={this.props.classes.shipit_btn}
+								onClick={this.handlePackit}>
+								Pack It
+							</Button> */}
+						</div>
+					) : (
+						<Typography gutterBottom variant="h5" component="h2">
+							Products
+						</Typography>
+					)}
 					<AddProductModal
 						getThumbnail={this.getThumbnail}
 						addImgs={this.addImgs}
@@ -267,9 +307,10 @@ class ProductList extends Component {
 				</div>
 
 				<div
-					className={classNames(this.props.classes.content, {
-						[this.props.classes.contentShift]: this.state.open,
-					})}>
+					className={
+						this.props.selectedProducts.length >= 1 &&
+						this.props.classes.contentShift
+					}>
 					<div className={this.props.classes.drawerHeader} />
 					<div>
 						<div className={this.props.classes.searchContainer}>
@@ -294,11 +335,6 @@ class ProductList extends Component {
 									return (
 										<div key={product.uuid}>
 											<Product
-												style={{
-													display: 'flex',
-													justifyContent: 'space-between',
-													flexDirection: 'column',
-												}}
 												openDrawer={this.handleDrawerOpen}
 												selectProduct={this.props.selectProduct}
 												editProduct={this.props.editProduct}
@@ -330,41 +366,17 @@ class ProductList extends Component {
 					</div>
 				</div>
 
-				{this.props.selectedProducts.length && (
-					<Drawer
-						className={this.props.classes.drawer}
-						variant="persistent"
-						classes={{
-							paper: this.props.classes.drawerPaper,
-						}}
-						anchor="right"
-						open={true}>
-						<Divider />
-						<Paper>
-							<List>
-								<Typography>List</Typography>
-								{this.props.selectedProducts.map((prod, i) => (
-									<ListItem key={i}>
-										<ListItemText
-											onClick={() => this.handleDeleteSelected(prod.uuid)}
-											primary={prod.name}
-										/>
-									</ListItem>
-								))}
-							</List>
-							<Divider />
-							<Button onClick={this.handlePackit}>Pack It</Button>
-						</Paper>
-					</Drawer>
-				)}
+				{this.handleRenderList()}
 			</div>
 		);
 	}
 }
 
 export default compose(
-	connect(
-		null,
-		{ getProducts, addProduct, deleteSelectedProduct },
-	)(withStyles(styles)(ProductList)),
+	withRouter(
+		connect(
+			null,
+			{ getProducts, addProduct, deleteSelectedProduct },
+		)(withStyles(styles)(ProductList)),
+	),
 );
