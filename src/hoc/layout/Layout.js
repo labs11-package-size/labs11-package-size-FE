@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,11 +9,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
-
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Avatar from '@material-ui/core/Avatar';
@@ -115,6 +115,7 @@ const styles = theme => ({
 class Layout extends React.Component {
 	state = {
 		open: true,
+		menuOpen: false,
 	};
 
 	handleDrawerOpen = () => {
@@ -122,6 +123,14 @@ class Layout extends React.Component {
 	};
 
 	handleDrawerClose = () => {
+		this.setState({ open: false });
+	};
+
+	handleMenuOpen = () => {
+		this.setState({ open: true });
+	};
+
+	handleMenuClose = () => {
 		this.setState({ open: false });
 	};
 
@@ -171,15 +180,34 @@ class Layout extends React.Component {
 								</Typography>
 							</Button>
 						</Typography>
+						<div>
 						{this.props.isLoggedIn ? (
+							<>
 							<Avatar
 								alt={this.props.userInfo.displayName}
 								src={this.props.userInfo.photoURL}
 								className={classes.avatar}
 							/>
+							<Menu id="menu-appbar" >
+								<MenuItem onClick={this.handleMenuClose}>
+								<div className={this.props.classes.root}>
+									<Typography gutterBottom variant="h5" component="h2">
+										User Account:
+									</Typography>
+									<Typography className={this.props.classes.heading}>
+										Display Name: {this.props.userInfo.displayName}
+									</Typography>
+									<Typography className={this.props.classes.heading}>
+										Email Address: {this.props.userInfo.email}
+									</Typography>
+								</div>
+								</MenuItem>
+							</Menu>
+							</>
 						) : (
 							<AccountCircle />
 						)}
+						</div>
 					</Toolbar>
 				</AppBar>
 				<Drawer
