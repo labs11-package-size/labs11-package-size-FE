@@ -98,7 +98,6 @@ const styles = theme => ({
 		marginTop: 50,
 		flexGrow: 1,
 		padding: theme.spacing.unit * 3,
-		height: '100vh',
 		overflow: 'auto',
 	},
 	chartContainer: {
