@@ -21,6 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import EditProductModal from "../modals/EditProductModal";
 import DeleteModal from "./deleteModal";
+import { Grid } from "@material-ui/core";
 
 function getModalStyle() {
   const top = 50;
@@ -30,7 +31,8 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-    width: '70%'
+    width: '1000px',
+    height: '700px',
   };
 }
 
@@ -95,11 +97,33 @@ const styles = theme => ({
 		'&:hover': {
 			color: '#72BDA2',
 			backgroundColor: 'white',
-		},
+    },
+    margin: "10px",
   },
   summaryCard: {
     border: '1px black solid',
-    padding: '1%',
+    width: '50%',
+    height: '100%',
+    // padding: '1%',
+  },
+  summaryCard2: {
+    border: '1px black solid',
+    width: '30%',
+    height: '100%',
+    // padding: '1%',
+  },
+  // prodSum: {
+  //   textAlign: 'center',
+  // },
+  descriptionAndDimensions: {
+    height: "250px"
+  },
+  heading: {
+    padding: "15px 0 0 5px",
+    fontSize: "20px",
+  },
+  individualShipment: {
+    width: "30%",
   }
 });
 
@@ -115,9 +139,13 @@ class ProductDetailModal extends React.Component {
 		this.props.getDetail(uuid, page);
   };
 
+  previousPage = () => {
+    this.setState(prevState => ({ page: --prevState.page }), () => this.props.getDetail(this.props.product.uuid, this.state.page));
+  };
+
   nextPage = () => {
     this.setState(prevState => ({ page: ++prevState.page }), () => this.props.getDetail(this.props.product.uuid, this.state.page));
-  }
+  };
 
   handleClose = () => {
     this.setState({ open: false });
@@ -126,7 +154,6 @@ class ProductDetailModal extends React.Component {
     this.props.updateState(this.props.product);
   };
 
-  
 	handlePackit = (event, uuid) => {
 		event.preventDefault();
 		this.props.addPackage([uuid]);
@@ -248,104 +275,160 @@ class ProductDetailModal extends React.Component {
 						open={this.state.open}
 						onClose={event => this.handleClose(event)}>
 						<div style={getModalStyle()} className={classes.paper}>
-							<div>
+            <div>
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
+              >
+              <Grid
+                container
+                direction="row"
+                justify="flex-end"
+                alignItems="center"
+              >
+                <div aria-label="Pack It">
+                  <Tooltip title="Pack It">
+                    <Button
+                      variant="contained"
+                      className={classes.submit}
+                      onClick={event => this.handlePackit(event, this.props.product.uuid)}
+                      >
+                      Pack It
+                    </Button>
+                  </Tooltip>
+                </div>	
+                <div aria-label="delete">
+                  <DeleteModal
+                    delete={event =>
+                      this.props.deleteProduct(this.props.product.uuid, event)
+                    }
+                  />
+                </div>  
+              </Grid>
 								<Typography variant="h6" id="modal-title">
 									{this.props.product.name}
 								</Typography>
-							</div>
-							<div aria-label="Pack It">
-                <Tooltip title="Pack It">
-                  <Button
-                    variant="contained"
-                    className={classes.submit}
-                    onClick={event => this.handlePackit(event, this.props.product.uuid)}
-                    >
-                    Pack It
-                  </Button>
-                </Tooltip>
-							</div>	
-							<div aria-label="delete">
-								<DeleteModal
-									delete={event =>
-										this.props.deleteProduct(this.props.product.uuid, event)
-									}
-								/>
-              </div>  
+              </Grid>
+              </div>
               <div>
 							{this.props.detail ? 
 								<div>
-                  <Card className={this.props.classes.summaryCard}>
-                    <div className={this.props.classes.root}>
-                      <Typography variant="h6" id="modal-title">
-                        Product Summary:
-                      </Typography>
-                      <Typography>
-                        Description: {this.props.detail.productDescription}
-                      </Typography>
-                      <Typography className={classes.heading}>
-                        Price: ${this.props.detail.value}
-                      </Typography>
-                      <Typography className={classes.heading}>
-                        Fragile: {this.props.detail.fragile}
-                      </Typography>
-                    </div>
-                  </Card>
-                  <Card className={this.props.classes.summaryCard} >
-                    <div className={this.props.classes.root}>
-                      <Typography className={classes.heading}>
-                        Product Dimensions:
-                      </Typography>
-                      <Typography className={classes.heading}>
-                        Length: {this.props.detail.length}"
-                      </Typography>
-                      <Typography className={classes.heading}>
-                        Width: {this.props.detail.width}"
-                      </Typography>
-                      <Typography className={classes.heading}>
-                        Height: {this.props.detail.height}"
-                      </Typography>
-                    </div>
-                  </Card>
+                  <Typography variant="h6" id="modal-title" className={this.props.classes.prodSum}>
+                        Product Summary
+                  </Typography>
+                    <Grid
+                      className={this.props.classes.descriptionAndDimensions}
+                      container
+                      alignItems="center"
+                      direction="row"
+                      >
+                      <Card className={this.props.classes.summaryCard}>  
+                        <Grid direction="column" flexWrap="wrap">
+                        <Typography>
+                          Description: {this.props.detail.productDescription}
+                        </Typography>
+                        <Typography className={classes.heading}>
+                          Price: ${this.props.detail.value}
+                        </Typography>
+                        <Typography className={classes.heading}>
+                          Weight: {this.props.detail.weight}lbs
+                        </Typography>
+                        <Typography className={classes.heading}>
+                          Fragile: {this.props.detail.fragile}
+                        </Typography>
+                        </Grid>
+                    </Card>
+                    <Card className={this.props.classes.summaryCard2} >
+                    
+                      <Grid container direction="column" alignItems="flex-end">
+                        <Typography className={classes.heading}>
+                          Product Dimensions:
+                        </Typography>
+                        <Typography className={classes.heading}>
+                          Length: {this.props.detail.length}"
+                        </Typography>
+                        <Typography className={classes.heading}>
+                          Width: {this.props.detail.width}"
+                        </Typography>
+                        <Typography className={classes.heading}>
+                          Height: {this.props.detail.height}"
+                        </Typography>
+                        </Grid>
+            
+                    </Card>
+                  </Grid>
                   <Card>
-                    <div className={this.props.classes.root} className={this.props.classes.summaryCard}>
-                      <Typography className={classes.heading}>
+                      <Typography className={classes.shipmentTitle}>
                         Shipment Summary:
                       </Typography>
-                        <div className={this.props.classes.summaryCard}>
+                        <Grid 
+                          className={this.props.classes.shipmentContainer} 
+                          container 
+                          justify="space-evenly" 
+                          direction="row"
+                        >
                         {this.props.detail.shipments ? (
                           this.props.detail.shipments.map((shipment, i) => {
                             return (
-                              <div key={i}>
-                                <Typography className={classes.heading}>
+                                <Grid key={i}
+                                  container
+                                  direction="column"
+                                  className={this.props.classes.individualShipment}
+                                >
+                                <Typography className={classes.shipmentHeading}>
                                   Date Shipped: {shipment.dateShipped}
                                 </Typography>
-                                <Typography className={classes.heading}>
+                                <Typography className={classes.shipmentHeading}>
                                   Last Updated: {shipment.lastUpdated}
                                 </Typography>
-                                <Typography className={classes.heading}>
+                                <Typography className={classes.shipmentHeading}>
                                   Shipped To: {shipment.shippedTo}
                                 </Typography>
-                                <Typography className={classes.heading}>
+                                <Typography className={classes.shipmentHeading}>
                                   Date Arrived: {shipment.dateArrived}
                                 </Typography>
-                                <Typography className={classes.heading}>
+                                <Typography className={classes.shipmentHeading}>
                                   Tracking Number: {shipment.trackingNumber}
                                 </Typography>
-                                <Typography className={classes.heading}>
+                                <Typography className={classes.shipmentHeading}>
                                   Status: {shipment.status}
                                 </Typography>
-                                <Typography className={classes.heading}>
+                                <Typography className={classes.shipmentHeading}>
                                   Carrier Name: {shipment.carrierName}
                                 </Typography>
-                              </div>
+                                </Grid>
                             )
                           })
                           ) : (
                           <div>There are no shipments associated with this product.</div>
                           )
                         }
-                        </div>
-                    </div>
+                        </Grid>
+                        <Grid
+                          container
+                          direction="row"
+                          justify="space-between"
+                          
+                        >
+                        <Tooltip title="Previous Shipment">
+                          <Button 
+                            variant="contained"
+                            className={classes.submit}
+                            onClick={() => this.previousPage()}>
+                            Previous Page
+                          </Button>
+                        </Tooltip>
+                        <Tooltip title="Next Shipment">
+                          <Button 
+                            variant="contained"
+                            className={classes.submit}
+                            onClick={() => this.nextPage()}>
+                            Next Page
+                          </Button>
+                        </Tooltip>
+                        </Grid>
                   </Card>
 								</div>
 								: null 
@@ -353,22 +436,21 @@ class ProductDetailModal extends React.Component {
               </div>
 							<div>
               <Tooltip title="Close">
-                <Button 
-                    variant="contained"
-                    className={classes.submit}
-                    onClick={event => this.handleClose(event)}>
-                  Close
-                </Button>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
+                  <Button 
+                      variant="contained"
+                      className={classes.submit}
+                      onClick={event => this.handleClose(event)}>
+                    Close
+                  </Button>
+                </Grid>
               </Tooltip>
                 {this.props.children}
-                <Tooltip title="Next Shipment">
-                  <Button 
-                    variant="contained"
-                    className={classes.submit}
-                    onClick={() => this.nextPage()}>
-                    Next Page
-                  </Button>
-                </Tooltip>
 							</div>
 						</div>
 					</Modal>

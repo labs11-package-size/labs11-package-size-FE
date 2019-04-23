@@ -8,7 +8,8 @@ import {
 	editUser,
 } from '../../store/actions/userActions';
 
-import Navigation from '../../components/navigation/Navigation'
+import Navigation from '../../components/navigation/Navigation';
+import Layout from '../../hoc/layout/Layout';
 
 class AccountView extends Component {
 	state = {
