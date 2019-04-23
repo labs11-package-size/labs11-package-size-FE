@@ -107,7 +107,7 @@ const styles = theme => ({
 
   },
   ActivityTimeStamp: {
-    
+
   }
 });
 
@@ -238,7 +238,7 @@ class ViewShipmentModal extends React.Component {
           let panelString = `panel${panelNumber}`
           return <ExpansionPanel expanded={expanded === panelString} onChange={this.handleChange(panelString)}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Event ${eventNumber}</Typography>
+            <Typography className={classes.heading}>Event{eventNumber}</Typography>
             <Typography className={classes.secondaryHeading}>{shippingActivity.details}</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
