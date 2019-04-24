@@ -21,13 +21,41 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Paper from '@material-ui/core/Paper';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { Redirect, withRouter } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import EditProductModal from '../modals/EditProductModal';
 import DeleteModal from './deleteModal';
 import { Grid } from '@material-ui/core';
+
+const timezone = moment.tz.guess()
+
+function prevButtonStyles(page) {
+	if (page === 1) {
+		return {
+			visibility: "hidden"
+		}
+		
+	} else {
+		return {
+			visibility: "visible"
+		}
+	}
+}
+
+function nextButtonStyles(page, shipmentCount) {
+	if (shipmentCount <= (page*3)) {
+		return {
+			visibility: "hidden"
+		}
+		
+	} else {
+		return {
+			visibility: "visible"
+		}
+	}
+}
 
 function getModalStyle() {
 	const top = 50;
@@ -117,9 +145,10 @@ const styles = theme => ({
 		margin: '10px',
 	},
 	shipmentTitle: {
-		padding: 15,
-		width: '50%',
+		padding: "20px 0",
+		width: '100%',
 		height: '100%',
+		textAlign: "center"
 	},
 	summaryCard: {
 		// border: '1px black solid',
@@ -148,6 +177,10 @@ const styles = theme => ({
 	individualShipment: {
 		width: '30%',
 	},
+	shipmentContainer: {
+		height: "200px"
+	},
+	outerShipmentContainer: {}
 });
 function Transition(props) {
 	return <Slide direction="up" {...props} />;
@@ -438,18 +471,24 @@ class ProductDetailModal extends React.Component {
 												</Grid>
 											</Card>
 										</Grid>
-										<Card>
-											<Typography
+										<Card classname={classes.outershipmentContainer}>
+											{(!!this.props.detail.shipmentsCount && this.props.detail.shipmentsCount !== 1) && (<Typography
 												variant="h6"
 												className={classes.shipmentTitle}>
-												Shipment Summary:
-											</Typography>
+												There are {this.props.detail.shipmentsCount} past shipments for this product.
+											</Typography>)}
+											{(this.props.detail.shipmentsCount === 1) && (<Typography
+												variant="h6"
+												className={classes.shipmentTitle}>
+												There is {this.props.detail.shipmentsCount} past shipment for this product.
+											</Typography>)}
+											
 											<Grid
 												className={this.props.classes.shipmentContainer}
 												container
 												justify="space-evenly"
 												direction="row">
-												{this.props.detail.shipments ? (
+												{!!this.props.detail.shipmentsCount ? (
 													this.props.detail.shipments.map((shipment, i) => {
 														return (
 															<Grid
@@ -461,11 +500,11 @@ class ProductDetailModal extends React.Component {
 																}>
 																<Typography className={classes.shipmentHeading}>
 																	Date Shipped:{' '}
-																	{moment(shipment.dateShipped).format('LL')}
+																	{moment.tz(shipment.dateShipped, "Pacific/Fiji").clone().tz(timezone).format('LL')}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
 																	Last Updated:{' '}
-																	{moment(shipment.lastUpdated).format(
+																	{moment.tz(shipment.lastUpdated, "Pacific/Fiji").clone().tz(timezone).format(
 																		'LL h:mm a',
 																	)}
 																</Typography>
@@ -491,16 +530,17 @@ class ProductDetailModal extends React.Component {
 														);
 													})
 												) : (
-													<div>
+													<Typography style={{ marginTop: "100px"}} className={classes.shipmentHeading}>
 														There are no shipments associated with this product.
-													</div>
+													</Typography>
 												)}
 											</Grid>
 											<Grid container direction="row" justify="space-between">
-												<Tooltip title="Previous Shipment">
+												<Tooltip title="Previous 3 Shipments">
 													<Button
 														variant="contained"
 														className={classes.submit}
+														style={prevButtonStyles(this.state.page)}
 														onClick={() => this.previousPage()}>
 														<Icon
 															className={classNames(
@@ -510,10 +550,11 @@ class ProductDetailModal extends React.Component {
 														/>
 													</Button>
 												</Tooltip>
-												<Tooltip title="Next Shipment">
+												<Tooltip title="Next 3 Shipments">
 													<Button
 														variant="contained"
 														className={classes.submit}
+														style={nextButtonStyles(this.state.page, this.props.detail.shipmentsCount)}
 														onClick={() => this.nextPage()}>
 														<Icon
 															className={classNames(
