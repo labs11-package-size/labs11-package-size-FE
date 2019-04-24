@@ -6,9 +6,8 @@ const styles = theme => ({
     width: "575px",
     height: "575px",
     [theme.breakpoints.down("md")]: {
-      width: "300px",
-      height: "300px",
-      margin: "100px 0"
+      width: "400px",
+      height: "400px",
     }
   }
 });
