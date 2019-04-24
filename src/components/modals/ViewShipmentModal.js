@@ -14,6 +14,9 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import moment from "moment-timezone"
+
+const timezone = moment.tz.guess()
 
 function getModalStyle(tracked) {
   const top = 50;
@@ -22,7 +25,7 @@ function getModalStyle(tracked) {
     return {
       width: "1000px",
       height: "800px",
-      padding: "30px",
+      padding: "30px 20px",
       top: `${top}%`,
       left: `${left}%`,
       transform: `translate(-${top}%, -${left}%)`
@@ -86,28 +89,62 @@ const styles = theme => ({
   },
   TrackedShipmentDetailContainer: {
     display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap"
+    justifyContent: "space-evenly",
+    flexWrap: "wrap",
+    alignItems: "center",
+    height: "650px"
+    
   },
   TrackedShipmentLeftData: {
     width: "30%",
-    textAlign: "center",
-    height: "675px"
+    padding: "15px",
+    backgrounColor: "#ECEFF3",
+    border: "1px solid black",
+    borderRadius: "15px"
 },
   TrackedShipmentAccordianContainer: {
-    width: "70%"
+    width: "55%"
+  },
+  TrackedShipmentLeftDataHeader: {
+    marginTop: "10px",
+    textDecoration: "underline"
   },
   TrackedShipmentLeftDataText: {
-    marginTop: "10px"
+    textAlign: "center"
   },
   productNameList: {
-    padding: 0,
+
   },
   ActivityLocation: {
 
   },
   ActivityTimeStamp: {
 
+  },
+  AccordionPanelOuter: {
+    margin: "0"
+  },
+  AccordionPanelSummary: {
+    minHeight: "0"
+  },
+  summarycontent: {
+    margin: "7px 0"
+  },
+  AccordianDetails: {
+    padding: "2px 24px 12px"
+  },
+  ActivityLocation: {
+    fontWeight: "bolder"
+  },
+  ActivityTimestamp: {
+    marginLeft: "7px"
+  },
+  ModalTitle: {
+    width: "100%",
+    textAlign: "center"
+  },
+  UntrackedTitle: {
+    margin: "15px 0"
   }
 });
 
@@ -123,6 +160,7 @@ class ViewShipmentModal extends React.Component {
   };
 
   render() {
+    console.log("timezone", timezone)
     const { classes } = this.props;
     const { expanded } = this.state;
     return (
@@ -137,6 +175,17 @@ class ViewShipmentModal extends React.Component {
             style={getModalStyle(this.props.shipment.tracked)}
             className={classes.paper}
           >
+          <div className={classes.ModalTitle}>
+            {!this.props.shipment.tracked ? (<Typography className={classes.UntrackedTitle} variant="h5" id="modal-title">
+                  Suggested Packaging Orientation
+                </Typography>) :
+
+              (<Typography className={classes.TrackedTitle} variant="h5" id="modal-title">
+                  Detailed Shipment Menu
+                </Typography>)
+            }
+          </div>
+          
             {!this.props.shipment.tracked ? (
               <div
                 style={{
@@ -145,9 +194,6 @@ class ViewShipmentModal extends React.Component {
                   alignItems: "center"
                 }}
               >
-                <Typography variant="h5" style={{ margin: "20px 0" }}>
-                  Suggested Packaging Orientation
-                </Typography>
                 <EmbeddedModel source={this.props.shipment.modelURL} />
                 {!!this.props.addingShipment ? (
                   <div>
@@ -178,27 +224,16 @@ class ViewShipmentModal extends React.Component {
                     {this.props.errorMessage}
                   </Typography>
                 )}
-                <div>
-                  <Button
-                    className={classes.backButton}
-                    onClick={this.props.closeModal}
-                  >
-                    Go Back to List
-                  </Button>
-                </div>
               </div>
             ) : (
               <div className={classes.TrackedShipmentDetailContainer}>
               <div
                 className={classes.TrackedShipmentLeftData}
               >
-                <Typography variant="h5" id="modal-title">
-                  Detailed Shipment Menu
+                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataTitle}>
+                For package sent to: <br/> {this.props.shipment.shippedTo}
                 </Typography>
-                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
-                For package sent to {this.props.shipment.shippedTo}
-                </Typography>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
+                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                   Contained Items
                 </Typography>
                 <ul className={classes.productNameList}>
@@ -206,53 +241,66 @@ class ViewShipmentModal extends React.Component {
                   return <li>{productName}</li>
                 })}
                 </ul>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
+                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                 Tracking Number
                 </Typography>
                 <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
                    {this.props.shipment.trackingNumber}
                 </Typography>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
+                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                 Shipping Service
                 </Typography>
                 <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
-                  {this.props.shipment.shippingType}
+                  {this.props.shipment.shippingType ? (`${this.props.shipment.shippingType}`) : (`Unknown`)}
                 </Typography>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
+                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                 Box Dimensions
                 </Typography>
                 <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
                 {this.props.shipment.dimensions}
                 </Typography>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
+                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                 Total Item Weight
                 </Typography>
                 <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
                 {this.props.shipment.totalWeight}
                 </Typography>
+                <div style ={{width: "100%", display: "flex", justifyContent: "center"}}>
+                  <Button
+                    className={classes.backButton}
+                    onClick={() => window.open(`${this.props.shipment.modelURL}`, '_blank')}
+                  >
+                    View Packaging Suggestion Model
+                  </Button>
+                </div>
                 </div>
                 <div className={classes.TrackedShipmentAccordianContainer}>
         {this.props.shipment.shippingData.activities.map((shippingActivity, index, array) => {
           let eventNumber = (array.length - index)
           let panelNumber = (index + 1)
           let panelString = `panel${panelNumber}`
-          return <ExpansionPanel expanded={expanded === panelString} onChange={this.handleChange(panelString)}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          return <ExpansionPanel className={classes.AccordionPanelOuter} expanded={expanded === panelString} onChange={this.handleChange(panelString)}>
+          <ExpansionPanelSummary classes={{ content: classes.summarycontent }} className={classes.AccordionPanelSummary} expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>Event{eventNumber}</Typography>
             <Typography className={classes.secondaryHeading}>{shippingActivity.details}</Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          <ExpansionPanelDetails className={classes.AccordianDetails}>
+          <Typography className={classes.ActivityLocation}>
+            {shippingActivity.location ? (`${shippingActivity.location}:`) : (`En-route:`)}
+             
+            </Typography>
             <Typography className={classes.ActivityTimestamp}>
-              {shippingActivity.timestamp}
+              Item scanned on {moment.tz(shippingActivity.timestamp, "Pacific/Fiji").clone().tz(timezone).format("dddd, MMM Do")} at {moment.tz(shippingActivity.timestamp, "Pacific/Fiji").clone().tz(timezone).format("hh:mm A")}
             </Typography>
-            <Typography className={classes.ActivityLocation}>
-              {shippingActivity.location}
-            </Typography>
+            
           </ExpansionPanelDetails>
         </ExpansionPanel>
         })}
       </div>
-      <div>
+
+      </div>
+            )}
+            <div style ={{width: "100%", display: "flex", justifyContent: "center"}}>
                   <Button
                     className={classes.backButton}
                     onClick={this.props.closeModal}
@@ -260,8 +308,6 @@ class ViewShipmentModal extends React.Component {
                     Go Back to List
                   </Button>
                 </div>
-      </div>
-            )}
           </div>
         </Modal>
       </div>
