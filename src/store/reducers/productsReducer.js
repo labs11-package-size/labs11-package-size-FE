@@ -99,7 +99,6 @@ const productsReducer = (state = initialState, action) => {
 		case ADDING_PRODUCT:
 			return {
 				...state,
-				thumbnail: state.images.length >= 1 && state.images[0].secure_url,
 				adding: true,
 				failure: false,
 				error: null,
