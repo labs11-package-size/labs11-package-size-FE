@@ -66,12 +66,7 @@ class ImgUploader extends Component {
 					</Typography>
 					{this.props.images.length !== 0 ? <>{list}</> : null}
 
-					<Dropzone
-						onDrop={file =>
-							this.handleUpload(file).then(res => {
-								console.log(res);
-							})
-						}>
+					<Dropzone onDrop={file => this.handleUpload(file)}>
 						{({ getRootProps, getInputProps }) => (
 							<div {...getRootProps()}>
 								<input {...getInputProps()} />

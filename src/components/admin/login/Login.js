@@ -135,15 +135,15 @@ const Login = props => {
 								props.handleGoogleLogin();
 							}}
 						/>
-						{/* <div
+						<div
 							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
 							<Button
 								variant="contained"
 								className={classes.submit}
 								onClick={props.handleRegister}>
-								Register
+								Click to register
 							</Button>
-						</div> */}
+						</div>
 					</div>
 				</Paper>
 			</main>

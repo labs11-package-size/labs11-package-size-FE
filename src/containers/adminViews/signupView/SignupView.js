@@ -43,12 +43,11 @@ const styles = theme => ({
 	},
 	submit: {
 		marginTop: theme.spacing.unit * 3,
-		backgroundColor: '#72BDA2',
 		color: 'white',
+		backgroundColor: '#72BDA2',
 		'&:hover': {
 			color: '#72BDA2',
 			backgroundColor: 'white',
-			border: 'solid 5px #72BDA2',
 		},
 	},
 });
@@ -154,6 +153,15 @@ class SignupView extends Component {
 								Sign Up
 							</Button>
 						</form>
+						<div
+							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
+							<Button
+								variant="contained"
+								className={classes.submit}
+								onClick={this.props.handleSignIn}>
+								Back to login
+							</Button>
+						</div>
 					</Paper>
 				</main>
 			</div>

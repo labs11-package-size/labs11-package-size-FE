@@ -68,8 +68,9 @@ class ProductListView extends Component {
 				width: '',
 				height: '',
 				value: '',
-				thumbnail: '',
-				images: [],
+				images: this.props.images,
+				// thumbnail:
+				// 	this.props.images.length >= 1 && this.props.images[0].secure_url,
 			},
 			trackingNumber: '',
 			searchTerm: '',
@@ -111,6 +112,7 @@ class ProductListView extends Component {
 				width: '',
 				height: '',
 				value: '',
+				thumbnail: '',
 				images: [],
 			},
 		});
@@ -128,6 +130,18 @@ class ProductListView extends Component {
 		this.props.deleteProduct(id);
 		return <Redirect to="/products" />;
 	};
+	// componentWillUpdate = prevProps => {
+	// 	if (this.props.images.length >= 1 && prevProps.images.length >= 1) {
+	// 		this.setState({
+	// 			product: {
+	// 				...this.state.product,
+	// 				images: this.props.images,
+	// 				thumbnail:
+	// 					this.props.images.length >= 1 && this.props.images[0].secure_url,
+	// 			},
+	// 		});
+	// 	}
+	// };
 
 	editProduct = (id, prod) => {
 		this.props.editProduct(id, prod);
@@ -140,9 +154,9 @@ class ProductListView extends Component {
 				width: '',
 				height: '',
 				value: '',
-				thumbnail: '',
-				images: [],
 			},
+			thumbnail: '',
+			images: [],
 		});
 		this.props.history.push('/');
 	};
@@ -162,7 +176,7 @@ class ProductListView extends Component {
 		this.setState({
 			product: {
 				...this.state.product,
-				thumbnail: imgs[0].secure_url,
+				thumbnail: imgs && imgs[0].secure_url,
 			},
 		});
 	};
@@ -171,7 +185,7 @@ class ProductListView extends Component {
 		this.setState({
 			product: {
 				...this.state.product,
-				images: files.map(img => img.secure_url),
+				images: files && files.map(img => img.secure_url),
 			},
 		});
 	};
@@ -336,7 +350,8 @@ const mapStateToProps = state => {
 		selectedProducts: state.shipmentsReducer.selectedProducts,
 		products: state.productsReducer.products,
 		thumbnail: state.productsReducer.thumbnail,
-		images: state.productsReducer.images,
+		images:
+			state.productsReducer.images.length >= 1 && state.productsReducer.images,
 	};
 };
 
