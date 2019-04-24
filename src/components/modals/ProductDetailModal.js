@@ -124,7 +124,7 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: "none",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "500px"
     }
   },
@@ -162,7 +162,7 @@ const styles = theme => ({
     width: "100%",
     height: "100%",
     textAlign: "center",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "none"
     }
   },
@@ -192,20 +192,20 @@ const styles = theme => ({
   },
   individualShipment: {
     width: "30%",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "none"
     }
   },
   ShipmentAccordionContainer: {
     display: "none",
     width: "100%",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "block"
     }
   },
   ShipmentAccordionSubtext: {
     display: "none",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "block"
     }
   },

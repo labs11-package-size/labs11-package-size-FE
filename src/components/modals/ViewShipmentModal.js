@@ -31,7 +31,7 @@ const styles = theme => ({
     top: "50%",
     left: "50%",
     transform: `translate(-50%, -50%)`,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "500px"
     }
   },
@@ -44,7 +44,7 @@ const styles = theme => ({
     top: "50%",
     left: "50%",
     transform: `translate(-50%, -50%)`,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "500px",
       height: "615px"
     }
@@ -57,13 +57,13 @@ const styles = theme => ({
     "&:hover": {
       color: "black"
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "300px",
     }
   },
   trackInput: {
     width: "350px",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "230px"
     }
   },
@@ -108,11 +108,14 @@ const styles = theme => ({
     padding: "15px",
     backgrounColor: "#ECEFF3",
     border: "1px solid black",
-    borderRadius: "15px"
+    borderRadius: "15px",
+    [theme.breakpoints.down("sm")]: {
+      width: "auto"
+    }
 },
   TrackedShipmentAccordianContainer: {
     width: "55%",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "none"
     }
   },
