@@ -38,11 +38,14 @@ const styles = theme => ({
     marginTop: "10px",
     width: "100%",
     marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
+    overflowX: "visible"
   },
   table: {
     minWidth: 700,
-    marginTop: "10px"
+    marginTop: "10px",
+    [theme.breakpoints.down("sm")]: {
+      minWidth: "0",
+    }
   },
   switch: {
     margin: "0px 20px 0"

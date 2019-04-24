@@ -13,19 +13,32 @@ const styles = theme => ({
   root: {
     width: "800px"
   },
+  TimeColumn: { 
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
+   },
+  StatusColumn: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
+  },
   WeightColumn: {
     [theme.breakpoints.down("md")]: {
-      display: "none",
-    
+      display: "none"
     }
   },
   DimensionsColumn: {
     [theme.breakpoints.down("md")]: {
-      display: "none",
-    
+      display: "none"
     }
   },
-  NamesColumn: { width: "700px" }
+  NamesColumn: { 
+    width: "700px",
+    [theme.breakpoints.down("sm")]: {
+      width: "20%"
+    }
+   }
 });
 
 class EnhancedTableHead extends React.Component {
@@ -40,7 +53,29 @@ class EnhancedTableHead extends React.Component {
       <TableHead>
         <TableRow>
           {shipmentTitles.map((shipment, index) => {
-            if (index === 2) {
+            if (index === 0) {
+              return (
+                <TableCell
+                  className={classes.TimeColumn}
+                  align="right"
+                  padding="default"
+                  onClick={event => this.createSortHandler(event, shipment.id)}
+                >
+                  <TableSortLabel>{shipment.label}</TableSortLabel>
+                </TableCell>
+              );
+            } else if (index === 1) {
+              return (
+                <TableCell
+                  className={classes.StatusColumn}
+                  align="right"
+                  padding="default"
+                  onClick={event => this.createSortHandler(event, shipment.id)}
+                >
+                  <TableSortLabel>{shipment.label}</TableSortLabel>
+                </TableCell>
+              );
+            } else if (index === 2) {
               return (
                 <TableCell
                   className={classes.WeightColumn}
@@ -73,7 +108,8 @@ class EnhancedTableHead extends React.Component {
                   <TableSortLabel>{shipment.label}</TableSortLabel>
                 </TableCell>
               );
-            } else {
+            }
+             else {
               return (
                 <TableCell
                   align="right"
