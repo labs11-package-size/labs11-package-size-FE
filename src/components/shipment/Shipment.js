@@ -11,10 +11,12 @@ import Icon from "@material-ui/core/Icon";
 import classNames from "classnames";
 import Checkbox from "@material-ui/core/Checkbox";
 import ViewShipmentModal from "../modals/ViewShipmentModal";
-import moment from "moment";
+import moment from "moment-timezone";
 import { Button } from "@material-ui/core";
 import { white } from "ansi-colors";
 import Typography from "@material-ui/core/Typography";
+
+const timezone = moment.tz.guess()
 
 const styles = theme => ({
   statuscell: {
@@ -32,7 +34,7 @@ function Shipment(props) {
   return (
     <TableRow id={"tablerow-1"} style={{ cursor: "pointer" }} hover aria-checked="false" role="checkbox" tabIndex={-1} onClick={() => props.openModal(props.shipment)}>
       <TableCell align="right">
-        {moment(props.shipment.lastUpdated).format("L h:mm a")}
+        {moment.tz(props.shipment.lastUpdated, "Pacific/Fiji").clone().tz(timezone).format("L h:mm a")}
       </TableCell>
       {props.shipment.tracked ? (
         <TableCell
