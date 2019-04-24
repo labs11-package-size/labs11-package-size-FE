@@ -28,7 +28,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     width: "1000px",
     height: "800px",
-    padding: "30px 20px",
     top: "50%",
     left: "50%",
     transform: `translate(-50%, -50%)`,
