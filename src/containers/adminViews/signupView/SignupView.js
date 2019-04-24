@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { register } from '../../../store/actions/userActions';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const styles = theme => ({
 	main: {
@@ -61,7 +62,7 @@ class SignupView extends Component {
 			displayName: '',
 			password: '',
 		},
-		error: null,
+		submitted: false,
 	};
 
 	handleChange = e => {
@@ -76,15 +77,21 @@ class SignupView extends Component {
 	handleRegister = e => {
 		e.preventDefault();
 		this.props.register(this.state.user);
-		this.setState({
-			user: {
-				firstName: '',
-				lastName: '',
-				emailAddress: '',
-				displayName: '',
-				password: '',
+		this.setState(
+			{
+				user: {
+					firstName: '',
+					lastName: '',
+					emailAddress: '',
+					displayName: '',
+					password: '',
+				},
+				submitted: true,
 			},
-		});
+			() => {
+				setTimeout(() => this.setState({ submitted: false }), 5000);
+			},
+		);
 	};
 
 	render() {
@@ -101,67 +108,78 @@ class SignupView extends Component {
 							Register
 						</Typography>
 
-						<form className={classes.form}>
+						<ValidatorForm
+							className={classes.form}
+							ref="form"
+							onSubmit={this.handleRegister}>
 							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="name">First Name</InputLabel>
-								<Input
-									id="firstName"
-									value={this.state.user.firstName}
+								<TextValidator
+									label="First Name"
 									onChange={this.handleChange}
 									name="firstName"
+									value={this.state.user.firstName}
+									validators={['required']}
+									errorMessages={['this field is required']}
 									autoFocus
 								/>
 							</FormControl>
 							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="last-name">Last Name</InputLabel>
-								<Input
-									id="last-name"
-									value={this.state.user.lastName}
+								<TextValidator
+									label="Last Name"
 									onChange={this.handleChange}
 									name="lastName"
+									value={this.state.user.lastName}
+									validators={['required']}
+									errorMessages={['this field is required']}
 								/>
 							</FormControl>
 							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="email">Email</InputLabel>
-								<Input
-									id="email"
-									value={this.state.user.emailAddress}
+								<TextValidator
+									label="Email"
 									onChange={this.handleChange}
 									name="emailAddress"
+									value={this.state.user.emailAddress}
+									validators={['required', 'isEmail']}
+									errorMessages={[
+										'this field is required',
+										'email is not valid',
+									]}
 								/>
 							</FormControl>
 							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="password">Password</InputLabel>
-								<Input
+								<TextValidator
+									label="Password"
 									onChange={this.handleChange}
-									value={this.state.user.password}
 									name="password"
-									type="password"
-									id="password"
-									autoComplete="current-password"
+									value={this.state.user.password}
+									validators={['required']}
+									errorMessages={['this field is required']}
 								/>
 							</FormControl>
-							{this.state.error && (
-								<Typography>{this.state.error.message}</Typography>
-							)}
+							<br />
 							<Button
-								onClick={this.handleRegister}
+								disabled={this.state.submitted}
 								type="submit"
 								fullWidth
 								variant="contained"
 								className={classes.submit}>
-								Sign Up
+								{(this.state.submitted && 'Your form is submitted!') ||
+									(!this.state.submitted && 'Register')}
 							</Button>
-						</form>
-						<div
-							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
-							<Button
-								variant="contained"
-								className={classes.submit}
-								onClick={this.props.handleSignIn}>
-								Back to login
-							</Button>
-						</div>
+							<div
+								style={{
+									margin: 5,
+									display: 'flex',
+									justifyContent: 'center',
+								}}>
+								<Button
+									variant="contained"
+									className={classes.submit}
+									onClick={this.props.handleSignIn}>
+									Back to login
+								</Button>
+							</div>
+						</ValidatorForm>
 					</Paper>
 				</main>
 			</div>

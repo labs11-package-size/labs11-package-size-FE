@@ -257,6 +257,7 @@ class ProductListView extends Component {
 									addProduct={() => this.props.addProduct(this.state.product)}>
 									<form className={this.props.classes.container}>
 										<Input
+											required
 											onChange={this.handleInputChange}
 											name="name"
 											value={this.state.product.name}
@@ -265,6 +266,7 @@ class ProductListView extends Component {
 										/>
 
 										<Input
+											required
 											onChange={this.handleInputChange}
 											name="productDescription"
 											value={this.state.product.productDescription}
@@ -276,6 +278,7 @@ class ProductListView extends Component {
 										/>
 
 										<Input
+											required
 											onChange={this.handleInputChange}
 											name="height"
 											value={this.state.product.height}
@@ -287,6 +290,7 @@ class ProductListView extends Component {
 										/>
 
 										<Input
+											required
 											onChange={this.handleInputChange}
 											name="length"
 											value={this.state.product.length}
@@ -297,6 +301,7 @@ class ProductListView extends Component {
 											}}
 										/>
 										<Input
+											required
 											onChange={this.handleInputChange}
 											name="value"
 											value={this.state.product.value}
@@ -307,6 +312,7 @@ class ProductListView extends Component {
 											}}
 										/>
 										<Input
+											required
 											onChange={this.handleInputChange}
 											name="weight"
 											value={this.state.product.weight}
@@ -317,6 +323,7 @@ class ProductListView extends Component {
 											}}
 										/>
 										<Input
+											required
 											onChange={this.handleInputChange}
 											name="width"
 											value={this.state.product.width}
