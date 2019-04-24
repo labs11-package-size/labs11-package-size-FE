@@ -26,6 +26,12 @@ const styles = theme => ({
     backgroundColor: "#72bda2",
     color: "white",
     fontSize: "10px"
+  },
+  WeightRow: {
+
+  },
+  DimensionsRow: {
+    
   }
 });
 
@@ -53,8 +59,8 @@ function Shipment(props) {
           </Typography>
         </TableCell>
       )}
-      <TableCell align="right">{props.shipment.totalWeight}</TableCell>
-      <TableCell align="right">{props.shipment.dimensions}</TableCell>
+      <TableCell className={classes.WeightRow} align="right">{props.shipment.totalWeight}</TableCell>
+      <TableCell className={classes.DimensionsRow} align="right">{props.shipment.dimensions}</TableCell>
       <TableCell align="right">
         {props.shipment.productNames.join(", ")}
       </TableCell>

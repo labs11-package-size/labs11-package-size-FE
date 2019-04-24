@@ -128,7 +128,7 @@ const styles = theme => ({
       width: "500px"
     }
   },
-  submit: {
+  pagebutton: {
     color: "white",
     backgroundColor: "#72BDA2",
     "&:hover": {
@@ -136,6 +136,16 @@ const styles = theme => ({
       backgroundColor: "white"
     },
     margin: "10px"
+  },
+  backbutton: {
+    color: "white",
+    backgroundColor: "#72BDA2",
+    "&:hover": {
+      color: "#72BDA2",
+      backgroundColor: "white"
+    },
+    margin: "10px",
+    width: "40%"
   },
   packit_submit: {
     width: "100%",
@@ -334,7 +344,7 @@ class ProductDetailModal extends React.Component {
                   className={classes.packit_submit}
                   onClick={event => this.handleDialogOpen(event)}
                 >
-                  Pack It
+                Add to Package List
                 </Button>
               ) : (
                 // <div>
@@ -362,7 +372,7 @@ class ProductDetailModal extends React.Component {
                   className={classes.packit_submit}
                   onClick={event => this.handleProductSelect(event)}
                 >
-                  Pack It
+                Add to Package List
                 </Button>
               )}
             </CardActions>
@@ -399,12 +409,12 @@ class ProductDetailModal extends React.Component {
                       <Tooltip title="Pack It">
                         <Button
                           variant="contained"
-                          className={classes.submit}
+                          className={classes.pagebutton}
                           onClick={event =>
                             this.handlePackit(event, this.props.product.uuid)
                           }
                         >
-                          Pack It
+                        Pack this item
                         </Button>
                       </Tooltip>
                     </div>
@@ -745,7 +755,7 @@ class ProductDetailModal extends React.Component {
                         <Tooltip title="Previous 3 Shipments">
                           <Button
                             variant="contained"
-                            className={classes.submit}
+                            className={classes.pagebutton}
                             style={prevButtonStyles(this.state.page)}
                             onClick={() => this.previousPage()}
                           >
@@ -760,7 +770,7 @@ class ProductDetailModal extends React.Component {
                         <Tooltip title="Next 3 Shipments">
                           <Button
                             variant="contained"
-                            className={classes.submit}
+                            className={classes.pagebutton}
                             style={nextButtonStyles(
                               this.state.page,
                               this.props.detail.shipmentsCount
@@ -790,10 +800,10 @@ class ProductDetailModal extends React.Component {
                   >
                     <Button
                       variant="contained"
-                      className={classes.submit}
+                      className={classes.backbutton}
                       onClick={event => this.handleClose(event)}
                     >
-                      Close
+                    Back to list
                     </Button>
                   </Grid>
                 </Tooltip>
