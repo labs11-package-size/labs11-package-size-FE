@@ -36,6 +36,20 @@ const styles = theme => ({
       width: "500px"
     }
   },
+  paperuntracked: {
+    position: "absolute",
+    outline: "none",
+    backgroundColor: theme.palette.background.paper,
+    width: "700px",
+    height: "800px",
+    top: "50%",
+    left: "50%",
+    transform: `translate(-50%, -50%)`,
+    [theme.breakpoints.down("md")]: {
+      width: "500px",
+      height: "615px"
+    }
+  },
   backButton: {
     width: "500px",
     color: "white",
@@ -43,6 +57,9 @@ const styles = theme => ({
     marginTop: "25px",
     "&:hover": {
       color: "black"
+    },
+    [theme.breakpoints.down("md")]: {
+      width: "300px",
     }
   },
   trackInput: {
@@ -136,7 +153,8 @@ const styles = theme => ({
   },
   ModalTitle: {
     width: "100%",
-    textAlign: "center"
+    textAlign: "center",
+    margin: "20px 0"
   }
 });
 
@@ -163,7 +181,10 @@ class ViewShipmentModal extends React.Component {
           onClose={this.props.closeModal}
         >
           <div
-            className={classes.paper}
+            className={classNames({
+				[classes.paper]: this.props.shipment.tracked === 1,
+        [classes.paperuntracked]: this.props.shipment.tracked === 0
+			})}
           >
           <div className={classes.ModalTitle}>
             {!this.props.shipment.tracked ? (<Typography variant="h5" id="modal-title">
