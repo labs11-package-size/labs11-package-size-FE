@@ -69,7 +69,7 @@ class AddProductModal extends React.Component {
 						variant="contained"
 						className={classes.submit}
 						onClick={this.handleOpen}>
-						Add Product
+						create a new product
 					</Button>
 				</Tooltip>
 				<Modal

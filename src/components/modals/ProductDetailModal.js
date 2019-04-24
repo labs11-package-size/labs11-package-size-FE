@@ -29,31 +29,29 @@ import EditProductModal from '../modals/EditProductModal';
 import DeleteModal from './deleteModal';
 import { Grid } from '@material-ui/core';
 
-const timezone = moment.tz.guess()
+const timezone = moment.tz.guess();
 
 function prevButtonStyles(page) {
 	if (page === 1) {
 		return {
-			visibility: "hidden"
-		}
-		
+			visibility: 'hidden',
+		};
 	} else {
 		return {
-			visibility: "visible"
-		}
+			visibility: 'visible',
+		};
 	}
 }
 
 function nextButtonStyles(page, shipmentCount) {
-	if (shipmentCount <= (page*3)) {
+	if (shipmentCount <= page * 3) {
 		return {
-			visibility: "hidden"
-		}
-		
+			visibility: 'hidden',
+		};
 	} else {
 		return {
-			visibility: "visible"
-		}
+			visibility: 'visible',
+		};
 	}
 }
 
@@ -145,10 +143,10 @@ const styles = theme => ({
 		margin: '10px',
 	},
 	shipmentTitle: {
-		padding: "20px 0",
+		padding: '20px 0',
 		width: '100%',
 		height: '100%',
-		textAlign: "center"
+		textAlign: 'center',
 	},
 	summaryCard: {
 		// border: '1px black solid',
@@ -178,9 +176,9 @@ const styles = theme => ({
 		width: '30%',
 	},
 	shipmentContainer: {
-		height: "200px"
+		height: '200px',
 	},
-	outerShipmentContainer: {}
+	outerShipmentContainer: {},
 });
 function Transition(props) {
 	return <Slide direction="up" {...props} />;
@@ -272,7 +270,7 @@ class ProductDetailModal extends React.Component {
 								<Button
 									className={classes.packit_submit}
 									onClick={event => this.handleDialogOpen(event)}>
-									Pack It
+									Add to Package List
 								</Button>
 							) : (
 								// <div>
@@ -299,7 +297,7 @@ class ProductDetailModal extends React.Component {
 								<Button
 									className={classes.packit_submit}
 									onClick={event => this.handleProductSelect(event)}>
-									Pack It
+									Add to Package List
 								</Button>
 							)}
 						</CardActions>
@@ -336,7 +334,7 @@ class ProductDetailModal extends React.Component {
 													onClick={event =>
 														this.handlePackit(event, this.props.product.uuid)
 													}>
-													Pack It
+													Pack this item
 												</Button>
 											</Tooltip>
 										</div>
@@ -472,17 +470,24 @@ class ProductDetailModal extends React.Component {
 											</Card>
 										</Grid>
 										<Card classname={classes.outershipmentContainer}>
-											{(!!this.props.detail.shipmentsCount && this.props.detail.shipmentsCount !== 1) && (<Typography
-												variant="h6"
-												className={classes.shipmentTitle}>
-												There are {this.props.detail.shipmentsCount} past shipments for this product.
-											</Typography>)}
-											{(this.props.detail.shipmentsCount === 1) && (<Typography
-												variant="h6"
-												className={classes.shipmentTitle}>
-												There is {this.props.detail.shipmentsCount} past shipment for this product.
-											</Typography>)}
-											
+											{!!this.props.detail.shipmentsCount &&
+												this.props.detail.shipmentsCount !== 1 && (
+													<Typography
+														variant="h6"
+														className={classes.shipmentTitle}>
+														There are {this.props.detail.shipmentsCount} past
+														shipments for this product.
+													</Typography>
+												)}
+											{this.props.detail.shipmentsCount === 1 && (
+												<Typography
+													variant="h6"
+													className={classes.shipmentTitle}>
+													There is {this.props.detail.shipmentsCount} past
+													shipment for this product.
+												</Typography>
+											)}
+
 											<Grid
 												className={this.props.classes.shipmentContainer}
 												container
@@ -500,13 +505,19 @@ class ProductDetailModal extends React.Component {
 																}>
 																<Typography className={classes.shipmentHeading}>
 																	Date Shipped:{' '}
-																	{moment.tz(shipment.dateShipped, "Pacific/Fiji").clone().tz(timezone).format('LL')}
+																	{moment
+																		.tz(shipment.dateShipped, 'Pacific/Fiji')
+																		.clone()
+																		.tz(timezone)
+																		.format('LL')}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
 																	Last Updated:{' '}
-																	{moment.tz(shipment.lastUpdated, "Pacific/Fiji").clone().tz(timezone).format(
-																		'LL h:mm a',
-																	)}
+																	{moment
+																		.tz(shipment.lastUpdated, 'Pacific/Fiji')
+																		.clone()
+																		.tz(timezone)
+																		.format('LL h:mm a')}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
 																	Shipped To: {shipment.shippedTo}
@@ -530,7 +541,9 @@ class ProductDetailModal extends React.Component {
 														);
 													})
 												) : (
-													<Typography style={{ marginTop: "100px"}} className={classes.shipmentHeading}>
+													<Typography
+														style={{ marginTop: '100px' }}
+														className={classes.shipmentHeading}>
 														There are no shipments associated with this product.
 													</Typography>
 												)}
@@ -554,7 +567,10 @@ class ProductDetailModal extends React.Component {
 													<Button
 														variant="contained"
 														className={classes.submit}
-														style={nextButtonStyles(this.state.page, this.props.detail.shipmentsCount)}
+														style={nextButtonStyles(
+															this.state.page,
+															this.props.detail.shipmentsCount,
+														)}
 														onClick={() => this.nextPage()}>
 														<Icon
 															className={classNames(
@@ -580,7 +596,7 @@ class ProductDetailModal extends React.Component {
 											variant="contained"
 											className={classes.submit}
 											onClick={event => this.handleClose(event)}>
-											Close
+											Back to list
 										</Button>
 									</Grid>
 								</Tooltip>

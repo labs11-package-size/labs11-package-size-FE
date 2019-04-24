@@ -240,16 +240,6 @@ class ProductListView extends Component {
 						getDetail={this.props.getDetail}
 					/>
 				</div>
-
-				<div>
-					<div className={this.props.classes.modalStyle}>
-						<Paper className={this.props.classes.paper}>
-							<Typography variant="h6">
-								No Products yet.. Add a product to get started
-							</Typography>
-						</Paper>
-					</div>
-				</div>
 			</div>
 		);
 	}
