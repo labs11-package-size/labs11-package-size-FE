@@ -12,7 +12,20 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = theme => ({
   root: {
     width: "800px"
-  }
+  },
+  WeightColumn: {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    
+    }
+  },
+  DimensionsColumn: {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    
+    }
+  },
+  NamesColumn: { width: "700px" }
 });
 
 class EnhancedTableHead extends React.Component {
@@ -27,19 +40,40 @@ class EnhancedTableHead extends React.Component {
       <TableHead>
         <TableRow>
           {shipmentTitles.map((shipment, index) => {
-            if (index === 4) {
+            if (index === 2) {
               return (
                 <TableCell
+                  className={classes.WeightColumn}
                   align="right"
                   padding="default"
                   onClick={event => this.createSortHandler(event, shipment.id)}
-                  style={{ width: "700px" }}
                 >
                   <TableSortLabel>{shipment.label}</TableSortLabel>
                 </TableCell>
               );
-            } 
-            else {
+            } else if (index === 3) {
+              return (
+                <TableCell
+                  className={classes.DimensionsColumn}
+                  align="right"
+                  padding="default"
+                  onClick={event => this.createSortHandler(event, shipment.id)}
+                >
+                  <TableSortLabel>{shipment.label}</TableSortLabel>
+                </TableCell>
+              );
+            } else if (index === 4) {
+              return (
+                <TableCell
+                  className={classes.NamesColumn}
+                  align="right"
+                  padding="default"
+                  onClick={event => this.createSortHandler(event, shipment.id)}
+                >
+                  <TableSortLabel>{shipment.label}</TableSortLabel>
+                </TableCell>
+              );
+            } else {
               return (
                 <TableCell
                   align="right"
@@ -59,31 +93,6 @@ class EnhancedTableHead extends React.Component {
     );
   }
 }
-
-const toolbarStyles = theme => ({
-  root: {
-    paddingRight: theme.spacing.unit
-  },
-  highlight:
-    theme.palette.type === "light"
-      ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark
-        },
-  spacer: {
-    flex: "1 1 100%"
-  },
-  actions: {
-    color: theme.palette.text.secondary
-  },
-  title: {
-    flex: "0 0 auto"
-  }
-});
 
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
@@ -127,5 +136,5 @@ const shipmentTitles = [
   }
 ];
 
-EnhancedTableHead = withStyles(toolbarStyles)(EnhancedTableHead);
+EnhancedTableHead = withStyles(styles)(EnhancedTableHead);
 export default EnhancedTableHead;

@@ -28,10 +28,14 @@ const styles = theme => ({
     fontSize: "10px"
   },
   WeightRow: {
-
+    [theme.breakpoints.down("md")]: {
+      display: "none"
+    }
   },
   DimensionsRow: {
-    
+    [theme.breakpoints.down("md")]: {
+      display: "none"
+    }
   }
 });
 
