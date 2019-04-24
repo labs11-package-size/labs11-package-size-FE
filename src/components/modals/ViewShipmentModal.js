@@ -160,7 +160,6 @@ class ViewShipmentModal extends React.Component {
   };
 
   render() {
-    console.log("timezone", timezone)
     const { classes } = this.props;
     const { expanded } = this.state;
     return (
