@@ -9162,6 +9162,14 @@ react-flip-move@^3.0.1:
   resolved "https://registry.yarnpkg.com/react-flip-move/-/react-flip-move-3.0.3.tgz#3065b0b9e622ae73953aba725f8feed8e4643667"
   integrity sha512-gR2jvjUgIXI7ceFWJkr8owX4vKhV0IJoXIf/Dt7gESFe5OKiSz2H6d10mKTW8fN134NDI16J4HgEgq9pKqJd5A==
 
+react-form-validator-core@0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/react-form-validator-core/-/react-form-validator-core-0.6.3.tgz#9d75496ecec245e4baf7c40dbb3deefed1f88994"
+  integrity sha512-77gbQ1CrA9N0EJmOCKnm/aW1DYhRSZ9YSce4Y9/UymDWZU8pR3jLVWaOS6wVVg2fpK8GiZN4YoBRxfpY0p8maA==
+  dependencies:
+    promise-polyfill "8.1.0"
+    react-lifecycles-compat "^3.0.2"
+
 react-google-button@^0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/react-google-button/-/react-google-button-0.5.3.tgz#d8c76328e51b55f2835a4ebe23817906dac6a4f8"
@@ -9241,6 +9249,13 @@ react-loading-screen@^0.0.17:
     react-spinkit "^3.0.0"
     styled-components "^3.2.6"
     webpack "^2.6.1"
+
+react-material-ui-form-validator@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/react-material-ui-form-validator/-/react-material-ui-form-validator-2.0.8.tgz#01d81b5a49d94af6f5a6e64b45eb9fc857d52ae1"
+  integrity sha512-U+HuORWdA7GmFgNbHOc2HrEQ3OLLZYQO+DENPX6X843VR0rOyojQrNh00ePuFIRSnpv6ZGNz5ob5ShBUYnchPQ==
+  dependencies:
+    react-form-validator-core "0.6.3"
 
 react-pose-text@^3.1.0:
   version "3.1.0"

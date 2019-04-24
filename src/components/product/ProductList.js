@@ -93,6 +93,14 @@ const styles = theme => ({
 		alignItems: 'baseline',
 		display: 'flex',
 	},
+	paper: {
+		marginTop: theme.spacing.unit * 8,
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+			.spacing.unit * 3}px`,
+	},
 	searchContainer: {
 		marginLeft: 'auto',
 		marginBottom: 40,
@@ -314,25 +322,28 @@ class ProductList extends Component {
 						this.props.classes.contentShift
 					}>
 					<div className={this.props.classes.drawerHeader} />
+
 					<div>
-						<div className={this.props.classes.searchContainer}>
-							<TextField
-								name="search"
-								value={this.props.searchTerm}
-								onChange={this.props.updateSearch}
-								id="filled-full-width"
-								label="Search by name..."
-								margin="normal"
-								fullWidth
-								variant="filled"
-								InputLabelProps={{
-									shrink: true,
-								}}
-							/>
-						</div>
+						{this.props.products.length >= 1 && (
+							<div className={this.props.classes.searchContainer}>
+								<TextField
+									name="search"
+									value={this.props.searchTerm}
+									onChange={this.props.updateSearch}
+									id="filled-full-width"
+									label="Search by name..."
+									margin="normal"
+									fullWidth
+									variant="filled"
+									InputLabelProps={{
+										shrink: true,
+									}}
+								/>
+							</div>
+						)}
 
 						<div className={this.props.classes.root}>
-							{this.props.products ? (
+							{this.props.products.length >= 1 ? (
 								this.props.products.map(product => {
 									return (
 										<div key={product.uuid}>
@@ -362,7 +373,13 @@ class ProductList extends Component {
 									);
 								})
 							) : (
-								<div>no list yet</div>
+								<div style={{ margin: '0 auto' }}>
+									<Paper className={this.props.classes.paper}>
+										<Typography variant="h6">
+											No Products yet... Create a new product to get started
+										</Typography>
+									</Paper>
+								</div>
 							)}
 						</div>
 					</div>
