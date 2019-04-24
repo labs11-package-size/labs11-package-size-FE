@@ -5,7 +5,7 @@ const styles = theme => ({
   ModelContainer: {
     width: "575px",
     height: "575px",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "400px",
       height: "400px",
     }
