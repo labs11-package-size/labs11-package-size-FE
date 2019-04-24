@@ -18,33 +18,23 @@ import moment from "moment-timezone"
 
 const timezone = moment.tz.guess()
 
-function getModalStyle(tracked) {
-  const top = 50;
-  const left = 50;
-  if (!!tracked) {
-    return {
-      width: "1000px",
-      height: "800px",
-      padding: "30px 20px",
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`
-    };
-  }
-  return {
-    width: "700px",
-    height: "800px",
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
-
 const styles = theme => ({
+  modal: {
+
+  },
   paper: {
     position: "absolute",
     outline: "none",
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
+    width: "1000px",
+    height: "800px",
+    padding: "30px 20px",
+    top: "50%",
+    left: "50%",
+    transform: `translate(-50%, -50%)`,
+    [theme.breakpoints.down("md")]: {
+      width: "500px"
+    }
   },
   backButton: {
     width: "500px",
@@ -56,7 +46,10 @@ const styles = theme => ({
     }
   },
   trackInput: {
-    width: "350px"
+    width: "350px",
+    [theme.breakpoints.down("md")]: {
+      width: "230px"
+    }
   },
   trackButton: {
     marginLeft: "50px",
@@ -92,8 +85,7 @@ const styles = theme => ({
     justifyContent: "space-evenly",
     flexWrap: "wrap",
     alignItems: "center",
-    height: "650px"
-    
+    height: "650px",
   },
   TrackedShipmentLeftData: {
     width: "30%",
@@ -103,7 +95,10 @@ const styles = theme => ({
     borderRadius: "15px"
 },
   TrackedShipmentAccordianContainer: {
-    width: "55%"
+    width: "55%",
+    [theme.breakpoints.down("md")]: {
+      display: "none"
+    }
   },
   TrackedShipmentLeftDataHeader: {
     marginTop: "10px",
@@ -142,9 +137,6 @@ const styles = theme => ({
   ModalTitle: {
     width: "100%",
     textAlign: "center"
-  },
-  UntrackedTitle: {
-    margin: "15px 0"
   }
 });
 
@@ -171,11 +163,10 @@ class ViewShipmentModal extends React.Component {
           onClose={this.props.closeModal}
         >
           <div
-            style={getModalStyle(this.props.shipment.tracked)}
             className={classes.paper}
           >
           <div className={classes.ModalTitle}>
-            {!this.props.shipment.tracked ? (<Typography className={classes.UntrackedTitle} variant="h5" id="modal-title">
+            {!this.props.shipment.tracked ? (<Typography variant="h5" id="modal-title">
                   Suggested Packaging Orientation
                 </Typography>) :
 

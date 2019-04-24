@@ -12,18 +12,6 @@ import { lighten } from "@material-ui/core/styles/colorManipulator";
 import { Button } from "@material-ui/core";
 import CompareArrows from "@material-ui/icons/CompareArrowsRounded";
 
-const styles = theme => ({
-	root: {
-		width: 'auto',
-	},
-	table: {
-		minWidth: 1020,
-	},
-	tableWrapper: {
-		overflowX: 'auto',
-	},
-});
-
 
 const toolbarStyles = theme => ({
 	root: {
@@ -44,9 +32,50 @@ const toolbarStyles = theme => ({
 	actions: {
 		color: theme.palette.text.secondary,
 	},
-	title: {
-		flex: '0 0 auto',
+	DeleteText: {
+		[theme.breakpoints.down("sm")]: {
+			fontSize: "12px"
+		 }
 	},
+	ButtonContainer: {
+		width: "500px", 
+		display: "flex", 
+		justifyContent: "center", 
+		alignItems: "center", 
+		marginLeft: "30%",
+		[theme.breakpoints.down("md")]: {
+			marginLeft: "10%"
+		},
+		[theme.breakpoints.down("sm")]: {
+		 marginLeft: "0",
+		 width: "auto",
+		}
+	},
+	SelectedButton: {
+		color: "white",
+		 backgroundColor: "#bd7280",
+			border: "1px solid grey",
+			[theme.breakpoints.down("sm")]: {
+				fontSize: "10px"
+			}
+	},
+	UnselectedButton: {
+		border: "1px solid grey",
+		[theme.breakpoints.down("sm")]: {
+      fontSize: "10px"
+    }
+	},
+	CompareArrows: {
+		fontSize: "32px"
+	},
+	DeleteInfoContainer: {
+		display: "flex",
+		alignItems: "baseline",
+		[theme.breakpoints.down("sm")]: {
+			flexDirection: "column",
+			marginLeft: "5px"
+    }
+	}
 });
 
 
@@ -62,29 +91,29 @@ let EnhancedTableToolbar = props => {
 				[classes.highlight]: numSelected > 0,
 			})}>
 			{props.filter ? (
-          <div style={{width: "500px", display: "flex", justifyContent: "center", alignItems: "center", marginLeft: "30%"}}>
-            <Button style={{color: "white", backgroundColor: "#bd7280", border: "1px solid grey"}}>View Untracked Shipments</Button>
-			<CompareArrows style={{fontSize: "32px"}} />
-            <Button style={{border: "1px solid grey"}} onClick={() => props.handleFilter()}>View Tracked Shipments</Button>
+          <div className={classes.ButtonContainer}>
+            <Button className={classes.SelectedButton}>View Untracked Shipments</Button>
+			<CompareArrows className={classes.CompareArrows} />
+            <Button className={classes.UnselectedButton} onClick={() => props.handleFilter()}>View Tracked Shipments</Button>
           </div>
         ) : (
-          <div style={{width: "500px", display: "flex", justifyContent: "center", alignItems: "center", marginLeft: "30%"}}>
-            <Button style={{border: "1px solid grey"}} onClick={() => props.handleFilter()}>View Untracked Shipments</Button>
-			<CompareArrows style={{fontSize: "32px"}} />
-            <Button style={{color: "white", backgroundColor: "#bd7280", border: "1px solid grey"}}>View Tracked Shipments</Button>
+          <div className={classes.ButtonContainer}>
+            <Button className={classes.UnselectedButton} onClick={() => props.handleFilter()}>View Untracked Shipments</Button>
+			<CompareArrows className={classes.CompareArrows} />
+            <Button className={classes.SelectedButton}>View Tracked Shipments</Button>
           </div>
         )}
-		<div style={{ display: "flex", alignItems: "baseline"}}>
-		<div className={classes.title}>
+		<div className={classes.DeleteInfoContainer}>
+		<div>
 				{numSelected > 0 && (
-					<Typography color="inherit" variant="subtitle1">
+					<Typography className={classes.DeleteText} color="inherit" variant="subtitle1">
 						{numSelected} selected
 					</Typography>
 				)}
 			</div>
-			<div className={classes.actions}>
+			<div>
 				{numSelected > 0 && (
-					<IconButton aria-label="Delete">
+					<IconButton className={classes.DeleteButton} aria-label="Delete">
 						<DeleteModal
 							delete={() => {
 								props.deleteShipment(
