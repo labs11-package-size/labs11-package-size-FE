@@ -98,6 +98,7 @@ class Login extends Component {
 							<FormControl margin="normal" required fullWidth>
 								<TextValidator
 									label="Password"
+									type="password"
 									onChange={this.props.handleInputChange}
 									name="password"
 									value={this.props.password}

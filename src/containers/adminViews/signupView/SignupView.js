@@ -149,6 +149,7 @@ class SignupView extends Component {
 							<FormControl margin="normal" required fullWidth>
 								<TextValidator
 									label="Password"
+									type="password"
 									onChange={this.handleChange}
 									name="password"
 									value={this.state.user.password}
