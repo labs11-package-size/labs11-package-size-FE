@@ -196,12 +196,15 @@ class ProductDetailModal extends React.Component {
 		this.setState({ open: true });
 		this.props.getDetail(uuid, page);
 	};
-	handleDialogOpen = () => {
-		this.setState({ dialogOpen: true });
-	};
-	handleDialogClose = () => {
-		this.setState({ dialogOpen: false });
-	};
+	// handleDialogOpen = () => {
+	// 	if(this.props.selectedProducts.length >= 10) {
+	// 		alert('You have reacted limit')
+	// 	}
+	// 	this.setState({ dialogOpen: true });
+	// };
+	// handleDialogClose = () => {
+	// 	this.setState({ dialogOpen: false });
+	// };
 
 	previousPage = () => {
 		this.setState(
@@ -231,8 +234,14 @@ class ProductDetailModal extends React.Component {
 	};
 
 	handleProductSelect = event => {
-		this.props.selectProduct(this.props.product, event);
-		this.props.openDrawer();
+		event.preventDefault();
+		if (this.props.selectedProducts.length >= 10) {
+			alert('limit reached');
+			return;
+		} else {
+			this.props.selectProduct(this.props.product, event);
+			this.props.openDrawer();
+		}
 	};
 
 	render() {
@@ -266,40 +275,11 @@ class ProductDetailModal extends React.Component {
 						/>
 
 						<CardActions className={classes.actions} disableActionSpacing>
-							{this.props.selectedProducts.length >= 10 ? (
-								<Button
-									className={classes.packit_submit}
-									onClick={event => this.handleDialogOpen(event)}>
-									Add to Package List
-								</Button>
-							) : (
-								// <div>
-								// 	<Button
-								// 		className={classes.packit_submit}
-								// 		onClick={event => this.handleDialogOpen(event)}>
-								// 		Pack It
-								// 	</Button>
-								// 	<Dialog
-								// 		open={true}
-								// 		TransitionComponent={Transition}
-								// 		keepMounted
-								// 		onClose={this.handleDialogClose}
-								// 		aria-labelledby="alert-dialog-slide-title"
-								// 		aria-describedby="alert-dialog-slide-description">
-								// 		<DialogContent>
-								// 			<DialogContentText id="alert-dialog-slide-description">
-								// 				Limit Reached.
-								// 			</DialogContentText>
-								// 		</DialogContent>
-								// 	</Dialog>
-								// </div>
-								// alert('Limit Reached')
-								<Button
-									className={classes.packit_submit}
-									onClick={event => this.handleProductSelect(event)}>
-									Add to Package List
-								</Button>
-							)}
+							<Button
+								className={classes.packit_submit}
+								onClick={event => this.handleProductSelect(event)}>
+								Add to Package List
+							</Button>
 						</CardActions>
 					</Card>
 

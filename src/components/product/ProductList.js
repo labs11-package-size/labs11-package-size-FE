@@ -177,7 +177,6 @@ class ProductList extends Component {
 	};
 
 	render() {
-		console.log(this.props.product);
 		return (
 			<div className={this.props.classes.container}>
 				<div className={this.props.classes.headingContainer}>
