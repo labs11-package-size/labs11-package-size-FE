@@ -29,7 +29,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditProductModal from '../modals/EditProductModal';
-import DeleteModal from './deleteModal';
+import DeleteModal from './GreenDeleteModal';
 import { Grid } from '@material-ui/core';
 
 const timezone = moment.tz.guess();
