@@ -170,15 +170,19 @@ const styles = theme => ({
     // border: '1px black solid',
     padding: 10,
     width: "50%",
-    height: "100%"
+    height: "100%",
     // padding: '1%',
   },
   summaryCard2: {
     // border: '1px black solid',
     width: "50%",
     padding: 10,
-    height: "100%"
+    height: "100%",
     // padding: '1%',
+  },
+  summaryCardHeaders: {
+    fontSize: "20px",
+    textAlign: "center",
   },
   prodSum: {
     textAlign: "center"
@@ -215,7 +219,7 @@ const styles = theme => ({
   outerShipmentContainer: {},
   AccordionSubheading: {
     fontSize: "12px",
-    padding: 0
+    padding: 0,
   },
   AccordionHeading: {
     fontSize: "12px"
@@ -514,22 +518,22 @@ class ProductDetailModal extends React.Component {
                     >
                       <Card className={classes.summaryCard}>
                         <Grid direction="column" flexWrap="wrap">
-                          <Typography>Description:</Typography>
-                          <Typography style={{ padding: "0 0 0 20px" }}>
+                          <Typography className={classes.summaryCardHeaders}>Description:</Typography>
+                          <Typography style={{ padding: "0 0 0 20px", margin: "0 20px 0 20px" }}>
                             {this.props.detail.productDescription}
                           </Typography>
                         </Grid>
                       </Card>
                       <Card className={classes.summaryCard2}>
-                        <Grid
-                          container
-                          direction="column"
-                          alignItems="flex-start"
-                          padding="0 0 0 20px"
-                        >
-                          <Typography className={classes.ProductDetailsRow}>
-                            Product Details
-                          </Typography>
+                        <Typography className={classes.summaryCardHeaders}>
+                          Product Details:
+                        </Typography>
+                          <Grid
+                            container
+                            direction="column"
+                            alignItems="flex-start"
+                            padding="0 0 0 70px"
+                          >
                           <Grid
                             container
                             style={{ width: "100%" }}
