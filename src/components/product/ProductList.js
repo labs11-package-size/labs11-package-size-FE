@@ -13,11 +13,11 @@ import Drawer from '@material-ui/core/Drawer';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { getProducts, addProduct } from '../../store/actions/productActions';
+import { getProducts } from '../../store/actions/productActions';
 import classNames from 'classnames';
 import AddProductModal from '../modals/AddProductModal';
 import ImgUploader from '../imgUploader/ImgUploader';
-import { deleteSelectedProduct } from '../../store/actions/shipmentActions';
+import { deleteSelectedProduct, deleteAllSelected } from '../../store/actions/shipmentActions';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withRouter } from 'react-router-dom';
 
@@ -109,6 +109,33 @@ const styles = theme => ({
 		justifyContent: 'center',
 		maxWidth: '50%',
 	},
+	listbuttons: {
+		margin: '0 auto',
+			width: '40%',
+			backgroundColor: '#72BDA2',
+			color: 'white'
+	},
+	buttoncontainer: {
+		width: "100%",
+		display: "flex",
+		justifyContent: "space-between",
+	},
+	ListItem: {
+		padding: 0,
+		whiteSpace: "nowrap",
+  overflow: "hidden"
+	},
+	ExitButton: {
+		
+			width: '100px',
+			backgroundColor: '#72BDA2',
+			color: 'white'
+	},
+	PackagingTitleContainer: {
+		width: "60%",
+		display: "flex",
+		justifyContent: "space-between"
+	}
 });
 
 class ProductList extends Component {
@@ -151,23 +178,32 @@ class ProductList extends Component {
 								Package List
 							</Typography>
 							{this.props.selectedProducts.map((prod, i) => (
-								<ListItem key={i}>
+								<ListItem key={i} className={this.props.classes.ListItem}>
 									<Checkbox
 										style={{ color: '#72BDA2' }}
 										checked={true}
 										onClick={() => this.handleDeleteSelected(prod.uuid)}
 										indeterminate
 									/>
-									<ListItemText primary={prod.name} />
+									{prod.name.length > 20 ? (<ListItemText primary={`${prod.name.slice(0, 19)}...`} />) :
+									<ListItemText primary={prod.name} />}
+									
 								</ListItem>
 							))}
 						</List>
 						<Divider />
+						<div className={this.props.classes.buttoncontainer}>
 						<Button
-							className={this.props.classes.shipit_btn}
+							className={this.props.classes.listbuttons}
 							onClick={this.handlePackit}>
 							Pack It
 						</Button>
+						<Button
+							className={this.props.classes.listbuttons}
+							onClick={() => this.props.deleteAllSelected()}>
+							Clear All
+						</Button>
+						</div>
 					</Paper>
 				</Drawer>
 			);
@@ -182,7 +218,7 @@ class ProductList extends Component {
 			<div className={this.props.classes.container}>
 				<div className={this.props.classes.headingContainer}>
 					{this.props.selectedProducts.length >= 1 ? (
-						<div>
+						<div className={this.props.classes.PackagingTitleContainer}>
 							<Typography gutterBottom variant="h5" component="h2">
 								PACKING MULTIPLE PRODUCTS
 							</Typography>
@@ -191,6 +227,8 @@ class ProductList extends Component {
 								onClick={this.handlePackit}>
 								Pack It
 							</Button> */}
+						
+						<Button className={this.props.classes.ExitButton} onClick={() => this.props.deleteAllSelected()}>Cancel Packaging</Button>
 						</div>
 					) : (
 						<Typography gutterBottom variant="h5" component="h2">
@@ -395,7 +433,7 @@ export default compose(
 	withRouter(
 		connect(
 			null,
-			{ getProducts, addProduct, deleteSelectedProduct },
+			{ getProducts, deleteSelectedProduct, deleteAllSelected },
 		)(withStyles(styles)(ProductList)),
 	),
 );
