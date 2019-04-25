@@ -32,7 +32,8 @@ const styles = theme => ({
     left: "50%",
     transform: `translate(-50%, -50%)`,
     [theme.breakpoints.down("sm")]: {
-      width: "500px"
+      width: "500px",
+      height: "700px"
     }
   },
   paperuntracked: {
@@ -102,6 +103,9 @@ const styles = theme => ({
     flexWrap: "wrap",
     alignItems: "center",
     height: "650px",
+    [theme.breakpoints.down("sm")]: {
+      height: "550px"
+    }
   },
   TrackedShipmentLeftData: {
     width: "30%",
@@ -115,6 +119,10 @@ const styles = theme => ({
 },
   TrackedShipmentAccordianContainer: {
     width: "55%",
+    height: "90%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
     [theme.breakpoints.down("sm")]: {
       display: "none"
     }
@@ -156,7 +164,7 @@ const styles = theme => ({
   ModalTitle: {
     width: "100%",
     textAlign: "center",
-    margin: "20px 0"
+    margin: "10px 0"
   }
 });
 
@@ -188,16 +196,18 @@ class ViewShipmentModal extends React.Component {
         [classes.paperuntracked]: this.props.shipment.tracked === 0
 			})}
           >
-          <div className={classes.ModalTitle}>
-            {!this.props.shipment.tracked ? (<Typography variant="h5" id="modal-title">
+         
+            {!this.props.shipment.tracked ? ( <div className={classes.ModalTitle}><Typography variant="h5" id="modal-title">
                   Suggested Packaging Orientation
-                </Typography>) :
+                </Typography><Typography id="modal-title">
+                  Box Size : {this.props.shipment.dimensions}
+                </Typography> </div>) :
 
-              (<Typography className={classes.TrackedTitle} variant="h5" id="modal-title">
+              ( <div className={classes.ModalTitle}><Typography className={classes.TrackedTitle} variant="h5" id="modal-title">
                   Detailed Shipment Menu
-                </Typography>)
+                </Typography> </div>)
             }
-          </div>
+         
           
             {!this.props.shipment.tracked ? (
               <div
@@ -243,10 +253,10 @@ class ViewShipmentModal extends React.Component {
               <div
                 className={classes.TrackedShipmentLeftData}
               >
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataTitle}>
+                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataTitle}>
                 Detail for package sent to: <br/> {this.props.shipment.shippedTo}
                 </Typography>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
+                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                   Contained Items
                 </Typography>
                 <ul className={classes.productNameList}>
