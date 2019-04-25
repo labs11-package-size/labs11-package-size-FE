@@ -244,7 +244,7 @@ class ViewShipmentModal extends React.Component {
                 className={classes.TrackedShipmentLeftData}
               >
                 <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataTitle}>
-                For package sent to: <br/> {this.props.shipment.shippedTo}
+                Detail for package sent to: <br/> {this.props.shipment.shippedTo}
                 </Typography>
                 <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                   Contained Items
@@ -254,28 +254,28 @@ class ViewShipmentModal extends React.Component {
                   return <li>{productName}</li>
                 })}
                 </ul>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
+                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                 Tracking Number
                 </Typography>
-                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
+                <Typography id="modal-title" className={classes.TrackedShipmentLeftDataText}>
                    {this.props.shipment.trackingNumber}
                 </Typography>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
+                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                 Shipping Service
                 </Typography>
-                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
+                <Typography id="modal-title" className={classes.TrackedShipmentLeftDataText}>
                   {this.props.shipment.shippingType ? (`${this.props.shipment.shippingType}`) : (`Unknown`)}
                 </Typography>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
+                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                 Box Dimensions
                 </Typography>
-                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
+                <Typography id="modal-title" className={classes.TrackedShipmentLeftDataText}>
                 {this.props.shipment.dimensions}
                 </Typography>
-                <Typography variant="h5" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
+                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataHeader}>
                 Total Item Weight
                 </Typography>
-                <Typography variant="h6" id="modal-title" className={classes.TrackedShipmentLeftDataText}>
+                <Typography id="modal-title" className={classes.TrackedShipmentLeftDataText}>
                 {this.props.shipment.totalWeight}
                 </Typography>
                 <div style ={{width: "100%", display: "flex", justifyContent: "center"}}>
@@ -294,7 +294,7 @@ class ViewShipmentModal extends React.Component {
           let panelString = `panel${panelNumber}`
           return <ExpansionPanel className={classes.AccordionPanelOuter} expanded={expanded === panelString} onChange={this.handleChange(panelString)}>
           <ExpansionPanelSummary classes={{ content: classes.summarycontent }} className={classes.AccordionPanelSummary} expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Event{eventNumber}</Typography>
+            <Typography className={classes.heading}>Event {eventNumber}</Typography>
             <Typography className={classes.secondaryHeading}>{shippingActivity.details}</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.AccordianDetails}>

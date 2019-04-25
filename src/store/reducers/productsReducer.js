@@ -18,6 +18,7 @@ import {
 	GETTING_DETAIL,
 	GETTING_DETAIL_SUCCESSFUL,
 	GETTING_DETAIL_FAILURE,
+	CLEAR_ADDING
 } from '../actions/productActions';
 
 const initialState = {
@@ -79,6 +80,7 @@ const productsReducer = (state = initialState, action) => {
 				error: null,
 			};
 		case UPLOADING_IMAGE_SUCCESS:
+		console.log("upload image success payload", action.payload)
 			return {
 				...state,
 				images: [...state.images, action.payload],
@@ -216,7 +218,12 @@ const productsReducer = (state = initialState, action) => {
 				failure: true,
 				error: action.payload,
 			};
-
+			case CLEAR_ADDING:
+			return {
+				...state,
+				images: [],
+				thumbnail: ""
+			}
 		default:
 			return state;
 	}

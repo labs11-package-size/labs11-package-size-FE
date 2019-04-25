@@ -30,6 +30,8 @@ export const GETTING_DETAIL = 'GETTING_DETAIL';
 export const GETTING_DETAIL_SUCCESSFUL = 'GETTING_DETAIL_SUCCESSFUL';
 export const GETTING_DETAIL_FAILURE = 'GETTING_DETAIL_FAILURE';
 
+export const CLEAR_ADDING = 'CLEAR_ADDING';
+
 axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
 axios.interceptors.request.use(
 	function(options) {
@@ -72,7 +74,6 @@ export const uploadImgs = files => dispatch => {
 	uploadRequest
 		.then(res => {
 			dispatch({ type: UPLOADING_IMAGE_SUCCESS, payload: res.body });
-			console.log(`UPLOAD COMPLETE:${JSON.stringify(res.body)}`);
 		})
 		.catch(err => dispatch({ type: UPLOADING_IMAGE_FAILURE, payload: err }));
 };
@@ -95,7 +96,6 @@ export const getProducts = () => dispatch => {
 };
 
 export const addProduct = newProd => dispatch => {
-	console.log(newProd);
 	dispatch({ type: ADDING_PRODUCT });
 	axios
 		.post('/products/add', newProd)
@@ -143,4 +143,8 @@ export const getDetail = (uuid, page) => dispatch => {
 		.catch(err =>
 			dispatch({ type: GETTING_DETAIL_FAILURE, payload: err.data }),
 		);
+};
+
+export const ClearAdding = () => dispatch => {
+	dispatch({ type: CLEAR_ADDING });
 };

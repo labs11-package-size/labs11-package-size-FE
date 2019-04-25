@@ -36,7 +36,7 @@ const styles = theme => ({
   NamesColumn: { 
     width: "700px",
     [theme.breakpoints.down("sm")]: {
-      width: "20%"
+      width: "75%"
     }
    }
 });
@@ -162,7 +162,7 @@ const shipmentTitles = [
     id: "dimensions",
     numeric: false,
     disablePadding: false,
-    label: "Dimensions (inches)"
+    label: "Box Size (in.)"
   },
   {
     id: "productNames",
