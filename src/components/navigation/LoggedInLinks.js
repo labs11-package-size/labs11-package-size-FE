@@ -34,6 +34,9 @@ const styles = {
 	menuButton: {
 		color: '#72BDA2',
 	},
+	shipmenticon: {
+		color: "#bd7280"
+	}
 };
 
 class LoggedInLinks extends Component {
@@ -99,7 +102,7 @@ class LoggedInLinks extends Component {
 						<Tooltip title="Shipment List">
 							<ListItemIcon className={classes.menuButton}>
 								<Icon
-									className={classNames(classes.icon, 'fas fa-shipping-fast')}
+									className={classNames(classes.shipmenticon, 'fas fa-shipping-fast')}
 								/>
 							</ListItemIcon>
 						</Tooltip>
