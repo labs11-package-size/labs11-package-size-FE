@@ -30,6 +30,8 @@ export const GETTING_DETAIL = 'GETTING_DETAIL';
 export const GETTING_DETAIL_SUCCESSFUL = 'GETTING_DETAIL_SUCCESSFUL';
 export const GETTING_DETAIL_FAILURE = 'GETTING_DETAIL_FAILURE';
 
+export const CLEAR_ADDING = 'CLEAR_ADDING';
+
 axios.defaults.baseURL = 'https://scannarserver.herokuapp.com/api';
 axios.interceptors.request.use(
 	function(options) {
@@ -143,4 +145,8 @@ export const getDetail = (uuid, page) => dispatch => {
 		.catch(err =>
 			dispatch({ type: GETTING_DETAIL_FAILURE, payload: err.data }),
 		);
+};
+
+export const ClearAdding = () => dispatch => {
+	dispatch({ type: CLEAR_ADDING });
 };
