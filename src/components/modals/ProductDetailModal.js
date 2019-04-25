@@ -24,7 +24,10 @@ import Paper from '@material-ui/core/Paper';
 import moment from 'moment-timezone';
 import { Redirect, withRouter } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditProductModal from '../modals/EditProductModal';
 import DeleteModal from './deleteModal';
 import { Grid } from '@material-ui/core';
@@ -63,8 +66,6 @@ function getModalStyle() {
 		top: `${top}%`,
 		left: `${left}%`,
 		transform: `translate(-${top}%, -${left}%)`,
-		width: '1000px',
-		height: 'auto',
 	};
 }
 
@@ -117,13 +118,17 @@ const styles = theme => ({
 	},
 	paper: {
 		position: 'absolute',
-		width: theme.spacing.unit * 60,
+		width: '1000px',
+		height: 'auto',
 		backgroundColor: '#F2F3F4',
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing.unit * 4,
 		outline: 'none',
+		[theme.breakpoints.down('sm')]: {
+			width: '500px',
+		},
 	},
-	submit: {
+	pagebutton: {
 		color: 'white',
 		backgroundColor: '#72BDA2',
 		'&:hover': {
@@ -131,6 +136,16 @@ const styles = theme => ({
 			backgroundColor: 'white',
 		},
 		margin: '10px',
+	},
+	backbutton: {
+		color: 'white',
+		backgroundColor: '#72BDA2',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+		},
+		margin: '10px',
+		width: '40%',
 	},
 	packit_submit: {
 		width: '100%',
@@ -147,6 +162,9 @@ const styles = theme => ({
 		width: '100%',
 		height: '100%',
 		textAlign: 'center',
+		[theme.breakpoints.down('sm')]: {
+			display: 'none',
+		},
 	},
 	summaryCard: {
 		// border: '1px black solid',
@@ -168,17 +186,63 @@ const styles = theme => ({
 	descriptionAndDimensions: {
 		height: '250px',
 	},
-	heading: {
+	ProductDetailsRow: {
 		padding: '15px 0 0 5px',
-		fontSize: '1.2em',
+		fontSize: '12px',
 	},
 	individualShipment: {
 		width: '30%',
+		[theme.breakpoints.down('sm')]: {
+			display: 'none',
+		},
+	},
+	ShipmentAccordionContainer: {
+		display: 'none',
+		width: '100%',
+		[theme.breakpoints.down('sm')]: {
+			display: 'block',
+		},
+	},
+	ShipmentAccordionSubtext: {
+		display: 'none',
+		[theme.breakpoints.down('sm')]: {
+			display: 'block',
+		},
 	},
 	shipmentContainer: {
 		height: '200px',
 	},
 	outerShipmentContainer: {},
+	AccordionSubheading: {
+		fontSize: '12px',
+		padding: 0,
+	},
+	AccordionHeading: {
+		fontSize: '12px',
+	},
+	summarycontent: {
+		minHeight: '0',
+		margin: '7px 0',
+		display: 'flex',
+		justifyContent: 'space-between',
+	},
+	AccordionPanelSummary: {
+		minHeight: '0',
+	},
+	summaryexpanded: {
+		minHeight: '0',
+	},
+	rootsummary: {
+		minHeight: '0',
+	},
+	expandIcon: {
+		minHeight: '0',
+	},
+	AccordionDetails: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+	},
 });
 function Transition(props) {
 	return <Slide direction="up" {...props} />;
@@ -189,6 +253,13 @@ class ProductDetailModal extends React.Component {
 		open: false,
 		page: 1,
 		dialogOpen: false,
+		expanded: null,
+	};
+
+	handleChange = panel => (event, expanded) => {
+		this.setState({
+			expanded: expanded ? panel : false,
+		});
 	};
 
 	handleOpen = (event, uuid, page) => {
@@ -196,15 +267,12 @@ class ProductDetailModal extends React.Component {
 		this.setState({ open: true });
 		this.props.getDetail(uuid, page);
 	};
-	// handleDialogOpen = () => {
-	// 	if(this.props.selectedProducts.length >= 10) {
-	// 		alert('You have reacted limit')
-	// 	}
-	// 	this.setState({ dialogOpen: true });
-	// };
-	// handleDialogClose = () => {
-	// 	this.setState({ dialogOpen: false });
-	// };
+	handleDialogOpen = () => {
+		this.setState({ dialogOpen: true });
+	};
+	handleDialogClose = () => {
+		this.setState({ dialogOpen: false });
+	};
 
 	previousPage = () => {
 		this.setState(
@@ -234,19 +302,13 @@ class ProductDetailModal extends React.Component {
 	};
 
 	handleProductSelect = event => {
-		event.preventDefault();
-		if (this.props.selectedProducts.length >= 10) {
-			alert('limit reached');
-			return;
-		} else {
-			this.props.selectProduct(this.props.product, event);
-			this.props.openDrawer();
-		}
+		this.props.selectProduct(this.props.product, event);
+		this.props.openDrawer();
 	};
 
 	render() {
 		const { classes } = this.props;
-
+		const { expanded } = this.state;
 		return (
 			<div className={classes.container}>
 				<div
@@ -294,7 +356,7 @@ class ProductDetailModal extends React.Component {
 									variant="h6"
 									id="modal-title"
 									className={this.props.classes.prodSum}>
-									Product Summary
+									Product Summary for {this.props.product.name}
 								</Typography>
 								<Grid
 									container
@@ -304,13 +366,13 @@ class ProductDetailModal extends React.Component {
 									<Grid
 										container
 										direction="row"
-										justify="flex-end"
+										justify="center"
 										alignItems="center">
 										<div aria-label="Pack It">
 											<Tooltip title="Pack It">
 												<Button
 													variant="contained"
-													className={classes.submit}
+													className={classes.pagebutton}
 													onClick={event =>
 														this.handlePackit(event, this.props.product.uuid)
 													}>
@@ -399,53 +461,88 @@ class ProductDetailModal extends React.Component {
 											/>
 										</div>
 									</Grid>
-									<Typography variant="h6" id="modal-title">
-										{this.props.product.name}
-									</Typography>
 								</Grid>
 							</div>
 							<div>
 								{this.props.detail ? (
 									<div>
 										<Grid
-											className={this.props.classes.descriptionAndDimensions}
+											className={classes.descriptionAndDimensions}
 											container
 											alignItems="center"
 											direction="row">
-											<Card className={this.props.classes.summaryCard}>
+											<Card className={classes.summaryCard}>
 												<Grid direction="column" flexWrap="wrap">
-													<Typography className={classes.heading}>
-														Description:
-													</Typography>
+													<Typography>Description:</Typography>
 													<Typography style={{ padding: '0 0 0 20px' }}>
 														{this.props.detail.productDescription}
 													</Typography>
-													<Typography className={classes.heading}>
-														Price: ${this.props.detail.value}
-													</Typography>
-													<Typography className={classes.heading}>
-														Weight: {this.props.detail.weight}lbs
-													</Typography>
 												</Grid>
 											</Card>
-											<Card className={this.props.classes.summaryCard2}>
+											<Card className={classes.summaryCard2}>
 												<Grid
 													container
 													direction="column"
 													alignItems="flex-start"
 													padding="0 0 0 20px">
-													<Typography className={classes.heading}>
-														Product Dimensions:
+													<Typography className={classes.ProductDetailsRow}>
+														Product Details
 													</Typography>
-													<Typography className={classes.heading}>
-														Length: {this.props.detail.length}"
-													</Typography>
-													<Typography className={classes.heading}>
-														Width: {this.props.detail.width}"
-													</Typography>
-													<Typography className={classes.heading}>
-														Height: {this.props.detail.height}"
-													</Typography>
+													<Grid
+														container
+														style={{ width: '100%' }}
+														justify="space-evenly">
+														<Typography className={classes.ProductDetailsRow}>
+															Length:
+														</Typography>
+														<Typography className={classes.ProductDetailsRow}>
+															{this.props.detail.length}in.
+														</Typography>
+													</Grid>
+													<Grid
+														container
+														style={{ width: '100%' }}
+														justify="space-evenly">
+														<Typography className={classes.ProductDetailsRow}>
+															Width:
+														</Typography>
+														<Typography className={classes.ProductDetailsRow}>
+															{this.props.detail.width}in.
+														</Typography>
+													</Grid>
+													<Grid
+														container
+														style={{ width: '100%' }}
+														justify="space-evenly">
+														<Typography className={classes.ProductDetailsRow}>
+															Height:
+														</Typography>
+														<Typography className={classes.ProductDetailsRow}>
+															{this.props.detail.height}in.
+														</Typography>
+													</Grid>
+													<Grid
+														container
+														style={{ width: '100%' }}
+														justify="space-evenly">
+														<Typography className={classes.ProductDetailsRow}>
+															Price:
+														</Typography>
+														<Typography className={classes.ProductDetailsRow}>
+															${this.props.detail.value}
+														</Typography>
+													</Grid>
+													<Grid
+														container
+														style={{ width: '100%' }}
+														justify="space-evenly">
+														<Typography className={classes.ProductDetailsRow}>
+															Weight:
+														</Typography>
+														<Typography className={classes.ProductDetailsRow}>
+															{this.props.detail.weight}lbs
+														</Typography>
+													</Grid>
 												</Grid>
 											</Card>
 										</Grid>
@@ -455,7 +552,7 @@ class ProductDetailModal extends React.Component {
 													<Typography
 														variant="h6"
 														className={classes.shipmentTitle}>
-														There are {this.props.detail.shipmentsCount} past
+														There are {this.props.detail.shipmentsCount} tracked
 														shipments for this product.
 													</Typography>
 												)}
@@ -463,7 +560,7 @@ class ProductDetailModal extends React.Component {
 												<Typography
 													variant="h6"
 													className={classes.shipmentTitle}>
-													There is {this.props.detail.shipmentsCount} past
+													There is {this.props.detail.shipmentsCount} tracked
 													shipment for this product.
 												</Typography>
 											)}
@@ -492,7 +589,7 @@ class ProductDetailModal extends React.Component {
 																		.format('LL')}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
-																	Last Updated:{' '}
+																	Created On:{' '}
 																	{moment
 																		.tz(shipment.lastUpdated, 'Pacific/Fiji')
 																		.clone()
@@ -512,7 +609,7 @@ class ProductDetailModal extends React.Component {
 																	Tracking Number: {shipment.trackingNumber}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
-																	Status: {shipment.status}
+																	Status: {parsedStatus(shipment)}
 																</Typography>
 																<Typography className={classes.shipmentHeading}>
 																	Carrier Name: {shipment.carrierName}
@@ -524,7 +621,75 @@ class ProductDetailModal extends React.Component {
 													<Typography
 														style={{ marginTop: '100px' }}
 														className={classes.shipmentHeading}>
-														There are no shipments associated with this product.
+														There are no tracked shipments associated with this
+														product.
+													</Typography>
+												)}
+												{!!this.props.detail.shipmentsCount ? (
+													this.props.detail.shipments.map(
+														(shipment, index, array) => {
+															let eventNumber = index;
+															let panelNumber = index + 1;
+															let panelString = `panel${panelNumber}`;
+															return (
+																<ExpansionPanel
+																	className={classes.ShipmentAccordionContainer}
+																	expanded={expanded === panelString}
+																	onChange={this.handleChange(panelString)}>
+																	<ExpansionPanelSummary
+																		classes={{
+																			expanded: classes.summaryexpanded,
+																			content: classes.summarycontent,
+																			root: classes.rootsummary,
+																			expandIcon: classes.expandIcon,
+																		}}
+																		className={classes.AccordionPanelSummary}
+																		expandIcon={<ExpandMoreIcon />}>
+																		<Typography
+																			className={classes.AccordionHeading}>
+																			{moment
+																				.tz(
+																					shipment.lastUpdated,
+																					'Pacific/Fiji',
+																				)
+																				.clone()
+																				.tz(timezone)
+																				.format('LL h:mm a')}
+																		</Typography>
+																		<Typography
+																			className={classes.AccordionSubheading}>
+																			Track #{shipment.trackingNumber}
+																		</Typography>
+																	</ExpansionPanelSummary>
+																	<ExpansionPanelDetails
+																		className={classes.AccordionDetails}>
+																		<Typography
+																			className={classes.AccordionShippedTo}>
+																			Sent to {shipment.shippedTo}
+																		</Typography>
+																		<Typography
+																			className={classes.AccordionShippedTo}>
+																			Current status: {parsedStatus(shipment)}
+																		</Typography>
+																		{!!shipment.dateArrived && (
+																			<Typography
+																				className={
+																					classes.AccordionDateArrived
+																				}>
+																				Arrived on {shipment.dateArrived}
+																			</Typography>
+																		)}
+																	</ExpansionPanelDetails>
+																</ExpansionPanel>
+															);
+														},
+													)
+												) : (
+													<Typography
+														style={{ marginTop: '100px' }}
+														className={classes.ShipmentAccordionSubtext}>
+														There are no tracked shipments associated with this
+														product.
 													</Typography>
 												)}
 											</Grid>
@@ -532,7 +697,7 @@ class ProductDetailModal extends React.Component {
 												<Tooltip title="Previous 3 Shipments">
 													<Button
 														variant="contained"
-														className={classes.submit}
+														className={classes.pagebutton}
 														style={prevButtonStyles(this.state.page)}
 														onClick={() => this.previousPage()}>
 														<Icon
@@ -546,7 +711,7 @@ class ProductDetailModal extends React.Component {
 												<Tooltip title="Next 3 Shipments">
 													<Button
 														variant="contained"
-														className={classes.submit}
+														className={classes.pagebutton}
 														style={nextButtonStyles(
 															this.state.page,
 															this.props.detail.shipmentsCount,
@@ -574,7 +739,7 @@ class ProductDetailModal extends React.Component {
 										alignItems="center">
 										<Button
 											variant="contained"
-											className={classes.submit}
+											className={classes.backbutton}
 											onClick={event => this.handleClose(event)}>
 											Back to list
 										</Button>
@@ -589,6 +754,27 @@ class ProductDetailModal extends React.Component {
 		);
 	}
 }
+
+const parsedStatus = n => {
+	if (n.status === 0) {
+		return 'Unknown';
+	}
+	if (n.status === 1) {
+		return 'Shipping';
+	}
+	if (n.status === 2) {
+		return 'En-Route';
+	}
+	if (n.status === 3) {
+		return 'Out-For-Delivery';
+	}
+	if (n.status === 4) {
+		return 'Delivered';
+	}
+	if (n.status === 5) {
+		return 'Delayed';
+	}
+};
 
 ProductDetailModal.propTypes = {
 	classes: PropTypes.object.isRequired,
