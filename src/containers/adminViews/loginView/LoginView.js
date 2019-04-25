@@ -34,19 +34,20 @@ class LoginView extends Component {
 	handleEmailLogin = event => {
 		event.preventDefault();
 		this.props.emailLogin(this.state.user);
-
-		this.setState(
-			{
-				user: {
-					emailAddress: '',
-					password: '',
+		if (!!this.props.errMessage) {
+			this.setState(
+				{
+					user: {
+						emailAddress: '',
+						password: '',
+					},
+					submitted: true,
 				},
-				submitted: true,
-			},
-			() => {
-				setTimeout(() => this.setState({ submitted: false }), 5000);
-			},
-		);
+				() => {
+					setTimeout(() => this.setState({ submitted: false }), 2000);
+				},
+			);
+		}
 	};
 
 	render() {
@@ -62,6 +63,7 @@ class LoginView extends Component {
 					isRegistering={this.props.isRegistering}
 					handleGoogleLogin={this.handleGoogleLogin}
 					handleEmailLogin={this.handleEmailLogin}
+					error={this.props.errMessage}
 				/>
 			</div>
 		);

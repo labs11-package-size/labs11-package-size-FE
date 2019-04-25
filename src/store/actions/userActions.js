@@ -156,7 +156,7 @@ export const register = credentials => dispatch => {
 		})
 		.catch(err => {
 			console.log(err);
-			dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
+			dispatch({ type: USER_LOGIN_FAILURE, payload: err.message });
 		});
 };
 

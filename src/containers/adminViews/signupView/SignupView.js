@@ -63,6 +63,7 @@ class SignupView extends Component {
 			password: '',
 		},
 		submitted: false,
+		error: null,
 	};
 
 	handleChange = e => {
@@ -74,27 +75,48 @@ class SignupView extends Component {
 		});
 	};
 
+	componentWillUpdate() {
+		if (this.props.error) {
+			return () =>
+				this.setState(
+					{
+						error: this.props.error,
+					},
+					() =>
+						setTimeout(() => {
+							this.setState({
+								error: null,
+							});
+						}, 2000),
+				);
+		}
+	}
+
 	handleRegister = e => {
 		e.preventDefault();
 		this.props.register(this.state.user);
-		this.setState(
-			{
-				user: {
-					firstName: '',
-					lastName: '',
-					emailAddress: '',
-					displayName: '',
-					password: '',
+		if (!!this.props.error) {
+			this.setState(
+				{
+					user: {
+						firstName: '',
+						lastName: '',
+						emailAddress: '',
+						displayName: '',
+						password: '',
+					},
+					submitted: true,
+					error: null,
 				},
-				submitted: true,
-			},
-			() => {
-				setTimeout(() => this.setState({ submitted: false }), 500);
-			},
-		);
+				() => {
+					setTimeout(() => this.setState({ submitted: false }), 2000);
+				},
+			);
+		}
 	};
 
 	render() {
+		console.log(this.props.error);
 		const { classes } = this.props;
 		return (
 			<div>
@@ -107,7 +129,7 @@ class SignupView extends Component {
 						<Typography component="h1" variant="h5">
 							Register
 						</Typography>
-
+						<h4 style={{ color: 'red' }}>{this.props.error}</h4>
 						<ValidatorForm
 							className={classes.form}
 							ref="form"
@@ -188,7 +210,13 @@ class SignupView extends Component {
 	}
 }
 
+const mapStateToProps = state => {
+	return {
+		error: state.userReducer.error,
+	};
+};
+
 export default connect(
-	null,
+	mapStateToProps,
 	{ register },
 )(withStyles(styles)(SignupView));
