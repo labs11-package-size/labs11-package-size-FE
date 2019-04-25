@@ -74,7 +74,6 @@ export const uploadImgs = files => dispatch => {
 	uploadRequest
 		.then(res => {
 			dispatch({ type: UPLOADING_IMAGE_SUCCESS, payload: res.body });
-			console.log(`UPLOAD COMPLETE:${JSON.stringify(res.body)}`);
 		})
 		.catch(err => dispatch({ type: UPLOADING_IMAGE_FAILURE, payload: err }));
 };
@@ -97,7 +96,6 @@ export const getProducts = () => dispatch => {
 };
 
 export const addProduct = newProd => dispatch => {
-	console.log(newProd);
 	dispatch({ type: ADDING_PRODUCT });
 	axios
 		.post('/products/add', newProd)

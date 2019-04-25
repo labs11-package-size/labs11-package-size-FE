@@ -80,6 +80,7 @@ const productsReducer = (state = initialState, action) => {
 				error: null,
 			};
 		case UPLOADING_IMAGE_SUCCESS:
+		console.log("upload image success payload", action.payload)
 			return {
 				...state,
 				images: [...state.images, action.payload],
