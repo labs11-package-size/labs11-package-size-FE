@@ -36,7 +36,7 @@ const styles = theme => ({
   NamesColumn: { 
     width: "700px",
     [theme.breakpoints.down("sm")]: {
-      width: "20%"
+      width: "75%"
     }
    }
 });

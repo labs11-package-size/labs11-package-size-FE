@@ -294,7 +294,7 @@ class ViewShipmentModal extends React.Component {
           let panelString = `panel${panelNumber}`
           return <ExpansionPanel className={classes.AccordionPanelOuter} expanded={expanded === panelString} onChange={this.handleChange(panelString)}>
           <ExpansionPanelSummary classes={{ content: classes.summarycontent }} className={classes.AccordionPanelSummary} expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Event{eventNumber}</Typography>
+            <Typography className={classes.heading}>Event {eventNumber}</Typography>
             <Typography className={classes.secondaryHeading}>{shippingActivity.details}</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.AccordianDetails}>

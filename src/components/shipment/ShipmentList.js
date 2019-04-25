@@ -49,6 +49,19 @@ const styles = theme => ({
   },
   switch: {
     margin: "0px 20px 0"
+  },
+  paginationroot: {
+    [theme.breakpoints.down("sm")]: {
+      height: "auto"
+    }
+  },
+  paginationtoolbar: {
+    [theme.breakpoints.down("sm")]: {
+      height: "auto",
+      flexDirection: "column"
+
+    }
+
   }
 });
 
@@ -267,6 +280,7 @@ class ShipmentList extends React.Component {
           nextIconButtonProps={{
             "aria-label": "Next Page"
           }}
+          classes={{ root: classes.paginationroot, toolbar: classes.paginationtoolbar }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />

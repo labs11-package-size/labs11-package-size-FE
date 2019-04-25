@@ -62,7 +62,7 @@ function Shipment(props) {
       {props.shipment.tracked ? (
         <TableCell
           style={statusStyling(props.shipment)}
-          className={classes.statuscell}
+          className={classes.StatusRow}
           align="right"
         >
           {parsedStatus(props.shipment)}
