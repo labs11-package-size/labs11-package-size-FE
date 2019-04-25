@@ -77,7 +77,9 @@ class Login extends Component {
 						<Typography component="h1" variant="h5">
 							Sign in
 						</Typography>
-
+						<h4 style={{ color: 'red' }}>
+							{this.props.error === 'auth/user-not-found' && 'User not found'}
+						</h4>
 						<ValidatorForm
 							className={classes.form}
 							ref="form"
