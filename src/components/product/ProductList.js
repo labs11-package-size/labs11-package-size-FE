@@ -133,8 +133,6 @@ const styles = theme => ({
 	},
 	PackagingTitleContainer: {
 		width: "60%",
-		display: "flex",
-		justifyContent: "space-between"
 	}
 });
 
@@ -227,7 +225,7 @@ class ProductList extends Component {
 								Pack It
 							</Button> */}
 						
-						<Button className={this.props.classes.ExitButton} onClick={() => this.props.deleteAllSelected()}>Cancel Packaging</Button>
+						
 						</div>
 					) : (
 						<Typography gutterBottom variant="h5" component="h2">
@@ -235,8 +233,6 @@ class ProductList extends Component {
 						</Typography>
 					)}
 					<AddProductModal
-						getThumbnail={this.getThumbnail}
-						addImgs={this.addImgs}
 						addProduct={() => this.props.addProduct(this.props.product)}>
 						<form className={this.props.classes.container} autocomplete="off">
 							<div className={this.props.classes.container}>
@@ -343,8 +339,6 @@ class ProductList extends Component {
 									}}
 								/>
 								<ImgUploader
-									getThumbnail={this.props.getThumbnail}
-									addImgs={this.props.addImgs}
 									deleteImgFromProdList={this.props.deleteImg}
 									thumbnail={this.props.thumbnail}
 								/>
