@@ -18,33 +18,36 @@ import moment from "moment-timezone"
 
 const timezone = moment.tz.guess()
 
-function getModalStyle(tracked) {
-  const top = 50;
-  const left = 50;
-  if (!!tracked) {
-    return {
-      width: "1000px",
-      height: "800px",
-      padding: "30px 20px",
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`
-    };
-  }
-  return {
-    width: "700px",
-    height: "800px",
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
-
 const styles = theme => ({
+  modal: {
+
+  },
   paper: {
     position: "absolute",
     outline: "none",
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
+    width: "1000px",
+    height: "800px",
+    top: "50%",
+    left: "50%",
+    transform: `translate(-50%, -50%)`,
+    [theme.breakpoints.down("sm")]: {
+      width: "500px"
+    }
+  },
+  paperuntracked: {
+    position: "absolute",
+    outline: "none",
+    backgroundColor: theme.palette.background.paper,
+    width: "700px",
+    height: "800px",
+    top: "50%",
+    left: "50%",
+    transform: `translate(-50%, -50%)`,
+    [theme.breakpoints.down("sm")]: {
+      width: "500px",
+      height: "615px"
+    }
   },
   backButton: {
     width: "500px",
@@ -53,10 +56,16 @@ const styles = theme => ({
     marginTop: "25px",
     "&:hover": {
       color: "black"
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "300px",
     }
   },
   trackInput: {
-    width: "350px"
+    width: "350px",
+    [theme.breakpoints.down("sm")]: {
+      width: "230px"
+    }
   },
   trackButton: {
     marginLeft: "50px",
@@ -92,18 +101,23 @@ const styles = theme => ({
     justifyContent: "space-evenly",
     flexWrap: "wrap",
     alignItems: "center",
-    height: "650px"
-    
+    height: "650px",
   },
   TrackedShipmentLeftData: {
     width: "30%",
     padding: "15px",
     backgrounColor: "#ECEFF3",
     border: "1px solid black",
-    borderRadius: "15px"
+    borderRadius: "15px",
+    [theme.breakpoints.down("sm")]: {
+      width: "auto"
+    }
 },
   TrackedShipmentAccordianContainer: {
-    width: "55%"
+    width: "55%",
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
   },
   TrackedShipmentLeftDataHeader: {
     marginTop: "10px",
@@ -141,10 +155,8 @@ const styles = theme => ({
   },
   ModalTitle: {
     width: "100%",
-    textAlign: "center"
-  },
-  UntrackedTitle: {
-    margin: "15px 0"
+    textAlign: "center",
+    margin: "20px 0"
   }
 });
 
@@ -160,7 +172,6 @@ class ViewShipmentModal extends React.Component {
   };
 
   render() {
-    console.log("timezone", timezone)
     const { classes } = this.props;
     const { expanded } = this.state;
     return (
@@ -172,11 +183,13 @@ class ViewShipmentModal extends React.Component {
           onClose={this.props.closeModal}
         >
           <div
-            style={getModalStyle(this.props.shipment.tracked)}
-            className={classes.paper}
+            className={classNames({
+				[classes.paper]: this.props.shipment.tracked === 1,
+        [classes.paperuntracked]: this.props.shipment.tracked === 0
+			})}
           >
           <div className={classes.ModalTitle}>
-            {!this.props.shipment.tracked ? (<Typography className={classes.UntrackedTitle} variant="h5" id="modal-title">
+            {!this.props.shipment.tracked ? (<Typography variant="h5" id="modal-title">
                   Suggested Packaging Orientation
                 </Typography>) :
 
@@ -281,7 +294,7 @@ class ViewShipmentModal extends React.Component {
           let panelString = `panel${panelNumber}`
           return <ExpansionPanel className={classes.AccordionPanelOuter} expanded={expanded === panelString} onChange={this.handleChange(panelString)}>
           <ExpansionPanelSummary classes={{ content: classes.summarycontent }} className={classes.AccordionPanelSummary} expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>Event{eventNumber}</Typography>
+            <Typography className={classes.heading}>Event {eventNumber}</Typography>
             <Typography className={classes.secondaryHeading}>{shippingActivity.details}</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.AccordianDetails}>

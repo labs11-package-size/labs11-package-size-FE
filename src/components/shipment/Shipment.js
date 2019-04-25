@@ -19,13 +19,36 @@ import Typography from "@material-ui/core/Typography";
 const timezone = moment.tz.guess()
 
 const styles = theme => ({
-  statuscell: {
-    width: "100px"
+  TimeRow: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
+  },
+  StatusRow: {
+    width: "100px",
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
   },
   button: {
     backgroundColor: "#72bda2",
     color: "white",
     fontSize: "10px"
+  },
+  WeightRow: {
+    [theme.breakpoints.down("md")]: {
+      display: "none"
+    }
+  },
+  DimensionsRow: {
+    [theme.breakpoints.down("md")]: {
+      display: "none"
+    }
+  },
+  NamesRow: {
+    [theme.breakpoints.down("md")]: {
+     fontSize: "10px"
+    }
   }
 });
 
@@ -33,19 +56,19 @@ function Shipment(props) {
   const { classes } = props;
   return (
     <TableRow id={"tablerow-1"} style={{ cursor: "pointer" }} hover aria-checked="false" role="checkbox" tabIndex={-1} onClick={() => props.openModal(props.shipment)}>
-      <TableCell align="right">
+      <TableCell className={classes.TimeRow} align="right">
         {moment.tz(props.shipment.lastUpdated, "Pacific/Fiji").clone().tz(timezone).format("L h:mm a")}
       </TableCell>
       {props.shipment.tracked ? (
         <TableCell
           style={statusStyling(props.shipment)}
-          className={classes.statuscell}
+          className={classes.StatusRow}
           align="right"
         >
           {parsedStatus(props.shipment)}
         </TableCell>
       ) : (
-        <TableCell className={classes.statuscell} align="right">
+        <TableCell className={classes.StatusRow} align="right">
           <Typography
             style={{ fontSize: "11px", color: "grey", whiteSpace: "nowrap" }}
           >
@@ -53,9 +76,9 @@ function Shipment(props) {
           </Typography>
         </TableCell>
       )}
-      <TableCell align="right">{props.shipment.totalWeight}</TableCell>
-      <TableCell align="right">{props.shipment.dimensions}</TableCell>
-      <TableCell align="right">
+      <TableCell className={classes.WeightRow} align="right">{props.shipment.totalWeight}</TableCell>
+      <TableCell className={classes.DimensionsRow} align="right">{props.shipment.dimensions}</TableCell>
+      <TableCell className={classes.NamesRow} align="right">
         {props.shipment.productNames.join(", ")}
       </TableCell>
       <TableCell padding="checkbox" align="right">
