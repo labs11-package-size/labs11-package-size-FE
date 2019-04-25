@@ -192,6 +192,11 @@ const styles = theme => ({
 	},
 	individualShipment: {
 		width: '30%',
+		display: "flex",
+		flexDirection: "column",
+		padding: "10px",
+		
+
 		[theme.breakpoints.down('sm')]: {
 			display: 'none',
 		},
@@ -243,6 +248,12 @@ const styles = theme => ({
 		flexDirection: 'column',
 		alignItems: 'center',
 	},
+	DescriptionTitle: {
+		textAlign: "center",
+		fontWeight: "bold",
+		marginBottom: "5px"
+	},
+	
 });
 function Transition(props) {
 	return <Slide direction="up" {...props} />;
@@ -473,7 +484,7 @@ class ProductDetailModal extends React.Component {
 											direction="row">
 											<Card className={classes.summaryCard}>
 												<Grid direction="column" flexWrap="wrap">
-													<Typography>Description:</Typography>
+													<Typography className={classes.DescriptionTitle}>Description</Typography>
 													<Typography style={{ padding: '0 0 0 20px' }}>
 														{this.props.detail.productDescription}
 													</Typography>
@@ -483,9 +494,9 @@ class ProductDetailModal extends React.Component {
 												<Grid
 													container
 													direction="column"
-													alignItems="flex-start"
+													alignItems="center"
 													padding="0 0 0 20px">
-													<Typography className={classes.ProductDetailsRow}>
+													<Typography className={classes.DescriptionTitle}>
 														Product Details
 													</Typography>
 													<Grid
@@ -573,13 +584,12 @@ class ProductDetailModal extends React.Component {
 												{!!this.props.detail.shipmentsCount ? (
 													this.props.detail.shipments.map((shipment, i) => {
 														return (
-															<Grid
+															<Card
 																key={i}
-																container
-																direction="column"
 																className={
-																	this.props.classes.individualShipment
-																}>
+																	this.props.classes.individualShipment}
+																raised={true}
+																>
 																<Typography className={classes.shipmentHeading}>
 																	Date Shipped:{' '}
 																	{moment
@@ -614,7 +624,7 @@ class ProductDetailModal extends React.Component {
 																<Typography className={classes.shipmentHeading}>
 																	Carrier Name: {shipment.carrierName}
 																</Typography>
-															</Grid>
+															</Card>
 														);
 													})
 												) : (

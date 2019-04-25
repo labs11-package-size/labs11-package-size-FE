@@ -162,7 +162,7 @@ const shipmentTitles = [
     id: "dimensions",
     numeric: false,
     disablePadding: false,
-    label: "Dimensions (inches)"
+    label: "Box Size (in.)"
   },
   {
     id: "productNames",
