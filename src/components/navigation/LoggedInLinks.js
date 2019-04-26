@@ -35,8 +35,8 @@ const styles = {
 		color: '#72BDA2',
 	},
 	shipmenticon: {
-		color: "#bd7280"
-	}
+		color: '#bd7280',
+	},
 };
 
 class LoggedInLinks extends Component {
@@ -102,7 +102,10 @@ class LoggedInLinks extends Component {
 						<Tooltip title="Shipment List">
 							<ListItemIcon className={classes.menuButton}>
 								<Icon
-									className={classNames(classes.shipmenticon, 'fas fa-shipping-fast')}
+									className={classNames(
+										classes.shipmenticon,
+										'fas fa-shipping-fast',
+									)}
 								/>
 							</ListItemIcon>
 						</Tooltip>
@@ -131,7 +134,7 @@ class LoggedInLinks extends Component {
 						<ListItemText primary="Logout" />
 					</ListItem> */}
 				</List>
-				<Divider />
+				{/* <Divider /> */}
 				{/* {this.handleRenderList()} */}
 			</div>
 		);

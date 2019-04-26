@@ -171,19 +171,23 @@ class Layout extends React.Component {
 					<Toolbar
 						disableGutters={!this.state.open}
 						className={classes.toolbar}>
-						<Typography
+						{/* <Typography
 							onClick={() => this.props.history.push('/')}
 							component="h1"
 							variant="h6"
 							color="inherit"
 							noWrap
-							className={classes.title}>
-							<Button style={{ color: '#0D2C54' }}>
-								<Typography color="inherit" variant="h6">
+							className={classes.title}> */}
+						<Button style={{ marginLeft: '8px' }}>
+							{/* <Typography color="inherit" variant="h6">
 									ScannAR
-								</Typography>
-							</Button>
-						</Typography>
+								</Typography> */}
+							<img
+								src="https://res.cloudinary.com/dlrdfp08e/image/upload/c_scale,w_58/v1556292600/scannar-imgs/ikplcjuoqgei90lpueeb.png"
+								alt="title"
+							/>
+						</Button>
+						{/* </Typography> */}
 						<div>
 							{this.props.isLoggedIn && (
 								<LoggedInLinks
