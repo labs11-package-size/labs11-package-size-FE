@@ -10,7 +10,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 function getModalStyle() {
 	const top = 50;
-	const left = 50;
+	const left = 30;
 
 	return {
 		top: `${top}%`,
@@ -66,7 +66,7 @@ class EditProductModal extends React.Component {
 		const { classes } = this.props;
 
 		return (
-			<div>
+			<div onClick={event => event.stopPropagation()}>
 				<Tooltip title="Edit">
 					<Button
 						variant="contained"
@@ -81,10 +81,14 @@ class EditProductModal extends React.Component {
 					open={this.state.open}
 					onClose={this.handleClose}>
 					<div style={getModalStyle()} className={classes.paper}>
-						<Typography variant="h6" id="modal-title">
-							Are you sure you want to edit this product?
-						</Typography>
 						<div>
+							<Typography
+								variant="h5"
+								component="h2"
+								gutterBottom
+								id="modal-title">
+								Edit this product?
+							</Typography>
 							{this.props.children}
 							<div className={classes.root}>
 								<Button

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const styles = theme => ({
 	main: {
@@ -61,95 +62,105 @@ const styles = theme => ({
 	},
 });
 
-const Login = props => {
-	const { classes } = props;
+class Login extends Component {
+	render() {
+		const { classes } = this.props;
 
-	return (
-		<div>
-			<main className={classes.main}>
-				<CssBaseline />
-				<Paper className={classes.paper}>
-					<Avatar className={classes.avatar}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component="h1" variant="h5">
-						Sign in
-					</Typography>
-					<form className={classes.form}>
-						<FormControl margin="normal" required fullWidth>
-							<InputLabel htmlFor="email">Email</InputLabel>
-							<Input
-								id="email"
-								value={props.email}
-								onChange={props.handleInputChange}
-								name="email"
-								autoFocus
-							/>
-						</FormControl>
-						<FormControl margin="normal" required fullWidth>
-							<InputLabel htmlFor="password">Password</InputLabel>
-							<Input
-								onChange={props.handleInputChange}
-								value={props.password}
-								name="password"
-								type="password"
-								id="password"
-							/>
-						</FormControl>
-						<FormControlLabel
-							control={<Checkbox value="remember" color="primary" />}
-							label="Remember me"
-						/>
-						<Button
-							onClick={props.handleEmailLogin}
-							type="submit"
-							fullWidth
-							variant="contained"
-							className={classes.submit}>
+		return (
+			<div>
+				<main className={classes.main}>
+					<CssBaseline />
+					<Paper className={classes.paper}>
+						<Avatar className={classes.avatar}>
+							<LockOutlinedIcon />
+						</Avatar>
+						<Typography component="h1" variant="h5">
 							Sign in
-						</Button>
-						<div>
-							{props.error && (
-								<Paper className={classes.errorPaper} elevation={1}>
-									<Typography className={classes.error}>
-										{props.error}
-									</Typography>
-								</Paper>
-							)}
-						</div>
-					</form>
-					<div>
-						<div
-							style={{ margin: 20, display: 'flex', justifyContent: 'center' }}>
-							<Typography>OR</Typography>
-						</div>
-						<GoogleButton
-							style={{
-								backgroundColor: '#72BDA2',
-								'&:hover': {
-									color: '#72BDA2',
-									backgroundColor: 'white',
-								},
-							}}
-							onClick={() => {
-								props.handleGoogleLogin();
-							}}
-						/>
-						<div
-							style={{ margin: 5, display: 'flex', justifyContent: 'center' }}>
+						</Typography>
+						<h4 style={{ color: 'red' }}>
+							{this.props.error === 'auth/user-not-found' && 'User not found'}
+						</h4>
+						<ValidatorForm
+							className={classes.form}
+							ref="form"
+							onSubmit={this.props.handleEmailLogin}>
+							<FormControl margin="normal" required fullWidth>
+								<TextValidator
+									label="Email"
+									onChange={this.props.handleInputChange}
+									name="emailAddress"
+									value={this.props.email}
+									validators={['required', 'isEmail']}
+									errorMessages={[
+										'this field is required',
+										'email is not valid',
+									]}
+								/>
+							</FormControl>
+							<FormControl margin="normal" required fullWidth>
+								<TextValidator
+									label="Password"
+									type="password"
+									onChange={this.props.handleInputChange}
+									name="password"
+									value={this.props.password}
+									validators={['required']}
+									errorMessages={['this field is required']}
+								/>
+							</FormControl>
+							<br />
 							<Button
+								disabled={this.props.submitted}
+								type="submit"
+								fullWidth
 								variant="contained"
-								className={classes.submit}
-								onClick={props.handleRegister}>
-								Register
+								className={classes.submit}>
+								{(this.props.submitted && 'Your form is submitted!') ||
+									(!this.props.submitted && 'Sign in')}
 							</Button>
+							<div
+								style={{
+									margin: 5,
+									display: 'flex',
+									justifyContent: 'center',
+								}}>
+								<Button
+									variant="contained"
+									className={classes.submit}
+									onClick={this.props.handleRegister}>
+									Click to register
+								</Button>
+							</div>
+						</ValidatorForm>
+
+						<div>
+							<div
+								style={{
+									margin: 20,
+									display: 'flex',
+									justifyContent: 'center',
+								}}>
+								<Typography>OR</Typography>
+							</div>
+							<GoogleButton
+								style={{
+									backgroundColor: '#72BDA2',
+									'&:hover': {
+										color: '#72BDA2',
+										backgroundColor: 'white',
+									},
+								}}
+								onClick={() => {
+									this.props.handleGoogleLogin();
+								}}
+							/>
 						</div>
-					</div>
-				</Paper>
-			</main>
-		</div>
-	);
-};
+					</Paper>
+				</main>
+			</div>
+		);
+	}
+}
 
 Login.propTypes = {
 	classes: PropTypes.object.isRequired,

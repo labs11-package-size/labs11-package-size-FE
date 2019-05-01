@@ -15,11 +15,16 @@ import {
 	UPLOADING_IMAGE_SUCCESS,
 	UPLOADING_IMAGE_FAILURE,
 	DELETING_IMAGE,
+	GETTING_DETAIL,
+	GETTING_DETAIL_SUCCESSFUL,
+	GETTING_DETAIL_FAILURE,
+	CLEAR_ADDING
 } from '../actions/productActions';
 
 const initialState = {
 	products: [],
 	images: [],
+	productDetail: null,
 	thumbnail: '',
 	fetching: false,
 	adding: false,
@@ -75,6 +80,7 @@ const productsReducer = (state = initialState, action) => {
 				error: null,
 			};
 		case UPLOADING_IMAGE_SUCCESS:
+		console.log("upload image success payload", action.payload)
 			return {
 				...state,
 				images: [...state.images, action.payload],
@@ -95,7 +101,6 @@ const productsReducer = (state = initialState, action) => {
 		case ADDING_PRODUCT:
 			return {
 				...state,
-				thumbnail: state.images[0].secure_url,
 				adding: true,
 				failure: false,
 				error: null,
@@ -191,7 +196,34 @@ const productsReducer = (state = initialState, action) => {
 				failure: true,
 				error: action.payload,
 			};
-
+		case GETTING_DETAIL:
+			return {
+				...state,
+				fetching: true,
+				error: null,
+			};
+		case GETTING_DETAIL_SUCCESSFUL:
+			return {
+				...state,
+				productDetail: action.payload,
+				fetching: false,
+				success: true,
+				error: null,
+			};
+		case GETTING_DETAIL_FAILURE:
+			return {
+				...state,
+				fetching: false,
+				success: false,
+				failure: true,
+				error: action.payload,
+			};
+			case CLEAR_ADDING:
+			return {
+				...state,
+				images: [],
+				thumbnail: ""
+			}
 		default:
 			return state;
 	}

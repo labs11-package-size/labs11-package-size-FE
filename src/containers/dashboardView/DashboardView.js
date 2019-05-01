@@ -7,7 +7,6 @@ import ShipmentListView from '../shipmentView/ShipmentListView';
 import PackageTableView from '../packageTableView/PackageTableView';
 import { getProducts } from '../../store/actions/productActions';
 import { getShipments } from '../../store/actions/shipmentActions';
-import { getPackages } from '../../store/actions/packageActions';
 
 const styles = theme => ({
 	root: {
@@ -16,10 +15,8 @@ const styles = theme => ({
 });
 
 class DashboardView extends Component {
-	async componentDidMount() {
+	async componentWillMount() {
 		this.props.getProducts();
-		this.props.getShipments();
-		this.props.getPackages();
 	}
 
 	render() {
@@ -30,12 +27,9 @@ class DashboardView extends Component {
 					<div className="">
 						<ProductListView products={this.props.products} />
 					</div>
-					<div className="">
+					{/* <div className="">
 						<ShipmentListView shipments={this.props.shipments} />
-					</div>
-					<div className="">
-						<PackageTableView shipments={this.props.packages} />
-					</div>
+					</div> */}
 				</div>
 			</div>
 		);
@@ -46,13 +40,12 @@ const mapStateToProps = state => {
 	return {
 		products: state.productsReducer.products,
 		shipments: state.shipmentsReducer.shipments,
-		packages: state.packageReducer.packages,
 	};
 };
 
 export default compose(
 	connect(
 		mapStateToProps,
-		{ getProducts, getShipments, getPackages },
+		{ getProducts, getShipments },
 	),
 )(withStyles(styles)(DashboardView));

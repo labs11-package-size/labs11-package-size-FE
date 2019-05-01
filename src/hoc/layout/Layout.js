@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,29 +9,50 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
-
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import {
+	addPackage,
+	deleteSelectedProduct,
+} from '../../store/actions/shipmentActions';
 import LoggedInLinks from '../../components/navigation/LoggedInLinks';
 import LoggedOutLinks from '../../components/navigation/LoggedOutLinks';
 
-const drawerWidth = 185;
+const drawerWidth = 200;
 
 const styles = theme => ({
 	root: {
 		display: 'flex',
 		margin: '0 auto',
 	},
+	submit: {
+		display: 'flex',
+		justifyContent: 'center',
+		borderRadius: 5,
+		color: 'white',
+		backgroundColor: '#72BDA2',
+		'&:hover': {
+			color: '#72BDA2',
+			backgroundColor: 'white',
+		},
+		margin: '10px',
+	},
 	toolbar: {
 		paddingRight: 24,
+		display: 'flex',
+		justifyContent: 'space-between',
 	},
 	toolbarIcon: {
 		display: 'flex',
@@ -42,8 +63,7 @@ const styles = theme => ({
 	},
 	appBar: {
 		right: 'auto',
-		maxWidth: 1200,
-		backgroundColor: '#72BDA2',
+		backgroundColor: '#F2F3F4',
 		zIndex: theme.zIndex.drawer + 1,
 		transition: theme.transitions.create(['width', 'margin'], {
 			easing: theme.transitions.easing.sharp,
@@ -61,12 +81,19 @@ const styles = theme => ({
 	menuButton: {
 		marginLeft: 12,
 		marginRight: 36,
+		color: '#72BDA2',
 	},
 	menuButtonHidden: {
 		display: 'none',
 	},
 	title: {
-		flexGrow: 1,
+		// flexGrow: 1,
+	},
+	avatar: {
+		cursor: 'pointer',
+	},
+	paper_class: {
+		padding: 10,
 	},
 	drawerPaper: {
 		margin: '0 auto',
@@ -94,8 +121,12 @@ const styles = theme => ({
 		marginTop: 50,
 		flexGrow: 1,
 		padding: theme.spacing.unit * 3,
-		height: '100vh',
 		overflow: 'auto',
+	},
+	nav_content: {
+		display: 'flex',
+		marginLeft: 0,
+		justifyContent: 'space-between',
 	},
 	chartContainer: {
 		marginLeft: -22,
@@ -110,33 +141,29 @@ const styles = theme => ({
 
 class Layout extends React.Component {
 	state = {
-		open: true,
+		open: false,
+		menuOpen: false,
+		anchorEl: null,
 	};
 
-	handleDrawerOpen = () => {
-		this.setState({ open: true });
+	handleClose = () => {
+		this.setState({ anchorEl: null });
 	};
 
-	handleDrawerClose = () => {
-		this.setState({ open: false });
+	handleMenu = event => {
+		this.setState({ anchorEl: event.currentTarget });
 	};
-
-	componentDidMount() {
-		setTimeout(() => {
-			this.setState({
-				open: false,
-			});
-		}, 1000);
-	}
 
 	render() {
 		const { classes } = this.props;
+		const { anchorEl } = this.state;
+		const open = Boolean(anchorEl);
 
 		return (
 			<div className={classes.root}>
 				<CssBaseline />
 				<AppBar
-					position="absolute"
+					position="fixed"
 					className={classNames(
 						classes.appBar,
 						this.state.open && classes.appBarShift,
@@ -144,16 +171,6 @@ class Layout extends React.Component {
 					<Toolbar
 						disableGutters={!this.state.open}
 						className={classes.toolbar}>
-						<IconButton
-							color="inherit"
-							aria-label="Open drawer"
-							onClick={this.handleDrawerOpen}
-							className={classNames(
-								classes.menuButton,
-								this.state.open && classes.menuButtonHidden,
-							)}>
-							<MenuIcon />
-						</IconButton>
 						<Typography
 							onClick={() => this.props.history.push('/')}
 							component="h1"
@@ -161,40 +178,90 @@ class Layout extends React.Component {
 							color="inherit"
 							noWrap
 							className={classes.title}>
-							<Button style={{ color: 'white' }}>
+							<Button style={{ color: '#0D2C54' }}>
 								<Typography color="inherit" variant="h6">
 									ScannAR
 								</Typography>
 							</Button>
 						</Typography>
-						{this.props.isLoggedIn ? (
-							<Avatar
-								alt={this.props.userInfo.displayName}
-								src={this.props.userInfo.photoURL}
-								className={classes.avatar}
-							/>
-						) : (
-							<AccountCircle />
-						)}
+						<div>
+							{this.props.isLoggedIn && (
+								<LoggedInLinks
+									deleteSelected={this.props.deleteSelectedProduct}
+									addPackage={this.props.addPackage}
+									handleDrawerOpen={this.handleDrawerOpen}
+									selectedProducts={this.props.selectedProducts}
+								/>
+							)}
+						</div>
+						<div>
+							{this.props.isLoggedIn && (
+								<div>
+									<Avatar
+										onClick={this.handleMenu}
+										alt={this.props.userInfo.displayName}
+										src={this.props.userInfo.photoURL}
+										className={classes.avatar}
+									/>
+
+									<Menu
+										style={{ marginTop: '40px' }}
+										id="menu-appbar"
+										anchorEl={anchorEl}
+										anchorOrigin={{
+											vertical: 'bottom',
+											horizontal: 'center',
+										}}
+										transformOrigin={{
+											vertical: 'bottom',
+											horizontal: 'center',
+										}}
+										open={open}
+										onClose={this.handleClose}>
+										<Paper className={classes.paper_class}>
+											<Typography
+												style={{
+													fontSize: '18px',
+													fontWeight: 600,
+												}}>
+												Account Detail
+											</Typography>
+											<Divider />
+											<div
+												style={{
+													fontSize: '14px',
+													fontWeight: 500,
+												}}>
+												<Typography
+													style={{
+														fontSize: '14px',
+														fontWeight: 500,
+														paddingTop: '12px',
+													}}>
+													Display Name: {this.props.userInfo.displayName}
+												</Typography>
+												<Typography
+													style={{
+														fontSize: '14px',
+														fontWeight: 500,
+														paddingTop: '12px',
+													}}>
+													Email Address: {this.props.userInfo.email}
+												</Typography>
+											</div>
+										</Paper>
+										<MenuItem
+											className={classes.submit}
+											onClick={() => this.props.history.push('/logout')}>
+											Logout
+										</MenuItem>
+									</Menu>
+								</div>
+							)}
+						</div>
 					</Toolbar>
 				</AppBar>
-				<Drawer
-					variant="permanent"
-					classes={{
-						paper: classNames(
-							classes.drawerPaper,
-							!this.state.open && classes.drawerPaperClose,
-						),
-					}}
-					open={this.state.open}>
-					<div className={classes.toolbarIcon}>
-						<IconButton onClick={this.handleDrawerClose}>
-							<ChevronLeftIcon />
-						</IconButton>
-					</div>
-					<Divider />
-					{this.props.isLoggedIn ? <LoggedInLinks /> : <LoggedOutLinks />}
-				</Drawer>
+
 				<main className={classes.content}>{this.props.children}</main>
 			</div>
 		);
@@ -205,6 +272,7 @@ const mapStateToProps = state => {
 	return {
 		isLoggedIn: state.userReducer.isLoggedIn,
 		userInfo: state.firebaseReducer.auth,
+		selectedProducts: state.shipmentsReducer.selectedProducts,
 	};
 };
 
@@ -216,7 +284,7 @@ export default compose(
 	withRouter(
 		connect(
 			mapStateToProps,
-			{},
+			{ addPackage, deleteSelectedProduct },
 		)(withStyles(styles)(Layout)),
 	),
 );

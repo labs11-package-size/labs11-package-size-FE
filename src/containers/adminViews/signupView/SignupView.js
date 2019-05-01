@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { register } from '../../../store/actions/userActions';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const styles = theme => ({
 	main: {
@@ -43,12 +44,11 @@ const styles = theme => ({
 	},
 	submit: {
 		marginTop: theme.spacing.unit * 3,
-		backgroundColor: '#72BDA2',
 		color: 'white',
+		backgroundColor: '#72BDA2',
 		'&:hover': {
 			color: '#72BDA2',
 			backgroundColor: 'white',
-			border: 'solid 5px #72BDA2',
 		},
 	},
 });
@@ -62,6 +62,7 @@ class SignupView extends Component {
 			displayName: '',
 			password: '',
 		},
+		submitted: false,
 		error: null,
 	};
 
@@ -74,21 +75,48 @@ class SignupView extends Component {
 		});
 	};
 
+	componentWillUpdate() {
+		if (this.props.error) {
+			return () =>
+				this.setState(
+					{
+						error: this.props.error,
+					},
+					() =>
+						setTimeout(() => {
+							this.setState({
+								error: null,
+							});
+						}, 2000),
+				);
+		}
+	}
+
 	handleRegister = e => {
 		e.preventDefault();
 		this.props.register(this.state.user);
-		this.setState({
-			user: {
-				firstName: '',
-				lastName: '',
-				emailAddress: '',
-				displayName: '',
-				password: '',
-			},
-		});
+		if (!!this.props.error) {
+			this.setState(
+				{
+					user: {
+						firstName: '',
+						lastName: '',
+						emailAddress: '',
+						displayName: '',
+						password: '',
+					},
+					submitted: true,
+					error: null,
+				},
+				() => {
+					setTimeout(() => this.setState({ submitted: false }), 2000);
+				},
+			);
+		}
 	};
 
 	render() {
+		console.log(this.props.error);
 		const { classes } = this.props;
 		return (
 			<div>
@@ -101,59 +129,80 @@ class SignupView extends Component {
 						<Typography component="h1" variant="h5">
 							Register
 						</Typography>
-
-						<form className={classes.form}>
+						<h4 style={{ color: 'red' }}>{this.props.error}</h4>
+						<ValidatorForm
+							className={classes.form}
+							ref="form"
+							onSubmit={this.handleRegister}>
 							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="name">First Name</InputLabel>
-								<Input
-									id="firstName"
-									value={this.state.user.firstName}
+								<TextValidator
+									label="First Name"
 									onChange={this.handleChange}
 									name="firstName"
+									value={this.state.user.firstName}
+									validators={['required']}
+									errorMessages={['this field is required']}
 									autoFocus
 								/>
 							</FormControl>
 							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="last-name">Last Name</InputLabel>
-								<Input
-									id="last-name"
-									value={this.state.user.lastName}
+								<TextValidator
+									label="Last Name"
 									onChange={this.handleChange}
 									name="lastName"
+									value={this.state.user.lastName}
+									validators={['required']}
+									errorMessages={['this field is required']}
 								/>
 							</FormControl>
 							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="email">Email</InputLabel>
-								<Input
-									id="email"
-									value={this.state.user.emailAddress}
+								<TextValidator
+									label="Email"
 									onChange={this.handleChange}
 									name="emailAddress"
+									value={this.state.user.emailAddress}
+									validators={['required', 'isEmail']}
+									errorMessages={[
+										'this field is required',
+										'email is not valid',
+									]}
 								/>
 							</FormControl>
 							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="password">Password</InputLabel>
-								<Input
-									onChange={this.handleChange}
-									value={this.state.user.password}
-									name="password"
+								<TextValidator
+									label="Password"
 									type="password"
-									id="password"
-									autoComplete="current-password"
+									onChange={this.handleChange}
+									name="password"
+									value={this.state.user.password}
+									validators={['required']}
+									errorMessages={['this field is required']}
 								/>
 							</FormControl>
-							{this.state.error && (
-								<Typography>{this.state.error.message}</Typography>
-							)}
+							<br />
 							<Button
-								onClick={this.handleRegister}
+								disabled={this.state.submitted}
 								type="submit"
 								fullWidth
 								variant="contained"
 								className={classes.submit}>
-								Sign Up
+								{(this.state.submitted && 'Your form is submitted!') ||
+									(!this.state.submitted && 'Register')}
 							</Button>
-						</form>
+							<div
+								style={{
+									margin: 5,
+									display: 'flex',
+									justifyContent: 'center',
+								}}>
+								<Button
+									variant="contained"
+									className={classes.submit}
+									onClick={this.props.handleSignIn}>
+									Back to login
+								</Button>
+							</div>
+						</ValidatorForm>
 					</Paper>
 				</main>
 			</div>
@@ -161,7 +210,13 @@ class SignupView extends Component {
 	}
 }
 
+const mapStateToProps = state => {
+	return {
+		error: state.userReducer.error,
+	};
+};
+
 export default connect(
-	null,
+	mapStateToProps,
 	{ register },
 )(withStyles(styles)(SignupView));

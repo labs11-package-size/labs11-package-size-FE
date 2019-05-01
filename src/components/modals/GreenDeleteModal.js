@@ -31,9 +31,9 @@ const styles = theme => ({
 	},
 	submit: {
 		color: 'white',
-		backgroundColor: '#bd7280',
+		backgroundColor: '#72BDA2',
 		'&:hover': {
-			color: '#bd7280',
+			color: '#72BDA2',
 			backgroundColor: 'white',
 		},
 	},

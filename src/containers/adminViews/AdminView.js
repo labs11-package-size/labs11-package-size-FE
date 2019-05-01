@@ -9,7 +9,12 @@ class AdminView extends Component {
 
 	handleRegister = () => {
 		this.setState({
-			registering: !this.state.isRegistering,
+			registering: true,
+		});
+	};
+	handleSignIn = () => {
+		this.setState({
+			registering: false,
 		});
 	};
 	render() {
@@ -21,7 +26,7 @@ class AdminView extends Component {
 						isRegistering={this.state.registering}
 					/>
 				) : (
-					<SignupView />
+					<SignupView handleSignIn={this.handleSignIn} />
 				)}
 			</div>
 		);

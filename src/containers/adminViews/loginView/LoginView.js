@@ -12,10 +12,10 @@ import Login from '../../../components/admin/login/Login';
 class LoginView extends Component {
 	state = {
 		user: {
-			email: '',
+			emailAddress: '',
 			password: '',
 		},
-		error: null,
+		submitted: false,
 	};
 
 	handleChanges = event => {
@@ -34,13 +34,20 @@ class LoginView extends Component {
 	handleEmailLogin = event => {
 		event.preventDefault();
 		this.props.emailLogin(this.state.user);
-
-		this.setState({
-			user: {
-				emailAddress: '',
-				password: '',
-			},
-		});
+		if (!!this.props.errMessage) {
+			this.setState(
+				{
+					user: {
+						emailAddress: '',
+						password: '',
+					},
+					submitted: true,
+				},
+				() => {
+					setTimeout(() => this.setState({ submitted: false }), 2000);
+				},
+			);
+		}
 	};
 
 	render() {
@@ -48,14 +55,15 @@ class LoginView extends Component {
 			<div>
 				<Login
 					password={this.state.user.password}
-					email={this.state.user.email}
+					email={this.state.user.emailAddress}
 					user={this.state.user}
-					error={this.props.errMessage}
+					submitted={this.state.submitted}
 					handleInputChange={this.handleChanges}
 					handleRegister={this.props.handleRegister}
 					isRegistering={this.props.isRegistering}
 					handleGoogleLogin={this.handleGoogleLogin}
 					handleEmailLogin={this.handleEmailLogin}
+					error={this.props.errMessage}
 				/>
 			</div>
 		);

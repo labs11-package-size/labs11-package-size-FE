@@ -21,10 +21,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import DeleteModal from '../modals/deleteModal';
 import EditProductModal from '../modals/EditProductModal';
+import ProductDetailModal from '../modals/ProductDetailModal';
 
 const styles = theme => ({
 	card: {
-		width: 275,
+		width: 200,
 	},
 	container: {
 		margin: 40,
@@ -47,6 +48,7 @@ const styles = theme => ({
 	},
 	media: {
 		paddingTop: '56.25%',
+		// width: 100,
 	},
 	actions: {
 		display: 'flex',
@@ -70,156 +72,39 @@ const styles = theme => ({
 class Product extends Component {
 	state = { expanded: false };
 
-	handleExpandClick = () => {
-		this.setState(state => ({ expanded: !state.expanded }));
+	handleSelectProd = product => {
+		let selected = {
+			name: product.name,
+			uuid: product.uuid,
+		};
+
+		this.props.selectProduct(selected);
 	};
 
 	render() {
-		const { classes } = this.props;
 		return (
-			<div className={classes.container}>
-				<div className={classes.root}>
-					<Card className={classes.card}>
-						<CardHeader
-							avatar={
-								<Avatar aria-label="Recipe" className={classes.avatar}>
-									P
-								</Avatar>
-							}
-							title={this.props.product.name}
-						/>
-
-						<img
-							id={this.props.product.uuid}
-							style={{ width: 100 }}
-							src={this.props.product.thumbnail}
-							alt="product"
-						/>
-
-						<CardActions className={classes.actions} disableActionSpacing>
-							<div aria-label="add">
-								<Button
-									onClick={() =>
-										this.props.selectProduct(this.props.product.uuid)
-									}>
-									<Icon
-										className={classNames(
-											classes.icon,
-											'fas fa-clipboard-check',
-										)}
-									/>
-								</Button>
-							</div>
-							<div aria-label="delete">
-								<DeleteModal
-									delete={() =>
-										this.props.deleteProduct(this.props.product.uuid)
-									}
-								/>
-							</div>
-
-							<div aria-label="edit">
-								<EditProductModal
-									edit={() => {
-										this.props.editProduct(
-											this.props.product.uuid,
-											this.props.updatedProduct,
-										);
-									}}
-									product={this.props.product}
-									updateState={this.props.updateState}>
-									<form className={classes.formContainer}>
-										<Input
-											required
-											onChange={this.props.handleChange}
-											name="name"
-											defaultValue={this.props.product.name}
-											label={this.props.product.name}
-											placeholder="Product Name"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
-											}}
-										/>
-
-										<Input
-											required
-											onChange={this.props.handleChange}
-											name="productDescription"
-											defaultValue={this.props.product.productDescription}
-											label={this.props.product.productDescription}
-											placeholder="Description"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
-											}}
-										/>
-
-										<Input
-											required
-											onChange={this.props.handleChange}
-											name="value"
-											defaultValue={this.props.product.value}
-											label={this.props.product.value}
-											placeholder="Value"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
-											}}
-										/>
-										<Input
-											required
-											onChange={this.props.handleChange}
-											name="weight"
-											defaultValue={this.props.product.weight}
-											label={this.props.product.weight}
-											placeholder="Weight"
-											className={classes.input}
-											inputProps={{
-												'aria-label': 'Description',
-											}}
-										/>
-									</form>
-								</EditProductModal>
-							</div>
-							<Tooltip title="More Details...">
-								<IconButton
-									className={classnames(classes.expand, {
-										[classes.expandOpen]: this.state.expanded,
-									})}
-									onClick={this.handleExpandClick}
-									aria-expanded={this.state.expanded}
-									aria-label="Show more">
-									<ExpandMoreIcon />
-								</IconButton>
-							</Tooltip>
-						</CardActions>
-						<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-							<CardContent>
-								<Typography>
-									Description: {this.props.product.productDescription}
-								</Typography>
-
-								<Typography className={classes.heading}>
-									Value: {this.props.product.value}
-								</Typography>
-								<Typography className={classes.heading}>
-									Length: {this.props.product.length}
-								</Typography>
-								<Typography className={classes.heading}>
-									Width: {this.props.product.width}
-								</Typography>
-								<Typography className={classes.heading}>
-									Height: {this.props.product.height}
-								</Typography>
-								<Typography className={classes.heading}>
-									Fragile: {this.props.product.fragile}
-								</Typography>
-							</CardContent>
-						</Collapse>
-					</Card>
-				</div>
-			</div>
+			<ProductDetailModal
+				product={this.props.product}
+				deleteProduct={this.props.deleteProduct}
+				selectProduct={this.props.selectProduct}
+				editProduct={this.props.editProduct}
+				handleChange={this.props.handleChange}
+				trackingNumber={this.props.trackingNumber}
+				updatedProduct={this.props.updatedProduct}
+				updateState={this.props.updateState}
+				addShipment={this.props.addShipment}
+				name={this.props.name}
+				productDescription={this.props.productDescription}
+				weight={this.props.width}
+				thumbnail={this.props.thumbnail}
+				length={this.props.length}
+				width={this.props.width}
+				height={this.props.height}
+				value={this.props.value}
+				getDetail={this.props.getDetail}
+				addPackage={this.props.addPackage}
+				openDrawer={this.props.openDrawer}
+			/>
 		);
 	}
 }

@@ -69,7 +69,7 @@ export const googleLogin = () => dispatch => {
 };
 
 export const emailLogin = credentials => dispatch => {
-	const email = credentials.email.toString();
+	const email = credentials.emailAddress.toString();
 	const password = credentials.password.toString();
 	dispatch({ type: USER_LOGGING_IN });
 	firebase
@@ -156,7 +156,7 @@ export const register = credentials => dispatch => {
 		})
 		.catch(err => {
 			console.log(err);
-			dispatch({ type: USER_LOGIN_FAILURE, payload: err.data });
+			dispatch({ type: USER_LOGIN_FAILURE, payload: err.message });
 		});
 };
 

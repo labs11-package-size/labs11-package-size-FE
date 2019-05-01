@@ -8,6 +8,9 @@ import {
 	editUser,
 } from '../../store/actions/userActions';
 
+import Navigation from '../../components/navigation/Navigation';
+import Layout from '../../hoc/layout/Layout';
+
 class AccountView extends Component {
 	state = {
 		user: {
@@ -44,7 +47,7 @@ class AccountView extends Component {
 				<Account
 					editAccount={() => this.editAccount(this.state.userInfo)}
 					handleInputChange={this.handleInputChange}
-					editingUserInfo={this.editingUserInfo}
+					// editingUserInfo={this.editingUserInfo}
 					userInfo={this.state.userInfo}
 				/>
 			</div>
