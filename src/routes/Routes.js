@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import http from 'http';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import ProductListView from '../containers/productView/ProductListView';
 import PackagingView from '../containers/packagingView/PackagingView';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
-import loadingSpinner from '../components/loadingSpinner/LoadingSpinnerAddPackage.js'
+import loadingSpinner from '../components/loadingSpinner/LoadingSpinnerAddPackage.js';
 import ShipmentListView from '../containers/shipmentView/ShipmentListView';
 import PackageTableView from '../containers/packageTableView/PackageTableView';
 import AccountView from '../containers/accountView/AccountView';

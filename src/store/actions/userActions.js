@@ -210,6 +210,11 @@ export const editUser = userInfo => dispatch => {
 		.catch(res => ({ type: EDITING_USER_FAILURE }));
 };
 
+setInterval(function() {
+	console.log('worked');
+	getAuth();
+}, 300000); // every 5 minutes (300000)
+
 // export const register = newUser => dispatch => {
 // 	dispatch({ type: USER_REGISTERING });
 // 	axios
